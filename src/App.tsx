@@ -1,11 +1,20 @@
 import React from 'react';
-import './App.css';
+import { RecoilRoot } from 'recoil';
+import Header from './components/Header';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
 
 function App() {
   return (
-    <div>
-      프론트엔드
-    </div>
+    <RecoilRoot>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route index element={<Home />} />
+          {/*<Route path={'info'} element={<Info />} />*/}
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 }
 

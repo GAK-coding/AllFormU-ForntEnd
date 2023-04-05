@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export default function Home() {
-    return (
-        <div>프론트 세팅</div>
-    );
-};
+  return <div>홈</div>;
+}
