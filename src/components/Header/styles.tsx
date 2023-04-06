@@ -5,18 +5,18 @@ export const HeaderWrapper = styled.header`
   justify-content: space-between;
   align-items: center;
 
-  padding: 1rem 2rem;
+  padding: 2rem 2rem;
 `;
 
 export const Title = styled.div`
   & > a {
     color: var(--color-main);
-    text-transform: capitalize;
     font-size: 4rem;
+    font-weight: 700;
   }
 `;
 
-export const BtnBox = styled.div`
+export const BtnBox = styled.nav`
   display: flex;
 
   & > button {

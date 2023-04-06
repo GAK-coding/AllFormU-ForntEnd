@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <HeaderWrapper>
       <Title>
-        <Link to={'/'}>All Form ü</Link>
+        <Link to={'/'}>All Form Ü</Link>
       </Title>
       <BtnBox>
         <Button text={'My page'} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'} />
