@@ -3,6 +3,7 @@ import { Explanation, ExplanationAbove, ExplanationBelow, ExplanationMiddle, Hom
 import Button from '../../components/ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 
 export default function Home() {
   const { main } = useRecoilValue(color);
@@ -17,14 +18,9 @@ export default function Home() {
           </ExplanationAbove>
           <ExplanationMiddle>All Form Ü</ExplanationMiddle>
           <ExplanationBelow>
-            <Button
-              text={`나만의 설문 만들기 ->`}
-              fontSize={1.4}
-              bgColor={main}
-              width={20}
-              height={5}
-              color={'white'}
-            />
+            <Button fontSize={1.4} bgColor={main} width={20} height={5} color={'white'}>
+              나만의 설문 만들기 &nbsp;&nbsp;&nbsp; <AiOutlineArrowRight />
+            </Button>
           </ExplanationBelow>
         </div>
       </Explanation>

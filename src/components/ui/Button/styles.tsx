@@ -19,4 +19,10 @@ export const BtnWrapper = styled.button<Btn>`
   background-color: ${(props) => props.bgColor};
   font-size: ${(props) => props.fontSize}rem;
   font-weight: 700;
+
+  & > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
