@@ -2,7 +2,7 @@ import React from 'react';
 import { BtnWrapper } from './styles';
 
 export interface ButtonProps {
-  onClick?: any;
+  onClick?: () => void;
   color: string;
   bgColor: string;
   fontSize: number;
