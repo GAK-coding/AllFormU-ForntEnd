@@ -8,7 +8,6 @@ export interface ButtonProps {
   fontSize: number;
   width: number;
   height: number;
-  // text: string;
   children: ReactNode;
 }
 
