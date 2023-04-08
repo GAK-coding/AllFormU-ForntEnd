@@ -2,5 +2,5 @@ import { atom } from 'recoil';
 
 export const color = atom({
   key: 'color',
-  default: { main: '#655DBB' },
+  default: { main: '#655DBB', subBlue: '#C0DEFF' },
 });
