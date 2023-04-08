@@ -14,9 +14,13 @@ export default function Home() {
         <div>
           <ExplanationAbove>
             <span>Gak과 함께,</span>
-            <br /> 손쉽게 만드는 설문 플랫폼
+            <br />
+            너를 위해서, 너만을 위해서
           </ExplanationAbove>
-          <ExplanationMiddle>All Form Ü</ExplanationMiddle>
+          <ExplanationMiddle>
+            {/* All Form Ü */}
+            <img src="homeLogo.png" alt="homeLogo" />
+          </ExplanationMiddle>
           <ExplanationBelow>
             <Button fontSize={1.4} bgColor={main} width={20} height={5} color={'white'}>
               나만의 설문 만들기 &nbsp;&nbsp;&nbsp; <AiOutlineArrowRight />
