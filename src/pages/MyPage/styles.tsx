@@ -131,4 +131,6 @@ export const FormBox = styled.button`
   margin-top: 1.5rem;
   margin-left: 1rem;
   margin-right: 1rem;
+
+  cursor: pointer;
 `;
