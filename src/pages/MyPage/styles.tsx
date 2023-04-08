@@ -19,7 +19,7 @@ export const MyPageWrapper = styled.div`
 
 export const UserInfo = styled.div`
   width: 30%;
-  height: 45rem;
+  height: 48rem;
 
   display: flex;
   flex-direction: column;
@@ -27,7 +27,7 @@ export const UserInfo = styled.div`
 
   box-sizing: border-box;
   padding: 2rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
   margin-left: 3.5rem;
   margin-right: 1rem;
 
@@ -108,11 +108,20 @@ export const Line = styled.div`
   font-weight: 700;
 `;
 
+export const AlignBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 2rem;
+  margin-right: 2rem;
+`;
+
 export const FormBox = styled.button`
   flex-direction: row;
   justify-content: space-between;
 
-  width: 40%;
+  width: 55%;
   height: 6rem;
 
   border: 1px solid #dbdbdb;
@@ -120,5 +129,6 @@ export const FormBox = styled.button`
   background-color: #fefefe;
 
   margin-top: 1.5rem;
-  margin-left: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 `;

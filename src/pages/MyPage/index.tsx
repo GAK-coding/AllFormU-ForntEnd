@@ -2,8 +2,7 @@ import { useRecoilValue } from 'recoil';
 import BaseBgBox from '../../components/ui/BaseBgBox';
 import Button from '../../components/ui/Button';
 import { color } from '../../recoil/Color/atom';
-
-import { BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
+import { AlignBox, BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
 import { useEffect, useState } from 'react';
 import { signUpInfo } from '../../typings/user';
 
@@ -31,6 +30,9 @@ export default function MyPage() {
   // 화면에 보여지는 값
   const { name, email, userImg } = userInfo;
 
+  // 폼 데이터를 받아오는 값 저장
+  const formdata = 'hi';
+
   return (
     <BaseBgBox>
       <MyPageWrapper>
@@ -47,19 +49,31 @@ export default function MyPage() {
 
         <FormWrapper>
           <BtnBox>
-            <Button color={'black'} bgColor={subBlue} fontSize={1.3} width={11} height={3}>
+            <Button color={'black'} bgColor={subBlue} fontSize={1.3} width={11} height={3.5}>
               프로필 수정
             </Button>
           </BtnBox>
           <Form>
             <Line>내 생성폼</Line>
-            <FormBox>폼 제목1</FormBox>
-            <FormBox>폼 제목2</FormBox>
+            <AlignBox>
+              {formdata && <FormBox>{formdata}</FormBox>}
+              {formdata && <FormBox>{formdata}</FormBox>}
+            </AlignBox>
+            <AlignBox>
+              {formdata && <FormBox>{formdata}</FormBox>}
+              {formdata && <FormBox>{formdata}</FormBox>}
+            </AlignBox>
           </Form>
           <Form>
             <Line>내 응답</Line>
-            <FormBox>폼 제목1</FormBox>
-            <FormBox>폼 제목2</FormBox>
+            <AlignBox>
+              {formdata && <FormBox>{formdata}</FormBox>}
+              {formdata && <FormBox>{formdata}</FormBox>}
+            </AlignBox>
+            <AlignBox>
+              {formdata && <FormBox>{formdata}</FormBox>}
+              {formdata && <FormBox>{formdata}</FormBox>}
+            </AlignBox>
           </Form>
         </FormWrapper>
       </MyPageWrapper>
