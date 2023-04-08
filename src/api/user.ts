@@ -1,4 +1,7 @@
 import axios from 'axios';
-import { SignUpInfo } from '../typings/user';
+import { signUpInfo } from '../typings/user';
 
-export const signUp = (data: SignUpInfo) => axios.post('/api/signup', data);
+export const signUp = (data: signUpInfo) => axios.post('/api/signup', data);
+
+// export const signIn = (data: signInInfo) => axios.post('/api/login', data);
+export const signIn = (data: { email: string }) => axios.post('/api/login', data);
