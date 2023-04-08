@@ -2,13 +2,13 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
 import { Form, Line, Match, MisMatch, PageInfo, SignUpWrapper } from './styles';
 import Input from '../../components/ui/Input';
-import { SignUpInfo } from '../../typings/user';
+import { signUpInfo } from '../../typings/user';
 import Button from '../../components/ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { signUp } from '../../api/user';
 
-interface InputInfo extends SignUpInfo {
+interface InputInfo extends signUpInfo {
   checkPassword: string;
 }
 
@@ -80,7 +80,7 @@ export default function SignUp() {
           </Line>
           <Line>
             <div>
-              <span>이메일</span>
+              <span>Email</span>
             </div>
             <Input
               type={'email'}
