@@ -15,6 +15,7 @@ export const Explanation = styled.div`
   justify-content: center;
   align-items: flex-end;
 
+  /* margin-left: 30rem; */
   margin-right: 10rem;
 
   & > div {
@@ -40,6 +41,10 @@ export const ExplanationAbove = styled.div`
 export const ExplanationMiddle = styled.div`
   font-size: 8rem;
   font-weight: 700;
+
+  & > img {
+    width: 50%;
+  }
 `;
 
 export const ExplanationBelow = styled.div``;
