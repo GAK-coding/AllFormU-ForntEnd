@@ -19,6 +19,9 @@ body {
 
 :root {
     --color-main: #655DBB;
+    --color-light-purple:#E8D3FF;
+    --color-sub-blue: #C0DEFF;
+;
 }
 
 code {
