@@ -3,15 +3,15 @@ import BaseBgBox from '../../components/ui/BaseBgBox';
 import Button from '../../components/ui/Button';
 import { color } from '../../recoil/Color/atom';
 
-import { MyPageWrapper, UserInfo } from './styles';
+import { Form, FormWrapper, MyPageWrapper, UserInfo } from './styles';
 import { useEffect, useState } from 'react';
-import { SignUpInfo } from '../../typings/user';
+import { signUpInfo } from '../../typings/user';
 
 export default function MyPage() {
   //색깔
   const { subBlue } = useRecoilValue(color);
 
-  interface MypageInfo extends SignUpInfo {
+  interface MypageInfo extends signUpInfo {
     userImg?: string;
   }
   // user 개인 정보
@@ -49,6 +49,11 @@ export default function MyPage() {
           </div>
         </UserInfo>
       </MyPageWrapper>
+
+      <FormWrapper>
+        <Form>form 1</Form>
+        <Form>form 2</Form>
+      </FormWrapper>
     </BaseBgBox>
   );
 }

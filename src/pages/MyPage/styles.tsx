@@ -55,3 +55,28 @@ export const UserInfo = styled.div`
     }
   }
 `;
+
+export const FormWrapper = styled.div`
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Form = styled.div`
+  width: 52%;
+  height: 27rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  box-sizing: border-box;
+  padding: 2rem;
+  margin-top: 3rem;
+  margin-left: 3.5rem;
+  margin-right: 1rem;
+
+  border-radius: 3rem;
+  background-color: #fefefe;
+`;
