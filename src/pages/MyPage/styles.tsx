@@ -16,6 +16,11 @@ export const MyPageWrapper = styled.div`
       margin-left: 65rem;
     }
   }
+
+  // 하단 박스 스타일
+  & > div:last-of-type {
+    display: flex;
+  }
 `;
 
 export const UserInfo = styled.div`
@@ -60,6 +65,7 @@ export const FormWrapper = styled.div`
   padding: 3rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
 `;
 
 export const Form = styled.div`

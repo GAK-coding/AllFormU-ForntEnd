@@ -34,26 +34,30 @@ export default function MyPage() {
   return (
     <BaseBgBox>
       <MyPageWrapper>
+        {/* 상단 박스로 묶음 */}
         <div>
           My Page
           <Button color={'black'} bgColor={subBlue} fontSize={1.3} width={11} height={3}>
             프로필 수정
           </Button>
         </div>
-        <UserInfo>
-          {/* TODO : Img url 형태로 수정 */}
-          <img src="userProfile.png" alt="userProfile" />
-          <div>
-            <span> 이름 : {name} </span>
-            <span> email : {email} </span>
-          </div>
-        </UserInfo>
+        {/* 하단 박스로 묶음 */}
+        <div>
+          <UserInfo>
+            {/* TODO : Img url 형태로 수정 */}
+            <img src="userProfile.png" alt="userProfile" />
+            <div>
+              <span> 이름 : {name} </span>
+              <span> email : {email} </span>
+            </div>
+          </UserInfo>
+          {/* FormWrapper 하단 박스에 같이 묶음 */}
+          <FormWrapper>
+            <Form>form 1</Form>
+            <Form>form 2</Form>
+          </FormWrapper>
+        </div>
       </MyPageWrapper>
-
-      <FormWrapper>
-        <Form>form 1</Form>
-        <Form>form 2</Form>
-      </FormWrapper>
     </BaseBgBox>
   );
 }
