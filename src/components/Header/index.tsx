@@ -15,17 +15,15 @@ export default function Header() {
         <Link to={'/'}>All Form Ü</Link>
       </Title>
       <BtnBox>
-        <Button text={'My page'} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'} />
-        <Button text={'Guide'} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'} />
-        <Button
-          onClick={() => navigate('/signup')}
-          text={'Sign in'}
-          fontSize={1.4}
-          bgColor={main}
-          width={13}
-          height={4}
-          color={'white'}
-        />
+        <Button fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
+          My page
+        </Button>
+        <Button fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
+          Guide
+        </Button>
+        <Button onClick={() => navigate('/signup')} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
+          Sign in
+        </Button>
       </BtnBox>
     </HeaderWrapper>
   );

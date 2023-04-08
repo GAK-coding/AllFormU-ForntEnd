@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { BtnWrapper } from './styles';
 
 export interface ButtonProps {
-  onClick?: any;
+  onClick?: () => void;
   color: string;
   bgColor: string;
   fontSize: number;
   width: number;
   height: number;
-  text: string;
+  children: ReactNode;
 }
 
-export default function Button({ onClick, color, fontSize, bgColor, width, height, text }: ButtonProps) {
+export default function Button({ onClick, color, fontSize, bgColor, width, height, children }: ButtonProps) {
   return (
     <BtnWrapper onClick={onClick} color={color} fontSize={fontSize} height={height} bgColor={bgColor} width={width}>
-      {text}
+      <span>{children}</span>
     </BtnWrapper>
   );
 }
