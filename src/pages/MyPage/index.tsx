@@ -3,7 +3,7 @@ import BaseBgBox from '../../components/ui/BaseBgBox';
 import Button from '../../components/ui/Button';
 import { color } from '../../recoil/Color/atom';
 
-import { BtnBox, Form, FormWrapper, MyPageWrapper, UserInfo } from './styles';
+import { BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
 import { useEffect, useState } from 'react';
 import { signUpInfo } from '../../typings/user';
 
@@ -51,8 +51,16 @@ export default function MyPage() {
               프로필 수정
             </Button>
           </BtnBox>
-          <Form>form1</Form>
-          <Form>form2</Form>
+          <Form>
+            <Line>내 생성폼</Line>
+            <FormBox>폼 제목1</FormBox>
+            <FormBox>폼 제목2</FormBox>
+          </Form>
+          <Form>
+            <Line>내 응답</Line>
+            <FormBox>폼 제목1</FormBox>
+            <FormBox>폼 제목2</FormBox>
+          </Form>
         </FormWrapper>
       </MyPageWrapper>
     </BaseBgBox>

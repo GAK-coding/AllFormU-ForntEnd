@@ -3,22 +3,18 @@ import styled from 'styled-components';
 export const MyPageWrapper = styled.div`
   padding: 5rem;
   display: flex;
-  /* flex-direction: column; */
-
+  /* 
   & > div:first-of-type {
     margin-left: 3.5rem;
     font-size: 3rem;
     font-weight: 700;
     display: flex;
-  }
+  } */
 
-  & > button {
-    margin-left: 65rem;
-  }
-  // 하단 박스 스타일
+  /* // 하단 박스 스타일
   & > div:last-of-type {
     display: flex;
-  }
+  } */
 `;
 
 export const UserInfo = styled.div`
@@ -27,7 +23,6 @@ export const UserInfo = styled.div`
 
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   align-items: center;
 
   box-sizing: border-box;
@@ -92,8 +87,8 @@ export const Form = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
 
   box-sizing: border-box;
   padding: 2rem;
@@ -103,18 +98,27 @@ export const Form = styled.div`
 
   border-radius: 3rem;
   background-color: #fefefe;
+`;
 
-  & > div {
-    display: flex;
-    flex-direction: column;
-    /* justify-content: space-between;
-    align-items: center; */
+export const Line = styled.div`
+  display: flex;
+  margin-left: 1rem;
+  text-align: left;
+  font-size: 1.6rem;
+  font-weight: 700;
+`;
 
-    & > span {
-      margin-bottom: 2rem;
+export const FormBox = styled.button`
+  flex-direction: row;
+  justify-content: space-between;
 
-      font-size: 1.8rem;
-      font-weight: 500;
-    }
-  }
+  width: 40%;
+  height: 6rem;
+
+  border: 1px solid #dbdbdb;
+  border-radius: 1.8rem;
+  background-color: #fefefe;
+
+  margin-top: 1.5rem;
+  margin-left: 2rem;
 `;
