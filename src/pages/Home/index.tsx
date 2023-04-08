@@ -14,7 +14,7 @@ export default function Home() {
         <div>
           <ExplanationAbove>
             <span>Gak과 함께,</span>
-            <br /> 손쉽게 만드는 설문 플랫폼
+            <br /> 너를 위해서, 너만을 위해서
           </ExplanationAbove>
           <ExplanationMiddle>All Form Ü</ExplanationMiddle>
           <ExplanationBelow>
