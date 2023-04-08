@@ -3,7 +3,7 @@ import BaseBgBox from '../../components/ui/BaseBgBox';
 import Button from '../../components/ui/Button';
 import { color } from '../../recoil/Color/atom';
 
-import { Form, FormWrapper, MyPageWrapper, UserInfo } from './styles';
+import { BtnBox, Form, FormWrapper, MyPageWrapper, UserInfo } from './styles';
 import { useEffect, useState } from 'react';
 import { signUpInfo } from '../../typings/user';
 
@@ -34,29 +34,26 @@ export default function MyPage() {
   return (
     <BaseBgBox>
       <MyPageWrapper>
-        {/* 상단 박스로 묶음 */}
-        <div>
-          My Page
-          <Button color={'black'} bgColor={subBlue} fontSize={1.3} width={11} height={3}>
-            프로필 수정
-          </Button>
-        </div>
-        {/* 하단 박스로 묶음 */}
-        <div>
-          <UserInfo>
-            {/* TODO : Img url 형태로 수정 */}
-            <img src="userProfile.png" alt="userProfile" />
-            <div>
-              <span> 이름 : {name} </span>
-              <span> email : {email} </span>
-            </div>
-          </UserInfo>
-          {/* FormWrapper 하단 박스에 같이 묶음 */}
-          <FormWrapper>
-            <Form>form 1</Form>
-            <Form>form 2</Form>
-          </FormWrapper>
-        </div>
+        {/* TODO : My Page 글자 넣기 */}
+        <UserInfo>
+          {/* TODO : Img url 형태로 수정 */}
+          <div>My Page</div>
+          <img src="userProfile.png" alt="userProfile" />
+          <div>
+            <span> 이름 : {name} </span>
+            <span> email : {email} </span>
+          </div>
+        </UserInfo>
+
+        <FormWrapper>
+          <BtnBox>
+            <Button color={'black'} bgColor={subBlue} fontSize={1.3} width={11} height={3}>
+              프로필 수정
+            </Button>
+          </BtnBox>
+          <Form>form1</Form>
+          <Form>form2</Form>
+        </FormWrapper>
       </MyPageWrapper>
     </BaseBgBox>
   );
