@@ -12,7 +12,11 @@ export default function Header() {
   return (
     <HeaderWrapper>
       <Title>
-        <Link to={'/'}>All Form Ü</Link>
+        <Link to={'/'}>
+          <div>
+            <img src="headerLogo.png" alt="headerLogo"></img>
+          </div>
+        </Link>
       </Title>
       <BtnBox>
         <Button onClick={() => navigate('/mypage')} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
