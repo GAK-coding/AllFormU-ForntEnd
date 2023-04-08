@@ -19,7 +19,7 @@ export default function Home() {
           </ExplanationAbove>
           <ExplanationMiddle>
             {/* All Form Ü */}
-            <img src="homeLogo.png" alt="homeLogo"></img>
+            <img src="homeLogo.png" alt="homeLogo" />
           </ExplanationMiddle>
           <ExplanationBelow>
             <Button fontSize={1.4} bgColor={main} width={20} height={5} color={'white'}>

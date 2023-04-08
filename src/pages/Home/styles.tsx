@@ -5,25 +5,32 @@ export const HomeWrapper = styled.section`
   justify-content: center;
 
   margin-top: 10rem;
+
+  //& > div {
+  //  width: 50%;
+  //}
 `;
 
 export const Explanation = styled.div`
-  width: 45%;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
 
-  /* margin-left: 30rem; */
-  margin-right: 10rem;
+  width: 60%;
+
+  //border: 1px solid;
 
   & > div {
+    //border: 1px solid;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+
+    //padding-right: 2rem;
+
     & > div {
-      margin: 0 auto;
       margin-bottom: 1.4rem;
     }
   }
@@ -39,21 +46,22 @@ export const ExplanationAbove = styled.div`
 `;
 
 export const ExplanationMiddle = styled.div`
-  font-size: 8rem;
-  font-weight: 700;
+  text-align: center;
 
   & > img {
-    width: 50%;
+    width: 70%;
   }
 `;
 
 export const ExplanationBelow = styled.div``;
 
 export const Img = styled.div`
-  width: 45%;
   box-sizing: border-box;
+  //padding-left: 8rem;
+
+  width: 40%;
 
   & > img {
-    width: 60%;
+    width: 50%;
   }
 `;
