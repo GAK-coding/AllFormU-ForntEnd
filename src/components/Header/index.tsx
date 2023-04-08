@@ -25,7 +25,7 @@ export default function Header() {
         <Button fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
           Guide
         </Button>
-        <Button onClick={() => navigate('/signup')} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
+        <Button onClick={() => navigate('/signin')} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
           Sign in
         </Button>
       </BtnBox>
