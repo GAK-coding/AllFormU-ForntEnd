@@ -11,21 +11,25 @@ export default function MyPage() {
   //색깔
   const { subBlue } = useRecoilValue(color);
 
+  interface MypageInfo extends SignUpInfo {
+    userImg?: string;
+  }
   // user 개인 정보
-  const [userInfo, setUserInfo] = useState<SignUpInfo>({
+  const [userInfo, setUserInfo] = useState<MypageInfo>({
     name: '',
     email: '',
     password: '',
+    userImg: '',
   });
 
   // userInfo 값이 바뀔 때 마다 render
   useEffect(() => {
     const temp = { ...userInfo };
     setUserInfo(temp);
-  }, [userInfo.name, userInfo.email]);
+  }, [userInfo.name, userInfo.email, userInfo.userImg]);
 
   // 화면에 보여지는 값
-  const { name, email } = userInfo;
+  const { name, email, userImg } = userInfo;
 
   return (
     <BaseBgBox>
@@ -37,6 +41,7 @@ export default function MyPage() {
           </Button>
         </div>
         <UserInfo>
+          {/* TODO : Img url 형태로 수정 */}
           <img src="userProfile.png" alt="userProfile" />
           <div>
             <span> 이름 : {name} </span>
