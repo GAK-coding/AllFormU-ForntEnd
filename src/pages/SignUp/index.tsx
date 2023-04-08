@@ -44,7 +44,7 @@ export default function SignUp() {
       e.preventDefault();
 
       signUp({ name, email, password })
-        .then((res) => console.log(res))
+        .then(() => alert('회원가입에 성공하셨습니다!'))
         .catch((err) => console.error(err));
     },
     [name, email, password, checkPassword, checkPw]
