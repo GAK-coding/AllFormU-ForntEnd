@@ -120,7 +120,7 @@ export default function SignUp() {
           {password && checkPassword && checkPw && <Match>비밀번호가 일치합니다!</Match>}
           {password && checkPassword && !checkPw && <MisMatch>비밀번호가 불일치합니다.</MisMatch>}
 
-          <Button color={'black'} bgColor={subBlue} fontSize={1.4} width={10} height={4}>
+          <Button type={'submit'} color={'black'} bgColor={subBlue} fontSize={1.4} width={10} height={4}>
             회원가입
           </Button>
         </Form>
