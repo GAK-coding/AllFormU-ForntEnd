@@ -19,7 +19,7 @@ export default function Header() {
         </Link>
       </Title>
       <BtnBox>
-        <Button fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
+        <Button onClick={() => navigate('/mypage')} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
           My page
         </Button>
         <Button fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>

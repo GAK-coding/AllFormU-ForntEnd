@@ -11,3 +11,9 @@ export interface signInInfo extends Pick<user, 'email'> {
 export interface signUpInfo extends signInInfo {
   name: string;
 }
+
+export interface myPageInfo extends Pick<user, 'id'> {
+  email: string;
+  name: string;
+  userImg?: string;
+}
