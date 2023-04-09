@@ -1,12 +1,10 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import BaseBgBox from '../../components/ui/BaseBgBox';
 import Button from '../../components/ui/Button';
 import { color } from '../../recoil/Color/atom';
 import { AlignBox, BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
-import { useEffect, useState } from 'react';
-import { myPageInfo } from '../../typings/user';
 import { userInfo } from '../../recoil/User/atom';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate, Route, Navigate, Routes } from 'react-router-dom';
 
 export default function MyPage() {
   //색깔
@@ -14,19 +12,13 @@ export default function MyPage() {
 
   // user 개인 정보
 
-  const [info, setInfo] = useState<myPageInfo>({
-    id: -1,
-    name: '',
-    email: '',
-    userImg: '',
-  });
-
+  const [info, setInfo] = useRecoilState(userInfo);
   // 현재 user의 info
   const myInfo = useRecoilValue(userInfo);
   const setMyInfo = useSetRecoilState(userInfo);
 
   // 화면에 보여지는 값
-  const { name, email, userImg } = info;
+  const { id, name, email } = info;
 
   // 폼 데이터를 받아오는 값 저장
   const formdata = 'hi';
@@ -34,12 +26,20 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   // userInfo 값이 바뀔 때 마다 render
-  useEffect(() => {
-    const temp = { ...myInfo };
-    setInfo(temp);
-    setMyInfo(temp);
-    console.log(myInfo);
-  }, [info.name, info.email, info.userImg]);
+  // useEffect(() => {
+  //   const temp = { ...myInfo };
+  //   setInfo(temp);
+  //   setMyInfo(temp);
+  //   console.log(myInfo);
+  // }, [info.name, info.email, info.userImg]);
+
+  if (id === -1) {
+    return (
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/signin" />} />;
+      </Routes>
+    );
+  }
 
   return (
     <BaseBgBox>
