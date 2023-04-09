@@ -4,7 +4,7 @@ import Button from '../../components/ui/Button';
 import { color } from '../../recoil/Color/atom';
 import { AlignBox, BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
 import { useEffect, useState } from 'react';
-import { signUpInfo } from '../../typings/user';
+import { myPageInfo } from '../../typings/user';
 import { userInfo } from '../../recoil/User/atom';
 import { Navigate, useNavigate } from 'react-router-dom';
 
@@ -13,18 +13,18 @@ export default function MyPage() {
   const { subBlue } = useRecoilValue(color);
 
   // user 개인 정보
-  interface MypageInfo extends signUpInfo {
-    userImg?: string;
-  }
-  const [info, setInfo] = useState<MypageInfo>({
-    name: '채영',
-    email: 'cy@naver.com',
-    password: '',
+
+  const [info, setInfo] = useState<myPageInfo>({
+    id: -1,
+    name: '',
+    email: '',
     userImg: '',
   });
 
   // 현재 user의 info
-  const setUserInfo = useSetRecoilState(userInfo);
+  const myInfo = useRecoilValue(userInfo);
+  const setMyInfo = useSetRecoilState(userInfo);
+
   // 화면에 보여지는 값
   const { name, email, userImg } = info;
 
@@ -35,8 +35,10 @@ export default function MyPage() {
 
   // userInfo 값이 바뀔 때 마다 render
   useEffect(() => {
-    const temp = { ...info };
+    const temp = { ...myInfo };
     setInfo(temp);
+    setMyInfo(temp);
+    console.log(myInfo);
   }, [info.name, info.email, info.userImg]);
 
   return (
@@ -48,8 +50,8 @@ export default function MyPage() {
           <div>My Page</div>
           <img src="userProfile.png" alt="userProfile" />
           <div>
-            <span> 이름 : {name} </span>
-            <span> email : {email} </span>
+            <span> 이름 : {info.name} </span>
+            <span> email : {info.email} </span>
           </div>
         </UserInfo>
 
