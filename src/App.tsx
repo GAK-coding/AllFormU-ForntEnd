@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import MyPage from './pages/MyPage';
 import SignIn from './pages/SignIn';
+import ResForm from './pages/ResForm';
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ function App() {
             <Route path={'/signup'} element={<SignUp />} />
             <Route path={'/mypage'} element={<MyPage />} />
             <Route path={'/signin'} element={<SignIn />} />
+            <Route path={'/resform'} element={<ResForm />} />
           </Routes>
         </BrowserRouter>
       </RecoilRoot>
