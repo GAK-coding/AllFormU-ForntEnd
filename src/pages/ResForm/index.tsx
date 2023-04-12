@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
-import ResFormModal from '../../components/ResFormModal';
+import ResFormModal from '../../components/ResForm/ResFormModal';
 
 export default function ResForm() {
   const [isModalOpen, setIsModalOpen] = useState(false);
