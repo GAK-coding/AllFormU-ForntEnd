@@ -9,10 +9,14 @@ export default function ResForm() {
     setIsModalOpen(true);
   };
 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <BaseBgBox>
       <button onClick={showModal}>모달 버튼</button>
-      {isModalOpen && <ResFormModal open={isModalOpen} />}
+      {isModalOpen && <ResFormModal open={isModalOpen} onCancel={handleCancel} />}
     </BaseBgBox>
   );
 }
