@@ -1,6 +1,7 @@
 import React from 'react';
 import { Chat } from '../../../typings/resForm';
 import { ChatBox } from './styles';
+import { Skeleton } from 'antd';
 
 export default function ResFormChat({ myReq, gptRes }: Chat) {
   return (
@@ -17,7 +18,7 @@ export default function ResFormChat({ myReq, gptRes }: Chat) {
           <img src={'chatgpt.png'} alt={'chat gpt 사진'} />
           <span>GPT</span>
         </div>
-        <span>{gptRes}</span>
+        <span>{gptRes ? gptRes : <Skeleton loading={true} active />}</span>
       </ChatBox>
     </div>
   );
