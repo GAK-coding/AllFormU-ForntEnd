@@ -31,7 +31,7 @@ const dummyData: Chat[] = [
 
 export default function ResFormModal({ open, onCancel }: Props) {
   const { main } = useRecoilValue(color);
-  const [talk, setTalk] = useState<Chat[]>([]);
+  const [talk, setTalk] = useState<Chat[]>([...dummyData]);
   const [req, setReq] = useState('');
 
   const onChangeReq = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -50,19 +50,21 @@ export default function ResFormModal({ open, onCancel }: Props) {
     [req, talk]
   );
 
-  // useEffect(() => {
-  //   scrollRef.current?.scrollToBottom();
-  // }, []);
+  const talkRef = useRef<HTMLDivElement>(null); // Ref 생성
+  useEffect(() => {
+    talkRef.current?.scrollTo(0, talkRef.current.scrollHeight); // Ref를 사용하여 스크롤 내리기
+  }, [talk]); // talk 상태가 변경될 때마다 실행
 
   return (
     <ResModal
       title={<ResModalTitle>질문 세부 설명</ResModalTitle>}
-      width={800}
+      width={1000}
       open={open}
       onCancel={onCancel}
       footer={null}
+      centered
     >
-      <ResModalTalk>
+      <ResModalTalk ref={talkRef}>
         {talk?.map((chat) => {
           const { myReq, gptRes } = chat;
 
