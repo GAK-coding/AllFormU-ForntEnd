@@ -6,7 +6,6 @@ import { useRecoilValue } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
 import { Chat } from '../../../typings/resForm';
 import ResFormChat from '../ResFormChat';
-import Scrollbars from 'react-custom-scrollbars';
 
 interface Props {
   open: boolean;
