@@ -55,9 +55,6 @@ export const ResModalInput = styled.form`
 
   height: 10%;
 
-  //margin-left: -2.4rem;
-  //margin-right: -100rem;
-
   display: flex;
   justify-content: center;
   align-items: center;
