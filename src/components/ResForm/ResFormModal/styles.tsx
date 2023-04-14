@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Modal } from 'antd';
+import Input from '../../ui/Input';
 
 export const ResModal = styled(Modal)`
   .ant-modal-content {
@@ -26,6 +27,7 @@ export const ResModal = styled(Modal)`
 
   .ant-modal-body {
     max-height: 95%;
+    min-height: 95%;
 
     display: flex;
     flex-direction: column;
@@ -61,6 +63,7 @@ export const ResModalInput = styled.form`
 
   & > input {
     background-color: inherit;
+    width: 65%;
   }
 
   & > button {

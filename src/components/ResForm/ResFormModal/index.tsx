@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
 import { Chat } from '../../../typings/resForm';
 import ResFormChat from '../ResFormChat';
+import { message } from 'antd';
 
 interface Props {
   open: boolean;
@@ -35,16 +36,34 @@ const dummyData: Chat[] = [
 
 export default function ResFormModal({ open, onCancel }: Props) {
   const { main } = useRecoilValue(color);
-  const [talk, setTalk] = useState<Chat[]>([...dummyData]);
+  const [talk, setTalk] = useState<Chat[]>([]);
   const [req, setReq] = useState('');
+
+  // const onKeyDown = useCallback(
+  //   (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //     if (e.key === 'Enter' && e.shiftKey) {
+  //       e.preventDefault();
+  //
+  //       console.log('눌린');
+  //
+  //       setReq((prev) => prev + '\n');
+  //     }
+  //   },
+  //   [req, setReq]
+  // );
 
   const onChangeReq = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setReq(e.target.value);
   }, []);
 
-  const onClick = useCallback(
+  const onSubmit = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
+
+      if (req.length > 300) {
+        message.warning('입력된 값이 300자 초과입니다.');
+        return;
+      }
 
       const temp = [...talk];
       temp.push({ myReq: req, gptRes: '어쩌구 저쩌구 답변' });
@@ -76,8 +95,14 @@ export default function ResFormModal({ open, onCancel }: Props) {
         })}
       </ResModalTalk>
 
-      <ResModalInput onSubmit={onClick}>
-        <Input value={req} onChange={onChangeReq} placeholder={'질문을 입력해주세요.'} width={50} height={4} />
+      <ResModalInput onSubmit={onSubmit}>
+        <Input
+          value={req}
+          onChange={onChangeReq}
+          // onKeyDown={onKeyDown}
+          placeholder={'질문을 입력해주세요.'}
+          height={4}
+        />
         <Button type={'submit'} color={'white'} fontSize={1.6} width={8} height={4} bgColor={main}>
           전송
         </Button>

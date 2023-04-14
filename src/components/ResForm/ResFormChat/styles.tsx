@@ -4,8 +4,7 @@ export const ChatBox = styled.div<{ type: string }>`
   display: flex;
 
   font-weight: 700;
-  margin: 0 1rem;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 4rem;
   border-radius: 5rem;
 
   background-color: ${(props) => (props.type === 'user' ? '#F7E9A6' : '#EEEEEE')};
@@ -25,7 +24,7 @@ export const ChatBox = styled.div<{ type: string }>`
 
     & > img {
       border-radius: 50%;
-      width: 40%;
+      width: ${(props) => (props.type === 'user' ? '40%' : '36.5%')};
 
       margin-bottom: 0.5rem;
     }
