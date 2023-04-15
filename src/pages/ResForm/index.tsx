@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
-import BaseBgBox from '../../components/ui/BaseBgBox';
 import ResFormModal from '../../components/ResForm/ResFormModal';
 import Chat from './Chat';
+import {
+  ChatbotFunc,
+  ChatbotResWrapper,
+  Chatting,
+  ChattingBottom,
+  UserRes,
+  Line,
+  BtnBox,
+  BtnBoxWrapper,
+} from './styles';
+import Button from '../../components/ui/Button';
+import { useRecoilValue } from 'recoil';
+import { color } from '../../recoil/Color/atom';
 
 export default function ResForm() {
+  const { subBlue } = useRecoilValue(color);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -15,10 +29,37 @@ export default function ResForm() {
   };
 
   return (
-    <BaseBgBox>
-      <Chat myRes={'hi'} chatbotRes={'hi'} />
-      <button onClick={showModal}>모달 버튼</button>
-      {isModalOpen && <ResFormModal open={isModalOpen} onCancel={handleCancel} />}
-    </BaseBgBox>
+    <ChatbotResWrapper>
+      <Chatting>
+        <Chat myRes={'hhihihi'} chatbotRes={'hihhihihihiihihihhihihi'} />
+      </Chatting>
+
+      <ChattingBottom>
+        <ChatbotFunc>
+          <Line>
+            챗봇기능
+            <br />
+            사용하기
+          </Line>
+          <BtnBoxWrapper>
+            <BtnBox>
+              <Button color={'black'} bgColor={subBlue} fontSize={1} width={9.5} height={3}>
+                질문 읽어주기
+              </Button>
+              <Button onClick={showModal} color={'black'} bgColor={subBlue} fontSize={1} width={9.5} height={3}>
+                질문 세부설명
+                {isModalOpen && <ResFormModal open={isModalOpen} onCancel={handleCancel} />}
+              </Button>
+            </BtnBox>
+            <BtnBox>
+              <Button color={'black'} bgColor={subBlue} fontSize={1} width={9.5} height={3}>
+                기타문의
+              </Button>
+            </BtnBox>
+          </BtnBoxWrapper>
+        </ChatbotFunc>
+        <UserRes></UserRes>
+      </ChattingBottom>
+    </ChatbotResWrapper>
   );
 }

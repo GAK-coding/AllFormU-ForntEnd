@@ -1,17 +1,20 @@
 import { ChatbotChat } from '../../../typings/resForm';
-import { ChatBox } from './styles';
+import { ChatBot, User } from './styles';
 export default function Chat({ myRes, chatbotRes }: ChatbotChat) {
   return (
     <div>
-      <ChatBox type={'user'}>
-        <span>{myRes}</span>
-      </ChatBox>
-      <ChatBox type={'chatbot'}>
+      <ChatBot>
+        <img src={'gak_chatbot.png'} alt={'gak_chatbot 사진'} />
         <div>
-          <img src={'gak_chatbot.png'} alt={'gak_chatbot 사진'} />
           <span>{chatbotRes}</span>
         </div>
-      </ChatBox>
+      </ChatBot>
+
+      <User>
+        <div>
+          <span>{myRes}</span>
+        </div>
+      </User>
     </div>
   );
 }
