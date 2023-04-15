@@ -6,6 +6,7 @@ export const ChatbotResWrapper = styled(BaseGbBoxWrapper)`
   border-radius: 3rem;
   border: none;
 `;
+
 export const Chatting = styled.div`
   display: flex;
   height: 75%;
@@ -15,7 +16,6 @@ export const ChattingBottom = styled.div`
   display: flex;
   height: 25%;
   flex-direction: row;
-  //align-items: center;
 `;
 
 export const ChatbotFunc = styled.div`
