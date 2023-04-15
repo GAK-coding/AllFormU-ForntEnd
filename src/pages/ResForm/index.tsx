@@ -10,6 +10,7 @@ import {
   Line,
   BtnBox,
   BtnBoxWrapper,
+  List,
 } from './styles';
 import Button from '../../components/ui/Button';
 import { useRecoilValue } from 'recoil';
@@ -58,7 +59,13 @@ export default function ResForm() {
             </BtnBox>
           </BtnBoxWrapper>
         </ChatbotFunc>
-        <UserRes></UserRes>
+
+        <UserRes>
+          <List>
+            <img src="button.png" alt="button" />
+          </List>
+          <span>ㅠㅠㅠ</span>
+        </UserRes>
       </ChattingBottom>
     </ChatbotResWrapper>
   );

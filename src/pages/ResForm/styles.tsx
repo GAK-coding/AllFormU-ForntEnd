@@ -63,7 +63,7 @@ export const BtnBox = styled.div`
 `;
 export const UserRes = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   width: 60%;
   height: 12rem;
@@ -74,4 +74,28 @@ export const UserRes = styled.div`
   box-sizing: border-box;
   border-radius: 3rem;
   background-color: #f7e9a6;
+  //border: 3px solid #fefefe;
+
+  & > span {
+    display: flex;
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  & > button {
+    display: inline-block;
+    float: right;
+  }
+`;
+
+export const List = styled.button`
+  width: 5rem;
+  height: 2rem;
+  margin-left: 45rem;
+  //margin-top: -2.3rem;
+  cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
 `;
