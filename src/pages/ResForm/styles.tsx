@@ -11,6 +11,12 @@ export const Chatting = styled.div`
   //display: flex;
   display: block;
   height: 75%;
+
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+  }
 `;
 
 export const ChattingBottom = styled.div`

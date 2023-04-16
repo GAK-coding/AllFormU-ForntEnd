@@ -37,6 +37,7 @@ export default function ResForm() {
         <ChatBox user={user} chatbot={chat}></ChatBox>
         <ChatBox user={user} chatbot={chat}></ChatBox>
         <ChatBox user={user} chatbot={chat}></ChatBox>
+        <ChatBox user={user} chatbot={chat}></ChatBox>
       </Chatting>
       <ChattingBottom>
         <ChatbotFunc>
