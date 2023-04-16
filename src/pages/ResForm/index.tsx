@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ResFormModal from '../../components/ResForm/ResFormModal';
-import Chat from './Chat';
 import {
   ChatbotFunc,
   ChatbotResWrapper,
@@ -15,6 +14,7 @@ import {
 import Button from '../../components/ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
+import ChatBox from './ChatBox';
 
 export default function ResForm() {
   const { subBlue } = useRecoilValue(color);
@@ -29,12 +29,15 @@ export default function ResForm() {
     setIsModalOpen(false);
   };
 
+  const user = 'hihihihihihihi';
+  const chat = 'byebyebyebyebyebyebyebyebyebyebyebye';
   return (
     <ChatbotResWrapper>
       <Chatting>
-        <Chat myRes={'hhihihi'} chatbotRes={'hihhihihihiihihihhihihi'} />
+        <ChatBox user={user} chatbot={chat}></ChatBox>
+        <ChatBox user={user} chatbot={chat}></ChatBox>
+        <ChatBox user={user} chatbot={chat}></ChatBox>
       </Chatting>
-
       <ChattingBottom>
         <ChatbotFunc>
           <Line>

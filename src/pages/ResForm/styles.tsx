@@ -8,7 +8,8 @@ export const ChatbotResWrapper = styled(BaseGbBoxWrapper)`
 `;
 
 export const Chatting = styled.div`
-  display: flex;
+  //display: flex;
+  display: block;
   height: 75%;
 `;
 
