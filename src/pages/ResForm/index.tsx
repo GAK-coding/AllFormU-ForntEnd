@@ -31,6 +31,7 @@ export default function ResForm() {
 
   const user = 'hihihihihihihi';
   const chat = 'byebyebyebyebyebyebyebyebyebyebyebye';
+
   return (
     <ChatbotResWrapper>
       <Chatting>
@@ -53,7 +54,6 @@ export default function ResForm() {
               </Button>
               <Button onClick={showModal} color={'black'} bgColor={subBlue} fontSize={1} width={9.5} height={3}>
                 질문 세부설명
-                {isModalOpen && <ResFormModal open={isModalOpen} onCancel={handleCancel} />}
               </Button>
             </BtnBox>
             <BtnBox>
@@ -71,6 +71,8 @@ export default function ResForm() {
           <span>ㅠㅠㅠ</span>
         </UserRes>
       </ChattingBottom>
+
+      {isModalOpen && <ResFormModal open={isModalOpen} onCancel={handleCancel} />}
     </ChatbotResWrapper>
   );
 }

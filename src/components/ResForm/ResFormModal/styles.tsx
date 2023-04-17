@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Modal } from 'antd';
-import Input from '../../ui/Input';
 
 export const ResModal = styled(Modal)`
   .ant-modal-content {
