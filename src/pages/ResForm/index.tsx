@@ -65,9 +65,9 @@ export default function ResForm() {
         </ChatbotFunc>
 
         <UserRes>
-          <List>
-            <img src="button.png" alt="button" />
-          </List>
+          {/* <List> */}
+          {/*   <img src="button.png" alt="button" /> */}
+          {/* </List> */}
           <span>ㅠㅠㅠ</span>
         </UserRes>
       </ChattingBottom>
