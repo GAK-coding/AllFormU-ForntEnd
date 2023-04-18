@@ -7,6 +7,8 @@ import { color } from '../../../recoil/Color/atom';
 import { Chat } from '../../../typings/resForm';
 import ResFormChat from '../ResFormChat';
 import { message } from 'antd';
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 
 interface Props {
   open: boolean;
@@ -55,6 +57,48 @@ export default function ResFormModal({ open, onCancel }: Props) {
     talkRef.current?.scrollTo(0, talkRef.current.scrollHeight); // Ref를 사용하여 스크롤 내리기
   }, [talk]); // talk 상태가 변경될 때마다 실행
 
+  const username = '안녕';
+  let stompClient: any = null;
+
+  const onMessageReceived = (payload: any) => {
+    console.log(payload.body);
+  };
+
+  const onConnected = () => {
+    stompClient.subscribe('/topic/public', onMessageReceived);
+
+    // Tell your username to the server
+    stompClient.send('/app/chat.addUser', {}, JSON.stringify({ sender: username, type: 'JOIN' }));
+  };
+
+  const connect = () => {
+    if (username) {
+      const socket = new SockJS('/ws');
+      stompClient = Stomp.over(socket);
+
+      stompClient.connect({}, onConnected, (e: any) => console.log(e));
+    }
+  };
+
+  useEffect(() => {
+    connect();
+  }, []);
+
+  const sendMessage = async () => {
+    const chatMessage = {
+      sender: username,
+      content: '한국 수도가 어디야?',
+      type: 'CHAT',
+    };
+
+    try {
+      const a = await stompClient.send('/app/chat.sendMessage', {}, JSON.stringify(chatMessage));
+      console.log(a);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <ResModal
       title={<ResModalTitle>질문 세부 설명</ResModalTitle>}
@@ -70,6 +114,7 @@ export default function ResFormModal({ open, onCancel }: Props) {
 
           return <ResFormChat myReq={myReq} gptRes={gptRes} />;
         })}
+        <button onClick={sendMessage}>클릭</button>
       </ResModalTalk>
 
       <ResModalInput onSubmit={onSubmit}>
