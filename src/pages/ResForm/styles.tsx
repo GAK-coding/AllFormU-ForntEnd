@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { BaseGbBoxWrapper } from '../../components/ui/BaseBgBox/styles';
 
 export const ChatbotResWrapper = styled(BaseGbBoxWrapper)`
+  width: 110rem;
   height: 58rem;
   border-radius: 3rem;
   border: none;
@@ -40,13 +41,16 @@ export const ChatbotFunc = styled.div`
 `;
 
 export const Line = styled.div`
-  display: flex;
+  display: block;
   text-align: center;
+  align-items: center;
   font-weight: 700;
   font-size: 1.2rem;
 
-  margin-top: 2.2rem;
-  margin-left: 1rem;
+  margin-top: 0.5rem;
+  //margin-left: 1rem;
+  //margin-right: 1rem;
+  padding: 1.5rem;
   line-height: 2.2rem;
 `;
 
@@ -98,9 +102,11 @@ export const UserRes = styled.div`
 `;
 
 export const List = styled.button`
+  display: inline-block;
+  float: right;
   width: 5rem;
   height: 2rem;
-  margin-left: 45rem;
+  //margin-left: 45rem;
   //margin-top: -2.3rem;
   cursor: pointer;
   background-color: transparent;
