@@ -6,5 +6,9 @@ interface Props {
 }
 
 export default function BaseBgBox({ children }: Props) {
-  return <BaseGbBoxWrapper>{children}</BaseGbBoxWrapper>;
+  return (
+    <BaseGbBoxWrapper>
+      <div>{children}</div>
+    </BaseGbBoxWrapper>
+  );
 }

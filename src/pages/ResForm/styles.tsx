@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import { BaseGbBoxWrapper } from '../../components/ui/BaseBgBox/styles';
-
 export const ChatbotResWrapper = styled(BaseGbBoxWrapper)`
-  width: 110rem;
-  height: 58rem;
-  border-radius: 3rem;
-  border: none;
+  //width: 70%;
+  //min-height: 70rem;
+  //border-radius: 3rem;
+  //border: none;
 `;
 
 export const Chatting = styled.div`

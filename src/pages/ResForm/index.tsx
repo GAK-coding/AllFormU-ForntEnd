@@ -18,6 +18,7 @@ import ChatBox from './ChatBox';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { gptLoading, gptTalks } from '../../recoil/Gpt/atom';
+import BaseBgBox from '../../components/ui/BaseBgBox';
 
 interface ChatMessage {
   sender: string;

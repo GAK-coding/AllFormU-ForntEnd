@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Input } from './index';
 
-type input = Pick<Input, 'width' | 'height'>;
+type input = Pick<Input, 'width' | 'height' | 'size'>;
 
 export const BaseInput = styled.input<input>`
   background-color: rgba(232, 211, 255, 0.2);
@@ -10,6 +10,7 @@ export const BaseInput = styled.input<input>`
 
   width: ${(props) => props.width}rem;
   height: ${(props) => props.height}rem;
+  font-size: ${(props) => props.size}rem;
 
   &:focus {
     outline: none;
