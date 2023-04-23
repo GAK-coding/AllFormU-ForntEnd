@@ -70,9 +70,9 @@ export default function SignIn() {
             value={email}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
             placeholder={'이메일'}
-            width={30}
-            height={3}
-            size={1.8}
+            width={44}
+            height={3.5}
+            size={2.2}
           />
         </Line>
         <Line>
@@ -84,15 +84,15 @@ export default function SignIn() {
             value={password}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
             placeholder={'비밀번호'}
-            width={30}
-            height={3}
-            size={1.8}
+            width={44}
+            height={3.5}
+            size={2.2}
           />
         </Line>
 
         <Line>
           <div />
-          <Button type={'submit'} color={'black'} bgColor={subBlue} fontSize={1.8} width={10} height={4}>
+          <Button type={'submit'} color={'black'} bgColor={subBlue} fontSize={2} width={12} height={5}>
             로그인
           </Button>
         </Line>
@@ -104,9 +104,9 @@ export default function SignIn() {
             type={'button'}
             color={'black'}
             bgColor={subBlue}
-            fontSize={1.8}
+            fontSize={2}
             width={14}
-            height={4}
+            height={5}
           >
             회원가입
           </Button>

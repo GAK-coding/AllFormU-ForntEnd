@@ -73,9 +73,9 @@ export default function SignUp() {
             value={name}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'name')}
             placeholder={'이름'}
-            width={30}
-            height={3}
-            size={1.8}
+            width={44}
+            height={3.5}
+            size={2.2}
           />
         </Line>
         <Line>
@@ -87,9 +87,9 @@ export default function SignUp() {
             value={email}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
             placeholder={'이메일'}
-            width={30}
-            height={3}
-            size={1.8}
+            width={44}
+            height={3.5}
+            size={2.2}
           />
         </Line>
         <Line>
@@ -101,9 +101,9 @@ export default function SignUp() {
             value={password}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
             placeholder={'비밀번호'}
-            width={30}
-            height={3}
-            size={1.8}
+            width={44}
+            height={3.5}
+            size={2.2}
           />
         </Line>
         <Line>
@@ -115,9 +115,9 @@ export default function SignUp() {
             value={checkPassword}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'checkPassword')}
             placeholder={'비밀번호 확인'}
-            width={30}
-            height={3}
-            size={1.8}
+            width={44}
+            height={3.5}
+            size={2.2}
           />
         </Line>
         {password && checkPassword && checkPw && <Match>비밀번호가 일치합니다!</Match>}
@@ -125,7 +125,7 @@ export default function SignUp() {
 
         <Line>
           <div />
-          <Button type={'submit'} color={'black'} bgColor={subBlue} fontSize={1.8} width={11} height={4}>
+          <Button type={'submit'} color={'black'} bgColor={subBlue} fontSize={2} width={12} height={5}>
             회원가입
           </Button>
         </Line>
