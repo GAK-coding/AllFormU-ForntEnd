@@ -8,6 +8,10 @@ import SignUp from './pages/SignUp';
 import MyPage from './pages/MyPage';
 import SignIn from './pages/SignIn';
 import ResForm from './pages/ResForm';
+import MakeForm from './pages/MakeForm/Main';
+import MakeFormSelect from './pages/MakeForm/Select';
+import MakeFormDirect from './pages/MakeForm/Direct';
+import MakeFormChatbot from './pages/MakeForm/Chatbot';
 
 const queryClient = new QueryClient();
 
@@ -23,6 +27,10 @@ function App() {
             <Route path={'/mypage'} element={<MyPage />} />
             <Route path={'/signin'} element={<SignIn />} />
             <Route path={'/resform'} element={<ResForm />} />
+            <Route path={'/makeform'} element={<MakeForm />} />
+            <Route path={'/makeform/select'} element={<MakeFormSelect />} />
+            <Route path={'/makeform/direct'} element={<MakeFormDirect />} />
+            <Route path={'/makeform/chatbot'} element={<MakeFormChatbot />} />
           </Routes>
         </BrowserRouter>
       </RecoilRoot>
