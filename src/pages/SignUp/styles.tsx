@@ -1,13 +1,8 @@
 import styled from 'styled-components';
 
-export const SignUpWrapper = styled.div`
-  padding: 5rem;
-  display: flex;
-`;
-
 export const PageInfo = styled.div`
   width: 30%;
-  height: 45rem;
+  height: 90%;
 
   display: flex;
   flex-direction: column;
@@ -16,7 +11,7 @@ export const PageInfo = styled.div`
 
   box-sizing: border-box;
   padding: 2rem;
-  margin-right: 2rem;
+  margin-left: 6rem;
 
   border-radius: 3rem;
   background-color: rgba(232, 211, 255, 0.6);
@@ -46,7 +41,7 @@ export const PageInfo = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 65%;
+  width: 60%;
 
   display: flex;
   flex-direction: column;
@@ -62,15 +57,13 @@ export const Line = styled.div`
   align-items: center;
   margin-bottom: 2rem;
 
+  font-size: 1.8rem;
+
   & > div {
     width: 10rem;
 
     margin-right: 4rem;
     text-align: right;
-
-    & > span {
-      font-size: 1.6rem;
-    }
   }
 `;
 

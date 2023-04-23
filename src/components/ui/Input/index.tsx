@@ -9,9 +9,10 @@ export interface Input {
   width?: number;
   height?: number;
   type?: string;
+  size?: number;
 }
 
-export default function Input({ value, onChange, onKeyDown, placeholder, width, height, type }: Input) {
+export default function Input({ size, value, onChange, onKeyDown, placeholder, width, height, type }: Input) {
   return (
     <BaseInput
       type={type ? type : 'text'}
@@ -21,6 +22,7 @@ export default function Input({ value, onChange, onKeyDown, placeholder, width, 
       placeholder={placeholder}
       width={width}
       height={height}
+      size={size}
       required
     />
   );

@@ -43,6 +43,6 @@ export const BotBallon = styled.div`
 `;
 
 export const BotImage = styled.img`
-  width: 12%;
+  width: 30%;
   margin-right: 1rem;
 `;

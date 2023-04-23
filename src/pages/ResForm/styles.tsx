@@ -1,15 +1,22 @@
 import styled from 'styled-components';
 import { BaseGbBoxWrapper } from '../../components/ui/BaseBgBox/styles';
-
 export const ChatbotResWrapper = styled(BaseGbBoxWrapper)`
-  width: 110rem;
-  height: 58rem;
-  border-radius: 3rem;
-  border: none;
+  //width: 70%;
+  //min-height: 70rem;
+  //border-radius: 3rem;
+  //border: none;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+
+    & > div {
+      width: 100%;
+    }
+  }
 `;
 
 export const Chatting = styled.div`
-  //display: flex;
   display: block;
   height: 75%;
 
@@ -21,9 +28,9 @@ export const Chatting = styled.div`
 `;
 
 export const ChattingBottom = styled.div`
-  display: flex;
   height: 25%;
-  flex-direction: row;
+  display: flex;
+  align-items: center;
 `;
 
 export const ChatbotFunc = styled.div`
@@ -52,6 +59,8 @@ export const Line = styled.div`
   //margin-right: 1rem;
   padding: 1.5rem;
   line-height: 2.2rem;
+
+  width: 30%;
 `;
 
 export const BtnBoxWrapper = styled.div`
@@ -60,6 +69,8 @@ export const BtnBoxWrapper = styled.div`
   justify-content: space-between;
   flex-direction: column;
   margin-left: 1.8rem;
+
+  width: 70%;
 `;
 
 export const BtnBox = styled.div`
@@ -72,6 +83,7 @@ export const BtnBox = styled.div`
     margin-right: 2rem;
   }
 `;
+
 export const UserRes = styled.div`
   display: flex;
   flex-direction: column;

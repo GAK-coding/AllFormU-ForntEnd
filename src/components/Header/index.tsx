@@ -19,6 +19,16 @@ export default function Header() {
         </Link>
       </Title>
       <BtnBox>
+        <Button
+          onClick={() => navigate('/resform')}
+          fontSize={1.4}
+          bgColor={main}
+          width={13}
+          height={4}
+          color={'white'}
+        >
+          ResForm
+        </Button>
         <Button onClick={() => navigate('/mypage')} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
           My page
         </Button>
