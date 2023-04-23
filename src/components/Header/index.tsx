@@ -21,7 +21,7 @@ export default function Header() {
       <BtnBox>
         <Button
           onClick={() => navigate('/resform')}
-          fontSize={1.4}
+          fontSize={1.8}
           bgColor={main}
           width={13}
           height={4}
@@ -29,13 +29,13 @@ export default function Header() {
         >
           ResForm
         </Button>
-        <Button onClick={() => navigate('/mypage')} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
+        <Button onClick={() => navigate('/mypage')} fontSize={1.8} bgColor={main} width={13} height={4} color={'white'}>
           My page
         </Button>
-        <Button fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
+        <Button fontSize={1.8} bgColor={main} width={13} height={4} color={'white'}>
           Guide
         </Button>
-        <Button onClick={() => navigate('/signin')} fontSize={1.4} bgColor={main} width={13} height={4} color={'white'}>
+        <Button onClick={() => navigate('/signin')} fontSize={1.8} bgColor={main} width={13} height={4} color={'white'}>
           Sign in
         </Button>
       </BtnBox>

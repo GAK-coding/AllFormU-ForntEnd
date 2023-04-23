@@ -8,7 +8,7 @@ export const HeaderWrapper = styled.header`
   padding: 2rem 2rem;
 
   img {
-    width: 60%;
+    width: 80%;
   }
 `;
 
