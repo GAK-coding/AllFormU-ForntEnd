@@ -13,7 +13,7 @@ interface InputInfo extends signUpInfo {
 }
 
 export default function SignUp() {
-  const { subBlue } = useRecoilValue(color);
+  const { blue } = useRecoilValue(color);
   const [checkPw, setCheckPw] = useState(false);
 
   const [info, setInfo] = useState<InputInfo>({
@@ -125,7 +125,7 @@ export default function SignUp() {
 
         <Line>
           <div />
-          <Button type={'submit'} color={'black'} bgColor={subBlue} fontSize={2} width={12} height={5}>
+          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={2} width={12} height={5}>
             회원가입
           </Button>
         </Line>

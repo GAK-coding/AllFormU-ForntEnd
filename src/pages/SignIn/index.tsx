@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { userInfo } from '../../recoil/User/atom';
 
 export default function SignIn() {
-  const { subBlue } = useRecoilValue(color);
+  const { blue } = useRecoilValue(color);
   const setUserInfo = useSetRecoilState(userInfo);
   const serInfo = useRecoilValue(userInfo);
   const [info, setInfo] = useState<signInInfo>({
@@ -92,7 +92,7 @@ export default function SignIn() {
 
         <Line>
           <div />
-          <Button type={'submit'} color={'black'} bgColor={subBlue} fontSize={2} width={12} height={5}>
+          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={2} width={12} height={5}>
             로그인
           </Button>
         </Line>
@@ -103,7 +103,7 @@ export default function SignIn() {
             onClick={() => navigate('/signup')}
             type={'button'}
             color={'black'}
-            bgColor={subBlue}
+            bgColor={blue}
             fontSize={2}
             width={14}
             height={5}
