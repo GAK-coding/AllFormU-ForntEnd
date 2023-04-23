@@ -5,10 +5,6 @@ export const HomeWrapper = styled.section`
   justify-content: center;
 
   margin-top: 10rem;
-
-  //& > div {
-  //  width: 50%;
-  //}
 `;
 
 export const Explanation = styled.div`
@@ -17,18 +13,20 @@ export const Explanation = styled.div`
   justify-content: center;
   align-items: flex-end;
 
-  width: 60%;
+  width: 55%;
+  height: 60vh;
 
   //border: 1px solid;
 
   & > div {
-    //border: 1px solid;
-
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 
-    //padding-right: 2rem;
+    //border: 1px solid;
+    width: 70%;
+    height: 100%;
 
     & > div {
       margin-bottom: 1.4rem;
@@ -37,7 +35,7 @@ export const Explanation = styled.div`
 `;
 
 export const ExplanationAbove = styled.div`
-  font-size: 3.5rem;
+  font-size: 5rem;
   font-weight: 700;
 
   & > span {
@@ -49,7 +47,7 @@ export const ExplanationMiddle = styled.div`
   text-align: center;
 
   & > img {
-    width: 70%;
+    width: 100%;
   }
 `;
 
@@ -57,9 +55,11 @@ export const ExplanationBelow = styled.div``;
 
 export const Img = styled.div`
   box-sizing: border-box;
-  //padding-left: 8rem;
+  //border: 1px solid;
+  width: 45%;
 
-  width: 40%;
+  display: flex;
+  align-items: center;
 
   & > img {
     width: 50%;

@@ -18,11 +18,10 @@ export default function Home() {
             너를 위해서, 너만을 위해서
           </ExplanationAbove>
           <ExplanationMiddle>
-            {/* All Form Ü */}
             <img src="homeLogo.png" alt="homeLogo" />
           </ExplanationMiddle>
           <ExplanationBelow>
-            <Button fontSize={1.4} bgColor={main} width={20} height={5} color={'white'}>
+            <Button fontSize={1.8} bgColor={main} width={24} height={6} color={'white'}>
               나만의 설문 만들기 &nbsp;&nbsp;&nbsp; <AiOutlineArrowRight />
             </Button>
           </ExplanationBelow>
