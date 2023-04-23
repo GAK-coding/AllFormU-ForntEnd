@@ -14,7 +14,7 @@ export default function Header() {
       <Title>
         <Link to={'/'}>
           <div>
-            <img src="headerLogo.png" alt="headerLogo"></img>
+            <img src="headerLogo.png" alt="headerLogo" />
           </div>
         </Link>
       </Title>
