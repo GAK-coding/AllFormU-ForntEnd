@@ -8,7 +8,7 @@ export const BtnWrapper = styled.button<Btn>`
   justify-content: center;
   align-items: center;
 
-  border-radius: 5rem;
+  border-radius: ${(props) => (props.radius ? props.radius : 5)}rem;
   border: transparent;
   padding: 1rem 2rem;
   cursor: pointer;
