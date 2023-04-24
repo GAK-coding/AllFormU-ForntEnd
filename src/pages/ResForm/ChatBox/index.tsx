@@ -4,7 +4,7 @@ export default function ChatBox({ user, chatbot }: Chatbot) {
   return (
     <BallonWrapper>
       <BotBallon>
-        <BotImage src="gak_chatbot.png" alt="chatbot" />
+        <BotImage src="/images/gak_chatbot.png" alt="chatbot" />
         <span>{chatbot}</span>
       </BotBallon>
       <span>gak</span>

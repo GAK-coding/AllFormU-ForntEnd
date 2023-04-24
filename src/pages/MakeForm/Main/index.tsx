@@ -27,7 +27,7 @@ export default function MakeForm() {
           height={15}
           radius={2}
         >
-          <img src="Gak.png" alt={'Gak'} />
+          <img src="/images/Gak.png" alt={'Gak'} />
           <span>챗봇</span>
         </Button>
         <Button
@@ -39,7 +39,7 @@ export default function MakeForm() {
           height={15}
           radius={2}
         >
-          <img src="Pen.png" alt={'Pen'} />
+          <img src="/images/pen.png" alt={'Pen'} />
           <span>직접 작성</span>
         </Button>
       </MakeFormBottom>
