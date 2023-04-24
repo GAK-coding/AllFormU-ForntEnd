@@ -7,14 +7,14 @@ import { color } from '../../recoil/Color/atom';
 
 export default function Header() {
   const navigate = useNavigate();
-  const { main } = useRecoilValue(color);
+  const { purple } = useRecoilValue(color);
 
   return (
     <HeaderWrapper>
       <Title>
         <Link to={'/'}>
           <div>
-            <img src="headerLogo.png" alt="headerLogo" />
+            <img src="/images/headerLogo.png" alt="headerLogo" />
           </div>
         </Link>
       </Title>
@@ -22,20 +22,34 @@ export default function Header() {
         <Button
           onClick={() => navigate('/resform')}
           fontSize={1.8}
-          bgColor={main}
+          bgColor={purple}
           width={13}
           height={4}
           color={'white'}
         >
           ResForm
         </Button>
-        <Button onClick={() => navigate('/mypage')} fontSize={1.8} bgColor={main} width={13} height={4} color={'white'}>
+        <Button
+          onClick={() => navigate('/mypage')}
+          fontSize={1.8}
+          bgColor={purple}
+          width={13}
+          height={4}
+          color={'white'}
+        >
           My page
         </Button>
-        <Button fontSize={1.8} bgColor={main} width={13} height={4} color={'white'}>
+        <Button fontSize={1.8} bgColor={purple} width={13} height={4} color={'white'}>
           Guide
         </Button>
-        <Button onClick={() => navigate('/signin')} fontSize={1.8} bgColor={main} width={13} height={4} color={'white'}>
+        <Button
+          onClick={() => navigate('/signin')}
+          fontSize={1.8}
+          bgColor={purple}
+          width={13}
+          height={4}
+          color={'white'}
+        >
           Sign in
         </Button>
       </BtnBox>

@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function ResFormModal({ open, onCancel, sendMessage }: Props) {
-  const { main } = useRecoilValue(color);
+  const { purple } = useRecoilValue(color);
   const [talk, setTalk] = useRecoilState(gptTalks);
   const [req, setReq] = useState('');
   const [loading, setLoading] = useRecoilState(gptLoading);
@@ -73,7 +73,7 @@ export default function ResFormModal({ open, onCancel, sendMessage }: Props) {
 
       <ResModalInput onSubmit={onSubmit}>
         <Input value={req} onChange={onChangeReq} placeholder={'질문을 입력해주세요.'} height={4} />
-        <Button type={'submit'} color={'white'} fontSize={1.6} width={8} height={4} bgColor={main}>
+        <Button type={'submit'} color={'white'} fontSize={1.6} width={8} height={4} bgColor={purple}>
           전송
         </Button>
       </ResModalInput>
