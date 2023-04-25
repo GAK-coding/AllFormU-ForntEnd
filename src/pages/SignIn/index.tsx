@@ -56,7 +56,7 @@ export default function SignIn() {
       <PageInfo>
         <div>Sign In</div>
         <div>
-          <img src="logo.png" alt="logo" />
+          <img src="/images/logo.png" alt="logo" />
           <span>All Form U</span>
         </div>
       </PageInfo>
@@ -71,7 +71,7 @@ export default function SignIn() {
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
             placeholder={'이메일'}
             width={44}
-            height={3.5}
+            height={2.5}
             size={2.2}
           />
         </Line>
@@ -85,7 +85,7 @@ export default function SignIn() {
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
             placeholder={'비밀번호'}
             width={44}
-            height={3.5}
+            height={2.5}
             size={2.2}
           />
         </Line>
