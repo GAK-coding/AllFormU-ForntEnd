@@ -12,6 +12,8 @@ export const BaseInput = styled.input<input>`
   height: ${(props) => props.height}rem;
   font-size: ${(props) => props.size}rem;
 
+  padding: 1rem;
+
   &:focus {
     outline: none;
   }
