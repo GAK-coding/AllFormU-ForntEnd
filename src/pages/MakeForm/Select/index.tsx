@@ -4,6 +4,7 @@ import Button from '../../../components/ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const templates = [
   ['퀴즈', 'quiz'],
@@ -15,7 +16,6 @@ const templates = [
 ];
 
 export default function MakeFormSelect() {
-  const { lightPurple } = useRecoilValue(color);
   const navigate = useNavigate();
 
   return (
@@ -25,15 +25,15 @@ export default function MakeFormSelect() {
       </SelectTop>
       <SelectBottom>
         <SelectBottomLeft onClick={() => navigate('/makeform/direct')}>
-          <Button color={'white'} bgColor={lightPurple} fontSize={2} width={20} height={15}>
-            <img src="/images/plus.png" alt="+" />
+          <Button color={'black'} bgColor={'white'} fontSize={2} width={20} height={15}>
+            <AiOutlinePlus />
           </Button>
           <span>생성</span>
         </SelectBottomLeft>
         <SelectBottomRight>
           {templates.map(([name, img], index) => (
             <div key={index}>
-              <Button color={'white'} bgColor={lightPurple} fontSize={2} width={20} height={15}>
+              <Button color={'white'} bgColor={'white'} fontSize={2} width={20} height={15}>
                 <img src={`/images/${img}.png`} alt={name} />
               </Button>
               <span>{name}</span>

@@ -40,12 +40,17 @@ export const SelectBottomLeft = styled.div`
 
   & > button {
     border-radius: 2rem;
+    border: 3px solid #dbdbdb;
     margin-bottom: 2rem;
 
     & > span {
-      & > img {
-        width: 60%;
-      }
+      font-size: 10rem;
+    }
+
+    &:hover {
+      background-color: var(--color-light-purple);
+      color: white;
+      border: transparent;
     }
   }
   & > span {
@@ -71,10 +76,15 @@ export const SelectBottomRight = styled.div`
 
     & > button {
       border-radius: 2rem;
-      background-color: white;
       border: 3px solid #dbdbdb;
 
       margin-bottom: 1rem;
+
+      &:hover {
+        background-color: var(--color-light-purple);
+        color: white;
+        border: transparent;
+      }
 
       img {
         width: 50%;
