@@ -13,10 +13,8 @@ export const Explanation = styled.div`
   justify-content: center;
   align-items: flex-end;
 
-  width: 55%;
+  width: 60%;
   height: 60vh;
-
-  //border: 1px solid;
 
   & > div {
     display: flex;
@@ -24,7 +22,6 @@ export const Explanation = styled.div`
     justify-content: center;
     align-items: center;
 
-    //border: 1px solid;
     width: 70%;
     height: 100%;
 
@@ -55,8 +52,7 @@ export const ExplanationBelow = styled.div``;
 
 export const Img = styled.div`
   box-sizing: border-box;
-  //border: 1px solid;
-  width: 45%;
+  width: 40%;
 
   display: flex;
   align-items: center;
