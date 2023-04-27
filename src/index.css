@@ -20,6 +20,7 @@ body {
 :root {
     --color-main: #655DBB;
     --color-light-purple:#E8D3FF;
+    --color-light-purple-30:rgba(232, 211, 255, 0.3);
     --color-sub-blue: #C0DEFF;
 ;
 }
