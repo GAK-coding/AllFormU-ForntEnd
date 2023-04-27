@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import { SortablePane, Pane } from 'react-sortable-pane';
+import FormTitle from '../../../components/Questions/FormTitle';
+import { DirectWrapper, Drag, QuestionWrapper } from './styles';
+import { Col, Row } from 'antd';
+import ShortQuestion from '../../../components/Questions/ShortQuestion';
+import { useRecoilState } from 'recoil';
+import { questions } from '../../../recoil/MakeForm/atom';
+import { RxDragHandleHorizontal } from 'react-icons/rx';
 
 export default function MakeFormDirect() {
   const [isClick, setIsClick] = useState(false);
+  const [questionList, setQuestionList] = useRecoilState(questions);
 
   const handleMouseOver = () => {
     setIsClick(true);
@@ -12,25 +20,27 @@ export default function MakeFormDirect() {
     setIsClick(false);
   };
 
-  console.log(isClick);
-
   return (
-    <div style={{ fontSize: '4rem' }}>
-      <SortablePane isSortable={isClick} direction="vertical" margin={20}>
-        {[0, 1, 2].map((key) => (
-          <div key={key} style={{ border: '1px solid', width: '100rem' }}>
-            <Pane key={key}>
-              <div
-                onMouseOver={handleMouseOver}
-                onMouseOut={handleMouseOut}
-                style={{ border: '1px solid', width: '50%' }}
-              >
-                00{key}
-              </div>
-            </Pane>
-          </div>
-        ))}
-      </SortablePane>
-    </div>
+    <Row>
+      <Col span={4} />
+      <Col span={16}>
+        <DirectWrapper>
+          <FormTitle />
+          <SortablePane isSortable={isClick} direction="vertical" margin={20}>
+            {questionList.map((key) => (
+              <QuestionWrapper key={key.title}>
+                <Pane key={key.title}>
+                  <Drag onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+                    <RxDragHandleHorizontal />
+                  </Drag>
+                </Pane>
+                <ShortQuestion></ShortQuestion>
+              </QuestionWrapper>
+            ))}
+          </SortablePane>
+        </DirectWrapper>
+      </Col>
+      <Col span={4} />
+    </Row>
   );
 }
