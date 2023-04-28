@@ -20,21 +20,33 @@ export default function MakeFormDirect() {
     setIsClick(false);
   };
 
+  console.log(isClick);
+
   return (
     <Row>
       <Col span={4} />
       <Col span={16}>
         <DirectWrapper>
           <FormTitle />
-          <SortablePane isSortable={isClick} direction="vertical" margin={20}>
+          <SortablePane
+            onDragStart={() => {
+              setIsClick(true);
+            }}
+            onDragStop={() => {
+              setIsClick(false);
+            }}
+            isSortable={isClick}
+            direction="vertical"
+            margin={20}
+          >
             {questionList.map((key) => (
               <QuestionWrapper key={key.title}>
-                <Pane key={key.title}>
+                <Pane resizable={{ x: false, y: false, xy: false }} key={key.title}>
                   <Drag onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                     <RxDragHandleHorizontal />
                   </Drag>
                 </Pane>
-                <ShortQuestion></ShortQuestion>
+                <ShortQuestion data={key}></ShortQuestion>
               </QuestionWrapper>
             ))}
           </SortablePane>

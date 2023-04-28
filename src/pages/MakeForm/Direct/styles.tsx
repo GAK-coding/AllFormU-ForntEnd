@@ -10,11 +10,13 @@ export const Drag = styled.div`
   text-align: center;
 
   margin: 0 auto;
-  width: 10%;
-  height: 10%;
+  width: 20%;
+  height: 5rem;
 
   font-size: 2rem;
   cursor: grab;
+
+  border: 1px solid black;
 `;
 
 export const QuestionWrapper = styled.div`
