@@ -17,7 +17,7 @@ export const PageInfo = styled.div`
   background-color: rgba(232, 211, 255, 0.6);
 
   & > div:first-of-type {
-    font-size: 6.5rem;
+    font-size: 5.5rem;
     font-weight: 700;
   }
 
@@ -57,7 +57,8 @@ export const Line = styled.div`
   align-items: center;
   margin-bottom: 4rem;
 
-  font-size: 2.2rem;
+  font-size: 1.6rem;
+  font-weight: 700;
 
   & > div {
     width: 20%;

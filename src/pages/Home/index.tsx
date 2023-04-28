@@ -1,10 +1,11 @@
 import React from 'react';
-import { Explanation, ExplanationAbove, ExplanationBelow, ExplanationMiddle, HomeWrapper, Img } from './styles';
+import { Arrow, Explanation, ExplanationAbove, ExplanationBelow, ExplanationMiddle, HomeWrapper, Img } from './styles';
 import Button from '../../components/ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
+import { BsArrowRight } from 'react-icons/bs';
+import { BiRightArrowAlt } from 'react-icons/bi';
 
 export default function Home() {
   const { purple } = useRecoilValue(color);
@@ -15,23 +16,34 @@ export default function Home() {
       <Explanation>
         <div>
           <ExplanationAbove>
-            <span>Gak과 함께,</span>
-            <br />
-            너를 위해서, 너만을 위해서
+            <div />
+            <div>
+              <span>Gak</span> 과 함께
+              <br />
+              너를 위해서, 너만을 위해서
+            </div>
+            <div />
           </ExplanationAbove>
           <ExplanationMiddle>
-            <img src="/images/homeLogo.png" alt="homeLogo" />
+            <div />
+            <div>
+              <img src="/images/homeLogo.png" alt="homeLogo" />
+            </div>
+            <div />
           </ExplanationMiddle>
           <ExplanationBelow>
             <Button
               onClick={() => navigate('/makeform')}
               fontSize={1.8}
               bgColor={purple}
-              width={24}
-              height={6}
+              width={26}
+              height={5}
               color={'white'}
             >
-              나만의 설문 만들기 &nbsp;&nbsp;&nbsp; <AiOutlineArrowRight />
+              나만의 설문 만들기 &nbsp;&nbsp;&nbsp;
+              <Arrow>
+                <BiRightArrowAlt />
+              </Arrow>
             </Button>
           </ExplanationBelow>
         </div>

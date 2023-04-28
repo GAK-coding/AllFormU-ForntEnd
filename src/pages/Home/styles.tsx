@@ -4,7 +4,7 @@ export const HomeWrapper = styled.section`
   display: flex;
   justify-content: center;
 
-  margin-top: 10rem;
+  margin-top: 6rem;
 `;
 
 export const Explanation = styled.div`
@@ -13,10 +13,8 @@ export const Explanation = styled.div`
   justify-content: center;
   align-items: flex-end;
 
-  width: 55%;
+  width: 60%;
   height: 60vh;
-
-  //border: 1px solid;
 
   & > div {
     display: flex;
@@ -24,44 +22,69 @@ export const Explanation = styled.div`
     justify-content: center;
     align-items: center;
 
-    //border: 1px solid;
     width: 70%;
     height: 100%;
-
-    & > div {
-      margin-bottom: 1.4rem;
-    }
   }
 `;
 
 export const ExplanationAbove = styled.div`
-  font-size: 5rem;
+  font-size: 3rem;
   font-weight: 700;
+  align-self: flex-start;
+  display: flex;
 
-  & > span {
-    color: var(--color-main);
+  width: 100%;
+
+  & > div {
+    width: 15%;
+
+    & > span {
+      color: var(--color-main);
+    }
+  }
+
+  & > div:nth-child(2) {
+    width: 70%;
   }
 `;
 
 export const ExplanationMiddle = styled.div`
   text-align: center;
+  display: flex;
+  width: 100%;
 
-  & > img {
-    width: 100%;
+  & > div {
+    width: 10%;
+  }
+
+  & > div:nth-child(2) {
+    width: 80%;
+
+    & > img {
+      width: 92%;
+    }
   }
 `;
 
-export const ExplanationBelow = styled.div``;
+export const ExplanationBelow = styled.div`
+  margin-top: 4rem;
+`;
+
+export const Arrow = styled.div`
+  display: flex;
+  align-items: center;
+
+  font-size: 2.5rem;
+`;
 
 export const Img = styled.div`
   box-sizing: border-box;
-  //border: 1px solid;
-  width: 45%;
+  width: 40%;
 
   display: flex;
   align-items: center;
 
   & > img {
-    width: 50%;
+    width: 55%;
   }
 `;

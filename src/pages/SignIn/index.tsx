@@ -56,7 +56,7 @@ export default function SignIn() {
       <PageInfo>
         <div>Sign In</div>
         <div>
-          <img src="logo.png" alt="logo" />
+          <img src="/images/logo.png" alt="logo" />
           <span>All Form U</span>
         </div>
       </PageInfo>
@@ -71,13 +71,13 @@ export default function SignIn() {
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
             placeholder={'이메일'}
             width={44}
-            height={3.5}
-            size={2.2}
+            height={2}
+            size={1.6}
           />
         </Line>
         <Line>
           <div>
-            <span>비밀번호</span>
+            <span>Password</span>
           </div>
           <Input
             type={'password'}
@@ -85,14 +85,14 @@ export default function SignIn() {
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
             placeholder={'비밀번호'}
             width={44}
-            height={3.5}
-            size={2.2}
+            height={2}
+            size={1.6}
           />
         </Line>
 
         <Line>
           <div />
-          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={2} width={12} height={5}>
+          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={11} height={4.5}>
             로그인
           </Button>
         </Line>
@@ -104,9 +104,9 @@ export default function SignIn() {
             type={'button'}
             color={'black'}
             bgColor={blue}
-            fontSize={2}
+            fontSize={1.6}
             width={14}
-            height={5}
+            height={4.5}
           >
             회원가입
           </Button>
