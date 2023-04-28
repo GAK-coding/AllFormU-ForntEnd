@@ -1,6 +1,6 @@
 import React from 'react';
 import { BtnBox, HeaderWrapper, Title } from './styles';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
@@ -9,21 +9,27 @@ export default function Header() {
   const navigate = useNavigate();
   const { purple } = useRecoilValue(color);
 
+  const { pathname } = useLocation();
+
+  console.log(pathname);
+
   return (
     <HeaderWrapper>
       <Title>
-        <Link to={'/'}>
-          <div>
-            <img src="/images/headerLogo.png" alt="headerLogo" />
-          </div>
-        </Link>
+        {pathname !== '/' && (
+          <Link to={'/'}>
+            <div>
+              <img src="/images/headerLogo.png" alt="headerLogo" />
+            </div>
+          </Link>
+        )}
       </Title>
       <BtnBox>
         <Button
           onClick={() => navigate('/resform')}
-          fontSize={1.8}
+          fontSize={1.4}
           bgColor={purple}
-          width={13}
+          width={11}
           height={4}
           color={'white'}
         >
@@ -31,22 +37,22 @@ export default function Header() {
         </Button>
         <Button
           onClick={() => navigate('/mypage')}
-          fontSize={1.8}
+          fontSize={1.4}
           bgColor={purple}
-          width={13}
+          width={11}
           height={4}
           color={'white'}
         >
           My page
         </Button>
-        <Button fontSize={1.8} bgColor={purple} width={13} height={4} color={'white'}>
+        <Button fontSize={1.4} bgColor={purple} width={11} height={4} color={'white'}>
           Guide
         </Button>
         <Button
           onClick={() => navigate('/signin')}
-          fontSize={1.8}
+          fontSize={1.4}
           bgColor={purple}
-          width={13}
+          width={11}
           height={4}
           color={'white'}
         >

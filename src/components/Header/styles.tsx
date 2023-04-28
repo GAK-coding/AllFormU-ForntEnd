@@ -7,15 +7,17 @@ export const HeaderWrapper = styled.header`
 
   padding: 2rem 2rem;
 
+  height: 6vh;
+
   img {
-    width: 80%;
+    width: 60%;
   }
 `;
 
 export const Title = styled.div`
   & > a {
     color: var(--color-main);
-    font-size: 4rem;
+    font-size: 2rem;
     font-weight: 700;
   }
 `;
