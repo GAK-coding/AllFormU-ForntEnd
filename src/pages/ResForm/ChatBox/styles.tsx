@@ -12,6 +12,7 @@ export const BallonWrapper = styled.div`
   & > span {
     margin-left: 1rem;
     margin-top: 1rem;
+    font-weight: 700;
   }
   & > div {
     max-width: 50%;
