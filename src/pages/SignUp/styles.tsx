@@ -17,7 +17,7 @@ export const PageInfo = styled.div`
   background-color: rgba(232, 211, 255, 0.6);
 
   & > div:first-of-type {
-    font-size: 5rem;
+    font-size: 5.5rem;
     font-weight: 700;
   }
 
@@ -30,13 +30,13 @@ export const PageInfo = styled.div`
     & > span {
       margin-top: 4rem;
 
-      font-size: 2.4rem;
+      font-size: 3rem;
       font-weight: 700;
     }
   }
 
   img {
-    width: 50%;
+    width: 60%;
   }
 `;
 
@@ -50,17 +50,18 @@ export const Form = styled.form`
 `;
 
 export const Line = styled.div`
-  width: 80%;
+  width: 90%;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 
-  font-size: 1.8rem;
+  font-size: 1.6rem;
+  font-weight: 700;
 
   & > div {
-    width: 10rem;
+    width: 20%;
 
     margin-right: 4rem;
     text-align: right;

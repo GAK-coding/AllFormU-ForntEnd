@@ -26,7 +26,7 @@ interface ChatMessage {
 }
 
 export default function ResForm() {
-  const { subBlue } = useRecoilValue(color);
+  const { blue } = useRecoilValue(color);
   const [talk, setTalk] = useRecoilState(gptTalks);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -120,17 +120,17 @@ export default function ResForm() {
             </Line>
             <BtnBoxWrapper>
               <BtnBox>
-                <Button color={'black'} bgColor={subBlue} fontSize={1} width={9.5} height={3}>
+                <Button color={'black'} bgColor={blue} fontSize={1} width={9.5} height={3}>
                   질문 읽어주기
                 </Button>
-                <Button onClick={showModal} color={'black'} bgColor={subBlue} fontSize={1} width={9.5} height={3}>
+                <Button onClick={showModal} color={'black'} bgColor={blue} fontSize={1} width={9.5} height={3}>
                   GPT한테
                   <br />
                   물어보기
                 </Button>
               </BtnBox>
               <BtnBox>
-                <Button color={'black'} bgColor={subBlue} fontSize={1} width={9.5} height={3}>
+                <Button color={'black'} bgColor={blue} fontSize={1} width={9.5} height={3}>
                   기타문의
                 </Button>
               </BtnBox>

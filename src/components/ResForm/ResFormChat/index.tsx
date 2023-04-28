@@ -8,14 +8,14 @@ export default function ResFormChat({ myReq, gptRes }: Chat) {
     <div>
       <ChatBox type={'user'}>
         <div>
-          <img src={'userProfile.png'} alt={'유저 프로필 사진'} />
+          <img src={'/images/userProfile.png'} alt={'유저 프로필 사진'} />
           <span>오현</span>
         </div>
         <span>{myReq}</span>
       </ChatBox>
       <ChatBox type={'gpt'}>
         <div>
-          <img src={'chatgpt.png'} alt={'chat gpt 사진'} />
+          <img src={'/images/chatgpt.png'} alt={'chat gpt 사진'} />
           <span>GPT</span>
         </div>
         <span>{gptRes ? gptRes : <Skeleton loading={true} active />}</span>
