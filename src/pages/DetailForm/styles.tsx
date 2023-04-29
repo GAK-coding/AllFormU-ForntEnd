@@ -45,7 +45,12 @@ export const FormBox = styled(BaseGbBoxWrapper)`
   flex-direction: row;
 
   & div {
-    width: 60rem;
+    width: 70rem;
+  }
+
+  & > button:first-of-type {
+    border-radius: 2rem;
+    align-self: center;
   }
 `;
 

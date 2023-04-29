@@ -51,6 +51,9 @@ export default function MakeFormList() {
                   <span>{formInfo.description}</span>
                 </div>
               </Title>
+              <Button color={'black'} bgColor={lightPurple} fontSize={1.3} width={4} height={7}>
+                수정
+              </Button>
               <ButtonWrapper>
                 <Button color={'black'} bgColor={blue} fontSize={1.3} width={10} height={3.5}>
                   응답보기
