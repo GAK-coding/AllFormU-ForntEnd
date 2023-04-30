@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import { FormInfo, ShortQue } from '../../typings/makeForm';
+import { v4 as uuid } from 'uuid';
 
 export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', description: '' } });
 
@@ -8,21 +9,66 @@ export const questions = atom<ShortQue[]>({
   default: [
     {
       type: 'short',
-      require: true,
-      title: '테스트 질문1?',
-      answer: '테스트 대답1',
-    },
-    {
-      type: 'short',
+      id: uuid(),
       require: false,
-      title: '테스트 질문2?',
-      answer: '테스트 대답2',
+      title: '',
+      answer: '',
     },
     {
       type: 'short',
-      require: true,
-      title: '테스트 질문3?',
-      answer: '테스트 대답3',
+      id: uuid(),
+      require: false,
+      title: '',
+      answer: '',
     },
+    {
+      type: 'short',
+      id: uuid(),
+      require: false,
+      title: '',
+      answer: '',
+    },
+    // {
+    //   type: 'short',
+    //   require: false,
+    //   title: '',
+    //   answer: '',
+    // },
+    // {
+    //   type: 'short',
+    //   require: false,
+    //   title: '',
+    //   answer: '',
+    // },
+    // {
+    //   type: 'short',
+    //   require: false,
+    //   title: '',
+    //   answer: '',
+    // },
+    // {
+    //   type: 'short',
+    //   require: false,
+    //   title: '',
+    //   answer: '',
+    // },
+    // {
+    //   type: 'short',
+    //   require: false,
+    //   title: '',
+    //   answer: '',
+    // },
+    // {
+    //   type: 'short',
+    //   require: false,
+    //   title: '',
+    //   answer: '',
+    // },
+    // {
+    //   type: 'short',
+    //   require: false,
+    //   title: '',
+    //   answer: '',
+    // },
   ],
 });
