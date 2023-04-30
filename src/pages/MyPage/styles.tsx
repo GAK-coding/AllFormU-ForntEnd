@@ -3,22 +3,10 @@ import styled from 'styled-components';
 export const MyPageWrapper = styled.div`
   padding: 5rem;
   display: flex;
-  /* 
-  & > div:first-of-type {
-    margin-left: 3.5rem;
-    font-size: 3rem;
-    font-weight: 700;
-    display: flex;
-  } */
-
-  /* // 하단 박스 스타일
-  & > div:last-of-type {
-    display: flex;
-  } */
 `;
 
 export const UserInfo = styled.div`
-  width: 30%;
+  width: 30rem;
   height: 48rem;
 
   display: flex;
@@ -27,9 +15,7 @@ export const UserInfo = styled.div`
 
   box-sizing: border-box;
   padding: 2rem;
-  margin-top: 2rem;
-  margin-left: 3.5rem;
-  margin-right: 1rem;
+  margin: 2rem 0rem 2rem 2rem;
 
   border-radius: 3rem;
   background-color: rgba(232, 211, 255, 0.6);
