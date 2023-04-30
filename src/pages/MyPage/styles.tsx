@@ -82,30 +82,36 @@ export const BtnBox = styled.div`
 `;
 
 export const Form = styled.div`
-  width: 85%;
+  width: 90%;
   height: 20rem;
 
   display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
 
   box-sizing: border-box;
   padding: 2rem;
-  margin-top: 3rem;
-  margin-left: 6rem;
-  margin-right: 1rem;
 
+  margin: 3rem 1rem 0rem 8rem;
   border-radius: 3rem;
   background-color: #fefefe;
+
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
 `;
 
-export const Line = styled.div`
+export const Line = styled.button`
+  width: 20%;
   display: flex;
   margin-left: 1rem;
+
   text-align: left;
   font-size: 1.6rem;
   font-weight: 700;
+
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 `;
 
 export const AlignBox = styled.div`
@@ -128,9 +134,6 @@ export const FormBox = styled.button`
   border-radius: 1.8rem;
   background-color: #fefefe;
 
-  margin-top: 1.5rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-
+  margin: 1rem 1rem 0.5rem 1rem;
   cursor: pointer;
 `;
