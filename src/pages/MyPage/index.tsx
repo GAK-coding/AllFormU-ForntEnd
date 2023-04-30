@@ -93,7 +93,7 @@ export default function MyPage() {
             </Button>
           </BtnBox>
           <Form>
-            <Line>내 생성폼</Line>
+            <Line onClick={() => navigate('/mypage/makeform')}>내 생성폼</Line>
             <AlignBox>
               {makeFormInfo
                 .filter((formInfo) => formInfo.id < 3)
@@ -118,7 +118,7 @@ export default function MyPage() {
             </AlignBox>
           </Form>
           <Form>
-            <Line>내 응답</Line>
+            <Line onClick={() => navigate('/mypage/resform')}>내 응답</Line>
             <AlignBox>
               {resFormInfo
                 .filter((formInfo) => formInfo.id < 3)
