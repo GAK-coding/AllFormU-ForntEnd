@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import TextArea from 'antd/es/input/TextArea';
 
 export const FormTitleWrapper = styled.div`
   min-height: 20rem;
@@ -8,6 +7,10 @@ export const FormTitleWrapper = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+
+  .ant-input {
+    background-color: var(--color-light-purple-30);
+  }
 `;
 
 export const TitleInput = styled.input`
@@ -18,15 +21,6 @@ export const TitleInput = styled.input`
   width: 100%;
   padding-bottom: 1rem;
   font-size: 3rem;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-export const Description = styled(TextArea)`
-  border: none;
-  background-color: black;
 
   &:focus {
     outline: none;
