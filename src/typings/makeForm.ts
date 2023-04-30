@@ -9,3 +9,8 @@ export interface ShortQue {
   title: string;
   answer: string;
 }
+
+export interface makeInfoList {
+  title: string;
+  description?: string;
+}

@@ -33,13 +33,13 @@ export default function MyPage() {
   //   console.log(myInfo);
   // }, [info.name, info.email, info.userImg]);
 
-  if (id === -1) {
-    return (
-      <Routes>
-        <Route path="/" element={<Navigate replace to="/signin" />} />;
-      </Routes>
-    );
-  }
+  // if (id === -1) {
+  //   return (
+  //     <Routes>
+  //       <Route path="/" element={<Navigate replace to="/signin" />} />;
+  //     </Routes>
+  //   );
+  // }
 
   return (
     <BaseBgBox>
@@ -48,7 +48,7 @@ export default function MyPage() {
         <UserInfo>
           {/* TODO : Img url 형태로 수정 */}
           <div>My Page</div>
-          <img src="userProfile.png" alt="userProfile" />
+          <img src="images/userProfile.png" alt="userProfile" />
           <div>
             <span> 이름 : {info.name} </span>
             <span> email : {info.email} </span>
