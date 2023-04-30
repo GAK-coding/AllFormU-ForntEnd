@@ -45,8 +45,6 @@ export default function MakeFormDirect() {
     [questionList]
   );
 
-  console.log(questionList);
-
   return (
     <Row>
       <Col span={4} />
