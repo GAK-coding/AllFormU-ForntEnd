@@ -77,7 +77,6 @@ export const Title = styled.div`
 export const ButtonWrapper = styled.div`
   width: 10%;
   display: flex;
-  justify-items: right;
   flex-direction: column;
 
   & > button {
@@ -86,5 +85,16 @@ export const ButtonWrapper = styled.div`
 
   & > button:first-of-type {
     margin: 2rem 0rem 1.5rem 0rem;
+  }
+`;
+
+export const ButtonView = styled.div`
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+
+  & > button {
+    border-radius: 2rem;
+    margin-top: 4rem;
   }
 `;

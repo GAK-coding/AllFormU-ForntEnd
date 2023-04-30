@@ -3,7 +3,7 @@ import { color } from '../../../recoil/Color/atom';
 import { formInfoList } from '../../../recoil/FormList/atom';
 import { FormInfo } from '../../../typings/makeForm';
 import { useEffect } from 'react';
-import { ButtonWrapper, FormBox, FormListWrapper, HeaderWrapper, Title } from '../styles';
+import { ButtonView, FormBox, FormListWrapper, HeaderWrapper, Title } from '../styles';
 import Button from '../../../components/ui/Button';
 
 export default function ResFormList() {
@@ -53,11 +53,11 @@ export default function ResFormList() {
                 </div>
               </Title>
 
-              <ButtonWrapper>
+              <ButtonView>
                 <Button color={'black'} bgColor={blue} fontSize={1.3} width={10} height={3.5}>
                   응답확인
                 </Button>
-              </ButtonWrapper>
+              </ButtonView>
             </FormBox>
           );
         })}
