@@ -26,7 +26,7 @@ export const CheckMark = styled.div`
 `;
 
 export const ShortQueTop = styled.div`
-  min-height: 8rem;
+  min-height: 6rem;
 
   display: flex;
 `;
@@ -63,7 +63,7 @@ export const ShortQueTopRight = styled.div`
 
 export const ShortQueBottomLeft = styled.div`
   width: 70%;
-  min-height: 8rem;
+  min-height: 6rem;
 
   height: 100%;
   box-sizing: border-box;

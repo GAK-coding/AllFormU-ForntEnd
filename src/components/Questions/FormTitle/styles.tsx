@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const FormTitleWrapper = styled.div`
-  min-height: 20rem;
+  min-height: 15rem;
 
   display: flex;
   flex-direction: column;
@@ -20,7 +20,7 @@ export const TitleInput = styled.input`
 
   width: 100%;
   padding-bottom: 1rem;
-  font-size: 3rem;
+  font-size: 2rem;
 
   &:focus {
     outline: none;

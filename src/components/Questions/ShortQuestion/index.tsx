@@ -65,7 +65,7 @@ export default function ShortQuestion({ data, index, click, onDelete }: Props) {
               value={title}
               onChange={(e) => onChange(e, 'title')}
               width={'75%'}
-              fontSize={1.8}
+              fontSize={1.6}
               placeholder={'질문'}
             />
           </ShortQueTopLeft>
@@ -89,14 +89,15 @@ export default function ShortQuestion({ data, index, click, onDelete }: Props) {
               value={answer}
               onChange={(e) => onChange(e, 'answer')}
               width={'75%'}
-              fontSize={1.8}
+              fontSize={1.6}
               placeholder={'단답형 텍스트'}
+              disabled={true}
             />
-            <div>
-              <Button color={'black'} bgColor={blue} fontSize={1.4} width={8} height={3.5}>
-                추가
-              </Button>
-            </div>
+            {/* <div> */}
+            {/*   <Button color={'black'} bgColor={blue} fontSize={1.4} width={8} height={3.5}> */}
+            {/*     추가 */}
+            {/*   </Button> */}
+            {/* </div> */}
           </ShortQueBottomLeft>
         </ShortQueBottom>
       </ShortQuestionWrapper>
