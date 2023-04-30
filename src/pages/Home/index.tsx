@@ -1,35 +1,55 @@
 import React from 'react';
-import { Explanation, ExplanationAbove, ExplanationBelow, ExplanationMiddle, HomeWrapper, Img } from './styles';
+import { Arrow, Explanation, ExplanationAbove, ExplanationBelow, ExplanationMiddle, HomeWrapper, Img } from './styles';
 import Button from '../../components/ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { AiOutlineArrowRight } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import { BsArrowRight } from 'react-icons/bs';
+import { BiRightArrowAlt } from 'react-icons/bi';
 
 export default function Home() {
-  const { main } = useRecoilValue(color);
+  const { purple } = useRecoilValue(color);
+  const navigate = useNavigate();
 
   return (
     <HomeWrapper>
       <Explanation>
         <div>
           <ExplanationAbove>
-            <span>Gak과 함께,</span>
-            <br />
-            너를 위해서, 너만을 위해서
+            <div />
+            <div>
+              <span>Gak</span> 과 함께
+              <br />
+              너를 위해서, 너만을 위해서
+            </div>
+            <div />
           </ExplanationAbove>
           <ExplanationMiddle>
-            {/* All Form Ü */}
-            <img src="homeLogo.png" alt="homeLogo" />
+            <div />
+            <div>
+              <img src="/images/homeLogo.png" alt="homeLogo" />
+            </div>
+            <div />
           </ExplanationMiddle>
           <ExplanationBelow>
-            <Button fontSize={1.4} bgColor={main} width={20} height={5} color={'white'}>
-              나만의 설문 만들기 &nbsp;&nbsp;&nbsp; <AiOutlineArrowRight />
+            <Button
+              onClick={() => navigate('/makeform')}
+              fontSize={1.8}
+              bgColor={purple}
+              width={26}
+              height={5}
+              color={'white'}
+            >
+              나만의 설문 만들기 &nbsp;&nbsp;&nbsp;
+              <Arrow>
+                <BiRightArrowAlt />
+              </Arrow>
             </Button>
           </ExplanationBelow>
         </div>
       </Explanation>
       <Img>
-        <img src="logo.png" alt="logo" />
+        <img src="/images/logo.png" alt="logo" />
       </Img>
     </HomeWrapper>
   );

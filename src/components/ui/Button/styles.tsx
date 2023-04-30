@@ -8,7 +8,7 @@ export const BtnWrapper = styled.button<Btn>`
   justify-content: center;
   align-items: center;
 
-  border-radius: 5rem;
+  border-radius: ${(props) => (props.radius ? props.radius : 5)}rem;
   border: transparent;
   padding: 1rem 2rem;
   cursor: pointer;
@@ -20,9 +20,9 @@ export const BtnWrapper = styled.button<Btn>`
   font-size: ${(props) => props.fontSize}rem;
   font-weight: 700;
 
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
 
   & > span {
     display: flex;

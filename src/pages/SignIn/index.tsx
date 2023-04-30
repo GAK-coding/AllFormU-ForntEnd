@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
-import { Form, Line, PageInfo, SignUpWrapper } from '../SignUp/styles';
+import { Form, Line, PageInfo } from '../SignUp/styles';
 import Input from '../../components/ui/Input';
 import { signInInfo } from '../../typings/user';
 import Button from '../../components/ui/Button';
@@ -8,11 +8,10 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { signIn } from '../../api/user';
 import { useNavigate } from 'react-router-dom';
-import { SignInBtn } from './styles';
 import { userInfo } from '../../recoil/User/atom';
 
 export default function SignIn() {
-  const { subBlue } = useRecoilValue(color);
+  const { blue } = useRecoilValue(color);
   const setUserInfo = useSetRecoilState(userInfo);
   const serInfo = useRecoilValue(userInfo);
   const [info, setInfo] = useState<signInInfo>({
@@ -52,65 +51,67 @@ export default function SignIn() {
     [email]
   );
 
-  // console.log(serInfo);
-
   return (
     <BaseBgBox>
-      <SignUpWrapper>
-        <PageInfo>
-          <div>Sign In</div>
+      <PageInfo>
+        <div>Sign In</div>
+        <div>
+          <img src="/images/logo.png" alt="logo" />
+          <span>All Form U</span>
+        </div>
+      </PageInfo>
+      <Form onSubmit={onClick}>
+        <Line>
           <div>
-            <img src="logo.png" alt="logo" />
-            <span>All Form U</span>
+            <span>Email</span>
           </div>
-        </PageInfo>
-        <Form onSubmit={onClick}>
-          <Line>
-            <div>
-              <span>Email</span>
-            </div>
-            <Input
-              type={'email'}
-              value={email}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={'이메일'}
-              width={30}
-              height={3}
-            />
-          </Line>
-          <Line>
-            <div>
-              <span>비밀번호</span>
-            </div>
-            <Input
-              type={'password'}
-              value={password}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
-              placeholder={'비밀번호'}
-              width={30}
-              height={3}
-            />
-          </Line>
+          <Input
+            type={'email'}
+            value={email}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
+            placeholder={'이메일'}
+            width={44}
+            height={2}
+            size={1.6}
+          />
+        </Line>
+        <Line>
+          <div>
+            <span>Password</span>
+          </div>
+          <Input
+            type={'password'}
+            value={password}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
+            placeholder={'비밀번호'}
+            width={44}
+            height={2}
+            size={1.6}
+          />
+        </Line>
 
-          <Button type={'submit'} color={'black'} bgColor={subBlue} fontSize={1.4} width={10} height={4}>
+        <Line>
+          <div />
+          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={11} height={4.5}>
             로그인
           </Button>
+        </Line>
 
-          <SignInBtn>
-            <Button
-              onClick={() => navigate('/signup')}
-              type={'button'}
-              color={'black'}
-              bgColor={subBlue}
-              fontSize={1.4}
-              width={14}
-              height={4}
-            >
-              회원가입
-            </Button>
-          </SignInBtn>
-        </Form>
-      </SignUpWrapper>
+        <Line>
+          <div />
+          <Button
+            onClick={() => navigate('/signup')}
+            type={'button'}
+            color={'black'}
+            bgColor={blue}
+            fontSize={1.6}
+            width={14}
+            height={4.5}
+          >
+            회원가입
+          </Button>
+        </Line>
+      </Form>
     </BaseBgBox>
   );
 }

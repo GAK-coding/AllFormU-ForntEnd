@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
-import { Form, Line, Match, MisMatch, PageInfo, SignUpWrapper } from './styles';
+import { Form, Line, Match, MisMatch, PageInfo } from './styles';
 import Input from '../../components/ui/Input';
 import { signUpInfo } from '../../typings/user';
 import Button from '../../components/ui/Button';
@@ -13,7 +13,7 @@ interface InputInfo extends signUpInfo {
 }
 
 export default function SignUp() {
-  const { subBlue } = useRecoilValue(color);
+  const { blue } = useRecoilValue(color);
   const [checkPw, setCheckPw] = useState(false);
 
   const [info, setInfo] = useState<InputInfo>({
@@ -57,74 +57,79 @@ export default function SignUp() {
 
   return (
     <BaseBgBox>
-      <SignUpWrapper>
-        <PageInfo>
-          <div>Sign Up</div>
+      <PageInfo>
+        <div>Sign Up</div>
+        <div>
+          <img src="/images/logo.png" alt="logo" />
+          <span>All Form U</span>
+        </div>
+      </PageInfo>
+      <Form onSubmit={onClick}>
+        <Line>
           <div>
-            <img src="logo.png" alt="logo" />
-            <span>All Form U</span>
+            <span>이름</span>
           </div>
-        </PageInfo>
-        <Form onSubmit={onClick}>
-          <Line>
-            <div>
-              <span>이름</span>
-            </div>
-            <Input
-              value={name}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'name')}
-              placeholder={'이름'}
-              width={30}
-              height={3}
-            />
-          </Line>
-          <Line>
-            <div>
-              <span>Email</span>
-            </div>
-            <Input
-              type={'email'}
-              value={email}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={'이메일'}
-              width={30}
-              height={3}
-            />
-          </Line>
-          <Line>
-            <div>
-              <span>비밀번호</span>
-            </div>
-            <Input
-              type={'password'}
-              value={password}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
-              placeholder={'비밀번호'}
-              width={30}
-              height={3}
-            />
-          </Line>
-          <Line>
-            <div>
-              <span>비밀번호 확인</span>
-            </div>
-            <Input
-              type={'password'}
-              value={checkPassword}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'checkPassword')}
-              placeholder={'비밀번호 확인'}
-              width={30}
-              height={3}
-            />
-          </Line>
-          {password && checkPassword && checkPw && <Match>비밀번호가 일치합니다!</Match>}
-          {password && checkPassword && !checkPw && <MisMatch>비밀번호가 불일치합니다.</MisMatch>}
+          <Input
+            value={name}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'name')}
+            placeholder={'이름'}
+            width={44}
+            height={2}
+            size={1.6}
+          />
+        </Line>
+        <Line>
+          <div>
+            <span>Email</span>
+          </div>
+          <Input
+            type={'email'}
+            value={email}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
+            placeholder={'이메일'}
+            width={44}
+            height={2}
+            size={1.6}
+          />
+        </Line>
+        <Line>
+          <div>
+            <span>비밀번호</span>
+          </div>
+          <Input
+            type={'password'}
+            value={password}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
+            placeholder={'비밀번호'}
+            width={44}
+            height={2}
+            size={1.6}
+          />
+        </Line>
+        <Line>
+          <div>
+            <span>비밀번호 확인</span>
+          </div>
+          <Input
+            type={'password'}
+            value={checkPassword}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'checkPassword')}
+            placeholder={'비밀번호 확인'}
+            width={44}
+            height={2}
+            size={1.6}
+          />
+        </Line>
+        {password && checkPassword && checkPw && <Match>비밀번호가 일치합니다!</Match>}
+        {password && checkPassword && !checkPw && <MisMatch>비밀번호가 불일치합니다.</MisMatch>}
 
-          <Button type={'submit'} color={'black'} bgColor={subBlue} fontSize={1.4} width={10} height={4}>
+        <Line>
+          <div />
+          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={11} height={4.5}>
             회원가입
           </Button>
-        </Form>
-      </SignUpWrapper>
+        </Line>
+      </Form>
     </BaseBgBox>
   );
 }
