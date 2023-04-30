@@ -1,57 +1,88 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import BaseBgBox from '../../components/ui/BaseBgBox';
 import Button from '../../components/ui/Button';
 import { color } from '../../recoil/Color/atom';
 import { AlignBox, BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
-import { userInfo } from '../../recoil/User/atom';
 import { useNavigate, Route, Navigate, Routes } from 'react-router-dom';
+import { mypageInfo } from '../../recoil/User/atom';
+import { useEffect } from 'react';
+import { makeInfoList } from '../../typings/makeForm';
+import { makeFormInfoList, resFormInfoList } from '../../recoil/FormList/atom';
+import { resInfoList } from '../../typings/resForm';
 
 export default function MyPage() {
-  //색깔
+  const navigate = useNavigate();
   const { blue } = useRecoilValue(color);
 
-  // user 개인 정보
+  const myInfo = useRecoilValue(mypageInfo);
 
-  const [info, setInfo] = useRecoilState(userInfo);
-  // 현재 user의 info
-  const myInfo = useRecoilValue(userInfo);
-  const setMyInfo = useSetRecoilState(userInfo);
+  const setMakeFormInfoList = useSetRecoilState(makeFormInfoList);
+  useEffect(() => {
+    const dummyData: makeInfoList[] = [
+      {
+        id: 1,
+        title: 'Make form Title 1',
+      },
+      {
+        id: 2,
+        title: 'Make form Title 2',
+      },
+      {
+        id: 3,
+        title: 'Make form Title 3',
+      },
+      {
+        id: 4,
+        title: 'Make form Title 4',
+      },
+    ];
+    setMakeFormInfoList(dummyData);
+  }, []);
+  const makeFormInfo = useRecoilValue(makeFormInfoList);
 
-  // 화면에 보여지는 값
-  const { id, name, email } = info;
+  const setResFormInfoList = useSetRecoilState(resFormInfoList);
+  useEffect(() => {
+    const dummyData: resInfoList[] = [
+      {
+        id: 1,
+        title: 'Res form Title 1',
+      },
+      {
+        id: 2,
+        title: 'Res form Title 2',
+      },
+      {
+        id: 3,
+        title: 'Res form Title 3',
+      },
+      {
+        id: 4,
+        title: 'Res form Title 4',
+      },
+    ];
+    setResFormInfoList(dummyData);
+  }, []);
 
-  // 폼 데이터를 받아오는 값 저장
-  const formdata = 'hi';
+  const resFormInfo = useRecoilValue(resFormInfoList);
 
-  const navigate = useNavigate();
-
-  // userInfo 값이 바뀔 때 마다 render
-  // useEffect(() => {
-  //   const temp = { ...myInfo };
-  //   setInfo(temp);
-  //   setMyInfo(temp);
-  //   console.log(myInfo);
-  // }, [info.name, info.email, info.userImg]);
-
-  // if (id === -1) {
-  //   return (
-  //     <Routes>
-  //       <Route path="/" element={<Navigate replace to="/signin" />} />;
-  //     </Routes>
-  //   );
-  // }
+  // redirect
+  /* if (id === -1) {
+    return (
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/signin" />} />;
+      </Routes>
+    );
+  } */
 
   return (
     <BaseBgBox>
       <MyPageWrapper>
-        {/* TODO : My Page 글자 넣기 */}
         <UserInfo>
-          {/* TODO : Img url 형태로 수정 */}
           <div>My Page</div>
           <img src="images/userProfile.png" alt="userProfile" />
           <div>
-            <span> 이름 : {info.name} </span>
-            <span> email : {info.email} </span>
+            <span> 이름 : {myInfo.name} </span>
+            <span> email : {myInfo.email} </span>
           </div>
         </UserInfo>
 
@@ -64,23 +95,51 @@ export default function MyPage() {
           <Form>
             <Line>내 생성폼</Line>
             <AlignBox>
-              {formdata && <FormBox onClick={() => navigate('/')}>{formdata}</FormBox>}
-              {formdata && <FormBox onClick={() => navigate('/')}>{formdata}</FormBox>}
+              {makeFormInfo
+                .filter((formInfo) => formInfo.id < 3)
+                .map((formInfo, idx) => {
+                  return (
+                    <FormBox key={idx} onClick={() => navigate('/')}>
+                      {formInfo.title}
+                    </FormBox>
+                  );
+                })}
             </AlignBox>
             <AlignBox>
-              {formdata && <FormBox onClick={() => navigate('/')}>{formdata}</FormBox>}
-              {formdata && <FormBox onClick={() => navigate('/')}>{formdata}</FormBox>}
+              {makeFormInfo
+                .filter((formInfo) => formInfo.id > 2 && formInfo.id < 5)
+                .map((formInfo, idx) => {
+                  return (
+                    <FormBox key={idx} onClick={() => navigate('/')}>
+                      {formInfo.title}
+                    </FormBox>
+                  );
+                })}
             </AlignBox>
           </Form>
           <Form>
             <Line>내 응답</Line>
             <AlignBox>
-              {formdata && <FormBox onClick={() => navigate('/')}>{formdata}</FormBox>}
-              {formdata && <FormBox onClick={() => navigate('/')}>{formdata}</FormBox>}
+              {resFormInfo
+                .filter((formInfo) => formInfo.id < 3)
+                .map((formInfo, idx) => {
+                  return (
+                    <FormBox key={idx} onClick={() => navigate('/')}>
+                      {formInfo.title}
+                    </FormBox>
+                  );
+                })}
             </AlignBox>
             <AlignBox>
-              {formdata && <FormBox onClick={() => navigate('/')}>{formdata}</FormBox>}
-              {formdata && <FormBox onClick={() => navigate('/')}>{formdata}</FormBox>}
+              {resFormInfo
+                .filter((formInfo) => formInfo.id > 2 && formInfo.id < 5)
+                .map((formInfo, idx) => {
+                  return (
+                    <FormBox key={idx} onClick={() => navigate('/')}>
+                      {formInfo.title}
+                    </FormBox>
+                  );
+                })}
             </AlignBox>
           </Form>
         </FormWrapper>

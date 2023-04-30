@@ -1,4 +1,5 @@
 export interface resInfoList {
+  id: number;
   title: string;
   description?: string;
 }

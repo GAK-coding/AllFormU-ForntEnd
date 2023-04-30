@@ -3,7 +3,7 @@ import Button from '../../../components/ui/Button';
 import { ButtonWrapper, FormBox, FormListWrapper, HeaderWrapper, Title } from '../styles';
 import { color } from '../../../recoil/Color/atom';
 import { useEffect } from 'react';
-import { FormInfo } from '../../../typings/makeForm';
+import { makeInfoList } from '../../../typings/makeForm';
 import { makeFormInfoList } from '../../../recoil/FormList/atom';
 
 export default function MakeFormList() {
@@ -12,20 +12,24 @@ export default function MakeFormList() {
   const setFormInfoList = useSetRecoilState(makeFormInfoList);
 
   useEffect(() => {
-    const dummyData: FormInfo[] = [
+    const dummyData: makeInfoList[] = [
       {
+        id: 1,
         title: 'Title 1',
         description: 'Description 1',
       },
       {
+        id: 2,
         title: 'Title 2',
         description: 'Description 2',
       },
       {
+        id: 3,
         title: 'Title 3',
         description: 'Description 3',
       },
       {
+        id: 4,
         title: 'Title 4',
         description: 'Description 4',
       },

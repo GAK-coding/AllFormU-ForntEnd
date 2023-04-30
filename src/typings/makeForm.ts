@@ -11,6 +11,7 @@ export interface ShortQue {
 }
 
 export interface makeInfoList {
+  id: number;
   title: string;
   description?: string;
 }
