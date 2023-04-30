@@ -57,6 +57,7 @@ export const ShortQueTopRight = styled.div`
   & > span {
     font-size: 3rem;
     font-weight: 700;
+    cursor: pointer;
   }
 `;
 

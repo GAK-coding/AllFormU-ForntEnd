@@ -23,6 +23,7 @@ interface Props {
   data: ShortQue;
   index: number;
   click: boolean;
+  onDelete: (index: number) => void;
 }
 
 type QueType = {
@@ -35,7 +36,7 @@ const Types: QueType[] = [
   { value: 'long', label: '장문형' },
 ];
 
-export default function ShortQuestion({ data, index, click }: Props) {
+export default function ShortQuestion({ data, index, click, onDelete }: Props) {
   const { blue } = useRecoilValue(color);
   const { title, answer } = data;
   const [questionList, setQuestionList] = useRecoilState(questions);
@@ -77,7 +78,7 @@ export default function ShortQuestion({ data, index, click }: Props) {
               options={Types}
               suffixIcon={<TbTriangleInverted />}
             />
-            <span>
+            <span onClick={() => onDelete(index)}>
               <GrFormClose />
             </span>
           </ShortQueTopRight>
