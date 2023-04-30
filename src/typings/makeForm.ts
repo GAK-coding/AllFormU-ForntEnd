@@ -5,6 +5,7 @@ export interface FormInfo {
 
 export interface ShortQue {
   type: 'short';
+  id: string;
   require: boolean;
   title: string;
   answer: string;
