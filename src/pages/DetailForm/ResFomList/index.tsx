@@ -1,7 +1,6 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
 import { resFormInfoList } from '../../../recoil/FormList/atom';
-import { FormInfo } from '../../../typings/makeForm';
 import { useEffect } from 'react';
 import { ButtonView, FormBox, FormListWrapper, HeaderWrapper, Title } from '../styles';
 import Button from '../../../components/ui/Button';

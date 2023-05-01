@@ -31,10 +31,10 @@ export default function Info() {
         id: 3,
         title: 'Make form Title 3',
       },
-      {
-        id: 4,
-        title: 'Make form Title 4',
-      },
+      // {
+      //   id: 4,
+      //   title: 'Make form Title 4',
+      // },
     ];
     setMakeFormInfoList(dummyData);
   }, []);
@@ -124,6 +124,7 @@ export default function Info() {
                 })}
             </AlignBox>
           </Form>
+
           <Form>
             <Line onClick={() => navigate('/mypage/resform')}>내 응답</Line>
             <AlignBox>

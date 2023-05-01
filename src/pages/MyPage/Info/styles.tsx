@@ -40,13 +40,13 @@ export const UserInfo = styled.div`
     & > span:first-of-type {
       margin-top: 8rem;
       margin-bottom: 3rem;
-      font-size: 1.8rem;
-      font-weight: 500;
+      font-size: 1.6rem;
+      font-weight: 600;
     }
     & > span {
       margin-bottom: 1rem;
-      font-size: 1.8rem;
-      font-weight: 500;
+      font-size: 1.6rem;
+      font-weight: 600;
     }
   }
 `;
@@ -55,8 +55,6 @@ export const FormWrapper = styled.div`
   width: 65%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const BtnBox = styled.div`
@@ -103,17 +101,15 @@ export const Line = styled.button`
 export const AlignBox = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+
   margin-left: 2rem;
   margin-right: 2rem;
 `;
 
 export const FormBox = styled.button`
   flex-direction: row;
-  justify-content: space-between;
 
-  width: 55%;
+  width: 45%;
   height: 6rem;
 
   border: 1px solid #dbdbdb;
@@ -122,4 +118,7 @@ export const FormBox = styled.button`
 
   margin: 1rem 1rem 0.5rem 1rem;
   cursor: pointer;
+
+  font-weight: 600;
+  color: #696969;
 `;
