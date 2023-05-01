@@ -10,7 +10,13 @@ export const HeaderWrapper = styled.header`
   height: 6vh;
 
   img {
-    width: 60%;
+    width: 20rem;
+  }
+
+  @media screen and (max-width: 769px) {
+    img {
+      width: 15rem;
+    }
   }
 `;
 
