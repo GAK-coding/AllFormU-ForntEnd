@@ -1,16 +1,16 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import BaseBgBox from '../../components/ui/BaseBgBox';
-import Button from '../../components/ui/Button';
-import { color } from '../../recoil/Color/atom';
+import BaseBgBox from '../../../components/ui/BaseBgBox';
+import Button from '../../../components/ui/Button';
+import { color } from '../../../recoil/Color/atom';
 import { AlignBox, BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
 import { useNavigate, Route, Navigate, Routes } from 'react-router-dom';
-import { mypageInfo } from '../../recoil/User/atom';
+import { mypageInfo } from '../../../recoil/User/atom';
 import { useEffect } from 'react';
-import { makeInfoList } from '../../typings/makeForm';
-import { makeFormInfoList, resFormInfoList } from '../../recoil/FormList/atom';
-import { resInfoList } from '../../typings/resForm';
+import { makeInfoList } from '../../../typings/makeForm';
+import { makeFormInfoList, resFormInfoList } from '../../../recoil/FormList/atom';
+import { resInfoList } from '../../../typings/resForm';
 
-export default function MyPage() {
+export default function Info() {
   const navigate = useNavigate();
   const { blue } = useRecoilValue(color);
 
@@ -88,7 +88,14 @@ export default function MyPage() {
 
         <FormWrapper>
           <BtnBox>
-            <Button color={'black'} bgColor={blue} fontSize={1.3} width={11} height={3.5}>
+            <Button
+              onClick={() => navigate('/mypage/edit')}
+              color={'black'}
+              bgColor={blue}
+              fontSize={1.3}
+              width={11}
+              height={3.5}
+            >
               프로필 수정
             </Button>
           </BtnBox>
