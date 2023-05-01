@@ -11,8 +11,6 @@ export default function Header() {
 
   const { pathname } = useLocation();
 
-  console.log(pathname);
-
   return (
     <HeaderWrapper>
       <Title>
