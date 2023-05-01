@@ -17,3 +17,11 @@ export interface myPageInfo extends Pick<user, 'id'> {
   name: string;
   userImg?: string;
 }
+
+export interface myPageEditInfo {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  userImg: string;
+}

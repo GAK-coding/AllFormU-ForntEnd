@@ -33,12 +33,11 @@ export const SetUserImage = styled.div`
   }
 
   & > button:first-of-type {
-    margin-top: 7rem;
-    margin-bottom: 2rem;
+    margin: 7rem 0rem 2rem 0rem;
   }
 `;
 
-export const InputWRapper = styled.div`
+export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -59,13 +58,7 @@ export const InputWRapper = styled.div`
       font-weight: 700;
       display: flex;
       justify-content: right;
-      align-items: center;
-    }
-
-    & > input {
-      margin-left: 4rem;
-      display: flex;
-      align-items: flex-start;
+      margin-right: 3rem;
     }
 
     & > button {
@@ -79,17 +72,25 @@ export const InputWRapper = styled.div`
 `;
 
 export const BtnBox = styled.nav`
-  height: 10%;
+  height: 5%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   margin-left: 0 auto;
 
   & > button:first-of-type {
-    margin-left: 10rem;
+    margin-left: 40rem;
   }
+`;
+
+export const StopUser = styled.section`
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* margin-left: 35rem; */
 
   & > button {
-    margin: 2rem 1rem 0rem 1rem;
+    margin: 7rem 1rem 0rem 3rem;
   }
 `;

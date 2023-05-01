@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { EditPageWrapper, InputWRapper, SetUserImage, BtnBox } from './styles';
+import { EditPageWrapper, InputWrapper, SetUserImage, BtnBox, StopUser } from './styles';
 import { color } from '../../../recoil/Color/atom';
 import Button from '../../../components/ui/Button';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
@@ -39,7 +39,7 @@ export default function Edit() {
           </Button>
         </SetUserImage>
 
-        <InputWRapper>
+        <InputWrapper>
           <BtnBox>
             <Button color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
               완료
@@ -123,15 +123,15 @@ export default function Edit() {
             </Button>
           </div>
 
-          <BtnBox>
-            <Button color={'black'} bgColor={lightPurple} fontSize={1.3} width={13} height={3.5}>
+          <StopUser>
+            <Button color={'#696969'} bgColor={lightPurple} fontSize={1.3} width={12} height={3.5}>
               휴면계정 전환
             </Button>
-            <Button color={'black'} bgColor={lightPurple} fontSize={1.3} width={10} height={3.5}>
+            <Button color={'#696969'} bgColor={lightPurple} fontSize={1.3} width={12} height={3.5}>
               회원탈퇴
             </Button>
-          </BtnBox>
-        </InputWRapper>
+          </StopUser>
+        </InputWrapper>
       </EditPageWrapper>
     </BaseBgBox>
   );
