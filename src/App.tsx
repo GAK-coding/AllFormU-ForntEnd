@@ -5,7 +5,6 @@ import Header from './components/Header';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
-import MyPage from './pages/MyPage';
 import SignIn from './pages/SignIn';
 import ResForm from './pages/ResForm';
 import MakeForm from './pages/MakeForm/Main';
@@ -14,6 +13,8 @@ import MakeFormDirect from './pages/MakeForm/Direct';
 import MakeFormChatbot from './pages/MakeForm/Chatbot';
 import MakeFormList from './pages/DetailForm/MakeFormList';
 import ResFormList from './pages/DetailForm/ResFomList';
+import Info from './pages/MyPage/Info';
+import Edit from './pages/MyPage/Edit';
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,8 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path={'/signup'} element={<SignUp />} />
-            <Route path={'/mypage'} element={<MyPage />} />
+            <Route path={'/mypage'} element={<Info />} />
+            <Route path={'/mypage/edit'} element={<Edit />} />
             <Route path={'/mypage/makeform'} element={<MakeFormList />} />
             <Route path={'/mypage/resform'} element={<ResFormList />} />
             <Route path={'/signin'} element={<SignIn />} />

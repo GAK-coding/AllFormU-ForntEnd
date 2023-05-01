@@ -1,31 +1,35 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
-import { formInfoList } from '../../../recoil/FormList/atom';
-import { FormInfo } from '../../../typings/makeForm';
+import { resFormInfoList } from '../../../recoil/FormList/atom';
 import { useEffect } from 'react';
 import { ButtonView, FormBox, FormListWrapper, HeaderWrapper, Title } from '../styles';
 import Button from '../../../components/ui/Button';
+import { resInfoList } from '../../../typings/resForm';
 
 export default function ResFormList() {
   const { blue } = useRecoilValue(color);
 
-  const setFormInfoList = useSetRecoilState(formInfoList);
+  const setFormInfoList = useSetRecoilState(resFormInfoList);
 
   useEffect(() => {
-    const dummyData: FormInfo[] = [
+    const dummyData: resInfoList[] = [
       {
+        id: 1,
         title: 'Title 1',
         description: 'Description 1',
       },
       {
+        id: 2,
         title: 'Title 2',
         description: 'Description 2',
       },
       {
+        id: 3,
         title: 'Title 3',
         description: 'Description 3',
       },
       {
+        id: 4,
         title: 'Title 4',
         description: 'Description 4',
       },
@@ -34,7 +38,7 @@ export default function ResFormList() {
     setFormInfoList(dummyData);
   }, []);
 
-  const formInfoListData = useRecoilValue(formInfoList);
+  const formInfoListData = useRecoilValue(resFormInfoList);
 
   return (
     <>
