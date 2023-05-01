@@ -90,25 +90,25 @@ export default function ResForm() {
     }
   };
 
-  useLayoutEffect(() => {
-    connect();
-  }, []);
-
-  useEffect(() => {
-    if (connected && stompClient.current) {
-      stompClient.current.subscribe('/topic/public', onMessageReceived);
-    }
-  }, [connected, onMessageReceived]);
-
-  useEffect(() => {
-    if (res !== null && talk.length > 0) {
-      const temp = [...talk];
-      const lastChat = temp.pop()!;
-      const editedChat = { ...lastChat, gptRes: res };
-      temp.push(editedChat);
-      setTalk(temp);
-    }
-  }, [res]);
+  // useLayoutEffect(() => {
+  //   connect();
+  // }, []);
+  //
+  // useEffect(() => {
+  //   if (connected && stompClient.current) {
+  //     stompClient.current.subscribe('/topic/public', onMessageReceived);
+  //   }
+  // }, [connected, onMessageReceived]);
+  //
+  // useEffect(() => {
+  //   if (res !== null && talk.length > 0) {
+  //     const temp = [...talk];
+  //     const lastChat = temp.pop()!;
+  //     const editedChat = { ...lastChat, gptRes: res };
+  //     temp.push(editedChat);
+  //     setTalk(temp);
+  //   }
+  // }, [res]);
 
   useEffect(() => {
     const temp = [...chat];
@@ -154,9 +154,10 @@ export default function ResForm() {
           </UserRes>
         </ChattingBottom>
 
-        {connected && isModalOpen && (
-          <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />
-        )}
+        {/* {connected && isModalOpen && ( */}
+        {/*   <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} /> */}
+        {/* )} */}
+        {isModalOpen && <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />}
       </div>
     </ChatbotResWrapper>
   );
