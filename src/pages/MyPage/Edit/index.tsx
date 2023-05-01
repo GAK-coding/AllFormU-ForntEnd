@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { EditPageWrapper, InputWrapper, SetUserImage, BtnBox, StopUser } from './styles';
 import { color } from '../../../recoil/Color/atom';
 import Button from '../../../components/ui/Button';
@@ -6,10 +6,11 @@ import BaseBgBox from '../../../components/ui/BaseBgBox';
 import Input from '../../../components/ui/Input';
 import { ChangeEvent, useCallback, useState } from 'react';
 import { signInInfo } from '../../../typings/user';
+import { mypageInfo } from '../../../recoil/User/atom';
 
 export default function Edit() {
   const { blue, lightPurple } = useRecoilValue(color);
-  const username = 'codud';
+  const username = '';
 
   const [info, setInfo] = useState<signInInfo>({
     email: '',
@@ -24,6 +25,9 @@ export default function Edit() {
     },
     [info]
   );
+
+  const originInfo = useRecoilValue(mypageInfo);
+  const [editInfo, setEditInfo] = useRecoilState(mypageInfo);
 
   return (
     <BaseBgBox>
@@ -52,7 +56,7 @@ export default function Edit() {
               type={'username'}
               value={username}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={username}
+              placeholder={originInfo.name}
               width={30}
               height={2}
               size={1.5}
@@ -62,10 +66,10 @@ export default function Edit() {
           <div>
             <span>이메일</span>
             <Input
-              type={'username'}
+              type={'email'}
               value={username}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={username}
+              placeholder={originInfo.email}
               width={30}
               height={2}
               size={1.5}
@@ -79,10 +83,10 @@ export default function Edit() {
           <div>
             <span>인증번호</span>
             <Input
-              type={'username'}
+              type={'checkMail'}
               value={username}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={username}
+              placeholder={'인증번호'}
               width={30}
               height={2}
               size={1.5}
@@ -96,10 +100,10 @@ export default function Edit() {
           <div>
             <span>비밀번호</span>
             <Input
-              type={'username'}
+              type={'password'}
               value={username}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={username}
+              placeholder={'새로운 비밀번호'}
               width={30}
               height={2}
               size={1.5}
@@ -109,10 +113,10 @@ export default function Edit() {
           <div>
             <span>비밀번호 확인</span>
             <Input
-              type={'username'}
+              type={'checkPassword'}
               value={username}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={username}
+              placeholder={'비밀번호 확인'}
               width={30}
               height={2}
               size={1.5}

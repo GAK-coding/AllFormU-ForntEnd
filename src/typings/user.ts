@@ -12,9 +12,11 @@ export interface signUpInfo extends signInInfo {
   name: string;
 }
 
-export interface myPageInfo extends Pick<user, 'id'> {
+export interface myPageInfo {
+  id: number;
   email: string;
   name: string;
+  password?: string;
   userImg?: string;
 }
 
