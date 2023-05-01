@@ -3,10 +3,15 @@ import { Col, Row } from 'antd';
 import { useRecoilState } from 'recoil';
 import { AddQuestion, BtnWrapper } from './styles';
 import { questions } from '../../../recoil/MakeForm/atom';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import ShortQuestion from '../../../components/Questions/ShortQuestion';
 import FormTitle from '../../../components/Questions/FormTitle';
 import { v4 as uuid } from 'uuid';
+
+interface Drag {
+  source: { index: number };
+  destination: { index: number };
+}
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
@@ -21,17 +26,16 @@ export default function MakeFormDirect() {
   }, [nowIndex, questionList]);
 
   const onDragEnd = useCallback(
-    (result: any) => {
+    (result: DropResult) => {
       const temp = [...questionList];
 
       const start = result.source.index;
-      const end = result.destination.index;
+      const end = result?.destination?.index;
 
       const [remove] = temp.splice(start, 1);
-      temp.splice(end, 0, remove);
+      temp.splice(end!, 0, remove);
 
       setQuestionList(temp);
-      // console.log('이거: ', start, end);
     },
     [questionList]
   );
@@ -42,7 +46,7 @@ export default function MakeFormDirect() {
       temp.splice(index, 1);
       setQuestionList(temp);
     },
-    [questionList]
+    [questionList, nowIndex]
   );
 
   return (

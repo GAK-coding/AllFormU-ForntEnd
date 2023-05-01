@@ -40,7 +40,7 @@ export const ChatbotFunc = styled.div`
   width: 35%;
   height: 12rem;
   padding: 2rem;
-  margin-left: 7rem;
+  margin-left: 5rem;
 
   box-sizing: border-box;
   border-radius: 3rem;
@@ -54,10 +54,10 @@ export const Line = styled.div`
   font-weight: 700;
   font-size: 1.2rem;
 
-  margin-top: 0.5rem;
+  margin-top: 0.7rem;
   //margin-left: 1rem;
   //margin-right: 1rem;
-  padding: 1.5rem;
+  padding: 1rem;
   line-height: 2.2rem;
 
   width: 30%;
@@ -68,7 +68,7 @@ export const BtnBoxWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  margin-left: 1.8rem;
+  /* margin-left: 1.3rem; */
 
   width: 70%;
 `;
@@ -80,7 +80,7 @@ export const BtnBox = styled.div`
   justify-content: center;
 
   & > button:first-of-type {
-    margin-right: 2rem;
+    margin-right: 1.5rem;
   }
 `;
 

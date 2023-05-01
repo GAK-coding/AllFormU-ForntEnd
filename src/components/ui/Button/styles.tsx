@@ -13,8 +13,9 @@ export const BtnWrapper = styled.button<Btn>`
   padding: 1rem 2rem;
   cursor: pointer;
 
-  width: ${(props) => props.width}rem;
-  height: ${(props) => props.height}rem;
+  width: ${(props) => (typeof props.width === 'string' ? props.width : props.width + 'rem')};
+  height: ${(props) => (typeof props.height === 'string' ? props.height : props.height + 'rem')};
+
   color: ${(props) => props.color};
   background-color: ${(props) => props.bgColor};
   font-size: ${(props) => props.fontSize}rem;
