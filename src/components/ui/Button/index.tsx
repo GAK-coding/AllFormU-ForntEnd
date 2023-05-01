@@ -7,8 +7,8 @@ export interface ButtonProps {
   color: string;
   bgColor: string;
   fontSize: number;
-  width: number;
-  height: number;
+  width: number | string;
+  height: number | string;
   children: ReactNode;
   radius?: number;
 }
@@ -30,9 +30,9 @@ export default function Button({
       onClick={onClick}
       color={color}
       fontSize={fontSize}
+      width={width}
       height={height}
       bgColor={bgColor}
-      width={width}
       radius={radius}
     >
       <span>{children}</span>

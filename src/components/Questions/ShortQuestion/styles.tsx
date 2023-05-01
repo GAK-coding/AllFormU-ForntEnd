@@ -61,7 +61,7 @@ export const ShortQueTopRight = styled.div`
   }
 `;
 
-export const ShortQueBottomLeft = styled.div`
+export const ShortQueBottomLeft = styled.div<{ type: string }>`
   width: 70%;
   min-height: 6rem;
 
@@ -70,6 +70,21 @@ export const ShortQueBottomLeft = styled.div`
 
   display: flex;
   align-items: center;
+
+  & > span {
+    display: flex;
+    align-items: center;
+
+    border: none;
+    border-bottom: 1px solid #c4c4c4;
+
+    width: ${(props) => (props.type === 'short' || props.type === 'long' ? '75%' : '25%')};
+    padding: 0.5rem;
+
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #afafaf;
+  }
 
   & > div {
     width: 25%;

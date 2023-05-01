@@ -25,7 +25,7 @@ export default function MakeFormSelect() {
       </SelectTop>
       <SelectBottom>
         <SelectBottomLeft onClick={() => navigate('/makeform/direct')}>
-          <Button color={'black'} bgColor={'white'} fontSize={2} width={20} height={15}>
+          <Button color={'black'} bgColor={'white'} fontSize={2} width={'12vw'} height={'18vh'}>
             <AiOutlinePlus />
           </Button>
           <span>생성</span>
@@ -33,7 +33,7 @@ export default function MakeFormSelect() {
         <SelectBottomRight>
           {templates.map(([name, img], index) => (
             <div key={index}>
-              <Button color={'white'} bgColor={'white'} fontSize={2} width={20} height={15}>
+              <Button color={'white'} bgColor={'white'} fontSize={2} width={'12vw'} height={'18vh'}>
                 <img src={`/images/${img}.png`} alt={name} />
               </Button>
               <span>{name}</span>
