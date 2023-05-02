@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
-import { Form, Line, PageInfo } from '../SignUp/styles';
+import { Form, LoginBtn, LoginLine, PageInfo } from '../SignUp/styles';
 import Input from '../../components/ui/Input';
 import { signInInfo } from '../../typings/user';
 import Button from '../../components/ui/Button';
@@ -61,56 +61,50 @@ export default function SignIn() {
         </div>
       </PageInfo>
       <Form onSubmit={onClick}>
-        <Line>
-          <div>
-            <span>Email</span>
-          </div>
+        <LoginLine>
+          <span>Email</span>
+
           <Input
             type={'email'}
             value={email}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
             placeholder={'이메일'}
-            width={44}
+            width={30}
             height={2}
-            size={1.6}
+            size={1.5}
           />
-        </Line>
-        <Line>
-          <div>
-            <span>Password</span>
-          </div>
+        </LoginLine>
+        <LoginLine>
+          <span>Password</span>
+
           <Input
             type={'password'}
             value={password}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
             placeholder={'비밀번호'}
-            width={44}
+            width={30}
             height={2}
-            size={1.6}
+            size={1.5}
           />
-        </Line>
+        </LoginLine>
 
-        <Line>
-          <div />
-          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={11} height={4.5}>
+        <LoginBtn>
+          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={11} height={4}>
             로그인
           </Button>
-        </Line>
 
-        <Line>
-          <div />
           <Button
             onClick={() => navigate('/signup')}
             type={'button'}
             color={'black'}
             bgColor={blue}
-            fontSize={1.6}
-            width={14}
-            height={4.5}
+            fontSize={1.5}
+            width={15}
+            height={4}
           >
             회원가입
           </Button>
-        </Line>
+        </LoginBtn>
       </Form>
     </BaseBgBox>
   );
