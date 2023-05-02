@@ -64,40 +64,6 @@ export default function Edit() {
           </div>
 
           <div>
-            <span>이메일</span>
-            <Input
-              type={'email'}
-              value={username}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={originInfo.email}
-              width={30}
-              height={2}
-              size={1.5}
-            />
-
-            <Button color={'black'} bgColor={blue} fontSize={1.2} width={9} height={3.5}>
-              인증번호 전송
-            </Button>
-          </div>
-
-          <div>
-            <span>인증번호</span>
-            <Input
-              type={'checkMail'}
-              value={username}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={'인증번호'}
-              width={30}
-              height={2}
-              size={1.5}
-            />
-
-            <Button color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
-              확인
-            </Button>
-          </div>
-
-          <div>
             <span>비밀번호</span>
             <Input
               type={'password'}

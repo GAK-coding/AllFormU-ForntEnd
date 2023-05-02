@@ -42,11 +42,11 @@ export const InputWrapper = styled.div`
   flex-direction: column;
 
   & > div:first-of-type {
-    margin-top: 6rem;
+    margin-top: 8rem;
   }
 
   & > div {
-    margin: 1rem 0rem 1rem 5rem;
+    margin: 3rem 0rem 1rem 5rem;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

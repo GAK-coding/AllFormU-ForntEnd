@@ -79,7 +79,7 @@ export default function Info() {
       <MyPageWrapper>
         <UserInfo>
           <div>My Page</div>
-          <img src="images/userProfile.png" alt="userProfile" />
+          <img src="/images/userProfile.png" alt="userProfile" />
           <div>
             <span> 이름 : {myInfo.name} </span>
             <span> email : {myInfo.email} </span>
