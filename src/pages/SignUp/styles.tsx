@@ -47,6 +47,13 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & > nav {
+    display: flex;
+    justify-items: flex-end;
+    margin-left: 0 auto;
+    cursor: pointer;
+  }
 `;
 
 export const Line = styled.div`
@@ -144,4 +151,10 @@ export const LoginBtn = styled.div`
   & > button:first-of-type {
     margin-bottom: 3rem;
   }
+`;
+
+export const FindLine = styled.div`
+  /* display: flex; */
+  justify-content: flex-start;
+  margin-right: 0 auto;
 `;
