@@ -77,6 +77,24 @@ export const Line = styled.div`
   }
 `;
 
+export const LoginLine = styled.div`
+  width: 90%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 4rem;
+
+  & > span {
+    width: 15%;
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: right;
+    margin-right: 4rem;
+  }
+`;
 export const Match = styled.span`
   margin-bottom: 1rem;
   font-size: 1.5rem;
@@ -112,5 +130,18 @@ export const BtnBox = styled.div`
     margin-top: 3rem;
     font-size: 1.5rem;
     font-weight: 700;
+  }
+`;
+
+export const LoginBtn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 3rem;
+
+  & > button:first-of-type {
+    margin-bottom: 3rem;
   }
 `;
