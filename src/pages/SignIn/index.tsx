@@ -9,6 +9,7 @@ import { color } from '../../recoil/Color/atom';
 import { signIn } from '../../api/user';
 import { useNavigate } from 'react-router-dom';
 import { userInfo } from '../../recoil/User/atom';
+import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 
 export default function SignIn() {
   const { blue } = useRecoilValue(color);
@@ -92,6 +93,8 @@ export default function SignIn() {
           <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={11} height={4}>
             로그인
           </Button>
+
+          <GoogleAuth clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`} />
 
           <Button
             onClick={() => navigate('/signup')}

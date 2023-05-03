@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import GoogleButton from '../GoogleButton';
 
 interface Props {

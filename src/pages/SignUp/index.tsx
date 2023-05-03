@@ -8,7 +8,6 @@ import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { signUp } from '../../api/user';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
-import { GoogleLogin } from '@react-oauth/google';
 
 interface InputInfo extends signUpInfo {
   checkEmail: string;
