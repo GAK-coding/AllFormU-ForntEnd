@@ -18,7 +18,6 @@ export const BaseGbBoxWrapper = styled.section`
     height: 78vh;
 
     display: flex;
-    justify-content: flex-start;
     align-items: center;
   }
 `;

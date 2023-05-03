@@ -6,6 +6,7 @@ import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { BiRightArrowAlt } from 'react-icons/bi';
+import BallonChat from '../../components/ResForm/BallonChat';
 
 export default function Home() {
   const { purple } = useRecoilValue(color);
