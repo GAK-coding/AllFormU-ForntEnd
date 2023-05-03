@@ -17,6 +17,7 @@ export interface DescriptionQue {
   id: string;
   require: boolean;
   title: string;
+  section: number;
 }
 
 export interface SelectionQue extends Omit<DescriptionQue, 'type'> {
