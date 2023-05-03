@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useCallback } from 'react';
-import BaseQuestion from '../BaseQuestion';
 import { useRecoilState } from 'recoil';
 import { formInfo } from '../../../recoil/MakeForm/atom';
 import { FormTitleWrapper, TitleInput } from './styles';
 import TextArea from 'antd/es/input/TextArea';
+import { QueWrapper } from '../MakeQueBase/styles';
 
 export default function FormTitle() {
   const [info, setInfo] = useRecoilState(formInfo);
@@ -23,9 +23,9 @@ export default function FormTitle() {
   );
 
   return (
-    <BaseQuestion>
+    <QueWrapper>
       <FormTitleWrapper>
-        <TitleInput value={info.title} onChange={onChangeTitle} placeholder={'설문 제목 입력'} />
+        <TitleInput value={info.title} onChange={onChangeTitle} placeholder={'설문 제목 입력'} required />
         <TextArea
           showCount
           maxLength={300}
@@ -33,8 +33,9 @@ export default function FormTitle() {
           value={info.description}
           onChange={onChangeDescription}
           placeholder="설문 설명"
+          required
         />
       </FormTitleWrapper>
-    </BaseQuestion>
+    </QueWrapper>
   );
 }
