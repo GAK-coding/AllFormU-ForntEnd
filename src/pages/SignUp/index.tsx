@@ -7,6 +7,8 @@ import Button from '../../components/ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { signUp } from '../../api/user';
+import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
+import { GoogleLogin } from '@react-oauth/google';
 
 interface InputInfo extends signUpInfo {
   checkEmail: string;
@@ -68,10 +70,7 @@ export default function SignUp() {
     else setCheckPw(false);
   }, [info.password, info.checkPassword]);
 
-  useEffect(() => {
-    if (info.password === info.checkPassword) setCheckPw(true);
-    else setCheckPw(false);
-  }, [info.password, info.checkPassword]);
+  const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   return (
     <BaseBgBox>
@@ -166,10 +165,11 @@ export default function SignUp() {
             회원가입
           </Button>
 
-          <Button color={'black'} bgColor={blue} fontSize={1.5} width={20} height={4}>
+          {/* <Button color={'black'} bgColor={blue} fontSize={1.5} width={20} height={4}>
             <img src="/images/google.png" alt="google" />
             구글 계정으로 시작
-          </Button>
+          </Button> */}
+          <GoogleAuth clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`} />
         </BtnBox>
       </Form>
     </BaseBgBox>

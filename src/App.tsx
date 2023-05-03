@@ -15,6 +15,7 @@ import MakeFormList from './pages/DetailForm/MakeFormList';
 import ResFormList from './pages/DetailForm/ResFomList';
 import Info from './pages/MyPage/Info';
 import Edit from './pages/MyPage/Edit';
+import FindPassword from './pages/FindPassword';
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ function App() {
             <Route path={'/mypage/makeform'} element={<MakeFormList />} />
             <Route path={'/mypage/resform'} element={<ResFormList />} />
             <Route path={'/signin'} element={<SignIn />} />
+            <Route path={'/signin/findpassword'} element={<FindPassword />} />
             <Route path={'/resform'} element={<ResForm />} />
             <Route path={'/makeform'} element={<MakeForm />} />
             <Route path={'/makeform/select'} element={<MakeFormSelect />} />
