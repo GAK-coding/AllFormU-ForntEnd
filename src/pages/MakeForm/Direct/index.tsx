@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { AddQuestion, DirectForm } from './styles';
-import { questions } from '../../../recoil/MakeForm/atom';
+import { nowQuestion, questions, sectionLens } from '../../../recoil/MakeForm/atom';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import FormTitle from '../../../components/Questions/FormTitle';
 import { v4 as uuid } from 'uuid';
@@ -13,15 +13,34 @@ import { color } from '../../../recoil/Color/atom';
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const [nowIndex, setNowIndex] = useState(0);
+  const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
+  const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
   const { blue } = useRecoilValue(color);
 
   const addQuestion = useCallback(() => {
-    const temp = [...questionList];
-    temp.splice(nowIndex + 1, 0, { type: 'Description_short', id: uuid(), require: false, title: '' });
+    const temp = JSON.parse(JSON.stringify(questionList));
+    const { row, col } = nowQueInfo;
+
+    temp[row].splice(col + 1, 0, {
+      type: 'Description_short',
+      id: uuid(),
+      require: false,
+      title: '',
+      section: row,
+    });
 
     setQuestionList(temp);
     setNowIndex((prev) => prev + 1);
-  }, [nowIndex, questionList]);
+  }, [questionList, nowQueInfo]);
+
+  const onChangeTitle = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => {
+      const temp = JSON.parse(JSON.stringify(questionList));
+      temp[row][col][name] = e.target.value;
+      setQuestionList(temp);
+    },
+    [questionList]
+  );
 
   const onDragEnd = useCallback(
     (result: DropResult) => {
@@ -39,14 +58,14 @@ export default function MakeFormDirect() {
   );
 
   const onDelete = useCallback(
-    (index: number) => {
+    (row: number, col: number) => {
       if (questionList.length === 1) return;
 
       const temp = [...questionList];
-      temp.splice(index, 1);
+      temp[row].splice(col, 1);
       setQuestionList(temp);
 
-      if (nowIndex > 0 && index <= nowIndex) {
+      if (nowIndex > 0 && accrueQue[row] + col <= nowIndex) {
         setNowIndex((prev) => prev - 1);
       }
     },
@@ -54,15 +73,30 @@ export default function MakeFormDirect() {
   );
 
   const onClickQue = useCallback(
-    (index: number) => {
+    (index: number, row: number, col: number) => {
       setNowIndex(index);
+      setNowQueInfo({ row, col });
     },
-    [nowIndex]
+    [nowQueInfo, nowIndex]
   );
 
   const onSubmit = useCallback((e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
   }, []);
+
+  useEffect(() => {
+    const temp: number[] = [];
+
+    for (let i = 0; i < questionList.length; i++) {
+      i === 0 ? temp.push(questionList[i].length) : temp.push(temp[i - 1] + questionList[i].length);
+    }
+
+    setAccrueQue(temp);
+  }, [questionList]);
+
+  console.log(questionList);
+  console.log(nowIndex);
+  console.log(accrueQue);
 
   return (
     <Row>
@@ -75,21 +109,31 @@ export default function MakeFormDirect() {
               {(provided) => (
                 <div>
                   <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {questionList.map((card, idx) => (
-                      <Draggable draggableId={card.id} index={idx} key={card.id}>
-                        {(provided) => (
-                          <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                            <MakeQueBase
-                              data={card}
-                              index={idx}
-                              isClick={idx === nowIndex}
-                              onClickQue={onClickQue}
-                              onDelete={onDelete}
-                            />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                    {questionList.map((card, index) => {
+                      return (
+                        <Draggable draggableId={`section-${card[0].id}`} index={index} key={`section-${card[0].id}`}>
+                          {(provided) => (
+                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                              <div style={{ border: '1px solid', marginBottom: '2rem' }}>
+                                {card.map((v, idx) => (
+                                  <div key={v.id}>
+                                    <MakeQueBase
+                                      data={v}
+                                      row={index}
+                                      col={idx}
+                                      isClick={index === 0 ? idx === nowIndex : accrueQue[index - 1] + idx === nowIndex}
+                                      onChangeTitle={onChangeTitle}
+                                      onClickQue={onClickQue}
+                                      onDelete={() => onDelete(index, idx)}
+                                    />
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </Draggable>
+                      );
+                    })}
                   </div>
                   {provided.placeholder}
                 </div>

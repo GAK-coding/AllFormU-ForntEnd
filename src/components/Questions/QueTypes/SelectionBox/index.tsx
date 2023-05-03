@@ -12,10 +12,11 @@ import { Select } from 'antd';
 
 interface Props {
   data: SelectionQue;
-  index: number;
+  row: number;
+  col: number;
 }
 
-export default function SelectionBox({ data, index }: Props) {
+export default function SelectionBox({ data, row, col }: Props) {
   const { blue } = useRecoilValue(color);
   const [questionList, setQuestionList] = useRecoilState(questions);
   const { options, type } = data;
@@ -23,7 +24,7 @@ export default function SelectionBox({ data, index }: Props) {
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, num: number) => {
       const temp = JSON.parse(JSON.stringify(questionList));
-      (temp[index] as SelectionQue).options[num] = e.target.value;
+      (temp[row][col] as SelectionQue).options[num] = e.target.value;
       setQuestionList(temp);
     },
     [questionList]
@@ -32,28 +33,28 @@ export default function SelectionBox({ data, index }: Props) {
   const addOption = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(questionList));
     const isEtc = options[options.length - 1] === '기타';
-    isEtc && (temp[index] as SelectionQue).options.pop();
+    isEtc && (temp[row][col] as SelectionQue).options.pop();
 
-    (temp[index] as SelectionQue).options.push('');
+    (temp[row][col] as SelectionQue).options.push('');
 
-    isEtc && (temp[index] as SelectionQue).options.push('기타');
+    isEtc && (temp[row][col] as SelectionQue).options.push('기타');
     setQuestionList(temp);
   }, [questionList]);
 
   const addEtc = useCallback(() => {
     if (options[options.length - 1] !== '기타') {
       const temp = JSON.parse(JSON.stringify(questionList));
-      (temp[index] as SelectionQue).options.push('기타');
+      (temp[row][col] as SelectionQue).options.push('기타');
       setQuestionList(temp);
     }
-  }, [questionList, data, index, options]);
+  }, [questionList, data, row, col, options]);
 
   const onDelete = useCallback(
     (num: number) => {
       if (options.length === 1) return;
 
       const temp = JSON.parse(JSON.stringify(questionList));
-      (temp[index] as SelectionQue).options.splice(num, 1);
+      (temp[row][col] as SelectionQue).options.splice(num, 1);
       setQuestionList(temp);
     },
     [questionList]
@@ -62,7 +63,7 @@ export default function SelectionBox({ data, index }: Props) {
   const onChangeDropDown = useCallback(
     (value: string, num: number) => {
       const temp = JSON.parse(JSON.stringify(questionList));
-      (temp[index] as SelectionQue).options[num] = value;
+      (temp[row][col] as SelectionQue).options[num] = value;
       setQuestionList(temp);
     },
     [questionList]
@@ -71,7 +72,7 @@ export default function SelectionBox({ data, index }: Props) {
   useEffect(() => {
     if (type === 'Selection_dropDown' && options[options.length - 1] === '기타') {
       const temp = JSON.parse(JSON.stringify(questionList));
-      (temp[index] as SelectionQue).options.pop();
+      (temp[row][col] as SelectionQue).options.pop();
       setQuestionList(temp);
     }
   }, [questionList]);
