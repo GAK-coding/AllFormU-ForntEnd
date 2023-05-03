@@ -5,7 +5,7 @@ import Button from '../../ui/Button';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
 import { Chat } from '../../../typings/resForm';
-import ResFormChat from '../ResFormChat';
+import ResFormChat from '../ResFormModalChat';
 import { message } from 'antd';
 import { gptLoading, gptTalks } from '../../../recoil/Gpt/atom';
 

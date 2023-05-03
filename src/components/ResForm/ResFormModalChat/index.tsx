@@ -3,7 +3,7 @@ import { Chat } from '../../../typings/resForm';
 import { ChatBox } from './styles';
 import { Skeleton } from 'antd';
 
-export default function ResFormChat({ myReq, gptRes }: Chat) {
+export default function ResFormModalChat({ myReq, gptRes }: Chat) {
   return (
     <div>
       <ChatBox type={'user'}>
