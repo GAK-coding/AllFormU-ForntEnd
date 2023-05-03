@@ -11,31 +11,52 @@ export const questionTypes = atom({
   },
 });
 
+export const nowQuestion = atom<{ [key in string]: number }>({
+  key: 'nowQuestion',
+  default: { row: 0, col: 0 },
+});
+
 export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', description: '' } });
 
-export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>>({
+export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>({
   key: 'questions',
   default: [
-    {
-      type: 'Description_time',
-      id: uuid(),
-      require: false,
-      title: '',
-    },
-    {
-      type: 'Selection_selection',
-      id: uuid(),
-      require: false,
-      title: '',
-      options: ['0', '10'],
-    },
-    {
-      type: 'Grid_radio',
-      id: uuid(),
-      require: false,
-      title: '',
-      rows: [''],
-      cols: [''],
-    },
+    [
+      {
+        type: 'Description_short',
+        id: uuid(),
+        require: true,
+        title: 'What is your name?',
+        section: 0,
+      },
+      {
+        type: 'Selection_checkBox',
+        id: uuid(),
+        require: false,
+        title: 'What is your age?',
+        options: ['18', '19', '20'],
+        section: 0,
+      },
+    ],
+    [
+      {
+        type: 'Selection_checkBox',
+        id: uuid(),
+        require: false,
+        title: '',
+        options: [''],
+        section: 1,
+      },
+      {
+        type: 'Selection_checkBox',
+        id: uuid(),
+        require: false,
+        title: '',
+        options: [''],
+        section: 1,
+      },
+    ],
   ],
 });
+
+export const sectionLens = atom<number[]>({ key: 'sectionLens', default: [] });
