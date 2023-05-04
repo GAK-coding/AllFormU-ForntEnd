@@ -23,7 +23,7 @@ export default function SectionBox({ children, index }: Props) {
       setQuestionList(temp);
       setIdx(+value);
     },
-    [questionList, option, idx]
+    [questionList, idx, index, setQuestionList]
   );
 
   useEffect(() => {
@@ -32,11 +32,7 @@ export default function SectionBox({ children, index }: Props) {
       temp.push({ value: i, label: i + 1, disabled: i === index });
     }
     setOption(temp);
-  }, [index, questionList]);
-
-  // console.log(questionList);
-  // console.log(option);
-  console.log('인덱스: ', index);
+  }, [questionList, index, idx]);
 
   return (
     <SectionBoxWrapper>
@@ -44,7 +40,7 @@ export default function SectionBox({ children, index }: Props) {
         <FormInput value={''} onChange={(e) => console.log(e)} width={'50%'} fontSize={1.8} placeholder={'섹션 이름'} />
         <span>
           <span>섹션 순서</span>
-          <Select defaultValue={`${idx + 1}`} style={{ width: 100 }} onChange={onChangeSection} options={option} />
+          <Select defaultValue={`${index + 1}`} style={{ width: 100 }} onChange={onChangeSection} options={option} />
         </span>
       </div>
       {children}
