@@ -162,7 +162,7 @@ export default function MakeFormDirect() {
             </SectionBox>
           ))}
 
-          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={11} height={4.5}>
+          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}>
             폼 생성하기
           </Button>
         </DirectForm>
