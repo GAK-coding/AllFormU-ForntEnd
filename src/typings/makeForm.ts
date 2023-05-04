@@ -27,17 +27,18 @@ export type GridKinds = 'Grid_RADIO' | 'Grid_CHECKBOX';
 export interface DescriptionQue {
   type: DescriptionKinds;
   id: string;
-  require: boolean;
+  required: boolean;
   title: string;
-  section: number;
+  sectionNum: number;
+  descriptions: Array<{ content: string }>;
 }
 
-export interface SelectionQue extends Omit<DescriptionQue, 'type'> {
+export interface SelectionQue extends Omit<DescriptionQue, 'type' | 'descriptions'> {
   type: SelectionKinds;
-  options: string[];
+  options: Array<{ content: string }>;
 }
 
-export interface GridQue extends Omit<DescriptionQue, 'type'> {
+export interface GridQue extends Omit<DescriptionQue, 'type' | 'descriptions'> {
   type: GridKinds;
   rows: string[];
   cols: string[];

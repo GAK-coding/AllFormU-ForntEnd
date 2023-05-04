@@ -24,14 +24,13 @@ export default function MakeFormDirect() {
     const temp = JSON.parse(JSON.stringify(questionList));
     const { row, col } = nowQueInfo;
 
-    console.log('추가: ', row, col);
-
     temp[row].splice(col + 1, 0, {
       type: DESCRIPTION_SHORT,
       id: uuid(),
-      require: false,
+      required: false,
       title: '뭐냐',
-      section: row,
+      sectionNum: 0,
+      descriptions: [{ content: '' }],
     });
 
     setQuestionList(temp);

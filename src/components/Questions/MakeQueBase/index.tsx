@@ -92,7 +92,7 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
         !temp[row][col]['options'] && (temp[row][col]['options'] = ['']);
 
         if (value === SELECTION_LINEAR) {
-          (temp[row][col] as SelectionQue).options = ['0', '10'];
+          (temp[row][col] as SelectionQue).options = [{ content: '0' }, { content: '10' }];
         }
       } else if (queTypes['Grid'].includes(value)) {
         !!temp[row][col]['options'] && delete temp[row][col]['options'];
