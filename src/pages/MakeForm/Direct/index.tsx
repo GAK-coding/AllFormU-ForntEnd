@@ -9,12 +9,13 @@ import { v4 as uuid } from 'uuid';
 import MakeQueBase from '../../../components/Questions/MakeQueBase';
 import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
+import SectionBox from '../../../components/Questions/SectionBox';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
+  const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
   const [nowIndex, setNowIndex] = useState(0);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
-  const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
   const { blue } = useRecoilValue(color);
 
   const addQuestion = useCallback(() => {
@@ -43,14 +44,14 @@ export default function MakeFormDirect() {
   );
 
   const onDragEnd = useCallback(
-    (result: DropResult) => {
-      const temp = [...questionList];
+    (result: DropResult, row: number) => {
+      const temp = JSON.parse(JSON.stringify(questionList));
 
       const start = result.source.index;
       const end = result?.destination?.index;
 
-      const [remove] = temp.splice(start, 1);
-      temp.splice(end!, 0, remove);
+      const [remove] = temp[row].splice(start, 1);
+      temp[row].splice(end!, 0, remove);
 
       setQuestionList(temp);
     },
@@ -92,11 +93,9 @@ export default function MakeFormDirect() {
     }
 
     setAccrueQue(temp);
-  }, [questionList]);
+  }, []);
 
   console.log(questionList);
-  console.log(nowIndex);
-  console.log(accrueQue);
 
   return (
     <Row>
@@ -104,42 +103,38 @@ export default function MakeFormDirect() {
       <Col span={16}>
         <DirectForm onSubmit={onSubmit}>
           <FormTitle />
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="card" type="card" direction="vertical">
-              {(provided) => (
-                <div>
-                  <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {questionList.map((card, index) => {
-                      return (
-                        <Draggable draggableId={`section-${card[0].id}`} index={index} key={`section-${card[0].id}`}>
-                          {(provided) => (
-                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                              <div style={{ border: '1px solid', marginBottom: '2rem' }}>
-                                {card.map((v, idx) => (
-                                  <div key={v.id}>
-                                    <MakeQueBase
-                                      data={v}
-                                      row={index}
-                                      col={idx}
-                                      isClick={index === 0 ? idx === nowIndex : accrueQue[index - 1] + idx === nowIndex}
-                                      onChangeTitle={onChangeTitle}
-                                      onClickQue={onClickQue}
-                                      onDelete={() => onDelete(index, idx)}
-                                    />
-                                  </div>
-                                ))}
+          {questionList.map((section, index) => (
+            <SectionBox key={section[0].id} index={index}>
+              <DragDropContext onDragEnd={(result) => onDragEnd(result, index)}>
+                <Droppable droppableId="card" type="card" direction="vertical">
+                  {(provided) => (
+                    <div>
+                      <div {...provided.droppableProps} ref={provided.innerRef}>
+                        {section.map((que, idx) => (
+                          <Draggable draggableId={que.id} index={idx} key={que.id}>
+                            {(provided) => (
+                              <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                <MakeQueBase
+                                  data={que}
+                                  row={index}
+                                  col={idx}
+                                  isClick={index === 0 ? idx === nowIndex : accrueQue[index - 1] + idx === nowIndex}
+                                  onChangeTitle={onChangeTitle}
+                                  onClickQue={onClickQue}
+                                  onDelete={() => onDelete(index, idx)}
+                                />
                               </div>
-                            </div>
-                          )}
-                        </Draggable>
-                      );
-                    })}
-                  </div>
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+                            )}
+                          </Draggable>
+                        ))}
+                      </div>
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </SectionBox>
+          ))}
 
           <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={11} height={4.5}>
             폼 생성하기
