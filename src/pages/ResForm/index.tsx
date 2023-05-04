@@ -20,6 +20,7 @@ import Stomp from 'stompjs';
 import { gptLoading, gptTalks } from '../../recoil/Gpt/atom';
 import { chatTalks } from '../../recoil/Resform/atom';
 import Input from '../../components/ui/Input';
+import BallonChat from '../../components/ResForm/BallonChat';
 
 interface ChatMessage {
   sender: string;
@@ -119,12 +120,23 @@ export default function ResForm() {
     <ChatbotResWrapper>
       <div>
         <Chatting>
-          {chat?.map((message, idx) => {
-            const { user, chatbot } = message;
+          {/* {chat?.map((message, idx) => { */}
+          {/*   const { user, chatbot } = message; */}
 
-            return <ChatBox key={idx} user={user} chatbot={chatbot} />;
-          })}
+          {/*   return <ChatBox key={idx} user={user} chatbot={chatbot} />; */}
+          {/* })} */}
+          <BallonChat chatText={'으악1231231232131231312321'} />
+          <BallonChat chatText={'으악'} />
+          <BallonChat chatText={'으악'} />
+          <BallonChat chatText={'으악'} />
+          <BallonChat chatText={'으악'} />
+          <BallonChat chatText={'으악'} />
+          {/*   chatText={ */}
+          {/*     '으악 \n 1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312' */}
+          {/*   } */}
+          {/* /> */}
         </Chatting>
+
         <ChattingBottom>
           <ChatbotFunc>
             <Line>
