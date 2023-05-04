@@ -34,7 +34,7 @@ interface Props {
   row: number;
   col: number;
   isClick: boolean;
-  onClickQue: (index: number, row: number, col: number) => void;
+  onClickQue: (row: number, col: number) => void;
   onDelete: (row: number, col: number) => void;
   onChangeTitle: (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => void;
 }
@@ -108,7 +108,7 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
       <DeleteBtn onClick={() => onDelete(row, col)}>
         <GrFormClose />
       </DeleteBtn>
-      <QueBody onClick={() => onClickQue(row === 0 ? col : accrueQue[row - 1] + col, row, col)}>
+      <QueBody onClick={() => onClickQue(row, col)}>
         {isClick && <CheckMark />}
         <QueTop>
           <QueTopLeft>
