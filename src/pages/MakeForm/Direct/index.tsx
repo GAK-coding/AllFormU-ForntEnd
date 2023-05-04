@@ -10,6 +10,7 @@ import MakeQueBase from '../../../components/Questions/MakeQueBase';
 import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import SectionBox from '../../../components/Questions/SectionBox';
+import { DESCRIPTION_SHORT } from '../../../typings/makeForm';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
@@ -26,7 +27,7 @@ export default function MakeFormDirect() {
     console.log('추가: ', row, col);
 
     temp[row].splice(col + 1, 0, {
-      type: 'Description_short',
+      type: DESCRIPTION_SHORT,
       id: uuid(),
       require: false,
       title: '뭐냐',

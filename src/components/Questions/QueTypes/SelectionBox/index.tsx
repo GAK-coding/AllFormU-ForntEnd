@@ -1,5 +1,11 @@
 import React, { ChangeEvent, useCallback, useEffect } from 'react';
-import { SelectionQue } from '../../../../typings/makeForm';
+import {
+  SELECTION_CHECKBOX,
+  SELECTION_DROPDOWN,
+  SELECTION_LINEAR,
+  SELECTION_OPTION,
+  SelectionQue,
+} from '../../../../typings/makeForm';
 import FormInput from '../../../ui/FormInput';
 import Button from '../../../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -70,14 +76,14 @@ export default function SelectionBox({ data, row, col }: Props) {
   );
 
   useEffect(() => {
-    if (type === 'Selection_dropDown' && options[options.length - 1] === '기타') {
+    if (type === SELECTION_DROPDOWN && options[options.length - 1] === '기타') {
       const temp = JSON.parse(JSON.stringify(questionList));
       (temp[row][col] as SelectionQue).options.pop();
       setQuestionList(temp);
     }
   }, [questionList]);
 
-  if (type === 'Selection_linear') {
+  if (type === SELECTION_LINEAR) {
     return (
       <DropDownWrapper>
         <Select
@@ -115,9 +121,9 @@ export default function SelectionBox({ data, row, col }: Props) {
       {options.map((option, idx) => (
         <div key={idx}>
           <span>
-            {type === 'Selection_selection' ? (
+            {type === SELECTION_OPTION ? (
               <ImRadioUnchecked />
-            ) : type === 'Selection_checkBox' ? (
+            ) : type === SELECTION_CHECKBOX ? (
               <ImCheckboxUnchecked />
             ) : (
               <>{idx + 1}</>
@@ -138,7 +144,7 @@ export default function SelectionBox({ data, row, col }: Props) {
               <Button onClick={addOption} color={'black'} bgColor={blue} fontSize={1.4} width={8} height={3.5}>
                 추가
               </Button>
-              {type !== 'Selection_dropDown' && (
+              {type !== SELECTION_DROPDOWN && (
                 <Button onClick={addEtc} color={'black'} bgColor={blue} fontSize={1.4} width={8} height={3.5}>
                   기타
                 </Button>

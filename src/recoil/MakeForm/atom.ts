@@ -1,13 +1,41 @@
 import { atom } from 'recoil';
-import { FormInfo, DescriptionQue, SelectionQue, GridQue } from '../../typings/makeForm';
+import {
+  FormInfo,
+  DescriptionQue,
+  SelectionQue,
+  GridQue,
+  DESCRIPTION_SHORT,
+  DESCRIPTION_LONG,
+  DESCRIPTION_DATE,
+  DESCRIPTION_IMG,
+  DESCRIPTION_TIME,
+  SELECTION_LINEAR,
+  SELECTION_DROPDOWN,
+  SELECTION_CHECKBOX,
+  SELECTION_OPTION,
+  GRID_RADIO,
+  GRID_CHECKBOX,
+} from '../../typings/makeForm';
 import { v4 as uuid } from 'uuid';
+
+// export const DESCRIPTION_SHORT = 'Description_SHORT';
+// export const DESCRIPTION_LONG = 'Description_LONG';
+// export const DESCRIPTION_DATE = 'Description_DATE';
+// export const DESCRIPTION_TIME = 'Description_TIME';
+// export const DESCRIPTION_IMG = 'Description_IMG';
+// export const SELECTION_OPTION = 'Selection_OPTION';
+// export const SELECTION_CHECKBOX = 'Selection_CHECKBOX';
+// export const SELECTION_DROPDOWN = 'Selection_DROPDOWN';
+// export const SELECTION_LINEAR = 'Selection_LINEAR';
+// export const GRID_RADIO = 'Grid_RADIO';
+// export const GRID_CHECKBOX = 'Grid_CHECKBOX';
 
 export const questionTypes = atom({
   key: 'questionTypes',
   default: {
-    Description: ['Description_short', 'Description_long', 'Description_date', 'Description_time', 'Description_image'],
-    Selection: ['Selection_selection', 'Selection_checkBox', 'Selection_dropDown', 'Selection_linear'],
-    Grid: ['Grid_radio', 'Grid_checkBox'],
+    Description: [DESCRIPTION_SHORT, DESCRIPTION_LONG, DESCRIPTION_DATE, DESCRIPTION_TIME, DESCRIPTION_IMG],
+    Selection: [SELECTION_OPTION, SELECTION_CHECKBOX, SELECTION_DROPDOWN, SELECTION_LINEAR],
+    Grid: [GRID_RADIO, GRID_CHECKBOX],
   },
 });
 
@@ -23,14 +51,14 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
   default: [
     [
       {
-        type: 'Description_short',
+        type: DESCRIPTION_SHORT,
         id: uuid(),
         require: true,
         title: 'What is your name?',
         section: 0,
       },
       {
-        type: 'Selection_checkBox',
+        type: SELECTION_CHECKBOX,
         id: uuid(),
         require: false,
         title: 'What is your age?',
@@ -40,7 +68,7 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
     ],
     [
       {
-        type: 'Selection_checkBox',
+        type: SELECTION_CHECKBOX,
         id: uuid(),
         require: false,
         title: '',
@@ -48,7 +76,7 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
         section: 1,
       },
       {
-        type: 'Selection_checkBox',
+        type: SELECTION_CHECKBOX,
         id: uuid(),
         require: false,
         title: '',
@@ -58,7 +86,7 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
     ],
     [
       {
-        type: 'Selection_checkBox',
+        type: SELECTION_CHECKBOX,
         id: uuid(),
         require: false,
         title: '123',
@@ -66,7 +94,7 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
         section: 2,
       },
       {
-        type: 'Selection_checkBox',
+        type: SELECTION_CHECKBOX,
         id: uuid(),
         require: false,
         title: '',
