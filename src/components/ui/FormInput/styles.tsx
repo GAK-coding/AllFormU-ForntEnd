@@ -12,6 +12,7 @@ export const FormInputWrapper = styled.input<{ width: string; fontSize: number }
 
   &:focus {
     outline: none;
+    border-bottom: 1px solid black;
   }
 
   ::placeholder {
