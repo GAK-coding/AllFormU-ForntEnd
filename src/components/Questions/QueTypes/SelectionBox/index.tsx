@@ -1,5 +1,11 @@
 import React, { ChangeEvent, useCallback, useEffect } from 'react';
-import { SelectionQue } from '../../../../typings/makeForm';
+import {
+  SELECTION_CHECKBOX,
+  SELECTION_DROPDOWN,
+  SELECTION_LINEAR,
+  SELECTION_OPTION,
+  SelectionQue,
+} from '../../../../typings/makeForm';
 import FormInput from '../../../ui/FormInput';
 import Button from '../../../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -24,7 +30,7 @@ export default function SelectionBox({ data, row, col }: Props) {
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, num: number) => {
       const temp = JSON.parse(JSON.stringify(questionList));
-      (temp[row][col] as SelectionQue).options[num] = e.target.value;
+      (temp[row][col] as SelectionQue).options[num].content = e.target.value;
       setQuestionList(temp);
     },
     [questionList]
@@ -32,19 +38,19 @@ export default function SelectionBox({ data, row, col }: Props) {
 
   const addOption = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(questionList));
-    const isEtc = options[options.length - 1] === '기타';
+    const isEtc = options[options.length - 1].content === '기타';
     isEtc && (temp[row][col] as SelectionQue).options.pop();
 
-    (temp[row][col] as SelectionQue).options.push('');
+    (temp[row][col] as SelectionQue).options.push({ content: '' });
 
-    isEtc && (temp[row][col] as SelectionQue).options.push('기타');
+    isEtc && (temp[row][col] as SelectionQue).options.push({ content: '기타' });
     setQuestionList(temp);
   }, [questionList]);
 
   const addEtc = useCallback(() => {
-    if (options[options.length - 1] !== '기타') {
+    if (options[options.length - 1].content !== '기타') {
       const temp = JSON.parse(JSON.stringify(questionList));
-      (temp[row][col] as SelectionQue).options.push('기타');
+      (temp[row][col] as SelectionQue).options.push({ content: '기타' });
       setQuestionList(temp);
     }
   }, [questionList, data, row, col, options]);
@@ -63,21 +69,21 @@ export default function SelectionBox({ data, row, col }: Props) {
   const onChangeDropDown = useCallback(
     (value: string, num: number) => {
       const temp = JSON.parse(JSON.stringify(questionList));
-      (temp[row][col] as SelectionQue).options[num] = value;
+      (temp[row][col] as SelectionQue).options[num].content = value;
       setQuestionList(temp);
     },
     [questionList]
   );
 
   useEffect(() => {
-    if (type === 'Selection_dropDown' && options[options.length - 1] === '기타') {
+    if (type === SELECTION_DROPDOWN && options[options.length - 1].content === '기타') {
       const temp = JSON.parse(JSON.stringify(questionList));
       (temp[row][col] as SelectionQue).options.pop();
       setQuestionList(temp);
     }
   }, [questionList]);
 
-  if (type === 'Selection_linear') {
+  if (type === SELECTION_LINEAR) {
     return (
       <DropDownWrapper>
         <Select
@@ -115,16 +121,16 @@ export default function SelectionBox({ data, row, col }: Props) {
       {options.map((option, idx) => (
         <div key={idx}>
           <span>
-            {type === 'Selection_selection' ? (
+            {type === SELECTION_OPTION ? (
               <ImRadioUnchecked />
-            ) : type === 'Selection_checkBox' ? (
+            ) : type === SELECTION_CHECKBOX ? (
               <ImCheckboxUnchecked />
             ) : (
               <>{idx + 1}</>
             )}
           </span>
           <FormInput
-            value={option}
+            value={option.content}
             onChange={(e) => onChange(e, idx)}
             width={'40%'}
             fontSize={1.6}
@@ -138,7 +144,7 @@ export default function SelectionBox({ data, row, col }: Props) {
               <Button onClick={addOption} color={'black'} bgColor={blue} fontSize={1.4} width={8} height={3.5}>
                 추가
               </Button>
-              {type !== 'Selection_dropDown' && (
+              {type !== SELECTION_DROPDOWN && (
                 <Button onClick={addEtc} color={'black'} bgColor={blue} fontSize={1.4} width={8} height={3.5}>
                   기타
                 </Button>

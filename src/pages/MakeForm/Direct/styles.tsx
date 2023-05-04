@@ -26,3 +26,7 @@ export const AddQuestion = styled.button`
     writing-mode: vertical-rl;
   }
 `;
+
+export const AddSection = styled(AddQuestion)`
+  margin-left: 5em;
+`;

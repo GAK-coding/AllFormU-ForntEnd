@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { Col, Row } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { AddQuestion, DirectForm } from './styles';
+import { AddQuestion, AddSection, DirectForm } from './styles';
 import { nowQuestion, questions, sectionLens } from '../../../recoil/MakeForm/atom';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import FormTitle from '../../../components/Questions/FormTitle';
@@ -10,9 +10,11 @@ import MakeQueBase from '../../../components/Questions/MakeQueBase';
 import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import SectionBox from '../../../components/Questions/SectionBox';
+import { DESCRIPTION_SHORT } from '../../../typings/makeForm';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
+  // 각 섹션이 몇 번 인덱스까지 사용하는지
   const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
   const [nowIndex, setNowIndex] = useState(0);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
@@ -23,16 +25,35 @@ export default function MakeFormDirect() {
     const { row, col } = nowQueInfo;
 
     temp[row].splice(col + 1, 0, {
-      type: 'Description_short',
+      type: DESCRIPTION_SHORT,
       id: uuid(),
-      require: false,
-      title: '',
-      section: row,
+      required: false,
+      title: '뭐냐',
+      sectionNum: row,
+      descriptions: [{ content: '' }],
     });
 
     setQuestionList(temp);
     setNowIndex((prev) => prev + 1);
-  }, [questionList, nowQueInfo]);
+  }, [questionList, nowQueInfo, nowIndex]);
+
+  const addSection = useCallback(() => {
+    const temp = JSON.parse(JSON.stringify(questionList));
+
+    temp.push([
+      {
+        type: DESCRIPTION_SHORT,
+        id: uuid(),
+        required: true,
+        title: '',
+        sectionNum: temp.length,
+        descriptions: [{ content: '' }],
+      },
+    ]);
+    setQuestionList(temp);
+    setNowQueInfo({ row: temp.length - 1, col: 0 });
+    setNowIndex(accrueQue[accrueQue.length - 1] + 1);
+  }, [questionList, nowIndex, accrueQue, nowQueInfo]);
 
   const onChangeTitle = useCallback(
     (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => {
@@ -60,42 +81,47 @@ export default function MakeFormDirect() {
 
   const onDelete = useCallback(
     (row: number, col: number) => {
-      if (questionList.length === 1) return;
+      if (questionList[row].length === 1) return;
 
-      const temp = [...questionList];
+      const temp = JSON.parse(JSON.stringify(questionList));
       temp[row].splice(col, 1);
       setQuestionList(temp);
 
-      if (nowIndex > 0 && accrueQue[row] + col <= nowIndex) {
+      const delIdx = row === 0 ? col : accrueQue[row - 1] + col + 1;
+
+      if (delIdx < nowIndex || (col !== 0 && delIdx === nowIndex)) {
         setNowIndex((prev) => prev - 1);
       }
     },
-    [questionList, nowIndex]
+    [questionList, nowIndex, accrueQue]
   );
 
   const onClickQue = useCallback(
-    (index: number, row: number, col: number) => {
+    (row: number, col: number) => {
+      const index = row === 0 ? col : accrueQue[row - 1] + col + 1;
+
       setNowIndex(index);
       setNowQueInfo({ row, col });
     },
-    [nowQueInfo, nowIndex]
+    [nowQueInfo, nowIndex, accrueQue]
   );
 
   const onSubmit = useCallback((e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const temp: number[] = [];
 
     for (let i = 0; i < questionList.length; i++) {
-      i === 0 ? temp.push(questionList[i].length) : temp.push(temp[i - 1] + questionList[i].length);
+      i === 0 ? temp.push(questionList[i].length - 1) : temp.push(temp[i - 1] + questionList[i].length);
     }
 
     setAccrueQue(temp);
-  }, []);
+  }, [addQuestion]);
 
   console.log(questionList);
+  console.log(nowIndex);
 
   return (
     <Row>
@@ -103,25 +129,25 @@ export default function MakeFormDirect() {
       <Col span={16}>
         <DirectForm onSubmit={onSubmit}>
           <FormTitle />
-          {questionList.map((section, index) => (
-            <SectionBox key={section[0].id} index={index}>
-              <DragDropContext onDragEnd={(result) => onDragEnd(result, index)}>
+          {questionList.map((section, row) => (
+            <SectionBox key={`section-${row}`} index={row}>
+              <DragDropContext onDragEnd={(result) => onDragEnd(result, row)}>
                 <Droppable droppableId="card" type="card" direction="vertical">
                   {(provided) => (
                     <div>
                       <div {...provided.droppableProps} ref={provided.innerRef}>
-                        {section.map((que, idx) => (
-                          <Draggable draggableId={que.id} index={idx} key={que.id}>
+                        {section.map((que, col) => (
+                          <Draggable draggableId={que.id} index={col} key={que.id}>
                             {(provided) => (
                               <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                 <MakeQueBase
                                   data={que}
-                                  row={index}
-                                  col={idx}
-                                  isClick={index === 0 ? idx === nowIndex : accrueQue[index - 1] + idx === nowIndex}
+                                  row={row}
+                                  col={col}
+                                  isClick={row === 0 ? col === nowIndex : accrueQue[row - 1] + col + 1 === nowIndex}
                                   onChangeTitle={onChangeTitle}
                                   onClickQue={onClickQue}
-                                  onDelete={() => onDelete(index, idx)}
+                                  onDelete={() => onDelete(row, col)}
                                 />
                               </div>
                             )}
@@ -145,6 +171,9 @@ export default function MakeFormDirect() {
         <AddQuestion onClick={addQuestion}>
           <span>질문 추가</span>
         </AddQuestion>
+        <AddSection onClick={addSection}>
+          <span>섹션 추가</span>
+        </AddSection>
       </Col>
     </Row>
   );
