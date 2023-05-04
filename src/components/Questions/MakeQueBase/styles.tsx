@@ -103,7 +103,7 @@ export const QueBottomRight = styled.div`
   box-sizing: border-box;
 
   & > span {
-    color: #f36767;
+    color: #afafaf;
     font-weight: 700;
     margin-right: 0.5rem;
   }
