@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
-import { FindLine, Form, LoginBtn, LoginLine, PageInfo } from '../SignUp/styles';
+import { Form, LoginBtn, LoginLine, PageInfo } from '../SignUp/styles';
 import Input from '../../components/ui/Input';
 import { signInInfo } from '../../typings/user';
 import Button from '../../components/ui/Button';
@@ -88,7 +88,7 @@ export default function SignIn() {
           />
         </LoginLine>
         <LoginLine>
-          <div onClick={() => navigate('/login/findpassword')}>비밀번호 찾기</div>
+          <div onClick={() => navigate('/signin/findpassword')}>비밀번호 찾기</div>
         </LoginLine>
         <LoginBtn>
           <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={11} height={4}>
