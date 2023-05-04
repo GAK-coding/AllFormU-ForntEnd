@@ -56,6 +56,24 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
         section: 1,
       },
     ],
+    [
+      {
+        type: 'Selection_checkBox',
+        id: uuid(),
+        require: false,
+        title: '123',
+        options: [''],
+        section: 2,
+      },
+      {
+        type: 'Selection_checkBox',
+        id: uuid(),
+        require: false,
+        title: '',
+        options: [''],
+        section: 2,
+      },
+    ],
   ],
 });
 
