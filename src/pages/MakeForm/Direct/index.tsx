@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { Col, Row } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { AddQuestion, DirectForm } from './styles';
+import { AddQuestion, AddSection, DirectForm } from './styles';
 import { nowQuestion, questions, sectionLens } from '../../../recoil/MakeForm/atom';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import FormTitle from '../../../components/Questions/FormTitle';
@@ -14,7 +14,7 @@ import { DESCRIPTION_SHORT } from '../../../typings/makeForm';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
-  // 각 섹션이 몇 번 인덱스까지 사용하는
+  // 각 섹션이 몇 번 인덱스까지 사용하는지
   const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
   const [nowIndex, setNowIndex] = useState(0);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
@@ -29,13 +29,31 @@ export default function MakeFormDirect() {
       id: uuid(),
       required: false,
       title: '뭐냐',
-      sectionNum: 0,
+      sectionNum: row,
       descriptions: [{ content: '' }],
     });
 
     setQuestionList(temp);
     setNowIndex((prev) => prev + 1);
-  }, [questionList, nowQueInfo]);
+  }, [questionList, nowQueInfo, nowIndex]);
+
+  const addSection = useCallback(() => {
+    const temp = JSON.parse(JSON.stringify(questionList));
+
+    temp.push([
+      {
+        type: DESCRIPTION_SHORT,
+        id: uuid(),
+        required: true,
+        title: '',
+        sectionNum: temp.length,
+        descriptions: [{ content: '' }],
+      },
+    ]);
+    setQuestionList(temp);
+    setNowQueInfo({ row: temp.length - 1, col: 0 });
+    setNowIndex(accrueQue[accrueQue.length - 1] + 1);
+  }, [questionList, nowIndex, accrueQue, nowQueInfo]);
 
   const onChangeTitle = useCallback(
     (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => {
@@ -103,6 +121,7 @@ export default function MakeFormDirect() {
   }, [addQuestion]);
 
   console.log(questionList);
+  console.log(nowIndex);
 
   return (
     <Row>
@@ -152,6 +171,9 @@ export default function MakeFormDirect() {
         <AddQuestion onClick={addQuestion}>
           <span>질문 추가</span>
         </AddQuestion>
+        <AddSection onClick={addSection}>
+          <span>섹션 추가</span>
+        </AddSection>
       </Col>
     </Row>
   );
