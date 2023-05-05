@@ -58,6 +58,7 @@ export const InputId = styled.div`
     }
     & > input {
       margin-right: 1rem;
+      background-color: inherit;
     }
   }
 `;
