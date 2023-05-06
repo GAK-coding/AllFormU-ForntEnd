@@ -34,3 +34,37 @@ export const FloatButton = styled.button`
 
   cursor: pointer;
 `;
+
+export const ModalOpen = styled(FloatButton)`
+  height: 350px;
+  padding: 2rem;
+  border-radius: 70px;
+
+  & > button {
+    border: none;
+
+    & > span {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+  }
+`;
+
+export const CloseBtn = styled.button`
+  height: 10%;
+  cursor: pointer;
+
+  & > img {
+    width: 70%;
+  }
+`;
+
+export const FunctionBtn = styled.button`
+  height: 30%;
+
+  & > img {
+    width: 100%;
+    cursor: pointer;
+  }
+`;
