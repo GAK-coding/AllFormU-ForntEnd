@@ -4,10 +4,11 @@ import { GridBoxWrapper } from './styles';
 
 interface Props {
   data: GridQue;
-  index: number;
+  row: number;
+  col: number;
 }
 
-export default function GridBox({ data, index }: Props) {
+export default function GridBox({ data, row, col }: Props) {
   const { rows, cols } = data;
 
   return (
