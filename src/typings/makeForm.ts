@@ -16,7 +16,7 @@ export interface createFormData extends FormInfo {
 
 export interface FormInfo {
   title: string;
-  description: string;
+  content: string;
 }
 
 export type DescriptionKinds =

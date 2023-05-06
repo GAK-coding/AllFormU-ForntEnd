@@ -20,7 +20,7 @@ export default function MakeFormDirect() {
   const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
   const [nowIndex, setNowIndex] = useState(0);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
-  const { title, description } = useRecoilValue(formInfo);
+  const { title, content } = useRecoilValue(formInfo);
   const { blue } = useRecoilValue(color);
 
   const { mutate, isLoading, isError, error, isSuccess } = useMutation(createForm);
@@ -34,9 +34,9 @@ export default function MakeFormDirect() {
         return rest;
       });
 
-      mutate({ title, description, questions });
+      mutate({ title, content: content, questions });
     },
-    [title, description, questionList]
+    [title, content, questionList]
   );
 
   const addQuestion = useCallback(() => {
