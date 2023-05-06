@@ -53,6 +53,7 @@ export default function ResForm() {
   const [res, setRes] = useState('');
   const setLoading = useSetRecoilState(gptLoading);
 
+  //** 2. socket에서 밑에 onMessageReceived, connect, sendMessage 함수 사용 */
   const onMessageReceived = useCallback(
     (payload: Stomp.Message) => {
       const { content } = JSON.parse(payload.body);
@@ -91,6 +92,7 @@ export default function ResForm() {
     }
   };
 
+  //** 1. resFormPage에 들어가면 맨 처음에 백엔드와 socket 연결을 함 + 응답 받음 *?
   // useLayoutEffect(() => {
   //   connect();
   // }, []);
@@ -166,6 +168,7 @@ export default function ResForm() {
           </UserRes>
         </ChattingBottom>
 
+        {/* 3. 백엔드와 socket 연동이 되어야만 GPT와 대화하는 모달을 열 수 있음 */}
         {/* {connected && isModalOpen && ( */}
         {/*   <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} /> */}
         {/* )} */}
