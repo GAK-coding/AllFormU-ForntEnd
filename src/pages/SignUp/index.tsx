@@ -4,40 +4,35 @@ import { BtnBox, Form, Line, Match, MisMatch, PageInfo } from './styles';
 import Input from '../../components/ui/Input';
 import { signUpInfo } from '../../typings/user';
 import Button from '../../components/ui/Button';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { signUp } from '../../api/user';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
+import { useMutation } from 'react-query';
+import { signUpUserInfo } from '../../recoil/User/atom';
 
-interface InputInfo extends signUpInfo {
+interface InputInfo {
   checkEmail: string;
   checkPassword: string;
 }
 
 export default function SignUp() {
   const { blue } = useRecoilValue(color);
+  const [userInfo, setUserInfo] = useRecoilState(signUpUserInfo);
+  const { name, email, password } = useRecoilValue(signUpUserInfo);
 
   const [checkPw, setCheckPw] = useState(false);
   const [checkENum, setCheckENum] = useState(false);
 
-  const [info, setInfo] = useState<InputInfo>({
-    name: '',
-    email: '',
+  // 이메일 인증번호 = ENum;
+  const ENum = '000';
+
+  const [checkInfo, setCheckInfo] = useState<InputInfo>({
     checkEmail: '',
-    password: '',
     checkPassword: '',
   });
 
-  const { name, email, checkEmail, password, checkPassword } = info;
-
-  const onChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>, value: keyof InputInfo) => {
-      const temp = { ...info };
-      temp[value] = e.target.value;
-      setInfo(temp);
-    },
-    [info]
-  );
+  const { mutate, isLoading, isError, error, data, isSuccess } = useMutation(signUp);
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -46,13 +41,35 @@ export default function SignUp() {
         return;
       }
 
+      if (!checkENum) {
+        alert('인증번호가 일치하지 않습니다.');
+        return;
+      }
       e.preventDefault();
 
-      signUp({ name, email, password })
-        .then(() => alert('회원가입에 성공하셨습니다!'))
-        .catch((err) => console.error(err));
+      mutate({ name, email, password });
     },
-    [name, email, checkEmail, password, checkPassword, checkPw]
+    [userInfo.name, userInfo.email, checkInfo.checkEmail, userInfo.password, checkInfo.checkPassword, checkPw]
+  );
+
+  const onChangeCheck = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, value: keyof InputInfo) => {
+      const temp = { ...checkInfo };
+      temp[value] = e.target.value;
+
+      setCheckInfo(temp);
+    },
+    [checkInfo]
+  );
+
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, value: keyof signUpInfo) => {
+      const temp = { ...userInfo };
+      temp[value] = e.target.value;
+
+      setUserInfo(temp);
+    },
+    [userInfo]
   );
 
   const onSendNum = () => {
@@ -60,16 +77,16 @@ export default function SignUp() {
   };
 
   const onCheck = () => {
-    if (checkENum === true) alert('확인 되었습니다.');
-    else alert('인증번호가 일치하지 않습니다.');
+    if (checkInfo.checkEmail === ENum) {
+      alert('확인 되었습니다.');
+      setCheckENum(true);
+    } else alert('인증번호가 일치하지 않습니다.');
   };
 
   useEffect(() => {
-    if (info.password === info.checkPassword) setCheckPw(true);
+    if (userInfo.password === checkInfo.checkPassword) setCheckPw(true);
     else setCheckPw(false);
-  }, [info.password, info.checkPassword]);
-
-  const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  }, [userInfo.password, checkInfo.checkPassword]);
 
   return (
     <BaseBgBox>
@@ -116,8 +133,8 @@ export default function SignUp() {
 
           <Input
             type={'text'}
-            value={checkEmail}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'checkEmail')}
+            value={checkInfo.checkEmail}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeCheck(e, 'checkEmail')}
             placeholder={'인증번호'}
             width={25}
             height={1.8}
@@ -147,8 +164,8 @@ export default function SignUp() {
 
           <Input
             type={'password'}
-            value={checkPassword}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'checkPassword')}
+            value={checkInfo.checkPassword}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeCheck(e, 'checkPassword')}
             placeholder={'비밀번호 확인'}
             width={25}
             height={1.8}
@@ -156,8 +173,8 @@ export default function SignUp() {
           />
         </Line>
 
-        {password && checkPassword && checkPw && <Match>비밀번호가 일치합니다!</Match>}
-        {password && checkPassword && !checkPw && <MisMatch>비밀번호가 불일치합니다.</MisMatch>}
+        {password && checkInfo.checkPassword && checkPw && <Match>비밀번호가 일치합니다!</Match>}
+        {password && checkInfo.checkPassword && !checkPw && <MisMatch>비밀번호가 불일치합니다.</MisMatch>}
 
         <BtnBox>
           <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={11} height={4}>
