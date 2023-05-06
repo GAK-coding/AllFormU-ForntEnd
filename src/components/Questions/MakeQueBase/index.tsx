@@ -14,14 +14,25 @@ import {
 import FormInput from '../../ui/FormInput';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Select, Switch } from 'antd';
-import { questions, questionTypes } from '../../../recoil/MakeForm/atom';
+import { questions, questionTypes, sectionLens } from '../../../recoil/MakeForm/atom';
 import { TbTriangleInverted } from 'react-icons/tb';
 import { GrFormClose } from 'react-icons/gr';
 import {
+  DESCRIPTION_DATE,
+  DESCRIPTION_IMG,
+  DESCRIPTION_LONG,
+  DESCRIPTION_SHORT,
+  DESCRIPTION_TIME,
   DescriptionKinds,
   DescriptionQue,
+  GRID_CHECKBOX,
+  GRID_RADIO,
   GridKinds,
   GridQue,
+  SELECTION_CHECKBOX,
+  SELECTION_DROPDOWN,
+  SELECTION_LINEAR,
+  SELECTION_OPTION,
   SelectionKinds,
   SelectionQue,
 } from '../../../typings/makeForm';
@@ -31,10 +42,12 @@ import GridBox from '../QueTypes/GridBox';
 
 interface Props {
   data: DescriptionQue | SelectionQue | GridQue;
-  index: number;
+  row: number;
+  col: number;
   isClick: boolean;
-  onClickQue: (index: number) => void;
-  onDelete: (index: number) => void;
+  onClickQue: (row: number, col: number) => void;
+  onDelete: (row: number, col: number) => void;
+  onChangeTitle: (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => void;
 }
 
 type QueType = {
@@ -43,65 +56,49 @@ type QueType = {
 };
 
 const Types: QueType[] = [
-  { value: 'Description_short', label: '단답형' },
-  { value: 'Description_long', label: '장문형' },
-  { value: 'Description_date', label: '날짜' },
-  { value: 'Description_time', label: '시간' },
-  { value: 'Description_image', label: '이미지' },
-  { value: 'Selection_selection', label: '객관식 질문' },
-  { value: 'Selection_checkBox', label: '체크 박스' },
-  { value: 'Selection_dropDown', label: '드롭 다운' },
-  { value: 'Selection_linear', label: '선형 배율' },
-  { value: 'Grid_radio', label: '객관식 그리드' },
-  { value: 'Grid_checkBox', label: '체크박스 그리드' },
+  { value: DESCRIPTION_SHORT, label: '단답형' },
+  { value: DESCRIPTION_LONG, label: '장문형' },
+  { value: DESCRIPTION_DATE, label: '날짜' },
+  { value: DESCRIPTION_TIME, label: '시간' },
+  { value: DESCRIPTION_IMG, label: '이미지' },
+  { value: SELECTION_OPTION, label: '객관식 질문' },
+  { value: SELECTION_CHECKBOX, label: '체크 박스' },
+  { value: SELECTION_DROPDOWN, label: '드롭 다운' },
+  { value: SELECTION_LINEAR, label: '선형 배율' },
+  { value: GRID_RADIO, label: '객관식 그리드' },
+  { value: GRID_CHECKBOX, label: '체크박스 그리드' },
 ];
 
-export default function MakeQueBase({ onClickQue, data, index, isClick, onDelete }: Props) {
+export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDelete, onChangeTitle }: Props) {
   const { title, type } = data;
   const [questionList, setQuestionList] = useRecoilState(questions);
   const queTypes = useRecoilValue(questionTypes);
+  const accrueQue = useRecoilValue(sectionLens);
   const [nowType, setNowType] = useState(type);
-
-  const onChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>, name: 'title' | 'answer') => {
-      const temp = JSON.parse(JSON.stringify(questionList));
-      temp[index][name] = e.target.value;
-      setQuestionList(temp);
-    },
-    [questionList, data]
-  );
 
   const onChangeType = useCallback(
     (value: DescriptionKinds | SelectionKinds | GridKinds) => {
       setNowType(value);
       const temp = JSON.parse(JSON.stringify(questionList));
-      temp[index].type = value;
+      temp[row][col].type = value;
 
       if (queTypes['Description'].includes(value)) {
-        !!temp[index]['options'] && delete temp[index]['options'];
-        !!temp[index]['rows'] && delete temp[index]['rows'];
-        !!temp[index]['cols'] && delete temp[index]['cols'];
-      }
+        !!temp[row][col]['options'] && delete temp[row][col]['options'];
+        !!temp[row][col]['rows'] && delete temp[row][col]['rows'];
+        !!temp[row][col]['cols'] && delete temp[row][col]['cols'];
+      } else if (queTypes['Selection'].includes(value)) {
+        !!temp[row][col]['rows'] && delete temp[row][col]['rows'];
+        !!temp[row][col]['cols'] && delete temp[row][col]['cols'];
+        !temp[row][col]['options'] && (temp[row][col]['options'] = ['']);
 
-      if (queTypes['Selection'].includes(value)) {
-        !!temp[index]['rows'] && delete temp[index]['rows'];
-        !!temp[index]['cols'] && delete temp[index]['cols'];
-        !temp[index]['options'] && (temp[index]['options'] = ['']);
-
-        if (value === 'Selection_linear') {
-          (temp[index] as SelectionQue).options = ['0', '10'];
+        if (value === SELECTION_LINEAR) {
+          (temp[row][col] as SelectionQue).options = [{ content: '0' }, { content: '10' }];
         }
+      } else if (queTypes['Grid'].includes(value)) {
+        !!temp[row][col]['options'] && delete temp[row][col]['options'];
+        !temp[row][col]['rows'] && (temp[row][col]['rows'] = []);
+        !temp[row][col]['cols'] && (temp[row][col]['cols'] = []);
       }
-
-      if (queTypes['Grid'].includes(value)) {
-        !!temp[index]['options'] && delete temp[index]['options'];
-        !temp[index]['rows'] && (temp[index]['rows'] = []);
-        !temp[index]['cols'] && (temp[index]['cols'] = []);
-      }
-
-      // if (value === 'Selection_linear') {
-      //   (temp[index] as SelectionQue).options = ['0', '10'];
-      // }
 
       setQuestionList(temp);
     },
@@ -111,26 +108,24 @@ export default function MakeQueBase({ onClickQue, data, index, isClick, onDelete
   const onChangeRequire = useCallback(
     (checked: boolean) => {
       const temp = JSON.parse(JSON.stringify(questionList));
-      temp[index]['require'] = checked;
+      temp[row][col]['require'] = checked;
       setQuestionList(temp);
     },
     [questionList]
   );
 
-  console.log(questionList);
-
   return (
     <QueWrapper>
-      <DeleteBtn onClick={() => onDelete(index)}>
+      <DeleteBtn onClick={() => onDelete(row, col)}>
         <GrFormClose />
       </DeleteBtn>
-      <QueBody onClick={() => onClickQue(index)}>
+      <QueBody onClick={() => onClickQue(row, col)}>
         {isClick && <CheckMark />}
         <QueTop>
           <QueTopLeft>
             <FormInput
               value={title}
-              onChange={(e) => onChange(e, 'title')}
+              onChange={(e) => onChangeTitle(e, 'title', row, col)}
               width={'75%'}
               fontSize={1.6}
               placeholder={'질문'}
@@ -150,8 +145,10 @@ export default function MakeQueBase({ onClickQue, data, index, isClick, onDelete
         <QueBottom>
           <QueBottomLeft>
             {queTypes['Description'].includes(nowType) && <DescriptionBox type={nowType} />}
-            {queTypes['Selection'].includes(nowType) && <SelectionBox data={data as SelectionQue} index={index} />}
-            {queTypes['Grid'].includes(nowType) && <GridBox data={data as GridQue} index={index} />}
+            {queTypes['Selection'].includes(nowType) && (
+              <SelectionBox data={data as SelectionQue} row={row} col={col} />
+            )}
+            {queTypes['Grid'].includes(nowType) && <GridBox data={data as GridQue} row={row} col={col} />}
           </QueBottomLeft>
           <QueBottomRight>
             <span>필수 응답</span>

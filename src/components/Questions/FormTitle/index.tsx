@@ -15,23 +15,23 @@ export default function FormTitle() {
     [info]
   );
 
-  const onChangeDescription = useCallback(
+  const onChangeContent = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setInfo({ ...info, description: e.target.value });
+      setInfo({ ...info, content: e.target.value });
     },
     [info]
   );
 
   return (
-    <QueWrapper>
+    <QueWrapper style={{ backgroundColor: 'white' }}>
       <FormTitleWrapper>
         <TitleInput value={info.title} onChange={onChangeTitle} placeholder={'설문 제목 입력'} required />
         <TextArea
           showCount
           maxLength={300}
           style={{ height: 80, resize: 'none' }}
-          value={info.description}
-          onChange={onChangeDescription}
+          value={info.content}
+          onChange={onChangeContent}
           placeholder="설문 설명"
           required
         />

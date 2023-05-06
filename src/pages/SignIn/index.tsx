@@ -88,7 +88,9 @@ export default function SignIn() {
             size={1.5}
           />
         </LoginLine>
-        <span onClick={() => navigate('/')}>비밀번호 찾기</span>
+        <LoginLine>
+          <div onClick={() => navigate('/signin/findpassword')}>비밀번호 찾기</div>
+        </LoginLine>
         <LoginBtn>
           <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={11} height={4}>
             로그인

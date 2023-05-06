@@ -1,41 +1,79 @@
 import { atom } from 'recoil';
-import { FormInfo, DescriptionQue, SelectionQue, GridQue } from '../../typings/makeForm';
+import {
+  FormInfo,
+  DescriptionQue,
+  SelectionQue,
+  GridQue,
+  DESCRIPTION_SHORT,
+  DESCRIPTION_LONG,
+  DESCRIPTION_DATE,
+  DESCRIPTION_IMG,
+  DESCRIPTION_TIME,
+  SELECTION_LINEAR,
+  SELECTION_DROPDOWN,
+  SELECTION_CHECKBOX,
+  SELECTION_OPTION,
+  GRID_RADIO,
+  GRID_CHECKBOX,
+} from '../../typings/makeForm';
 import { v4 as uuid } from 'uuid';
 
 export const questionTypes = atom({
   key: 'questionTypes',
   default: {
-    Description: ['Description_short', 'Description_long', 'Description_date', 'Description_time', 'Description_image'],
-    Selection: ['Selection_selection', 'Selection_checkBox', 'Selection_dropDown', 'Selection_linear'],
-    Grid: ['Grid_radio', 'Grid_checkBox'],
+    Description: [DESCRIPTION_SHORT, DESCRIPTION_LONG, DESCRIPTION_DATE, DESCRIPTION_TIME, DESCRIPTION_IMG],
+    Selection: [SELECTION_OPTION, SELECTION_CHECKBOX, SELECTION_DROPDOWN, SELECTION_LINEAR],
+    Grid: [GRID_RADIO, GRID_CHECKBOX],
   },
 });
 
-export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', description: '' } });
+export const nowQuestion = atom<{ [key in string]: number }>({
+  key: 'nowQuestion',
+  default: { row: 0, col: 0 },
+});
 
-export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>>({
+export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', content: '' } });
+
+export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>({
   key: 'questions',
   default: [
-    {
-      type: 'Description_time',
-      id: uuid(),
-      require: false,
-      title: '',
-    },
-    {
-      type: 'Selection_selection',
-      id: uuid(),
-      require: false,
-      title: '',
-      options: ['0', '10'],
-    },
-    {
-      type: 'Grid_radio',
-      id: uuid(),
-      require: false,
-      title: '',
-      rows: [''],
-      cols: [''],
-    },
+    [
+      {
+        type: DESCRIPTION_SHORT,
+        id: uuid(),
+        required: true,
+        title: 'What is your name?',
+        sectionNum: 0,
+        descriptions: [{ content: '' }],
+      },
+      {
+        type: SELECTION_CHECKBOX,
+        id: uuid(),
+        required: false,
+        title: 'What is your age?',
+        options: [{ content: '18' }, { content: '19' }, { content: '20' }],
+        sectionNum: 0,
+      },
+    ],
+    [
+      {
+        type: SELECTION_OPTION,
+        id: uuid(),
+        required: true,
+        title: 'What is your name?',
+        sectionNum: 0,
+        options: [{ content: '0' }, { content: '7' }],
+      },
+      {
+        type: DESCRIPTION_TIME,
+        id: uuid(),
+        required: false,
+        title: 'What is your age?',
+        descriptions: [{ content: '' }],
+        sectionNum: 0,
+      },
+    ],
   ],
 });
+
+export const sectionLens = atom<number[]>({ key: 'sectionLens', default: [] });
