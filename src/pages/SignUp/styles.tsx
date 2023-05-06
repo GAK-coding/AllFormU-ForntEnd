@@ -46,7 +46,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 `;
 
 export const Line = styled.div`
@@ -94,6 +94,18 @@ export const LoginLine = styled.div`
     justify-content: right;
     margin-right: 4rem;
   }
+
+  & > div {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-left: 36rem;
+    margin-top: -5rem;
+    cursor: pointer;
+
+    font-weight: 700;
+    color: #696969;
+  }
 `;
 export const Match = styled.span`
   margin-bottom: 1rem;
@@ -139,9 +151,15 @@ export const LoginBtn = styled.div`
   justify-content: center;
   align-items: center;
 
-  margin-top: 3rem;
+  margin-top: 0rem;
 
   & > button:first-of-type {
     margin-bottom: 3rem;
   }
+`;
+
+export const FindLine = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin: auto;
 `;
