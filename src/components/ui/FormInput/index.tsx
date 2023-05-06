@@ -19,6 +19,7 @@ export default function FormInput({ value, onChange, width = '50%', fontSize, pl
       fontSize={fontSize}
       disabled={disabled}
       placeholder={placeholder}
+      required
     />
   );
 }
