@@ -37,7 +37,7 @@ export default function SectionBox({ children, index }: Props) {
   return (
     <SectionBoxWrapper>
       <div>
-        <FormInput value={''} onChange={(e) => console.log(e)} width={'50%'} fontSize={1.8} placeholder={'섹션 이름'} />
+        {/* <FormInput value={''} onChange={(e) => console.log(e)} width={'50%'} fontSize={1.8} placeholder={'섹션 이름'} /> */}
         <span>
           <span>섹션 순서</span>
           <Select defaultValue={`${index + 1}`} style={{ width: 100 }} onChange={onChangeSection} options={option} />

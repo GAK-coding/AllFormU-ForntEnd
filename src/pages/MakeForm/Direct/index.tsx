@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { Col, Row } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { AddQuestion, AddSection, DirectForm } from './styles';
-import { nowQuestion, questions, sectionLens } from '../../../recoil/MakeForm/atom';
+import { formInfo, nowQuestion, questions, sectionLens } from '../../../recoil/MakeForm/atom';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import FormTitle from '../../../components/Questions/FormTitle';
 import { v4 as uuid } from 'uuid';
@@ -11,6 +11,8 @@ import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import SectionBox from '../../../components/Questions/SectionBox';
 import { DESCRIPTION_SHORT } from '../../../typings/makeForm';
+import { useMutation } from 'react-query';
+import { createForm } from '../../../api/makeform';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
@@ -18,7 +20,24 @@ export default function MakeFormDirect() {
   const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
   const [nowIndex, setNowIndex] = useState(0);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
+  const { title, description } = useRecoilValue(formInfo);
   const { blue } = useRecoilValue(color);
+
+  const { mutate, isLoading, isError, error, isSuccess } = useMutation(createForm);
+
+  const onSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      const questions = questionList.flat().map((item) => {
+        const { id, ...rest } = item;
+        return rest;
+      });
+
+      mutate({ title, description, questions });
+    },
+    [title, description, questionList]
+  );
 
   const addQuestion = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(questionList));
@@ -75,20 +94,30 @@ export default function MakeFormDirect() {
       temp[row].splice(end!, 0, remove);
 
       setQuestionList(temp);
+      setNowIndex(row === 0 ? end! : accrueQue[row - 1] + end!);
     },
-    [questionList]
+    [questionList, nowIndex, accrueQue]
   );
 
   const onDelete = useCallback(
     (row: number, col: number) => {
-      if (questionList[row].length === 1) return;
+      if (row === 0 && questionList[row].length === 1) return;
 
       const temp = JSON.parse(JSON.stringify(questionList));
-      temp[row].splice(col, 1);
-      setQuestionList(temp);
-
       const delIdx = row === 0 ? col : accrueQue[row - 1] + col + 1;
 
+      if (row !== 0 && questionList[row].length === 1) {
+        temp.splice(row, 1);
+        setQuestionList(temp);
+
+        if (delIdx === nowIndex) {
+          setNowIndex((prev) => prev - 1);
+        }
+        return;
+      }
+
+      temp[row].splice(col, 1);
+      setQuestionList(temp);
       if (delIdx < nowIndex || (col !== 0 && delIdx === nowIndex)) {
         setNowIndex((prev) => prev - 1);
       }
@@ -106,10 +135,6 @@ export default function MakeFormDirect() {
     [nowQueInfo, nowIndex, accrueQue]
   );
 
-  const onSubmit = useCallback((e: ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  }, []);
-
   useLayoutEffect(() => {
     const temp: number[] = [];
 
@@ -119,9 +144,6 @@ export default function MakeFormDirect() {
 
     setAccrueQue(temp);
   }, [addQuestion]);
-
-  console.log(questionList);
-  console.log(nowIndex);
 
   return (
     <Row>

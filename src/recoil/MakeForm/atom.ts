@@ -55,6 +55,24 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
         sectionNum: 0,
       },
     ],
+    [
+      {
+        type: SELECTION_OPTION,
+        id: uuid(),
+        required: true,
+        title: 'What is your name?',
+        sectionNum: 0,
+        options: [{ content: '0' }, { content: '7' }],
+      },
+      {
+        type: DESCRIPTION_TIME,
+        id: uuid(),
+        required: false,
+        title: 'What is your age?',
+        descriptions: [{ content: '' }],
+        sectionNum: 0,
+      },
+    ],
   ],
 });
 
