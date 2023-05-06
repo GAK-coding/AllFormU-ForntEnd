@@ -42,7 +42,7 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
         type: DESCRIPTION_SHORT,
         id: uuid(),
         required: true,
-        title: 'What is your name?',
+        title: '섹션1',
         sectionNum: 0,
         descriptions: [{ content: '' }],
       },
@@ -60,20 +60,50 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
         type: SELECTION_OPTION,
         id: uuid(),
         required: true,
-        title: 'What is your name?',
-        sectionNum: 0,
+        title: '섹션2',
+        sectionNum: 1,
         options: [{ content: '0' }, { content: '7' }],
       },
       {
         type: DESCRIPTION_TIME,
         id: uuid(),
         required: false,
-        title: 'What is your age?',
+        title: 'What222222 ??????',
         descriptions: [{ content: '' }],
-        sectionNum: 0,
+        sectionNum: 1,
+      },
+    ],
+    [
+      {
+        type: SELECTION_OPTION,
+        id: uuid(),
+        required: true,
+        title: '섹션333333',
+        sectionNum: 2,
+        options: [{ content: '0' }, { content: '7' }],
+      },
+      {
+        type: DESCRIPTION_TIME,
+        id: uuid(),
+        required: false,
+        title: '으악새333333?',
+        descriptions: [{ content: '' }],
+        sectionNum: 2,
+      },
+    ],
+    [
+      {
+        type: SELECTION_OPTION,
+        id: uuid(),
+        required: true,
+        title: '섹션4',
+        sectionNum: 3,
+        options: [{ content: '0' }, { content: '7' }],
       },
     ],
   ],
 });
 
 export const sectionLens = atom<number[]>({ key: 'sectionLens', default: [] });
+
+export const changeSection = atom<boolean>({ key: 'changeSection', default: false });

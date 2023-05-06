@@ -94,9 +94,10 @@ export default function MakeFormDirect() {
       temp[row].splice(end!, 0, remove);
 
       setQuestionList(temp);
-      setNowIndex(row === 0 ? end! : accrueQue[row - 1] + end!);
+      setNowIndex(row === 0 ? end! : accrueQue[row - 1] + 1 + end!);
+      setNowQueInfo({ row: row, col: end! });
     },
-    [questionList, nowIndex, accrueQue]
+    [questionList, nowIndex, accrueQue, nowQueInfo]
   );
 
   const onDelete = useCallback(
@@ -152,8 +153,8 @@ export default function MakeFormDirect() {
         <DirectForm onSubmit={onSubmit}>
           <FormTitle />
           {questionList.map((section, row) => (
-            <SectionBox key={`section-${row}`} index={row}>
-              <DragDropContext onDragEnd={(result) => onDragEnd(result, row)}>
+            <DragDropContext key={`section-${row}`} onDragEnd={(result) => onDragEnd(result, row)}>
+              <SectionBox index={row} section={section[0]}>
                 <Droppable droppableId="card" type="card" direction="vertical">
                   {(provided) => (
                     <div>
@@ -180,8 +181,8 @@ export default function MakeFormDirect() {
                     </div>
                   )}
                 </Droppable>
-              </DragDropContext>
-            </SectionBox>
+              </SectionBox>
+            </DragDropContext>
           ))}
 
           <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}>
