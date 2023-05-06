@@ -14,7 +14,8 @@ export default function FindPassword() {
     email: '',
     password: '',
   });
-  const { email, password } = info;
+  const { email } = info;
+  const [sendId, setCheckId] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,6 +30,7 @@ export default function FindPassword() {
 
   const onCheck = () => {
     //아이디 보내는 코드
+    setCheckId(true);
   };
 
   return (
@@ -55,21 +57,23 @@ export default function FindPassword() {
           </div>
         </InputId>
 
-        <ResultWrapper>
-          <span>임시 비밀번호가 발급 되었습니다.</span>
-          <span>이메일을 확인해주세요.</span>
+        {sendId && (
+          <ResultWrapper>
+            <span>임시 비밀번호가 발급 되었습니다.</span>
+            <span>이메일을 확인해주세요.</span>
 
-          <Button
-            onClick={() => navigate('/signin')}
-            color={'black'}
-            bgColor={blue}
-            fontSize={1.5}
-            width={15}
-            height={4}
-          >
-            로그인으로 이동
-          </Button>
-        </ResultWrapper>
+            <Button
+              onClick={() => navigate('/signin')}
+              color={'black'}
+              bgColor={blue}
+              fontSize={1.5}
+              width={15}
+              height={4}
+            >
+              로그인으로 이동
+            </Button>
+          </ResultWrapper>
+        )}
       </div>
     </FindWrapper>
   );
