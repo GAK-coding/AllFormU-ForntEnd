@@ -20,6 +20,7 @@ import Stomp from 'stompjs';
 import { gptLoading, gptTalks } from '../../recoil/Gpt/atom';
 import { chatTalks } from '../../recoil/Resform/atom';
 import Input from '../../components/ui/Input';
+import BallonChat from '../../components/ResForm/BallonChat';
 
 interface ChatMessage {
   sender: string;
@@ -90,25 +91,25 @@ export default function ResForm() {
     }
   };
 
-  useLayoutEffect(() => {
-    connect();
-  }, []);
-
-  useEffect(() => {
-    if (connected && stompClient.current) {
-      stompClient.current.subscribe('/topic/public', onMessageReceived);
-    }
-  }, [connected, onMessageReceived]);
-
-  useEffect(() => {
-    if (res !== null && talk.length > 0) {
-      const temp = [...talk];
-      const lastChat = temp.pop()!;
-      const editedChat = { ...lastChat, gptRes: res };
-      temp.push(editedChat);
-      setTalk(temp);
-    }
-  }, [res]);
+  // useLayoutEffect(() => {
+  //   connect();
+  // }, []);
+  //
+  // useEffect(() => {
+  //   if (connected && stompClient.current) {
+  //     stompClient.current.subscribe('/topic/public', onMessageReceived);
+  //   }
+  // }, [connected, onMessageReceived]);
+  //
+  // useEffect(() => {
+  //   if (res !== null && talk.length > 0) {
+  //     const temp = [...talk];
+  //     const lastChat = temp.pop()!;
+  //     const editedChat = { ...lastChat, gptRes: res };
+  //     temp.push(editedChat);
+  //     setTalk(temp);
+  //   }
+  // }, [res]);
 
   useEffect(() => {
     const temp = [...chat];
@@ -119,12 +120,23 @@ export default function ResForm() {
     <ChatbotResWrapper>
       <div>
         <Chatting>
-          {chat?.map((message, idx) => {
-            const { user, chatbot } = message;
+          {/* {chat?.map((message, idx) => { */}
+          {/*   const { user, chatbot } = message; */}
 
-            return <ChatBox key={idx} user={user} chatbot={chatbot} />;
-          })}
+          {/*   return <ChatBox key={idx} user={user} chatbot={chatbot} />; */}
+          {/* })} */}
+          <BallonChat chatText={'으악1231231232131231312321'} />
+          <BallonChat chatText={'으악'} />
+          <BallonChat chatText={'으악'} />
+          <BallonChat chatText={'으악'} />
+          <BallonChat chatText={'으악'} />
+          <BallonChat chatText={'으악'} />
+          {/*   chatText={ */}
+          {/*     '으악 \n 1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312' */}
+          {/*   } */}
+          {/* /> */}
         </Chatting>
+
         <ChattingBottom>
           <ChatbotFunc>
             <Line>
@@ -154,9 +166,10 @@ export default function ResForm() {
           </UserRes>
         </ChattingBottom>
 
-        {connected && isModalOpen && (
-          <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />
-        )}
+        {/* {connected && isModalOpen && ( */}
+        {/*   <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} /> */}
+        {/* )} */}
+        {isModalOpen && <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />}
       </div>
     </ChatbotResWrapper>
   );

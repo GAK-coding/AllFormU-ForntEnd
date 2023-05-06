@@ -21,9 +21,9 @@ export const BtnWrapper = styled.button<Btn>`
   font-size: ${(props) => props.fontSize}rem;
   font-weight: 700;
 
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
 
   & > span {
     display: flex;
