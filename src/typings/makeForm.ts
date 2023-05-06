@@ -10,6 +10,10 @@ export const SELECTION_LINEAR = 'Selection_LINEAR';
 export const GRID_RADIO = 'Grid_RADIO';
 export const GRID_CHECKBOX = 'Grid_CHECKBOX';
 
+export interface createFormData extends FormInfo {
+  questions: Array<Omit<DescriptionQue, 'id'> | Omit<SelectionQue, 'id'> | Omit<GridQue, 'id'>>;
+}
+
 export interface FormInfo {
   title: string;
   description: string;
