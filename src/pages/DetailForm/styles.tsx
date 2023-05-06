@@ -35,9 +35,9 @@ export const FormBox = styled(BaseGbBoxWrapper)`
   border: none;
   background-color: rgba(232, 211, 255, 0.3);
 
-  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 4px 15px 0px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 2px 4px 15px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 2px 4px 15px 0px rgba(0, 0, 0, 0.2);
 
   margin-top: 2rem;
 

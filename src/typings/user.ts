@@ -9,6 +9,7 @@ export interface signInInfo extends Pick<user, 'email'> {
 }
 
 export interface signUpInfo extends signInInfo {
+  // eamil, password, name이 들어감
   name: string;
 }
 
