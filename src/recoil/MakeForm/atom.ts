@@ -32,7 +32,7 @@ export const nowQuestion = atom<{ [key in string]: number }>({
   default: { row: 0, col: 0 },
 });
 
-export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', description: '' } });
+export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', content: '' } });
 
 export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>({
   key: 'questions',
