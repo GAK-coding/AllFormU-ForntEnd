@@ -16,6 +16,7 @@ import ResFormList from './pages/DetailForm/ResFomList';
 import Info from './pages/MyPage/Info';
 import Edit from './pages/MyPage/Edit';
 import FindPassword from './pages/FindPassword';
+import FixedButton from './components/FixedButton';
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ function App() {
       <RecoilRoot>
         <BrowserRouter>
           <Header />
+          <FixedButton />
           <Routes>
             <Route index element={<Home />} />
             <Route path={'/signup'} element={<SignUp />} />
