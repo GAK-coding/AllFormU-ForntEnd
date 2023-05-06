@@ -1,13 +1,29 @@
 import { atom } from 'recoil';
-import { FormInfo, DescriptionQue, SelectionQue, GridQue } from '../../typings/makeForm';
+import {
+  FormInfo,
+  DescriptionQue,
+  SelectionQue,
+  GridQue,
+  DESCRIPTION_SHORT,
+  DESCRIPTION_LONG,
+  DESCRIPTION_DATE,
+  DESCRIPTION_IMG,
+  DESCRIPTION_TIME,
+  SELECTION_LINEAR,
+  SELECTION_DROPDOWN,
+  SELECTION_CHECKBOX,
+  SELECTION_OPTION,
+  GRID_RADIO,
+  GRID_CHECKBOX,
+} from '../../typings/makeForm';
 import { v4 as uuid } from 'uuid';
 
 export const questionTypes = atom({
   key: 'questionTypes',
   default: {
-    Description: ['Description_short', 'Description_long', 'Description_date', 'Description_time', 'Description_image'],
-    Selection: ['Selection_selection', 'Selection_checkBox', 'Selection_dropDown', 'Selection_linear'],
-    Grid: ['Grid_radio', 'Grid_checkBox'],
+    Description: [DESCRIPTION_SHORT, DESCRIPTION_LONG, DESCRIPTION_DATE, DESCRIPTION_TIME, DESCRIPTION_IMG],
+    Selection: [SELECTION_OPTION, SELECTION_CHECKBOX, SELECTION_DROPDOWN, SELECTION_LINEAR],
+    Grid: [GRID_RADIO, GRID_CHECKBOX],
   },
 });
 
@@ -16,62 +32,45 @@ export const nowQuestion = atom<{ [key in string]: number }>({
   default: { row: 0, col: 0 },
 });
 
-export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', description: '' } });
+export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', content: '' } });
 
 export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>({
   key: 'questions',
   default: [
     [
       {
-        type: 'Description_short',
+        type: DESCRIPTION_SHORT,
         id: uuid(),
-        require: true,
+        required: true,
         title: 'What is your name?',
-        section: 0,
+        sectionNum: 0,
+        descriptions: [{ content: '' }],
       },
       {
-        type: 'Selection_checkBox',
+        type: SELECTION_CHECKBOX,
         id: uuid(),
-        require: false,
+        required: false,
         title: 'What is your age?',
-        options: ['18', '19', '20'],
-        section: 0,
+        options: [{ content: '18' }, { content: '19' }, { content: '20' }],
+        sectionNum: 0,
       },
     ],
     [
       {
-        type: 'Selection_checkBox',
+        type: SELECTION_OPTION,
         id: uuid(),
-        require: false,
-        title: '',
-        options: [''],
-        section: 1,
+        required: true,
+        title: 'What is your name?',
+        sectionNum: 0,
+        options: [{ content: '0' }, { content: '7' }],
       },
       {
-        type: 'Selection_checkBox',
+        type: DESCRIPTION_TIME,
         id: uuid(),
-        require: false,
-        title: '',
-        options: [''],
-        section: 1,
-      },
-    ],
-    [
-      {
-        type: 'Selection_checkBox',
-        id: uuid(),
-        require: false,
-        title: '123',
-        options: [''],
-        section: 2,
-      },
-      {
-        type: 'Selection_checkBox',
-        id: uuid(),
-        require: false,
-        title: '',
-        options: [''],
-        section: 2,
+        required: false,
+        title: 'What is your age?',
+        descriptions: [{ content: '' }],
+        sectionNum: 0,
       },
     ],
   ],
