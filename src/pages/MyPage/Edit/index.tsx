@@ -8,6 +8,9 @@ import { ChangeEvent, useCallback, useState } from 'react';
 import { signInInfo } from '../../../typings/user';
 import { mypageInfo } from '../../../recoil/User/atom';
 
+interface ChangeInfo {
+  checkPassword: string;
+}
 export default function Edit() {
   const { blue, lightPurple } = useRecoilValue(color);
   const username = '';
@@ -17,6 +20,22 @@ export default function Edit() {
     password: '',
   });
 
+  const [changeInfo, setChangeInfo] = useState<ChangeInfo>({
+    checkPassword: '',
+  });
+
+  const [checkPw, setCheckPw] = useState(false);
+
+  const onChangeCheck = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, value: keyof ChangeInfo) => {
+      const temp = { ...changeInfo };
+      temp[value] = e.target.value;
+
+      setChangeInfo(temp);
+    },
+    [changeInfo]
+  );
+
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: keyof signInInfo) => {
       const temp = { ...info };
@@ -25,6 +44,10 @@ export default function Edit() {
     },
     [info]
   );
+
+  const onCheck = () => {
+    if (info.password == changeInfo.checkPassword) setCheckPw(true);
+  };
 
   const originInfo = useRecoilValue(mypageInfo);
   const [editInfo, setEditInfo] = useRecoilState(mypageInfo);
@@ -68,7 +91,7 @@ export default function Edit() {
             <Input
               type={'password'}
               value={username}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
               placeholder={'새로운 비밀번호'}
               width={30}
               height={2}
@@ -81,14 +104,14 @@ export default function Edit() {
             <Input
               type={'checkPassword'}
               value={username}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeCheck(e, 'checkPassword')}
               placeholder={'비밀번호 확인'}
               width={30}
               height={2}
               size={1.5}
             />
 
-            <Button color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
+            <Button onClick={onCheck} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
               확인
             </Button>
           </div>
