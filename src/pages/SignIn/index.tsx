@@ -96,7 +96,7 @@ export default function SignIn() {
             로그인
           </Button>
 
-          <GoogleAuth clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`} />
+          {/* <GoogleAuth clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`} /> */}
 
           <Button
             onClick={() => navigate('/signup')}
