@@ -46,36 +46,120 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 `;
 
 export const Line = styled.div`
   width: 90%;
 
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  margin-bottom: 4rem;
 
-  font-size: 1.6rem;
-  font-weight: 700;
+  margin-left: 5rem;
+  margin-bottom: 1.5rem;
 
-  & > div {
-    width: 20%;
-
+  & > span {
+    width: 15%;
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: right;
     margin-right: 4rem;
-    text-align: right;
+  }
+
+  & > button {
+    margin-left: 4rem;
+    display: flex;
+    align-self: flex-end;
+    justify-content: center;
+    justify-items: center;
   }
 `;
 
+export const LoginLine = styled.div`
+  width: 90%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 4rem;
+
+  & > span {
+    width: 15%;
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: right;
+    margin-right: 4rem;
+  }
+
+  & > div {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-left: 36rem;
+    margin-top: -5rem;
+    cursor: pointer;
+
+    font-weight: 700;
+    color: #696969;
+  }
+`;
 export const Match = styled.span`
   margin-bottom: 1rem;
-  font-size: 2rem;
-  color: #00c126;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1daa8b;
 `;
 
 export const MisMatch = styled.span`
   margin-bottom: 1rem;
-  font-size: 2rem;
-  color: #e61010;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f36767;
+`;
+
+export const BtnBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  img {
+    width: 15%;
+    margin-right: 1.5rem;
+  }
+
+  & > button {
+    margin: 2rem 0rem 0rem 0rem;
+  }
+
+  & > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+`;
+
+export const LoginBtn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 0rem;
+
+  & > button:first-of-type {
+    margin-bottom: 3rem;
+  }
+`;
+
+export const FindLine = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin: auto;
 `;
