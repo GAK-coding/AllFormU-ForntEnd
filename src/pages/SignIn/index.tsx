@@ -64,13 +64,12 @@ export default function SignIn() {
       <Form onSubmit={onClick}>
         <LoginLine>
           <span>Email</span>
-
           <Input
             type={'email'}
             value={email}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
             placeholder={'이메일'}
-            width={30}
+            width={'50%'}
             height={2}
             size={1.5}
           />
@@ -83,7 +82,7 @@ export default function SignIn() {
             value={password}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
             placeholder={'비밀번호'}
-            width={30}
+            width={'50%'}
             height={2}
             size={1.5}
           />
