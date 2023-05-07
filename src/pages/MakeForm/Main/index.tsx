@@ -13,7 +13,7 @@ export default function MakeForm() {
     <MakeFormWrapper>
       <MakeFormTop>
         <div>
-          <span>올라프</span>님 안녕하세요 😊
+          <span>권오현</span>님 안녕하세요 😊
         </div>
         <div>설문생성 형식을 선택해 주세요.</div>
       </MakeFormTop>

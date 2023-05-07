@@ -8,8 +8,8 @@ export const BaseInput = styled.input<input>`
   border: 1.5px solid #c4c4c4;
   border-radius: 1.6rem;
 
-  width: ${(props) => props.width}rem;
-  height: ${(props) => props.height}rem;
+  width: ${(props) => (typeof props.width === 'string' ? props.width : props.width + 'rem')};
+  height: ${(props) => (typeof props.height === 'string' ? props.height : props.height + 'rem')};
   font-size: ${(props) => props.size}rem;
 
   padding: 1rem;

@@ -15,6 +15,7 @@ import {
   SELECTION_OPTION,
   GRID_RADIO,
   GRID_CHECKBOX,
+  sectionType,
 } from '../../typings/makeForm';
 import { v4 as uuid } from 'uuid';
 
@@ -41,39 +42,17 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
       {
         type: DESCRIPTION_SHORT,
         id: uuid(),
-        required: true,
-        title: 'What is your name?',
+        required: false,
+        title: '',
         sectionNum: 0,
         descriptions: [{ content: '' }],
-      },
-      {
-        type: SELECTION_CHECKBOX,
-        id: uuid(),
-        required: false,
-        title: 'What is your age?',
-        options: [{ content: '18' }, { content: '19' }, { content: '20' }],
-        sectionNum: 0,
-      },
-    ],
-    [
-      {
-        type: SELECTION_OPTION,
-        id: uuid(),
-        required: true,
-        title: 'What is your name?',
-        sectionNum: 0,
-        options: [{ content: '0' }, { content: '7' }],
-      },
-      {
-        type: DESCRIPTION_TIME,
-        id: uuid(),
-        required: false,
-        title: 'What is your age?',
-        descriptions: [{ content: '' }],
-        sectionNum: 0,
       },
     ],
   ],
 });
 
 export const sectionLens = atom<number[]>({ key: 'sectionLens', default: [] });
+
+export const changeSection = atom<boolean>({ key: 'changeSection', default: false });
+
+export const queSectionNum = atom<sectionType[]>({ key: 'queSectionNum', default: [] });

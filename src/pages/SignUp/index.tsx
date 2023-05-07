@@ -100,15 +100,16 @@ export default function SignUp() {
       <Form onSubmit={onClick}>
         <Line>
           <span>이름</span>
-
           <Input
             value={name}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'name')}
             placeholder={'이름'}
-            width={25}
+            width={'50%'}
             height={1.8}
             size={1.4}
           />
+          <div />
+          <button className={'disabled'} disabled={true} />
         </Line>
 
         <Line>
@@ -119,7 +120,7 @@ export default function SignUp() {
             value={email}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
             placeholder={'이메일'}
-            width={25}
+            width={'50%'}
             height={1.8}
             size={1.4}
           />
@@ -136,7 +137,7 @@ export default function SignUp() {
             value={checkInfo.checkEmail}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeCheck(e, 'checkEmail')}
             placeholder={'인증번호'}
-            width={25}
+            width={'50%'}
             height={1.8}
             size={1.4}
           />
@@ -147,34 +148,46 @@ export default function SignUp() {
 
         <Line>
           <span>비밀번호</span>
-
           <Input
             type={'password'}
             value={password}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
             placeholder={'비밀번호'}
-            width={25}
+            width={'50%'}
             height={1.8}
             size={1.4}
-          />
+          />{' '}
+          <button className={'disabled'} disabled={true} />
         </Line>
 
         <Line>
           <span>비밀번호 확인</span>
-
           <Input
             type={'password'}
             value={checkInfo.checkPassword}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeCheck(e, 'checkPassword')}
             placeholder={'비밀번호 확인'}
-            width={25}
+            width={'50%'}
             height={1.8}
             size={1.4}
-          />
+          />{' '}
+          <button className={'disabled'} disabled={true} />
         </Line>
 
-        {password && checkInfo.checkPassword && checkPw && <Match>비밀번호가 일치합니다!</Match>}
-        {password && checkInfo.checkPassword && !checkPw && <MisMatch>비밀번호가 불일치합니다.</MisMatch>}
+        {password && checkInfo.checkPassword && checkPw && (
+          <Match>
+            <div />
+            비밀번호가 일치합니다!
+          </Match>
+        )}
+
+        {password && checkInfo.checkPassword && !checkPw && (
+          <MisMatch>
+            {' '}
+            <div />
+            비밀번호가 불일치합니다.
+          </MisMatch>
+        )}
 
         <BtnBox>
           <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={11} height={4}>
