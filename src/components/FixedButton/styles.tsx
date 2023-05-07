@@ -12,8 +12,8 @@ export const FloatButton = styled.button`
     color: #2d2d2d;
   }
 
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
 
   position: absolute;
   right: 30px;
