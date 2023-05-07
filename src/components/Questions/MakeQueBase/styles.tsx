@@ -62,6 +62,9 @@ export const QueTopLeft = styled.div`
   align-items: center;
 
   width: 70%;
+  box-sizing: border-box;
+
+  //border: 1px solid;
 `;
 
 export const QueTopRight = styled.div`
@@ -69,6 +72,10 @@ export const QueTopRight = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   width: 30%;
+
+  //border: 1px solid;
+
+  box-sizing: border-box;
 
   .custom-select .ant-select-selector {
     background-color: inherit;
@@ -84,6 +91,8 @@ export const QueBottom = styled.div`
 `;
 
 export const QueBottomLeft = styled.div`
+  //border: 1px solid;
+
   width: 70%;
   min-height: 6rem;
   box-sizing: border-box;
@@ -93,6 +102,8 @@ export const QueBottomLeft = styled.div`
 `;
 
 export const QueBottomRight = styled.div`
+  //border: 1px solid;
+
   width: 30%;
   min-height: 6rem;
 
@@ -102,7 +113,15 @@ export const QueBottomRight = styled.div`
   padding: 0.5rem;
   box-sizing: border-box;
 
-  & > span {
+  .custom-select .ant-select-selector {
+    background-color: inherit;
+    border-radius: 2rem;
+    color: #696969;
+
+    text-align: center;
+  }
+
+  & > div > span {
     color: #afafaf;
     font-weight: 700;
     margin-right: 0.5rem;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { SectionBoxWrapper } from './styles';
 import FormInput from '../../ui/FormInput';
 import { Select } from 'antd';
@@ -16,6 +16,14 @@ export default function SectionBox({ children, index, section }: Props) {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const [option, setOption] = useState<{ value: number; label: number; disabled: boolean }[]>([]);
   const [isChange, setIsChange] = useRecoilState(changeSection);
+  const [text, setText] = useState('');
+
+  const onChangeText = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.target.value);
+    },
+    [text]
+  );
 
   useEffect(() => {
     const temp: { value: number; label: number; disabled: boolean }[] = [];
@@ -56,7 +64,7 @@ export default function SectionBox({ children, index, section }: Props) {
   return (
     <SectionBoxWrapper>
       <div>
-        <FormInput value={''} onChange={(e) => console.log(e)} width={'50%'} fontSize={1.8} placeholder={'섹션 이름'} />
+        <FormInput value={text} onChange={onChangeText} width={'50%'} fontSize={1.8} placeholder={'섹션 이름'} />
         <span>
           <span>섹션 순서</span>
           <Select

@@ -23,7 +23,7 @@ export default function FormTitle() {
   );
 
   return (
-    <QueWrapper style={{ backgroundColor: 'white' }}>
+    <QueWrapper style={{ backgroundColor: '#F5F5F5' }}>
       <FormTitleWrapper>
         <TitleInput value={info.title} onChange={onChangeTitle} placeholder={'설문 제목 입력'} required />
         <TextArea
