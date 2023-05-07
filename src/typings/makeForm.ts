@@ -53,3 +53,12 @@ export interface makeInfoList {
   title: string;
   description?: string;
 }
+
+export interface QueType {
+  value: string;
+  label: string;
+}
+
+export interface sectionType extends QueType {
+  disabled: boolean;
+}

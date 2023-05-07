@@ -1,91 +1,126 @@
 import styled from 'styled-components';
 
 export const MyPageWrapper = styled.div`
-  padding: 5rem;
   display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  margin: 0 auto;
+
+  width: 90%;
+  height: 90%;
+
+  position: relative;
 `;
 
 export const UserInfo = styled.div`
-  width: 30rem;
-  height: 48rem;
+  width: 35%;
+  height: 100%;
 
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-
-  box-sizing: border-box;
-  padding: 2rem;
-  margin: 2rem 0rem 2rem 2rem;
-
-  border-radius: 3rem;
-  background-color: rgba(232, 211, 255, 0.6);
-
-  img {
-    width: 70%;
-    margin-top: 3rem;
-  }
-
-  & > div:first-of-type {
-    font-size: 3rem;
-    font-weight: 700;
-    display: flex;
-  }
 
   & > div {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
 
-    & > span:first-of-type {
-      margin-top: 8rem;
-      margin-bottom: 3rem;
-      font-size: 1.6rem;
-      font-weight: 600;
+    width: 90%;
+    max-width: 32rem;
+    height: 90%;
+
+    box-sizing: border-box;
+    padding: 2rem;
+
+    border-radius: 3rem;
+    background-color: rgba(232, 211, 255, 0.6);
+
+    img {
+      width: 70%;
+      margin-top: 3rem;
     }
-    & > span {
-      margin-bottom: 1rem;
-      font-size: 1.6rem;
-      font-weight: 600;
+
+    & > div:first-of-type {
+      font-size: 3rem;
+      font-weight: 700;
+      display: flex;
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      & > span:first-of-type {
+        margin-top: 8rem;
+        margin-bottom: 3rem;
+        font-size: 1.6rem;
+        font-weight: 600;
+      }
+      & > span {
+        margin-bottom: 1rem;
+        font-size: 1.6rem;
+        font-weight: 600;
+      }
     }
   }
 `;
 
 export const FormWrapper = styled.div`
   width: 65%;
+  height: 100%;
+
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
 `;
 
 export const BtnBox = styled.div`
   display: flex;
+  justify-content: flex-end;
 
-  & > button {
-    margin-left: 48rem;
-  }
+  height: 8%;
+
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
 `;
 
 export const Form = styled.div`
-  width: 90%;
-  height: 20rem;
+  position: relative;
 
   display: flex;
   flex-direction: column;
 
+  width: 90%;
+  height: 45%;
+  margin: 0 auto;
+
   box-sizing: border-box;
   padding: 2rem;
 
-  margin: 3rem 1rem 0rem 8rem;
   border-radius: 3rem;
   background-color: #fefefe;
 
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
+
+  & > span {
+    position: absolute;
+    cursor: pointer;
+
+    font-size: 2.5rem;
+    color: var(--color-light-purple);
+
+    top: 1rem;
+    right: 1.5rem;
+  }
 `;
 
-export const Line = styled.button`
-  width: 20%;
+export const Line = styled.div`
   display: flex;
   margin-left: 1rem;
 
@@ -94,13 +129,11 @@ export const Line = styled.button`
   font-weight: 700;
 
   background-color: transparent;
-  border: none;
   cursor: pointer;
 `;
 
 export const AlignBox = styled.div`
-  display: flex;
-  flex-direction: row;
+  height: 90%;
 
   margin-left: 2rem;
   margin-right: 2rem;

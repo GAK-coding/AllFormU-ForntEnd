@@ -10,25 +10,19 @@ export const FormTitleWrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
 
-  border: 2px solid lightgrey;
   border-radius: 2rem;
   padding: 2rem;
-
-  .ant-input-affix-wrapper .ant-input {
-    border: 1px solid red;
-  }
+  background-color: #f5f5f5;
 `;
 
 export const TitleInput = styled.input`
   background-color: inherit;
   border: none;
-  border-bottom: 1px solid var(--color-sub-blue);
+  border-bottom: 1px solid #c4c4c4;
 
   width: 100%;
   padding-bottom: 1rem;
   font-size: 2rem;
-
-  color: #655dbb;
 
   &:focus {
     outline: none;
