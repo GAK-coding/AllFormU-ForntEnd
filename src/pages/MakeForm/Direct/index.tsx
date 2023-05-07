@@ -47,7 +47,7 @@ export default function MakeFormDirect() {
       type: DESCRIPTION_SHORT,
       id: uuid(),
       required: false,
-      title: '뭐냐',
+      title: '',
       sectionNum: row,
       descriptions: [{ content: '' }],
     });
