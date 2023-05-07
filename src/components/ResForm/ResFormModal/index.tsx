@@ -72,7 +72,7 @@ export default function ResFormModal({ open, onCancel, sendMessage }: Props) {
       </ResModalTalk>
 
       <ResModalInput onSubmit={onSubmit}>
-        <Input value={req} onChange={onChangeReq} placeholder={'질문을 입력해주세요.'} height={4} />
+        <Input value={req} onChange={onChangeReq} placeholder={'질문을 입력해주세요.'} height={2.5} />
         <Button type={'submit'} color={'white'} fontSize={1.6} width={8} height={4} bgColor={purple}>
           전송
         </Button>

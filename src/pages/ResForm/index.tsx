@@ -93,25 +93,25 @@ export default function ResForm() {
   };
 
   //** 1. resFormPage에 들어가면 맨 처음에 백엔드와 socket 연결을 함 + 응답 받음 *?
-  // useLayoutEffect(() => {
-  //   connect();
-  // }, []);
-  //
-  // useEffect(() => {
-  //   if (connected && stompClient.current) {
-  //     stompClient.current.subscribe('/topic/public', onMessageReceived);
-  //   }
-  // }, [connected, onMessageReceived]);
-  //
-  // useEffect(() => {
-  //   if (res !== null && talk.length > 0) {
-  //     const temp = [...talk];
-  //     const lastChat = temp.pop()!;
-  //     const editedChat = { ...lastChat, gptRes: res };
-  //     temp.push(editedChat);
-  //     setTalk(temp);
-  //   }
-  // }, [res]);
+  useLayoutEffect(() => {
+    connect();
+  }, []);
+
+  useEffect(() => {
+    if (connected && stompClient.current) {
+      stompClient.current.subscribe('/topic/public', onMessageReceived);
+    }
+  }, [connected, onMessageReceived]);
+
+  useEffect(() => {
+    if (res !== null && talk.length > 0) {
+      const temp = [...talk];
+      const lastChat = temp.pop()!;
+      const editedChat = { ...lastChat, gptRes: res };
+      temp.push(editedChat);
+      setTalk(temp);
+    }
+  }, [res]);
 
   useEffect(() => {
     const temp = [...chat];
@@ -127,12 +127,12 @@ export default function ResForm() {
 
           {/*   return <ChatBox key={idx} user={user} chatbot={chatbot} />; */}
           {/* })} */}
-          <BallonChat chatText={'으악1231231232131231312321'} />
-          <BallonChat chatText={'으악'} />
-          <BallonChat chatText={'으악'} />
-          <BallonChat chatText={'으악'} />
-          <BallonChat chatText={'으악'} />
-          <BallonChat chatText={'으악'} />
+          {/* <BallonChat chatText={'으악1231231232131231312321'} /> */}
+          {/* <BallonChat chatText={'으악'} /> */}
+          {/* <BallonChat chatText={'으악'} /> */}
+          {/* <BallonChat chatText={'으악'} /> */}
+          {/* <BallonChat chatText={'으악'} /> */}
+          {/* <BallonChat chatText={'으악'} /> */}
           {/*   chatText={ */}
           {/*     '으악 \n 1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312' */}
           {/*   } */}
@@ -169,9 +169,9 @@ export default function ResForm() {
         </ChattingBottom>
 
         {/* 3. 백엔드와 socket 연동이 되어야만 GPT와 대화하는 모달을 열 수 있음 */}
-        {/* {connected && isModalOpen && ( */}
-        {/*   <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} /> */}
-        {/* )} */}
+        {connected && isModalOpen && (
+          <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />
+        )}
         {isModalOpen && <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />}
       </div>
     </ChatbotResWrapper>

@@ -23,16 +23,16 @@ export default function Header() {
         )}
       </Title>
       <BtnBox>
-        {/* <Button */}
-        {/*   onClick={() => navigate('/resform')} */}
-        {/*   fontSize={1.4} */}
-        {/*   bgColor={purple} */}
-        {/*   width={11} */}
-        {/*   height={4} */}
-        {/*   color={'white'} */}
-        {/* > */}
-        {/*   ResForm */}
-        {/* </Button> */}
+        <Button
+          onClick={() => navigate('/resform')}
+          fontSize={1.4}
+          bgColor={purple}
+          width={11}
+          height={4}
+          color={'white'}
+        >
+          ResForm
+        </Button>
         <Button
           onClick={() => navigate('/mypage')}
           fontSize={1.4}
