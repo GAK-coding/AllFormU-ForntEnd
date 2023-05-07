@@ -41,22 +41,23 @@ export const PageInfo = styled.div`
 `;
 
 export const Form = styled.form`
-  width: 60%;
+  width: 70%;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
 `;
 
 export const Line = styled.div`
   width: 90%;
 
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 
-  margin-left: 5rem;
+  //margin-left: 5rem;
+  margin: 0 auto;
   margin-bottom: 1.5rem;
 
   & > span {
@@ -69,11 +70,20 @@ export const Line = styled.div`
   }
 
   & > button {
+    width: 50%;
     margin-left: 4rem;
     display: flex;
     align-self: flex-end;
     justify-content: center;
     justify-items: center;
+  }
+
+  & > button:last-of-type {
+    width: 15%;
+  }
+
+  .disabled {
+    border: none;
   }
 `;
 
@@ -107,11 +117,20 @@ export const LoginLine = styled.div`
     color: #696969;
   }
 `;
+
 export const Match = styled.span`
   margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: 600;
   color: #1daa8b;
+
+  width: 90%;
+  display: flex;
+
+  & > div {
+    width: 23%;
+    height: 10px;
+  }
 `;
 
 export const MisMatch = styled.span`
@@ -119,6 +138,14 @@ export const MisMatch = styled.span`
   font-size: 1.5rem;
   font-weight: 600;
   color: #f36767;
+
+  width: 90%;
+  display: flex;
+
+  & > div {
+    width: 23%;
+    height: 10px;
+  }
 `;
 
 export const BtnBox = styled.div`
