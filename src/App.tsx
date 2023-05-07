@@ -12,10 +12,10 @@ import MakeFormSelect from './pages/MakeForm/Select';
 import MakeFormDirect from './pages/MakeForm/Direct';
 import MakeFormChatbot from './pages/MakeForm/Chatbot';
 import MakeFormList from './pages/DetailForm/MakeFormList';
-import ResFormList from './pages/DetailForm/ResFomList';
 import Info from './pages/MyPage/Info';
 import Edit from './pages/MyPage/Edit';
 import FindPassword from './pages/FindPassword';
+import ResFormList from './pages/DetailForm/ResFomList';
 
 const queryClient = new QueryClient();
 
