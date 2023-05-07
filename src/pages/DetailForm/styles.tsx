@@ -16,81 +16,75 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const FormListWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  & > div {
+    background-color: var(--color-light-purple-30);
+    width: 90%;
+    height: 14rem;
 
-  // TODO : 마지막에 밑에부분 이상함
-  overflow-y: scroll;
+    margin: 0 auto;
+    border-radius: 3rem;
+    margin-bottom: 2rem;
 
-  &::-webkit-scrollbar {
-    display: none; /* 크롬, 사파리, 오페라, 엣지 */
-  }
-`;
-
-export const FormBox = styled(BaseGbBoxWrapper)`
-  width: 60%;
-  height: 14rem;
-  border-radius: 3rem;
-  border: none;
-  background-color: rgba(232, 211, 255, 0.3);
-
-  margin-top: 2rem;
-
-  display: flex;
-  flex-direction: row;
-
-  & div {
-    width: 70rem;
-  }
-
-  & > button:first-of-type {
-    border-radius: 2rem;
-    align-self: center;
-  }
-`;
-
-export const Title = styled.div`
-  padding: 2rem;
-  font-weight: 700;
-
-  & > div:first-of-type {
     display: flex;
-    flex-direction: column;
-    margin-left: 5rem;
-    font-size: 2.5rem;
-    margin-top: 2rem;
-    align-self: self-start;
 
-    & > span {
-      font-size: 1.8rem;
-      color: #696969;
-      margin: 1.5rem 0rem 0rem 3.5rem;
+    & > div {
+      width: 50%;
     }
   }
 `;
 
+export const FormBox = styled(BaseGbBoxWrapper)`
+  //width: 60%;
+  //height: 14rem;
+  //border-radius: 3rem;
+  //border: none;
+  //background-color: rgba(232, 211, 255, 0.3);
+  //
+  //margin-top: 2rem;
+  //
+  //display: flex;
+`;
+
+export const Title = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  padding-left: 4rem;
+  box-sizing: border-box;
+
+  & > span:first-of-type {
+    font-weight: 700;
+    font-size: 2.5rem;
+  }
+
+  & > span:last-of-type {
+    font-size: 1.8rem;
+    color: #696969;
+    margin-top: 1.8rem;
+    margin-left: 2rem;
+  }
+`;
+
 export const ButtonWrapper = styled.div`
-  width: 10%;
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 4rem;
 
-  & > button {
-    border-radius: 2rem;
+  & > div:first-of-type {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
   }
 
-  & > button:first-of-type {
-    margin: 2rem 0rem 1.5rem 0rem;
+  & > div:last-of-type {
+    display: flex;
+    & > button {
+      margin-left: 1rem;
+    }
   }
 `;
 
-export const ButtonView = styled.div`
-  width: 10%;
-  display: flex;
-  flex-direction: column;
-
-  & > button {
-    border-radius: 2rem;
-    margin-top: 4rem;
-  }
-`;
+export const ButtonView = styled.div``;
