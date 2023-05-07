@@ -6,8 +6,8 @@ export interface Input {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder: string;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   type?: string;
   size?: number;
 }
