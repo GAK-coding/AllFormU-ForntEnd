@@ -9,11 +9,12 @@ import { useMutation, useQuery } from 'react-query';
 import { deleteFrom, getMakeForms } from '../../../api/getFormInfo';
 import { Col, Row } from 'antd';
 import { createForm } from '../../../api/makeform';
+import { getForm } from '../../../typings/getForm';
 
 export default function MakeFormList() {
   const { blue, lightPurple } = useRecoilValue(color);
 
-  const { data: makeFormInfo, isLoading, error, isError } = useQuery<any>('myMakeForm', getMakeForms);
+  const { data: makeFormInfo, isLoading, error, isError } = useQuery<getForm[]>('myMakeForm', getMakeForms);
 
   const {
     mutate,
