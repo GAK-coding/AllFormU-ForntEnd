@@ -4,7 +4,7 @@ import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import { AlignBox, BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
 import { useNavigate, Route, Navigate, Routes } from 'react-router-dom';
-import { mypageInfo } from '../../../recoil/User/atom';
+import { mypageInfo, userInfo } from '../../../recoil/User/atom';
 import { useEffect } from 'react';
 import { makeInfoList } from '../../../typings/makeForm';
 import { makeFormInfoList, resFormInfoList } from '../../../recoil/FormList/atom';
@@ -17,7 +17,7 @@ import { getForm } from '../../../typings/getForm';
 export default function Info() {
   const navigate = useNavigate();
   const { blue } = useRecoilValue(color);
-  const myInfo = useRecoilValue(mypageInfo);
+  const myInfo = useRecoilValue(userInfo);
 
   const setResFormInfoList = useSetRecoilState(resFormInfoList);
   useEffect(() => {
@@ -49,13 +49,13 @@ export default function Info() {
   console.log('이거', makeFormInfo);
 
   // redirect
-  /* if (id === -1) {
+  if (myInfo.id === -1) {
     return (
       <Routes>
         <Route path="/" element={<Navigate replace to="/signin" />} />;
       </Routes>
     );
-  } */
+  }
 
   return (
     <BaseBgBox>
