@@ -30,7 +30,7 @@ import {
   GridKinds,
   GridQue,
   QueType,
-  sectionType,
+  SectionType,
   SELECTION_CHECKBOX,
   SELECTION_DROPDOWN,
   SELECTION_LINEAR,
@@ -50,6 +50,7 @@ interface Props {
   onClickQue: (row: number, col: number) => void;
   onDelete: (row: number, col: number) => void;
   onChangeTitle: (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => void;
+  // onChangeSectionNum: (value: string, row: number, col: number) => void;
 }
 
 const Types: QueType[] = [
@@ -66,30 +67,44 @@ const Types: QueType[] = [
   { value: GRID_CHECKBOX, label: '체크박스 그리드' },
 ];
 
-export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDelete, onChangeTitle }: Props) {
+export default function MakeQueBase({
+  onClickQue,
+  data,
+  row,
+  col,
+  isClick,
+  onDelete,
+  onChangeTitle,
+}: // onChangeSectionNum,
+Props) {
   const { title, type } = data;
   const [questionList, setQuestionList] = useRecoilState(questions);
   const queTypes = useRecoilValue(questionTypes);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
+  const [queSecNum, setQueSecNum] = useRecoilState(queSectionNum);
   const [nowType, setNowType] = useState(type);
 
-  // const [sectionNum, setSectionNum] = useRecoilState(queSectionNum);
-  const sectionNum: sectionType[] = questionList.map((que, index) => {
-    return { value: index.toString(), label: (index + 1).toString(), disabled: index === row };
-  });
+  const [test, setTest] = useState(-1);
 
   const onChangeSectionNum = useCallback(
     (value: string) => {
       const temp = JSON.parse(JSON.stringify(questionList));
+
       const [remove] = temp[row].splice(col, 1);
       remove.sectionNum = +value;
       temp[+value].push(remove);
+
+      if (temp[row].length === 0) {
+        temp.splice(row, 1);
+      }
       setQuestionList(temp);
-      setNowQueInfo({ row: +value, col: temp[+value].length - 1 });
-      console.log(value, temp[+value].length - 1);
+      setNowQueInfo({ row: parseInt(value), col: temp[parseInt(value)].length - 1 });
+      setTest(parseInt(value));
     },
-    [questionList, nowQueInfo]
+    [questionList, nowQueInfo, test]
   );
+
+  console.log(test);
 
   const onChangeType = useCallback(
     (value: DescriptionKinds | SelectionKinds | GridKinds) => {
@@ -131,14 +146,6 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
     [questionList]
   );
 
-  // useEffect(() => {
-  //   setSectionNum(
-  //     questionList.map((que, index) => {
-  //       return { value: index.toString(), label: index.toString(), disabled: index === row };
-  //     })
-  //   );
-  // }, [sectionNum, questionList, onChangeSectionNum]);
-
   return (
     <QueWrapper>
       <DeleteBtn onClick={() => onDelete(row, col)}>
@@ -176,17 +183,17 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
             {queTypes['Grid'].includes(nowType) && <GridBox data={data as GridQue} row={row} col={col} />}
           </QueBottomLeft>
           <QueBottomRight>
-            {/* <div> */}
-            {/*   <span>섹션</span> */}
-            {/*   <Select */}
-            {/*     className="custom-select" */}
-            {/*     value={`${row + 1}`} */}
-            {/*     style={{ width: 60 }} */}
-            {/*     onChange={onChangeSectionNum} */}
-            {/*     options={sectionNum} */}
-            {/*     suffixIcon={<TbTriangleInverted />} */}
-            {/*   /> */}
-            {/* </div> */}
+            <div>
+              <span>섹션</span>
+              <Select
+                className="custom-select"
+                value={`${queSecNum[row].value}`}
+                style={{ width: 60 }}
+                onChange={onChangeSectionNum}
+                options={queSecNum}
+                suffixIcon={<TbTriangleInverted />}
+              />
+            </div>
             <div>
               <span>필수 응답</span>
               <Switch onChange={onChangeRequire} size={'small'} />

@@ -45,4 +45,9 @@ export const MakeFormBottom = styled.div`
       margin-bottom: 1rem;
     }
   }
+
+  & > button:hover {
+    background-color: white;
+    border: 1px solid var(--color-gray);
+  }
 `;

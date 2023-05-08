@@ -6,13 +6,13 @@ import { AlignBox, BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, User
 import { useNavigate, Route, Navigate, Routes } from 'react-router-dom';
 import { mypageInfo, userInfo } from '../../../recoil/User/atom';
 import { useEffect } from 'react';
-import { makeInfoList } from '../../../typings/makeForm';
+import { MakeInfoList } from '../../../typings/makeForm';
 import { makeFormInfoList, resFormInfoList } from '../../../recoil/FormList/atom';
 import { resInfoList } from '../../../typings/resForm';
 import { FiPlus } from 'react-icons/fi';
 import { useQuery } from 'react-query';
 import { getMakeForms } from '../../../api/getFormInfo';
-import { getForm } from '../../../typings/getForm';
+import { GetForm } from '../../../typings/getForm';
 
 export default function Info() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function Info() {
 
   const resFormInfo = useRecoilValue(resFormInfoList);
 
-  const { data: makeFormInfo, isLoading, error, isError } = useQuery<getForm[]>('myMakeForm', getMakeForms);
+  const { data: makeFormInfo, isLoading, error, isError } = useQuery<GetForm[]>('myMakeForm', getMakeForms);
 
   console.log('이거', makeFormInfo);
 
@@ -93,7 +93,7 @@ export default function Info() {
               <span>내 생성폼</span>
             </Line>
             <AlignBox>
-              {makeFormInfo?.map((formInfo: getForm) => (
+              {makeFormInfo?.map((formInfo: GetForm) => (
                 <FormBox key={formInfo.id}>{formInfo.title}</FormBox>
               ))}
             </AlignBox>
