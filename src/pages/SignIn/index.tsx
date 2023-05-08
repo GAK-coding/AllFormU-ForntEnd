@@ -56,6 +56,7 @@ export default function SignIn() {
       console.log(setUser.id);
       console.log(setUser.nickname);
       console.log(setUser.email);
+      navigate('/');
     }
   }, [isSuccess]);
 
