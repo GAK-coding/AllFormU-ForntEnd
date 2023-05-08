@@ -35,13 +35,13 @@ export default function ResForm() {
   const [req, setReq] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showModal = () => {
+  const showModal = useCallback(() => {
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setIsModalOpen(false);
-  };
+  }, []);
 
   const onChangeReq = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setReq(e.target.value);
