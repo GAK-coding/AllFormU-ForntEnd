@@ -79,7 +79,7 @@ export default function Edit() {
               type={'username'}
               value={username}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={originInfo.name}
+              placeholder={originInfo.nickname}
               width={30}
               height={2}
               size={1.5}

@@ -1,7 +1,8 @@
 export interface user {
   id: number;
-  name: string;
+  nickname: string;
   email: string;
+  password: string;
 }
 
 export interface signInInfo extends Pick<user, 'email'> {
@@ -10,20 +11,20 @@ export interface signInInfo extends Pick<user, 'email'> {
 
 export interface signUpInfo extends signInInfo {
   // eamil, password, name이 들어감
-  name: string;
+  nickname: string;
 }
 
 export interface myPageInfo {
   id: number;
   email: string;
-  name: string;
+  nickname: string;
   password?: string;
   userImg?: string;
 }
 
 export interface myPageEditInfo {
   id: number;
-  name: string;
+  nickname: string;
   email: string;
   password: string;
   userImg: string;
