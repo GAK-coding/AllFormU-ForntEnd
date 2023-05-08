@@ -30,4 +30,8 @@ export const BtnWrapper = styled.button<Btn>`
     justify-content: center;
     align-items: center;
   }
+
+  //&:hover {
+  //  filter: brightness(1.1);
+  //}
 `;
