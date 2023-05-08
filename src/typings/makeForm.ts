@@ -48,7 +48,7 @@ export interface GridQue extends Omit<DescriptionQue, 'type' | 'descriptions'> {
   cols: string[];
 }
 
-export interface makeInfoList {
+export interface MakeInfoList {
   id: number;
   title: string;
   description?: string;
@@ -59,6 +59,6 @@ export interface QueType {
   label: string;
 }
 
-export interface sectionType extends QueType {
-  disabled: boolean;
+export interface SectionType extends QueType {
+  disabled?: boolean;
 }
