@@ -35,19 +35,19 @@ export default function SignIn() {
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      signIn({ email })
-        .then((res) => {
-          console.log(res.data);
+      // signIn({ email })
+      //   .then((res) => {
+      //     console.log(res.data);
 
-          if (res.data[0]) {
-            setUserInfo(res.data[0]);
-            alert('로그인 성공!');
-          } else alert('로그인 실패');
-        })
-        .catch((err) => {
-          console.log(err);
-          alert('다시 시도해주세요.');
-        });
+      //     if (res.data[0]) {
+      //       setUserInfo(res.data[0]);
+      //       alert('로그인 성공!');
+      //     } else alert('로그인 실패');
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     alert('다시 시도해주세요.');
+      //   });
     },
     [email]
   );

@@ -78,7 +78,7 @@ export default function Info() {
             <div>My Page</div>
             <img src="/images/userProfile.png" alt="userProfile" />
             <div>
-              <span> 이름 : {myInfo.name} </span>
+              <span> 이름 : {myInfo.nickname} </span>
               <span> email : {myInfo.email} </span>
             </div>
           </div>
