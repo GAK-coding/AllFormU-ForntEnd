@@ -15,7 +15,7 @@ import {
   SELECTION_OPTION,
   GRID_RADIO,
   GRID_CHECKBOX,
-  sectionType,
+  SectionType,
 } from '../../typings/makeForm';
 import { v4 as uuid } from 'uuid';
 
@@ -57,4 +57,4 @@ export const sectionLens = atom<number[]>({ key: 'sectionLens', default: [] });
 
 export const changeSection = atom<boolean>({ key: 'changeSection', default: false });
 
-export const queSectionNum = atom<sectionType[]>({ key: 'queSectionNum', default: [] });
+export const queSectionNum = atom<SectionType[]>({ key: 'queSectionNum', default: [{ value: '0', label: '1' }] });

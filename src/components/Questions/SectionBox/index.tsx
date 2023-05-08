@@ -41,7 +41,7 @@ export default function SectionBox({ children, index, section }: Props) {
       setSectionList(sectionName);
       setIsChange(true);
     },
-    [questionList, setQuestionList, isChange]
+    [questionList, setQuestionList, isChange, sectionList]
   );
 
   useEffect(() => {
@@ -80,12 +80,7 @@ export default function SectionBox({ children, index, section }: Props) {
         />
         <span>
           <span>섹션 순서</span>
-          <Select
-            value={`${section['sectionNum'] + 1}`}
-            style={{ width: 100 }}
-            onChange={onChangeSection}
-            options={option}
-          />
+          <Select value={`${index + 1}`} style={{ width: 100 }} onChange={onChangeSection} options={option} />
         </span>
       </div>
       {children}

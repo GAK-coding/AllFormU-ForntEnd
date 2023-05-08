@@ -2,7 +2,14 @@ import React, { ChangeEvent, FormEvent, useCallback, useEffect, useLayoutEffect,
 import { Col, Row } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { AddQuestion, AddSection, DirectForm } from './styles';
-import { formInfo, nowQuestion, questions, sectionLens, sectionNames } from '../../../recoil/MakeForm/atom';
+import {
+  formInfo,
+  nowQuestion,
+  queSectionNum,
+  questions,
+  sectionLens,
+  sectionNames,
+} from '../../../recoil/MakeForm/atom';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import FormTitle from '../../../components/Questions/FormTitle';
 import { v4 as uuid } from 'uuid';
@@ -10,9 +17,10 @@ import MakeQueBase from '../../../components/Questions/MakeQueBase';
 import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import SectionBox from '../../../components/Questions/SectionBox';
-import { DESCRIPTION_SHORT } from '../../../typings/makeForm';
+import { DESCRIPTION_SHORT, SectionType } from '../../../typings/makeForm';
 import { useMutation } from 'react-query';
 import { createForm } from '../../../api/makeform';
+import MakeFromModal from '../../../components/MakeForm/MakeFromModal';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
@@ -22,9 +30,19 @@ export default function MakeFormDirect() {
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
   const { title, content } = useRecoilValue(formInfo);
   const [sectionList, setSectionList] = useRecoilState(sectionNames);
+  const [queSecNum, setQueSecNum] = useRecoilState(queSectionNum);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { blue } = useRecoilValue(color);
 
   const { mutate, isLoading, isError, error, isSuccess } = useMutation(createForm);
+
+  const showModal = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
 
   const onSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -39,6 +57,24 @@ export default function MakeFormDirect() {
     },
     [title, content, questionList]
   );
+
+  // const onChangeSectionNum = useCallback(
+  //   (value: string, row: number, col: number) => {
+  //     const temp = JSON.parse(JSON.stringify(questionList));
+  //
+  //     const [remove] = temp[row].splice(col, 1);
+  //     remove.sectionNum = +value;
+  //     temp[+value].push(remove);
+  //
+  //     if (temp[row].length === 0) {
+  //       temp.splice(row, 1);
+  //     }
+  //     setQuestionList(temp);
+  //     setNowQueInfo({ row: parseInt(value), col: temp[parseInt(value)].length - 1 });
+  //     console.log(value, temp[parseInt(value)].length - 1);
+  //   },
+  //   [questionList, nowQueInfo]
+  // );
 
   const addQuestion = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(questionList));
@@ -57,9 +93,11 @@ export default function MakeFormDirect() {
     setNowIndex((prev) => prev + 1);
   }, [questionList, nowQueInfo, nowIndex]);
 
+  console.log('Direct: ', nowQueInfo);
+
   const addSection = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(questionList));
-    const sectionName = JSON.parse(JSON.stringify(sectionList));
+    const tempSectionList = JSON.parse(JSON.stringify(sectionList));
 
     temp.push([
       {
@@ -71,11 +109,13 @@ export default function MakeFormDirect() {
         descriptions: [{ content: '' }],
       },
     ]);
+
     setQuestionList(temp);
-    setSectionList([...sectionName, '']);
+    setQueSecNum((prev) => [...prev, { value: queSecNum.length.toString(), label: (queSecNum.length + 1).toString() }]);
+    setSectionList([...tempSectionList, '']);
     setNowQueInfo({ row: temp.length - 1, col: 0 });
     setNowIndex(accrueQue[accrueQue.length - 1] + 1);
-  }, [questionList, nowIndex, accrueQue, nowQueInfo, sectionList]);
+  }, [questionList, nowIndex, accrueQue, nowQueInfo, sectionList, queSecNum]);
 
   const onChangeTitle = useCallback(
     (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => {
@@ -116,6 +156,12 @@ export default function MakeFormDirect() {
         sectionName.splice(row, 1);
         setQuestionList(temp);
         setSectionList(sectionName);
+        setQueSecNum((prev) => {
+          const temp = [...prev];
+          temp.pop();
+
+          return temp;
+        });
 
         if (delIdx === nowIndex) {
           setNowIndex((prev) => prev - 1);
@@ -129,10 +175,8 @@ export default function MakeFormDirect() {
         setNowIndex((prev) => prev - 1);
       }
     },
-    [questionList, nowIndex, accrueQue, sectionList]
+    [questionList, nowIndex, accrueQue, sectionList, queSecNum]
   );
-
-  console.log(questionList);
 
   const onClickQue = useCallback(
     (row: number, col: number) => {
@@ -179,6 +223,7 @@ export default function MakeFormDirect() {
                                   onChangeTitle={onChangeTitle}
                                   onClickQue={onClickQue}
                                   onDelete={() => onDelete(row, col)}
+                                  // onChangeSectionNum={onChangeSectionNum}
                                 />
                               </div>
                             )}
@@ -193,10 +238,12 @@ export default function MakeFormDirect() {
             </DragDropContext>
           ))}
 
-          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}>
+          <Button onClick={showModal} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}>
             폼 생성하기
           </Button>
         </DirectForm>
+
+        <MakeFromModal open={isModalOpen} onCancel={handleCancel} />
       </Col>
       <Col span={4}>
         <AddQuestion onClick={addQuestion}>
