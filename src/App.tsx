@@ -17,6 +17,7 @@ import Edit from './pages/MyPage/Edit';
 import FindPassword from './pages/FindPassword';
 import ResFormList from './pages/DetailForm/ResFomList';
 import FixedButton from './components/FixedButton';
+import ConnectGPT from './components/ConnectGPT';
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ function App() {
             <Route path={'/makeform/select'} element={<MakeFormSelect />} />
             <Route path={'/makeform/direct'} element={<MakeFormDirect />} />
             <Route path={'/makeform/chatbot'} element={<MakeFormChatbot />} />
+            <Route path={'/gpt'} element={<ConnectGPT open={true} />} />
           </Routes>
         </BrowserRouter>
       </RecoilRoot>

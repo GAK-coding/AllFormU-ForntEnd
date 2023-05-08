@@ -2,14 +2,18 @@ import React from 'react';
 import { Chat } from '../../../typings/resForm';
 import { ChatBox } from './styles';
 import { Skeleton } from 'antd';
+import { useRecoilValue } from 'recoil';
+import { userInfo } from '../../../recoil/User/atom';
 
 export default function ResFormModalChat({ myReq, gptRes }: Chat) {
+  const { nickname } = useRecoilValue(userInfo);
+
   return (
     <div>
       <ChatBox type={'user'}>
         <div>
           <img src={'/images/userProfile.png'} alt={'유저 프로필 사진'} />
-          <span>오현</span>
+          <span>{nickname}</span>
         </div>
         <span>{myReq}</span>
       </ChatBox>
