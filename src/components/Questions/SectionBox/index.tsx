@@ -3,7 +3,7 @@ import { SectionBoxWrapper } from './styles';
 import FormInput from '../../ui/FormInput';
 import { Select } from 'antd';
 import { useRecoilState } from 'recoil';
-import { changeSection, questions } from '../../../recoil/MakeForm/atom';
+import { changeSection, questions, sectionNames } from '../../../recoil/MakeForm/atom';
 import { DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
 
 interface Props {
@@ -16,13 +16,32 @@ export default function SectionBox({ children, index, section }: Props) {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const [option, setOption] = useState<{ value: number; label: number; disabled: boolean }[]>([]);
   const [isChange, setIsChange] = useRecoilState(changeSection);
-  const [text, setText] = useState('');
+  const [sectionList, setSectionList] = useRecoilState(sectionNames);
 
-  const onChangeText = useCallback(
+  const onChangeSectionName = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setText(e.target.value);
+      const temp = JSON.parse(JSON.stringify(sectionList));
+      temp[index] = e.target.value;
+      setSectionList(temp);
     },
-    [text]
+    [sectionList]
+  );
+
+  const onChangeSection = useCallback(
+    (value: string) => {
+      const temp = JSON.parse(JSON.stringify(questionList));
+      const sectionName = JSON.parse(JSON.stringify(sectionList));
+
+      const [target] = temp.splice(index, 1);
+      temp.splice(+value, 0, target);
+      const [targetName] = sectionName.splice(index, 1);
+      sectionName.splice(+value, 0, targetName);
+
+      setQuestionList(temp);
+      setSectionList(sectionName);
+      setIsChange(true);
+    },
+    [questionList, setQuestionList, isChange]
   );
 
   useEffect(() => {
@@ -32,18 +51,6 @@ export default function SectionBox({ children, index, section }: Props) {
     }
     setOption(temp);
   }, [questionList, index]);
-
-  const onChangeSection = useCallback(
-    (value: string) => {
-      const temp = JSON.parse(JSON.stringify(questionList));
-      const target = temp.splice(index, 1);
-      temp.splice(+value, 0, target[0]);
-      setQuestionList(temp);
-
-      setIsChange(true);
-    },
-    [questionList, setQuestionList, isChange]
-  );
 
   useEffect(() => {
     if (index === questionList.length - 1 && isChange) {
@@ -64,7 +71,13 @@ export default function SectionBox({ children, index, section }: Props) {
   return (
     <SectionBoxWrapper>
       <div>
-        <FormInput value={text} onChange={onChangeText} width={'50%'} fontSize={1.8} placeholder={'섹션 이름'} />
+        <FormInput
+          value={sectionList[index]}
+          onChange={onChangeSectionName}
+          width={'50%'}
+          fontSize={1.8}
+          placeholder={'섹션 이름'}
+        />
         <span>
           <span>섹션 순서</span>
           <Select

@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useCallback, useEffect, useLayoutEffect,
 import { Col, Row } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { AddQuestion, AddSection, DirectForm } from './styles';
-import { formInfo, nowQuestion, questions, sectionLens } from '../../../recoil/MakeForm/atom';
+import { formInfo, nowQuestion, questions, sectionLens, sectionNames } from '../../../recoil/MakeForm/atom';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import FormTitle from '../../../components/Questions/FormTitle';
 import { v4 as uuid } from 'uuid';
@@ -21,6 +21,7 @@ export default function MakeFormDirect() {
   const [nowIndex, setNowIndex] = useState(0);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
   const { title, content } = useRecoilValue(formInfo);
+  const [sectionList, setSectionList] = useRecoilState(sectionNames);
   const { blue } = useRecoilValue(color);
 
   const { mutate, isLoading, isError, error, isSuccess } = useMutation(createForm);
@@ -58,6 +59,7 @@ export default function MakeFormDirect() {
 
   const addSection = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(questionList));
+    const sectionName = JSON.parse(JSON.stringify(sectionList));
 
     temp.push([
       {
@@ -70,9 +72,10 @@ export default function MakeFormDirect() {
       },
     ]);
     setQuestionList(temp);
+    setSectionList([...sectionName, '']);
     setNowQueInfo({ row: temp.length - 1, col: 0 });
     setNowIndex(accrueQue[accrueQue.length - 1] + 1);
-  }, [questionList, nowIndex, accrueQue, nowQueInfo]);
+  }, [questionList, nowIndex, accrueQue, nowQueInfo, sectionList]);
 
   const onChangeTitle = useCallback(
     (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => {
@@ -105,11 +108,14 @@ export default function MakeFormDirect() {
       if (row === 0 && questionList[row].length === 1) return;
 
       const temp = JSON.parse(JSON.stringify(questionList));
+      const sectionName = JSON.parse(JSON.stringify(sectionList));
       const delIdx = row === 0 ? col : accrueQue[row - 1] + col + 1;
 
       if (row !== 0 && questionList[row].length === 1) {
         temp.splice(row, 1);
+        sectionName.splice(row, 1);
         setQuestionList(temp);
+        setSectionList(sectionName);
 
         if (delIdx === nowIndex) {
           setNowIndex((prev) => prev - 1);
@@ -123,8 +129,10 @@ export default function MakeFormDirect() {
         setNowIndex((prev) => prev - 1);
       }
     },
-    [questionList, nowIndex, accrueQue]
+    [questionList, nowIndex, accrueQue, sectionList]
   );
+
+  console.log(questionList);
 
   const onClickQue = useCallback(
     (row: number, col: number) => {

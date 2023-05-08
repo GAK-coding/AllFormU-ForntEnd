@@ -51,6 +51,8 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
   ],
 });
 
+export const sectionNames = atom<string[]>({ key: 'sectionNames', default: [''] });
+
 export const sectionLens = atom<number[]>({ key: 'sectionLens', default: [] });
 
 export const changeSection = atom<boolean>({ key: 'changeSection', default: false });
