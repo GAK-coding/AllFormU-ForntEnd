@@ -17,7 +17,6 @@ export const signIn = async (data: signInInfo) =>
     .post('/member', data)
     .then((res) => {
       console.log(res.data);
-      alert('성공');
       return res.data;
     })
     .catch((err) => {
