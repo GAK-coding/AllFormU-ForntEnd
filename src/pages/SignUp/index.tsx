@@ -50,7 +50,7 @@ export default function SignUp() {
       e.preventDefault();
 
       mutate({ nickname, email, password });
-      navigate('/');
+      navigate('/signin');
     },
     [userInfo.nickname, userInfo.email, checkInfo.checkEmail, userInfo.password, checkInfo.checkPassword, checkPw]
   );

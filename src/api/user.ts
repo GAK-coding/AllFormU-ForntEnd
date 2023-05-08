@@ -13,12 +13,13 @@ export const signUp = async (data: signUpInfo) =>
       console.error(err);
     });
 
-export const signIn = (data: signInInfo) =>
-  axios
-    .post('/member', data)
+export const signIn = async (data: signInInfo) =>
+  await axios
+    .get('/member', { params: data })
     .then((res) => {
       alert('로그인 성공');
-      console.log(res);
+      console.log(res.data);
+      return res.data;
     })
     .catch((err) => {
       alert('로그인 실패');

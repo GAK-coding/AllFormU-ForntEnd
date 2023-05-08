@@ -1,11 +1,16 @@
 import { atom } from 'recoil';
-import { myPageInfo, signUpInfo, user } from '../../typings/user';
+import { myPageInfo, signInInfo, signUpInfo, user } from '../../typings/user';
 
-export const userInfo = atom<user>({ key: 'userInfo', default: { id: -1, nickname: '', email: '' } });
+export const userInfo = atom<user>({ key: 'userInfo', default: { id: -1, nickname: '', email: '', password: '' } });
 
 export const signUpUserInfo = atom<signUpInfo>({
   key: 'signUpUserInfo',
   default: { nickname: '', email: '', password: '' },
+});
+
+export const signInUserInfo = atom<signInInfo>({
+  key: 'signInUserInfo',
+  default: { email: '', password: '' },
 });
 
 export const mypageInfo = atom<myPageInfo>({

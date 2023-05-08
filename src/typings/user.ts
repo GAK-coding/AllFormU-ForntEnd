@@ -2,6 +2,7 @@ export interface user {
   id: number;
   nickname: string;
   email: string;
+  password: string;
 }
 
 export interface signInInfo extends Pick<user, 'email'> {
