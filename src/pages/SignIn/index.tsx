@@ -9,7 +9,7 @@ import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
 import { userInfo, signInUserInfo } from '../../recoil/User/atom';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { signIn } from '../../api/user';
 
 export default function SignIn() {
@@ -17,7 +17,6 @@ export default function SignIn() {
   const [userInput, setUserInput] = useRecoilState(signInUserInfo);
   const { email, password } = useRecoilValue(signInUserInfo);
   const setUserInfo = useSetRecoilState(userInfo);
-
   const navigate = useNavigate();
 
   const onChange = useCallback(
@@ -27,13 +26,15 @@ export default function SignIn() {
 
       setUserInput(temp);
     },
-    [userInfo]
+    [userInput]
   );
-  // const {data:info, isLoading, error, isError} = useQuery<signInInfo>('signIn',signIn(signInUserInfo));
+  const { mutate, isLoading, isError, error, data, isSuccess } = useMutation(signIn);
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
+
+      mutate({ email, password });
     },
     [email]
   );
