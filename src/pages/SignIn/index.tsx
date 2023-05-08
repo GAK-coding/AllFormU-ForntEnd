@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from 'react';
+import React, { ChangeEvent, useCallback, useEffect } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
 import { Form, LoginBtn, LoginLine, PageInfo } from '../SignUp/styles';
 import Input from '../../components/ui/Input';
@@ -9,7 +9,7 @@ import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
 import { userInfo, signInUserInfo } from '../../recoil/User/atom';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import { signIn } from '../../api/user';
 
 export default function SignIn() {
@@ -17,6 +17,7 @@ export default function SignIn() {
   const [userInput, setUserInput] = useRecoilState(signInUserInfo);
   const { email, password } = useRecoilValue(signInUserInfo);
   const setUserInfo = useSetRecoilState(userInfo);
+  const setUser = useRecoilValue(userInfo);
   const navigate = useNavigate();
 
   const onChange = useCallback(
@@ -28,7 +29,16 @@ export default function SignIn() {
     },
     [userInput]
   );
-  const { mutate, isLoading, isError, error, data, isSuccess } = useMutation(signIn);
+
+  const { mutate, data, isSuccess } = useMutation(signIn, {
+    onSuccess: (data) => {
+      const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
+      setUserInfo(infoList);
+      // console.log(setUser.id);
+      // console.log(setUser.nickname);
+      // console.log(setUser.email);
+    },
+  });
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -36,8 +46,18 @@ export default function SignIn() {
 
       mutate({ email, password });
     },
-    [email]
+    [email, password]
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
+      setUserInfo(infoList);
+      console.log(setUser.id);
+      console.log(setUser.nickname);
+      console.log(setUser.email);
+    }
+  }, [isSuccess]);
 
   return (
     <BaseBgBox>
