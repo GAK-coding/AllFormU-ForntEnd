@@ -1,56 +1,64 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
-import { FindLine, Form, LoginBtn, LoginLine, PageInfo } from '../SignUp/styles';
+import { Form, LoginBtn, LoginLine, PageInfo } from '../SignUp/styles';
 import Input from '../../components/ui/Input';
 import { signInInfo } from '../../typings/user';
 import Button from '../../components/ui/Button';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { signIn } from '../../api/user';
 import { useNavigate } from 'react-router-dom';
-import { userInfo } from '../../recoil/User/atom';
+import { userInfo, signInUserInfo } from '../../recoil/User/atom';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
+import { useMutation } from 'react-query';
+import { signIn } from '../../api/user';
 
 export default function SignIn() {
   const { blue } = useRecoilValue(color);
+  const [userInput, setUserInput] = useRecoilState(signInUserInfo);
+  const { email, password } = useRecoilValue(signInUserInfo);
   const setUserInfo = useSetRecoilState(userInfo);
-  const serInfo = useRecoilValue(userInfo);
-  const [info, setInfo] = useState<signInInfo>({
-    email: '',
-    password: '',
-  });
-  const { email, password } = info;
+  const setUser = useRecoilValue(userInfo);
   const navigate = useNavigate();
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: keyof signInInfo) => {
-      const temp = { ...info };
+      const temp = { ...userInput };
       temp[value] = e.target.value;
-      setInfo(temp);
+
+      setUserInput(temp);
     },
-    [info]
+    [userInput]
   );
+
+  const { mutate, data, isSuccess } = useMutation(signIn, {
+    onSuccess: (data) => {
+      const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
+      setUserInfo(infoList);
+      // console.log(setUser.id);
+      // console.log(setUser.nickname);
+      // console.log(setUser.email);
+    },
+  });
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      signIn({ email })
-        .then((res) => {
-          console.log(res.data);
-
-          if (res.data[0]) {
-            setUserInfo(res.data[0]);
-            alert('로그인 성공!');
-          } else alert('로그인 실패');
-        })
-        .catch((err) => {
-          console.log(err);
-          alert('다시 시도해주세요.');
-        });
+      mutate({ email, password });
     },
-    [email]
+    [email, password]
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
+      setUserInfo(infoList);
+      console.log(setUser.id);
+      console.log(setUser.nickname);
+      console.log(setUser.email);
+      navigate('/');
+    }
+  }, [isSuccess]);
 
   return (
     <BaseBgBox>
