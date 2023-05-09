@@ -15,11 +15,12 @@ export const MakeFormTop = styled.div`
   font-weight: 700;
 
   & > div:first-of-type {
-    font-size: 6.5rem;
-    margin-bottom: 3rem;
+    font-size: 5rem;
+    margin-bottom: 5rem;
 
     & > span {
       color: var(--color-main);
+      font-size: 6.5rem;
     }
   }
 
@@ -31,7 +32,7 @@ export const MakeFormTop = styled.div`
 
 export const MakeFormBottom = styled.div`
   display: flex;
-  gap: 10rem;
+  gap: 8rem;
 
   & > button > span {
     display: flex;
@@ -44,5 +45,10 @@ export const MakeFormBottom = styled.div`
       width: 40%;
       margin-bottom: 1rem;
     }
+  }
+
+  & > button:hover {
+    background-color: white;
+    border: 1px solid var(--color-gray);
   }
 `;

@@ -10,6 +10,7 @@ import { signUp } from '../../api/user';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signUpUserInfo } from '../../recoil/User/atom';
+import { useNavigate } from 'react-router-dom';
 
 interface InputInfo {
   checkEmail: string;
@@ -19,7 +20,7 @@ interface InputInfo {
 export default function SignUp() {
   const { blue } = useRecoilValue(color);
   const [userInfo, setUserInfo] = useRecoilState(signUpUserInfo);
-  const { name, email, password } = useRecoilValue(signUpUserInfo);
+  const { nickname, email, password } = useRecoilValue(signUpUserInfo);
 
   const [checkPw, setCheckPw] = useState(false);
   const [checkENum, setCheckENum] = useState(false);
@@ -33,6 +34,7 @@ export default function SignUp() {
   });
 
   const { mutate } = useMutation(signUp);
+  const navigate = useNavigate();
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -47,9 +49,10 @@ export default function SignUp() {
       }
       e.preventDefault();
 
-      mutate({ name, email, password });
+      mutate({ nickname, email, password });
+      navigate('/signin');
     },
-    [userInfo, checkInfo]
+    [userInfo.name, userInfo.email, checkInfo.checkEmail, userInfo.password, checkInfo.checkPassword, checkPw]
   );
 
   const onChangeCheck = useCallback(
@@ -101,8 +104,8 @@ export default function SignUp() {
         <Line>
           <span>이름</span>
           <Input
-            value={name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'name')}
+            value={nickname}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'nickname')}
             placeholder={'이름'}
             width={'50%'}
             height={1.8}

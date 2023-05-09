@@ -3,18 +3,18 @@ import Button from '../../../components/ui/Button';
 import { ButtonWrapper, FormListWrapper, HeaderWrapper, Title } from '../styles';
 import { color } from '../../../recoil/Color/atom';
 import { useCallback, useEffect } from 'react';
-import { makeInfoList } from '../../../typings/makeForm';
+import { MakeInfoList } from '../../../typings/makeForm';
 import { makeFormInfoList } from '../../../recoil/FormList/atom';
 import { useMutation, useQuery } from 'react-query';
 import { deleteFrom, getMakeForms } from '../../../api/getFormInfo';
 import { Col, Row } from 'antd';
 import { createForm } from '../../../api/makeform';
-import { getForm } from '../../../typings/getForm';
+import { GetForm } from '../../../typings/getForm';
 
 export default function MakeFormList() {
   const { blue, lightPurple } = useRecoilValue(color);
 
-  const { data: makeFormInfo, isLoading, error, isError } = useQuery<getForm[]>('myMakeForm', getMakeForms);
+  const { data: makeFormInfo, isLoading, error, isError } = useQuery<GetForm[]>('myMakeForm', getMakeForms);
 
   const {
     mutate,

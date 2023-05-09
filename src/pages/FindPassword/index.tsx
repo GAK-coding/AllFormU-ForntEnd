@@ -6,6 +6,7 @@ import { color } from '../../recoil/Color/atom';
 import { ChangeEvent, useCallback, useState } from 'react';
 import { signInInfo } from '../../typings/user';
 import { useNavigate } from 'react-router-dom';
+import FixedButton from '../../components/FixedButton';
 
 export default function FindPassword() {
   const { blue } = useRecoilValue(color);

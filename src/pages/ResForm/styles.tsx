@@ -13,7 +13,7 @@ export const ChatbotResWrapper = styled(BaseGbBoxWrapper)`
     & > div {
       //width: 100%;
 
-      border: 1px solid;
+      //border: 1px solid;
     }
   }
 `;
@@ -24,7 +24,7 @@ export const Chatting = styled.div`
   flex-direction: column;
 
   height: 75%;
-  border: 1px solid;
+  //border: 1px solid;
 
   overflow-y: scroll;
 

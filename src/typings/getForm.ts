@@ -19,17 +19,12 @@ interface Option {
   answer: boolean;
 }
 
-interface Description {
-  createdDate: string;
-  modifiedDate: string;
-  id: number;
+interface Description extends Option {
   title: string | null;
-  content: string | null;
-  answer: boolean | null;
   quiz: boolean;
 }
 
-export interface getForm {
+export interface GetForm {
   createdDate: string;
   modifiedDate: string;
   id: number;
