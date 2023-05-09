@@ -32,7 +32,7 @@ export default function SignUp() {
     checkPassword: '',
   });
 
-  const { mutate, isLoading, isError, error, data, isSuccess } = useMutation(signUp);
+  const { mutate } = useMutation(signUp);
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -49,7 +49,7 @@ export default function SignUp() {
 
       mutate({ name, email, password });
     },
-    [userInfo.name, userInfo.email, checkInfo.checkEmail, userInfo.password, checkInfo.checkPassword, checkPw]
+    [userInfo, checkInfo]
   );
 
   const onChangeCheck = useCallback(
