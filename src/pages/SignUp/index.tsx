@@ -52,7 +52,7 @@ export default function SignUp() {
       mutate({ nickname, email, password });
       navigate('/signin');
     },
-    [userInfo.name, userInfo.email, checkInfo.checkEmail, userInfo.password, checkInfo.checkPassword, checkPw]
+    [userInfo, checkInfo]
   );
 
   const onChangeCheck = useCallback(
