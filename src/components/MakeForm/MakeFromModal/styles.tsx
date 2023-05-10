@@ -10,7 +10,7 @@ export const MakeFormModalWrapper = styled(Modal)`
     border-radius: 3rem;
 
     min-width: 6rem;
-    min-height: 35rem;
+    min-height: 36rem;
 
     padding-bottom: 0;
 
@@ -40,7 +40,7 @@ export const FormInfoWrapper = styled.div`
 
 export const FormInfo = styled.div`
   display: flex;
-  margin-bottom: 4rem;
+  margin-bottom: 4.5rem;
 
   & > span {
     display: flex;

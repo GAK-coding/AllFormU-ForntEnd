@@ -31,7 +31,7 @@ export default function MakeFormDirect() {
   const { title, content } = useRecoilValue(formInfo);
   const [sectionList, setSectionList] = useRecoilState(sectionNames);
   const [queSecNum, setQueSecNum] = useRecoilState(queSectionNum);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
   const { blue } = useRecoilValue(color);
 

@@ -7,10 +7,12 @@ export const UrlWrapper = styled.div`
   align-items: center;
 
   height: 100%;
+  margin-top: -3rem;
 
   & > div {
-    width: 90%;
-    margin-top: 1rem;
+    width: 95%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.8rem;
 
     display: flex;
     justify-content: space-evenly;

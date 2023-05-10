@@ -24,7 +24,7 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
   const { title, content } = useRecoilValue(formInfo);
   const { blue, lightPurple } = useRecoilValue(color);
   const [fix, setFix] = useRecoilState(formFix);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formId, setFormId] = useState(-1);
 
   const { mutate, data, isLoading, isError, error, isSuccess } = useMutation(createForm, {
@@ -74,12 +74,6 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
     return current && current < dayjs().endOf('day');
   };
 
-  const disabledDateTime = () => ({
-    disabledHours: () => range(0, 24).splice(4, 20),
-    disabledMinutes: () => range(30, 60),
-    disabledSeconds: () => [55, 56],
-  });
-
   return (
     <MakeFormModalWrapper
       title={<ResModalTitle>질문 세부 설명</ResModalTitle>}
@@ -96,7 +90,6 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
             <DatePicker
               format="YYYY-MM-DD HH:mm:ss"
               disabledDate={disabledDate}
-              disabledTime={disabledDateTime}
               showTime={{ defaultValue: dayjs('00:00:00', 'HH:mm:ss') }}
             />
           </span>
@@ -138,13 +131,13 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
             bgColor={blue}
             fontSize={1.6}
             width={13}
-            height={5}
+            height={4.5}
           >
             링크 생성
           </Button>
         </CreateForm>
       </FormInfoWrapper>
-      <UrlModal open={isModalOpen} onCancel={handleCancel} formId={formId} />
+      <UrlModal open={isModalOpen} formId={formId} />
     </MakeFormModalWrapper>
   );
 }
