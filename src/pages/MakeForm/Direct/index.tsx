@@ -238,7 +238,7 @@ export default function MakeFormDirect() {
             </DragDropContext>
           ))}
 
-          <Button onClick={showModal} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}>
+          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}>
             폼 생성하기
           </Button>
         </DirectForm>
