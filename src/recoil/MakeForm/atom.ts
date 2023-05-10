@@ -58,3 +58,5 @@ export const sectionLens = atom<number[]>({ key: 'sectionLens', default: [] });
 export const changeSection = atom<boolean>({ key: 'changeSection', default: false });
 
 export const queSectionNum = atom<SectionType[]>({ key: 'queSectionNum', default: [{ value: '0', label: '1' }] });
+
+export const formFix = atom({ key: 'formFix', default: false });
