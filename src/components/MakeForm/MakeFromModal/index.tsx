@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ResModalTitle } from '../../ResForm/ResFormModal/styles';
 import { CreateForm, FormInfo, FormInfoWrapper, MakeFormModalWrapper } from './styles';
 import { DatePicker } from 'antd';
@@ -7,16 +7,51 @@ import dayjs from 'dayjs';
 import Button from '../../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
-import { formFix } from '../../../recoil/MakeForm/atom';
+import { formFix, formInfo, questions } from '../../../recoil/MakeForm/atom';
+import UrlModal from '../UrlModal';
+import { useMutation } from 'react-query';
+import { createForm } from '../../../api/makeform';
 
 interface Props {
   open: boolean;
   onCancel: () => void;
+  isCreate: boolean;
+  setIsCreate: (value: boolean) => void;
 }
 
-export default function MakeFromModal({ open, onCancel }: Props) {
+export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }: Props) {
+  const questionList = useRecoilValue(questions);
+  const { title, content } = useRecoilValue(formInfo);
   const { blue, lightPurple } = useRecoilValue(color);
   const [fix, setFix] = useRecoilState(formFix);
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [formId, setFormId] = useState(-1);
+
+  const { mutate, data, isLoading, isError, error, isSuccess } = useMutation(createForm, {
+    onSuccess: (data) => {
+      setFormId(data);
+    },
+  });
+
+  const formCreate = useCallback(() => {
+    if (!isCreate) {
+      const questions = questionList.flat().map((item) => {
+        const { id, ...rest } = item;
+        return rest;
+      });
+
+      mutate({ title, content: content, questions });
+      setIsCreate(true);
+    }
+  }, [title, content, questionList, isCreate]);
+
+  const showModal = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
 
   const onFixAble = useCallback(() => {
     setFix(true);
@@ -94,14 +129,22 @@ export default function MakeFromModal({ open, onCancel }: Props) {
           </span>
         </FormInfo>
         <CreateForm>
-          <Button color={'black'} bgColor={blue} fontSize={1.6} width={13} height={5}>
-            QR 생성
-          </Button>
-          <Button color={'black'} bgColor={blue} fontSize={1.6} width={13} height={5}>
-            URL 생성
+          <Button
+            onClick={() => {
+              showModal();
+              formCreate();
+            }}
+            color={'black'}
+            bgColor={blue}
+            fontSize={1.6}
+            width={13}
+            height={5}
+          >
+            링크 생성
           </Button>
         </CreateForm>
       </FormInfoWrapper>
+      <UrlModal open={isModalOpen} onCancel={handleCancel} formId={formId} />
     </MakeFormModalWrapper>
   );
 }
