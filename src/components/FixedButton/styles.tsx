@@ -15,7 +15,7 @@ export const FloatButton = styled.button`
   width: 110px;
   height: 110px;
 
-  position: absolute;
+  position: fixed;
   right: 30px;
   bottom: 30px;
 
