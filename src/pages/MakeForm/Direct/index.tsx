@@ -32,6 +32,7 @@ export default function MakeFormDirect() {
   const [sectionList, setSectionList] = useRecoilState(sectionNames);
   const [queSecNum, setQueSecNum] = useRecoilState(queSectionNum);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreate, setIsCreate] = useState(false);
   const { blue } = useRecoilValue(color);
 
   const { mutate, isLoading, isError, error, isSuccess } = useMutation(createForm);
@@ -202,7 +203,7 @@ export default function MakeFormDirect() {
     <Row>
       <Col span={4} />
       <Col span={16}>
-        <DirectForm onSubmit={onSubmit}>
+        <DirectForm>
           <FormTitle />
           {questionList.map((section, row) => (
             <DragDropContext key={`section-${row}`} onDragEnd={(result) => onDragEnd(result, row)}>
@@ -241,9 +242,12 @@ export default function MakeFormDirect() {
           <Button onClick={showModal} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}>
             폼 생성하기
           </Button>
+          {/* <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}> */}
+          {/*   폼 생성하기 */}
+          {/* </Button> */}
         </DirectForm>
 
-        <MakeFromModal open={isModalOpen} onCancel={handleCancel} />
+        <MakeFromModal isCreate={isCreate} setIsCreate={setIsCreate} open={isModalOpen} onCancel={handleCancel} />
       </Col>
       <Col span={4}>
         <AddQuestion onClick={addQuestion}>

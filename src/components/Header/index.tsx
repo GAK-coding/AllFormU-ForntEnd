@@ -24,7 +24,7 @@ export default function Header() {
       </Title>
       <BtnBox>
         <Button
-          onClick={() => navigate('/resform')}
+          onClick={() => navigate('/resform/chatbot')}
           fontSize={1.4}
           bgColor={purple}
           width={11}

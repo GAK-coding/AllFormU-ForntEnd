@@ -1,4 +1,4 @@
-import { Chatbot } from '../../../typings/resForm';
+import { Chatbot } from '../../../../typings/resForm';
 import { BallonWrapper, BotBallon, BotImage, UserBallon } from './styles';
 export default function ChatBox({ user, chatbot }: Chatbot) {
   return (
