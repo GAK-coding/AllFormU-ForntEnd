@@ -2,8 +2,15 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { SectionBoxWrapper } from './styles';
 import FormInput from '../../ui/FormInput';
 import { Select } from 'antd';
-import { useRecoilState } from 'recoil';
-import { changeSection, questions, sectionNames } from '../../../recoil/MakeForm/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  changeSection,
+  nowFocusIndex,
+  nowQuestion,
+  questions,
+  sectionLens,
+  sectionNames,
+} from '../../../recoil/MakeForm/atom';
 import { DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
 
 interface Props {
@@ -17,6 +24,9 @@ export default function SectionBox({ children, index, section }: Props) {
   const [option, setOption] = useState<{ value: number; label: number; disabled: boolean }[]>([]);
   const [isChange, setIsChange] = useRecoilState(changeSection);
   const [sectionList, setSectionList] = useRecoilState(sectionNames);
+  const [nowIndex, setNowIndex] = useRecoilState(nowFocusIndex);
+  const accrueQue = useRecoilValue(sectionLens);
+  const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
 
   const onChangeSectionName = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,11 +47,22 @@ export default function SectionBox({ children, index, section }: Props) {
       const [targetName] = sectionName.splice(index, 1);
       sectionName.splice(+value, 0, targetName);
 
+      let idx = 0;
+      let count = 0;
+      if (+value !== 0) {
+        for (let i = 0; i < +value; i++) {
+          count += temp[i].length;
+        }
+        idx = count;
+      }
+
       setQuestionList(temp);
       setSectionList(sectionName);
       setIsChange(true);
+      setNowIndex(idx);
+      setNowQueInfo({ row: +value, col: 0 });
     },
-    [questionList, setQuestionList, isChange, sectionList]
+    [questionList, setQuestionList, isChange, sectionList, nowIndex, accrueQue, nowQueInfo]
   );
 
   useEffect(() => {
