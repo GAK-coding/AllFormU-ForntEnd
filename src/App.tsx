@@ -10,15 +10,16 @@ import MakeForm from './pages/MakeForm/Main';
 import MakeFormSelect from './pages/MakeForm/Select';
 import MakeFormDirect from './pages/MakeForm/Direct';
 import MakeFormChatbot from './pages/MakeForm/Chatbot';
-import MakeFormList from './pages/DetailForm/MakeFormList';
 import Info from './pages/MyPage/Info';
 import Edit from './pages/MyPage/Edit';
 import FindPassword from './pages/FindPassword';
-import ResFormList from './pages/DetailForm/ResFomList';
 import FixedButton from './components/FixedButton';
 import ChatbotResForm from './pages/ResForm/ChatbotResForm';
 import DirectResForm from './pages/ResForm/DirectResForm';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import MakeFormList from './pages/MyPage/DetailForm/MakeFormList';
+import ResFormList from './pages/MyPage/DetailForm/ResFomList';
+import EditForm from './pages/MyPage/EditForm';
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ function App() {
             <Route path={'/mypage'} element={<Info />} />
             <Route path={'/mypage/edit'} element={<Edit />} />
             <Route path={'/mypage/makeform'} element={<MakeFormList />} />
+            <Route path={'/mypage/editform/:id'} element={<EditForm />} />
             <Route path={'/mypage/resform'} element={<ResFormList />} />
             <Route path={'/signin'} element={<SignIn />} />
             <Route path={'/signin/findpassword'} element={<FindPassword />} />

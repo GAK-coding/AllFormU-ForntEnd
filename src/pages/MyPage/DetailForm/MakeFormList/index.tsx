@@ -1,23 +1,22 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import Button from '../../../components/ui/Button';
+import Button from '../../../../components/ui/Button';
 import { ButtonWrapper, FormListWrapper, HeaderWrapper, Title } from '../styles';
-import { color } from '../../../recoil/Color/atom';
+import { color } from '../../../../recoil/Color/atom';
 import { useCallback, useEffect } from 'react';
-import { MakeInfoList } from '../../../typings/makeForm';
-import { makeFormInfoList } from '../../../recoil/FormList/atom';
 import { useMutation, useQuery } from 'react-query';
-import { deleteFrom, getMakeForms } from '../../../api/getFormInfo';
+import { deleteFrom, getMakeForms } from '../../../../api/getFormInfo';
 import { Col, Row } from 'antd';
-import { createForm } from '../../../api/makeform';
-import { GetForm } from '../../../typings/getForm';
+import { GetForm } from '../../../../typings/getForm';
+import { useNavigate } from 'react-router-dom';
 
 export default function MakeFormList() {
   const { blue, lightPurple } = useRecoilValue(color);
+  const navigate = useNavigate();
 
   const { data: makeFormInfo, isLoading, error, isError } = useQuery<GetForm[]>('myMakeForm', getMakeForms);
 
   const {
-    mutate,
+    mutate: deleteMutate,
     isLoading: deleteIsLoading,
     isError: deleteIsError,
     error: deleteError,
@@ -25,7 +24,7 @@ export default function MakeFormList() {
   } = useMutation(deleteFrom);
 
   const deleteForm = useCallback((id: number) => {
-    mutate(id);
+    deleteMutate(id);
   }, []);
 
   return (
@@ -37,7 +36,7 @@ export default function MakeFormList() {
         </HeaderWrapper>
 
         <FormListWrapper>
-          {makeFormInfo?.map((formInfo: any) => {
+          {makeFormInfo?.map((formInfo) => {
             return (
               <div key={formInfo.id}>
                 <Title>
@@ -55,7 +54,14 @@ export default function MakeFormList() {
                     </Button>
                   </div>
                   <div>
-                    <Button color={'black'} bgColor={lightPurple} fontSize={1.3} width={4} height={8}>
+                    <Button
+                      onClick={() => navigate(`/mypage/editform/${formInfo.id}`)}
+                      color={'black'}
+                      bgColor={lightPurple}
+                      fontSize={1.3}
+                      width={4}
+                      height={8}
+                    >
                       수정
                     </Button>
                     <Button

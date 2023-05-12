@@ -35,6 +35,7 @@ export interface DescriptionQue {
   title: string;
   sectionNum: number;
   descriptions: Array<{ content: string }>;
+  fix?: boolean;
 }
 
 export interface SelectionQue extends Omit<DescriptionQue, 'type' | 'descriptions'> {

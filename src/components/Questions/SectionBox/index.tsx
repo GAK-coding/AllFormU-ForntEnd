@@ -12,7 +12,6 @@ import {
   sectionNames,
 } from '../../../recoil/MakeForm/atom';
 import { DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
-import { useMessage } from '../../../hooks/useMessage';
 
 interface Props {
   children: React.ReactNode;
