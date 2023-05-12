@@ -18,6 +18,7 @@ import ResFormList from './pages/DetailForm/ResFomList';
 import FixedButton from './components/FixedButton';
 import ChatbotResForm from './pages/ResForm/ChatbotResForm';
 import DirectResForm from './pages/ResForm/DirectResForm';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </RecoilRoot>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
