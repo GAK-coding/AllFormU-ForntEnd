@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { signInInfo, signUpInfo } from '../typings/user';
+import { sendEmail, signInInfo, signUpInfo } from '../typings/user';
 
 export const signUp = async (data: signUpInfo) =>
   await axios
@@ -11,6 +11,18 @@ export const signUp = async (data: signUpInfo) =>
     .catch((err) => {
       console.error(err);
     });
+
+export const checkEmail = async (data: sendEmail) => {
+  await axios
+    .post(`/member/register/confirm/${data.email}`, data)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
 export const signIn = async (data: signInInfo) =>
   await axios
