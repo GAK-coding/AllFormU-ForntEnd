@@ -12,14 +12,14 @@ import {
   sectionNames,
 } from '../../../recoil/MakeForm/atom';
 import { DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
+import { useMessage } from '../../../hooks/useMessage';
 
 interface Props {
   children: React.ReactNode;
   index: number;
-  section: DescriptionQue | SelectionQue | GridQue;
 }
 
-export default function SectionBox({ children, index, section }: Props) {
+export default function SectionBox({ children, index }: Props) {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const [option, setOption] = useState<{ value: number; label: number; disabled: boolean }[]>([]);
   const [isChange, setIsChange] = useRecoilState(changeSection);
@@ -30,7 +30,7 @@ export default function SectionBox({ children, index, section }: Props) {
 
   const onChangeSectionName = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      const temp = JSON.parse(JSON.stringify(sectionList));
+      const temp: string[] = JSON.parse(JSON.stringify(sectionList));
       temp[index] = e.target.value;
       setSectionList(temp);
     },
@@ -39,8 +39,8 @@ export default function SectionBox({ children, index, section }: Props) {
 
   const onChangeSection = useCallback(
     (value: string) => {
-      const temp = JSON.parse(JSON.stringify(questionList));
-      const sectionName = JSON.parse(JSON.stringify(sectionList));
+      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
+      const sectionName: string[] = JSON.parse(JSON.stringify(sectionList));
 
       const [target] = temp.splice(index, 1);
       temp.splice(+value, 0, target);
@@ -75,7 +75,7 @@ export default function SectionBox({ children, index, section }: Props) {
 
   useEffect(() => {
     if (index === questionList.length - 1 && isChange) {
-      const temp = JSON.parse(JSON.stringify(questionList));
+      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
 
       for (let i = 0; i < temp.length; i++) {
         for (let j = 0; j < temp[i].length; j++) {
