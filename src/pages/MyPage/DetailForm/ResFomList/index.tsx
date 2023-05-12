@@ -1,10 +1,10 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { color } from '../../../recoil/Color/atom';
-import { resFormInfoList } from '../../../recoil/FormList/atom';
+import { color } from '../../../../recoil/Color/atom';
+import { resFormInfoList } from '../../../../recoil/FormList/atom';
 import { useEffect } from 'react';
 import { ButtonView, FormBox, FormListWrapper, HeaderWrapper, Title } from '../styles';
-import Button from '../../../components/ui/Button';
-import { resInfoList } from '../../../typings/resForm';
+import Button from '../../../../components/ui/Button';
+import { resInfoList } from '../../../../typings/resForm';
 
 export default function ResFormList() {
   const { blue } = useRecoilValue(color);
