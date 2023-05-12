@@ -6,7 +6,7 @@ import { signUpInfo } from '../../typings/user';
 import Button from '../../components/ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { signUp } from '../../api/user';
+import { checkEmail, signUp } from '../../api/user';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signUpUserInfo } from '../../recoil/User/atom';
@@ -25,6 +25,7 @@ export default function SignUp() {
   const [checkPw, setCheckPw] = useState(false);
   const [checkENum, setCheckENum] = useState(false);
 
+  const [eamilNum, setEmailNum] = useState<string>('');
   // 이메일 인증번호 = ENum;
   const ENum = '000';
 
@@ -33,7 +34,7 @@ export default function SignUp() {
     checkPassword: '',
   });
 
-  const { mutate, isLoading, isError, error, data, isSuccess } = useMutation(signUp);
+  const { mutate: signUpRequest } = useMutation(signUp);
   const navigate = useNavigate();
 
   const onClick = useCallback(
@@ -49,10 +50,10 @@ export default function SignUp() {
       }
       e.preventDefault();
 
-      mutate({ nickname, email, password });
+      signUpRequest({ nickname, email, password });
       navigate('/signin');
     },
-    [userInfo.nickname, userInfo.email, checkInfo.checkEmail, userInfo.password, checkInfo.checkPassword, checkPw]
+    [userInfo, checkInfo]
   );
 
   const onChangeCheck = useCallback(
@@ -75,8 +76,17 @@ export default function SignUp() {
     [userInfo]
   );
 
-  const onSendNum = () => {
-    //메일로 인증번호 보내기
+  const { mutate: sendEmail, data } = useMutation(checkEmail, {
+    // 값 변환되면 다시 설정하기
+    // onSuccess: (data) => {
+    //   setEmailNum(data);
+    // },
+  });
+
+  const onSendEmail = () => {
+    const num = 0;
+    sendEmail({ email, num });
+    alert(data);
   };
 
   const onCheck = () => {
@@ -127,7 +137,7 @@ export default function SignUp() {
             height={1.8}
             size={1.4}
           />
-          <Button onClick={onSendNum} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
+          <Button onClick={onSendEmail} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
             인증번호 전송
           </Button>
         </Line>

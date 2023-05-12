@@ -45,20 +45,29 @@ export default function SignIn() {
       e.preventDefault();
 
       mutate({ email, password });
+
+      if (isSuccess) {
+        const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
+        setUserInfo(infoList);
+        console.log(setUser.id);
+        console.log(setUser.nickname);
+        console.log(setUser.email);
+        // navigate('/');
+      }
     },
-    [email, password]
+    [email, password, isSuccess]
   );
 
-  useEffect(() => {
-    if (isSuccess) {
-      const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
-      setUserInfo(infoList);
-      console.log(setUser.id);
-      console.log(setUser.nickname);
-      console.log(setUser.email);
-      navigate('/');
-    }
-  }, [isSuccess]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
+  //     setUserInfo(infoList);
+  //     console.log(setUser.id);
+  //     console.log(setUser.nickname);
+  //     console.log(setUser.email);
+  //     navigate('/');
+  //   }
+  // }, [isSuccess]);
 
   return (
     <BaseBgBox>
