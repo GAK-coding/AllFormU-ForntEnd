@@ -3,7 +3,7 @@ import { Col, Row } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { AddQuestion, AddSection, DirectForm } from './styles';
 import {
-  formInfo,
+  nowFocusIndex,
   nowQuestion,
   queSectionNum,
   questions,
@@ -18,24 +18,19 @@ import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import SectionBox from '../../../components/Questions/SectionBox';
 import { DESCRIPTION_SHORT, SectionType } from '../../../typings/makeForm';
-import { useMutation } from 'react-query';
-import { createForm } from '../../../api/makeform';
 import MakeFromModal from '../../../components/MakeForm/MakeFromModal';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
   // 각 섹션이 몇 번 인덱스까지 사용하는지
   const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
-  const [nowIndex, setNowIndex] = useState(0);
+  const [nowIndex, setNowIndex] = useRecoilState(nowFocusIndex);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
-  const { title, content } = useRecoilValue(formInfo);
   const [sectionList, setSectionList] = useRecoilState(sectionNames);
   const [queSecNum, setQueSecNum] = useRecoilState(queSectionNum);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
   const { blue } = useRecoilValue(color);
-
-  const { mutate, isLoading, isError, error, isSuccess } = useMutation(createForm);
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
@@ -44,38 +39,6 @@ export default function MakeFormDirect() {
   const handleCancel = useCallback(() => {
     setIsModalOpen(false);
   }, []);
-
-  const onSubmit = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
-      const questions = questionList.flat().map((item) => {
-        const { id, ...rest } = item;
-        return rest;
-      });
-
-      mutate({ title, content: content, questions });
-    },
-    [title, content, questionList]
-  );
-
-  // const onChangeSectionNum = useCallback(
-  //   (value: string, row: number, col: number) => {
-  //     const temp = JSON.parse(JSON.stringify(questionList));
-  //
-  //     const [remove] = temp[row].splice(col, 1);
-  //     remove.sectionNum = +value;
-  //     temp[+value].push(remove);
-  //
-  //     if (temp[row].length === 0) {
-  //       temp.splice(row, 1);
-  //     }
-  //     setQuestionList(temp);
-  //     setNowQueInfo({ row: parseInt(value), col: temp[parseInt(value)].length - 1 });
-  //     console.log(value, temp[parseInt(value)].length - 1);
-  //   },
-  //   [questionList, nowQueInfo]
-  // );
 
   const addQuestion = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(questionList));
@@ -93,8 +56,6 @@ export default function MakeFormDirect() {
     setQuestionList(temp);
     setNowIndex((prev) => prev + 1);
   }, [questionList, nowQueInfo, nowIndex]);
-
-  console.log('Direct: ', nowQueInfo);
 
   const addSection = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(questionList));
@@ -224,7 +185,6 @@ export default function MakeFormDirect() {
                                   onChangeTitle={onChangeTitle}
                                   onClickQue={onClickQue}
                                   onDelete={() => onDelete(row, col)}
-                                  // onChangeSectionNum={onChangeSectionNum}
                                 />
                               </div>
                             )}
@@ -242,9 +202,6 @@ export default function MakeFormDirect() {
           <Button onClick={showModal} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}>
             폼 생성하기
           </Button>
-          {/* <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}> */}
-          {/*   폼 생성하기 */}
-          {/* </Button> */}
         </DirectForm>
 
         <MakeFromModal isCreate={isCreate} setIsCreate={setIsCreate} open={isModalOpen} onCancel={handleCancel} />
