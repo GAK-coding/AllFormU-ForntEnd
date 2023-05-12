@@ -28,9 +28,14 @@ export const questionTypes = atom({
   },
 });
 
-export const nowQuestion = atom<{ [key in string]: number }>({
+export const nowQuestion = atom<{ row: number; col: number }>({
   key: 'nowQuestion',
   default: { row: 0, col: 0 },
+});
+
+export const nowFocusIndex = atom<number>({
+  key: 'nowFocusIndex',
+  default: 0,
 });
 
 export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', content: '' } });
