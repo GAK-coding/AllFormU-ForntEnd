@@ -63,7 +63,7 @@ export default function SignUp() {
 
       setCheckInfo(temp);
     },
-    [checkInfo]
+    [checkInfo.checkEmail, checkInfo.checkPassword]
   );
 
   const onChange = useCallback(
@@ -73,7 +73,7 @@ export default function SignUp() {
 
       setUserInfo(temp);
     },
-    [userInfo]
+    [userInfo.nickname, userInfo.email, userInfo.password]
   );
 
   const { mutate: sendEmail, data } = useMutation(checkEmail, {
@@ -196,7 +196,6 @@ export default function SignUp() {
 
         {password && checkInfo.checkPassword && !checkPw && (
           <MisMatch>
-            {' '}
             <div />
             비밀번호가 불일치합니다.
           </MisMatch>
