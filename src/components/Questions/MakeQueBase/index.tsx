@@ -93,17 +93,20 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
     } else return opt;
   });
 
-  const onSelectSectionNum = useCallback((option: SectionType) => {
-    if (nowQueInfo['row'] === 0 && questionList[0].length === 1) {
-      showMessage('warning', '첫번째 섹션의 질문 개수가 1개일 경우 해당 질문을 옮길 수 없습니다.');
-      return;
-    }
+  const onSelectSectionNum = useCallback(
+    (option: SectionType) => {
+      if (nowQueInfo['row'] === 0 && questionList[0].length === 1) {
+        showMessage('warning', '첫번째 섹션의 질문 개수가 1개일 경우 해당 질문을 옮길 수 없습니다.');
+        return;
+      }
 
-    const opt = { ...option };
+      const opt = { ...option };
 
-    setNowSection(opt['value']);
-    setIsChange(true);
-  }, []);
+      setNowSection(opt['value']);
+      setIsChange(true);
+    },
+    [nowQueInfo]
+  );
 
   const onChangeType = useCallback(
     (value: DescriptionKinds | SelectionKinds | GridKinds) => {
@@ -227,7 +230,7 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
             </div>
             <div>
               <span>필수 응답</span>
-              <Switch onChange={onChangeRequire} size={'small'} />
+              <Switch defaultChecked={data.required} onChange={onChangeRequire} size={'small'} />
             </div>
           </QueBottomRight>
         </QueBottom>
