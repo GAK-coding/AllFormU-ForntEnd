@@ -88,7 +88,7 @@ export default function SignUp() {
   // 이메일 중복체크 & 인증번호 전송
   const { mutate: sendEmail, data } = useMutation(checkEmail, {
     onSuccess: (data) => {
-      setMessage(data.message);
+      console.log(data);
     },
   });
 
