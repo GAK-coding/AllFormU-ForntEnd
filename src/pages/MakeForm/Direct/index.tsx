@@ -58,7 +58,7 @@ export default function MakeFormDirect() {
 
     temp[row].splice(col + 1, 0, {
       type: DESCRIPTION_SHORT,
-      id: uuid(),
+      tempId: uuid(),
       required: false,
       title: '',
       sectionNum: row,
@@ -88,8 +88,8 @@ export default function MakeFormDirect() {
     temp.push([
       {
         type: DESCRIPTION_SHORT,
-        id: uuid(),
-        required: true,
+        tempId: uuid(),
+        required: false,
         title: '',
         sectionNum: temp.length,
         descriptions: [{ content: '' }],
@@ -210,9 +210,9 @@ export default function MakeFormDirect() {
 
                           if (focus) {
                             return (
-                              <div ref={ref} key={que.id}>
+                              <div ref={ref} key={que.tempId}>
                                 <QueDraggable
-                                  draggableId={que.id}
+                                  draggableId={que.tempId}
                                   data={que}
                                   row={row}
                                   col={col}
@@ -226,9 +226,9 @@ export default function MakeFormDirect() {
                           }
 
                           return (
-                            <div key={que.id}>
+                            <div key={que.tempId}>
                               <QueDraggable
-                                draggableId={que.id}
+                                draggableId={que.tempId}
                                 data={que}
                                 row={row}
                                 col={col}

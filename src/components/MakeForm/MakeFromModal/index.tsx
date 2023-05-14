@@ -36,7 +36,7 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
   const formCreate = useCallback(() => {
     if (!isCreate) {
       const questions = questionList.flat().map((item) => {
-        const { id, ...rest } = item;
+        const { tempId, ...rest } = item;
         return rest;
       });
 
