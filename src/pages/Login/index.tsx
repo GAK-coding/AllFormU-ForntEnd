@@ -49,10 +49,7 @@ export default function SignIn() {
       if (isSuccess) {
         const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
         setUserInfo(infoList);
-        console.log(setUser.id);
-        console.log(setUser.nickname);
-        console.log(setUser.email);
-        // navigate('/');
+        navigate('/');
       }
     },
     [email, password, isSuccess]

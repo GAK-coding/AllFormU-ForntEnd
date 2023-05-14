@@ -14,9 +14,9 @@ export const signUp = async (data: signUpInfo) =>
 
 export const checkEmail = async (data: sendEmail) => {
   await axios
-    .post(`/member/register/confirm/${data.email}`, data)
+    .post(`/member/check/duplicatedMember`, data)
     .then((res) => {
-      console.log(res);
+      console.log(res.data);
       return res.data;
     })
     .catch((err) => {

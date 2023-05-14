@@ -53,7 +53,7 @@ export default function SignUp() {
       signUpRequest({ nickname, email, password });
       navigate('/signin');
     },
-    [userInfo, checkInfo]
+    [userInfo, checkInfo, checkPw, checkENum]
   );
 
   const onChangeCheck = useCallback(
@@ -76,17 +76,25 @@ export default function SignUp() {
     [userInfo.nickname, userInfo.email, userInfo.password]
   );
 
+  // const { mutate: sendEmail, data } = useMutation(checkEmail, {
+  //   // 값 변환되면 다시 설정하기
+  //   // onSuccess: (data) => {
+  //   //   setEmailNum(data);
+  //   // },
+  // });
+
+  const [message, setMessage] = useState('');
+
+  // 이메일 중복체크 & 인증번호 전송
   const { mutate: sendEmail, data } = useMutation(checkEmail, {
-    // 값 변환되면 다시 설정하기
-    // onSuccess: (data) => {
-    //   setEmailNum(data);
-    // },
+    onSuccess: (data) => {
+      setMessage(data.message);
+    },
   });
 
   const onSendEmail = () => {
-    const num = 0;
-    sendEmail({ email, num });
-    alert(data);
+    sendEmail({ email });
+    console.log(data);
   };
 
   const onCheck = () => {
