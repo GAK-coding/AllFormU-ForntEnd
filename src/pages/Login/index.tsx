@@ -17,7 +17,6 @@ export default function SignIn() {
   const [userInput, setUserInput] = useRecoilState(signInUserInfo);
   const { email, password } = useRecoilValue(signInUserInfo);
   const setUserInfo = useSetRecoilState(userInfo);
-  const setUser = useRecoilValue(userInfo);
   const navigate = useNavigate();
 
   const onChange = useCallback(
@@ -34,11 +33,16 @@ export default function SignIn() {
     onSuccess: (data) => {
       const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
       setUserInfo(infoList);
-      // console.log(setUser.id);
-      // console.log(setUser.nickname);
-      // console.log(setUser.email);
     },
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
+      setUserInfo(infoList);
+      navigate('/');
+    }
+  }, [isSuccess]);
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -48,14 +52,6 @@ export default function SignIn() {
     },
     [email, password]
   );
-
-  useEffect(() => {
-    if (isSuccess) {
-      const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
-      setUserInfo(infoList);
-      navigate('/');
-    }
-  }, [isSuccess]);
 
   return (
     <BaseBgBox>

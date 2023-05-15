@@ -24,6 +24,7 @@ export default function SignUp() {
   const [userInfo, setUserInfo] = useRecoilState(signUpUserInfo);
   const { nickname, email, password } = useRecoilValue(signUpUserInfo);
 
+  const [isValid, setIsValid] = useState(false);
   const [checkPw, setCheckPw] = useState(false);
   const [checkENum, setCheckENum] = useState(false);
 
@@ -70,6 +71,11 @@ export default function SignUp() {
     (e: ChangeEvent<HTMLInputElement>, value: keyof signUpInfo) => {
       const temp = { ...userInfo };
       temp[value] = e.target.value;
+
+      if (value === 'password') {
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,15}$/;
+        setIsValid(passwordRegex.test(e.target.value));
+      }
 
       setUserInfo(temp);
     },
@@ -173,7 +179,12 @@ export default function SignUp() {
             인증번호 전송
           </Button>
         </Line>
-
+        {emailSuccess && (
+          <Match>
+            <div />
+            {emailStatus.message}
+          </Match>
+        )}
         <Line>
           <span>인증번호</span>
 
@@ -204,6 +215,19 @@ export default function SignUp() {
           />{' '}
           <button className={'disabled'} disabled={true} />
         </Line>
+
+        {password &&
+          (isValid ? (
+            <Match>
+              <div />
+              사용가능한 비밀번호입니다.
+            </Match>
+          ) : (
+            <MisMatch>
+              <div />
+              비밀번호는 8~15자리의 영문, 숫자, 특수문자 조합으로 입력해주세요.
+            </MisMatch>
+          ))}
 
         <Line>
           <span>비밀번호 확인</span>
