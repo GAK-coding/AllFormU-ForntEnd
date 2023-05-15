@@ -203,11 +203,9 @@ export default function SignUp() {
         )}
 
         <BtnBox>
-          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={11} height={4}>
-            회원가입
+          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={15} height={4}>
+            회원가입 완료
           </Button>
-
-          <GoogleAuth clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`} />
         </BtnBox>
       </Form>
     </BaseBgBox>
