@@ -123,7 +123,7 @@ export default function SignUp() {
 
   useEffect(() => {
     if (checkNumSucsess) {
-      if (checkNum.httpStatus === 'OK') {
+      if (checkNum.httpStatus === 'OK' || checkNum.httpStatus === 'BAD_REQUEST') {
         setEmailNum(checkNum.message);
         console.log('이메일 인증번호 번호 ' + emailNum);
         alert('인증번호가 전송 되었습니다.');
