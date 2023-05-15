@@ -1,17 +1,7 @@
 import axios from 'axios';
 import { sendEmail, signInInfo, signUpInfo } from '../typings/user';
 
-export const signUp = async (data: signUpInfo) =>
-  await axios
-    .post('/member/register', data)
-    .then((res) => {
-      console.log(res.data);
-      return res.data;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-
+// 이메일 중복 확인
 export const checkEmail = async (data: sendEmail) => {
   try {
     const response = await axios.post('/member/check/duplicatedMember', data);
@@ -23,6 +13,7 @@ export const checkEmail = async (data: sendEmail) => {
   }
 };
 
+// 이메일 인증번호 전송
 export const emailCheckNum = async (data: sendEmail) => {
   try {
     const response = await axios.post('/member/register/confirm', data);
@@ -33,6 +24,20 @@ export const emailCheckNum = async (data: sendEmail) => {
     throw error;
   }
 };
+
+// 회원가입
+export const signUp = async (data: signUpInfo) => {
+  try {
+    const response = await axios.post('/member/register', data);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 로그인
 export const signIn = async (data: signInInfo) => {
   try {
     const response = await axios.post('/member', data);
@@ -40,6 +45,30 @@ export const signIn = async (data: signInInfo) => {
     return response.data;
   } catch (error) {
     console.error(error);
-    throw error; // 예외 처리를 위해 에러를 다시 throw합니다.
+    throw error;
+  }
+};
+
+// 휴면계정 변환
+export const setDormant = async (id: number) => {
+  try {
+    const response = await axios.patch(`/member/dormant/${id}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 계정탈퇴
+export const setWithdrawal = async (id: number) => {
+  try {
+    const response = await axios.patch(`/member/withdrawal/${id}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };

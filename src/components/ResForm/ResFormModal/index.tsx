@@ -56,7 +56,7 @@ export default function ResFormModal({ open, onCancel, sendMessage }: Props) {
 
   return (
     <ResModal
-      title={<ResModalTitle>질문 세부 설명</ResModalTitle>}
+      title={<ResModalTitle>GPT 이용하기</ResModalTitle>}
       width={1000}
       open={open}
       onCancel={onCancel}
