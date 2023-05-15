@@ -123,9 +123,11 @@ export default function SignUp() {
 
   useEffect(() => {
     if (checkNumSucsess) {
-      console.log('이메일 인증번호 받기 성공' + checkNum);
-      setEmailNum(checkNum.message);
-      console.log('이메일 인증번호 번호 받고 나서임' + emailNum);
+      if (checkNum.httpStatus === 'OK') {
+        setEmailNum(checkNum.message);
+        console.log('이메일 인증번호 번호 ' + emailNum);
+        alert('인증번호가 전송 되었습니다.');
+      }
     }
   }, [checkNumSucsess]);
 
@@ -181,12 +183,20 @@ export default function SignUp() {
             인증번호 전송
           </Button>
         </Line>
-        {emailSuccess && (
-          <Match>
-            <div />
-            {emailStatus.message}
-          </Match>
-        )}
+
+        {emailSuccess &&
+          (emailStatus.httpStatus === 'OK' ? (
+            <Match>
+              <div />
+              {emailStatus.message}
+            </Match>
+          ) : (
+            <MisMatch>
+              <div />
+              {emailStatus.message}
+            </MisMatch>
+          ))}
+
         <Line>
           <span>인증번호</span>
 
