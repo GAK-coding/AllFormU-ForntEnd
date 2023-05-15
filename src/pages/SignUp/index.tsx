@@ -243,19 +243,19 @@ export default function SignUp() {
           <button className={'disabled'} disabled={true} />
         </Line>
 
-        {password && checkInfo.checkPassword && checkPw && (
-          <Match>
-            <div />
-            비밀번호가 일치합니다!
-          </Match>
-        )}
-
-        {password && checkInfo.checkPassword && !checkPw && (
-          <MisMatch>
-            <div />
-            비밀번호가 불일치합니다.
-          </MisMatch>
-        )}
+        {password &&
+          checkInfo.checkPassword &&
+          (checkPw ? (
+            <Match>
+              <div />
+              비밀번호가 일치합니다.
+            </Match>
+          ) : (
+            <MisMatch>
+              <div />
+              비밀번호가 불일치합니다.
+            </MisMatch>
+          ))}
 
         <BtnBox>
           <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={11} height={4}>
