@@ -6,7 +6,7 @@ import { signUpInfo } from '../../typings/user';
 import Button from '../../components/ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { checkEmail, signUp } from '../../api/user';
+import { checkEmail, signUp, emailCheckNum } from '../../api/user';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signUpUserInfo } from '../../recoil/User/atom';
@@ -18,16 +18,17 @@ interface InputInfo {
 }
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const { blue } = useRecoilValue(color);
+
   const [userInfo, setUserInfo] = useRecoilState(signUpUserInfo);
   const { nickname, email, password } = useRecoilValue(signUpUserInfo);
 
   const [checkPw, setCheckPw] = useState(false);
   const [checkENum, setCheckENum] = useState(false);
 
-  const [eamilNum, setEmailNum] = useState<string>('');
   // 이메일 인증번호 = ENum;
-  const ENum = '000';
+  // const ENum = '000';
 
   const [checkInfo, setCheckInfo] = useState<InputInfo>({
     checkEmail: '',
@@ -35,7 +36,6 @@ export default function SignUp() {
   });
 
   const { mutate: signUpRequest } = useMutation(signUp);
-  const navigate = useNavigate();
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -76,29 +76,53 @@ export default function SignUp() {
     [userInfo.nickname, userInfo.email, userInfo.password]
   );
 
-  // const { mutate: sendEmail, data } = useMutation(checkEmail, {
-  //   // 값 변환되면 다시 설정하기
-  //   // onSuccess: (data) => {
-  //   //   setEmailNum(data);
-  //   // },
-  // });
-
-  const [message, setMessage] = useState('');
-
-  // 이메일 중복체크 & 인증번호 전송
-  const { mutate: sendEmail, data } = useMutation(checkEmail, {
+  // 이메일 중복체크
+  const {
+    mutate: sendEmail,
+    data: emailStatus,
+    isSuccess: emailSuccess,
+  } = useMutation(checkEmail, {
     onSuccess: (data) => {
       console.log(data);
     },
   });
 
-  const onSendEmail = () => {
+  const onCheckEmail = useCallback(() => {
     sendEmail({ email });
-    console.log(data);
-  };
+    console.log(emailStatus);
+  }, [userInfo.email]);
+
+  useEffect(() => {
+    if (emailSuccess) {
+      if (emailStatus.httpStatus === 'OK') {
+        console.log('성공' + emailStatus.httpStatus);
+        // 인증번호 요청보냄
+        onSendEmail();
+      } else {
+        console.log('실패' + emailStatus.httpStatus);
+      }
+    }
+  }, [emailSuccess]);
+
+  // 인증번호 전송
+  const [emailNum, setEmailNum] = useState<string>('');
+  const { mutate: sendEmailNum, data: checkNum, isSuccess: checkNumSucsess } = useMutation(emailCheckNum);
+
+  const onSendEmail = useCallback(() => {
+    const num = 0;
+    sendEmailNum({ email, num });
+  }, [userInfo.email]);
+
+  useEffect(() => {
+    if (checkNumSucsess) {
+      console.log('이메일 인증번호 받기 성공' + checkNum);
+      setEmailNum(checkNum.message);
+      console.log('이메일 인증번호 번호 받고 나서임' + emailNum);
+    }
+  }, [checkNumSucsess]);
 
   const onCheck = () => {
-    if (checkInfo.checkEmail === ENum) {
+    if (checkInfo.checkEmail === emailNum) {
       alert('확인 되었습니다.');
       setCheckENum(true);
     } else alert('인증번호가 일치하지 않습니다.');
@@ -145,7 +169,7 @@ export default function SignUp() {
             height={1.8}
             size={1.4}
           />
-          <Button onClick={onSendEmail} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
+          <Button onClick={onCheckEmail} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
             인증번호 전송
           </Button>
         </Line>
