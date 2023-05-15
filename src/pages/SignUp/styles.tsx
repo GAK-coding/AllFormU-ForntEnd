@@ -1,4 +1,13 @@
 import styled from 'styled-components';
+import { BaseGbBoxWrapper } from '../../components/ui/BaseBgBox/styles';
+
+export const Wrapper = styled.div`
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+`;
 
 export const PageInfo = styled.div`
   width: 30%;
@@ -109,7 +118,7 @@ export const LoginLine = styled.div`
     display: flex;
     justify-content: flex-end;
 
-    margin-left: 36rem;
+    margin-left: 30rem;
     margin-top: -5rem;
     cursor: pointer;
 
@@ -155,13 +164,9 @@ export const BtnBox = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  img {
-    width: 15%;
-    margin-right: 1.5rem;
-  }
 
   & > button {
-    margin: 2rem 0rem 0rem 0rem;
+    margin: 6rem 0rem -5rem 0rem;
   }
 
   & > span {
@@ -174,21 +179,35 @@ export const BtnBox = styled.div`
   }
 `;
 
-export const LoginBtn = styled.div`
+export const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  margin-top: 0rem;
-
   & > button:first-of-type {
-    margin-bottom: 3rem;
+    margin-top: -3rem;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
-export const FindLine = styled.div`
+export const LoginBtn = styled.div`
   display: flex;
-  justify-content: flex-start;
-  margin: auto;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5rem;
+`;
+
+export const LoginBtnBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 2rem;
+
+  img {
+    width: 20%;
+    margin-right: 1.5rem;
+  }
 `;
