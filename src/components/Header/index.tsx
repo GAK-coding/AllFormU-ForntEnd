@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { BtnBox, HeaderWrapper, Title } from './styles';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { userInfo } from '../../recoil/User/atom';
 
@@ -12,6 +12,17 @@ export default function Header() {
 
   const { pathname } = useLocation();
   const info = useRecoilValue(userInfo);
+  const setOutUser = useSetRecoilState(userInfo);
+
+  const checkLogout = useCallback(() => {
+    if (info.id !== -1) {
+      setOutUser({ id: -1, nickname: '', email: '', password: '' });
+      navigate('/');
+      alert('로그아웃 되었습니다.');
+    } else {
+      navigate('/signin');
+    }
+  }, [info.id]);
 
   return (
     <HeaderWrapper>
@@ -25,16 +36,6 @@ export default function Header() {
         )}
       </Title>
       <BtnBox>
-        {/* <Button
-          onClick={() => navigate('/resform/chatbot')}
-          fontSize={1.4}
-          bgColor={purple}
-          width={11}
-          height={4}
-          color={'white'}
-        >
-          ResForm
-        </Button> */}
         {info.id !== -1 && (
           <Button
             onClick={() => navigate('/mypage')}
@@ -48,14 +49,7 @@ export default function Header() {
           </Button>
         )}
 
-        <Button
-          onClick={() => navigate('/signin')}
-          fontSize={1.4}
-          bgColor={purple}
-          width={11}
-          height={4}
-          color={'white'}
-        >
+        <Button onClick={checkLogout} fontSize={1.4} bgColor={purple} width={11} height={4} color={'white'}>
           {info.id === -1 ? 'Login' : 'Logout'}
         </Button>
       </BtnBox>
