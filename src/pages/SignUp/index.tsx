@@ -175,7 +175,7 @@ export default function SignUp() {
             height={1.8}
             size={1.4}
           />
-          <Button onClick={onCheckEmail} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
+          <Button onClick={onCheckEmail} color={'black'} bgColor={blue} fontSize={1.3} width={8} height={3.5}>
             인증번호 전송
           </Button>
         </Line>
@@ -197,7 +197,7 @@ export default function SignUp() {
             height={1.8}
             size={1.4}
           />
-          <Button onClick={onCheck} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
+          <Button onClick={onCheck} color={'black'} bgColor={blue} fontSize={1.3} width={8} height={3.5}>
             완료
           </Button>
         </Line>
@@ -258,11 +258,11 @@ export default function SignUp() {
           ))}
 
         <BtnBox>
-          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={11} height={4}>
+          <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={13} height={4}>
             회원가입
           </Button>
 
-          <GoogleAuth clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`} />
+          {/* <GoogleAuth clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`} /> */}
         </BtnBox>
       </Form>
     </BaseBgBox>

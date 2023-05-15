@@ -71,7 +71,7 @@ export const Line = styled.div`
 
   & > button {
     width: 50%;
-    margin-left: 4rem;
+    margin-left: 2rem;
     display: flex;
     align-self: flex-end;
     justify-content: center;
