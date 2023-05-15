@@ -8,3 +8,11 @@ export const editFormInfo = async (userId: number, formId: number, title: string
     })
     .then((res) => res.data)
     .catch((err) => console.error(err));
+
+export const deleteQue = async (formId: number, queId: number) => {
+  try {
+    await axios.delete(`/question/DeleteSelectquestion/${formId}/${queId}`);
+  } catch (error) {
+    console.error(error);
+  }
+};
