@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
 import { BtnBox, Form, Line, Match, MisMatch, PageInfo } from './styles';
 import Input from '../../components/ui/Input';
@@ -7,7 +7,6 @@ import Button from '../../components/ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { checkEmail, signUp, emailCheckNum } from '../../api/user';
-import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signUpUserInfo } from '../../recoil/User/atom';
 import { useNavigate } from 'react-router-dom';
@@ -28,9 +27,6 @@ export default function SignUp() {
   const [checkPw, setCheckPw] = useState(false);
   const [checkENum, setCheckENum] = useState(false);
 
-  // 이메일 인증번호 = ENum;
-  // const ENum = '000';
-
   const [checkInfo, setCheckInfo] = useState<InputInfo>({
     checkEmail: '',
     checkPassword: '',
@@ -40,8 +36,13 @@ export default function SignUp() {
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
+      if (!isValid) {
+        alert('비밀번호 조건이 일치하지 않습니다.');
+        return;
+      }
+
       if (!checkPw) {
-        alert('비밀번호가 틀렸습니다.');
+        alert('비밀번호가 일치하지 않습니다.');
         return;
       }
 
@@ -49,6 +50,7 @@ export default function SignUp() {
         alert('인증번호가 일치하지 않습니다.');
         return;
       }
+
       e.preventDefault();
 
       signUpRequest({ nickname, email, password });
