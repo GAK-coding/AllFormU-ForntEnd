@@ -9,7 +9,8 @@ export const BtnWrapper = styled.button<Btn>`
   align-items: center;
 
   border-radius: ${(props) => (props.radius ? props.radius : 5)}rem;
-  border: transparent;
+  //border: transparent;
+  border: ${(props) => props.border || 'transparent'};
   padding: 1rem 2rem;
   cursor: pointer;
 

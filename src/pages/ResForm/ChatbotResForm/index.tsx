@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import ResFormModal from '../../components/ResForm/ResFormModal';
+import ResFormModal from '../../../components/ResForm/ResFormModal';
 import {
   ChatbotFunc,
   ChatbotResWrapper,
@@ -11,16 +11,16 @@ import {
   BtnBoxWrapper,
   List,
 } from './styles';
-import Button from '../../components/ui/Button';
+import Button from '../../../components/ui/Button';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { color } from '../../recoil/Color/atom';
+import { color } from '../../../recoil/Color/atom';
 import ChatBox from './ChatBox';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import { gptLoading, gptTalks } from '../../recoil/Gpt/atom';
-import { chatTalks } from '../../recoil/Resform/atom';
-import Input from '../../components/ui/Input';
-import BallonChat from '../../components/ResForm/BallonChat';
+import { gptLoading, gptTalks } from '../../../recoil/Gpt/atom';
+import { chatTalks } from '../../../recoil/Resform/atom';
+import Input from '../../../components/ui/Input';
+import BallonChat from '../../../components/ResForm/BallonChat';
 
 interface ChatMessage {
   sender: string;
@@ -28,7 +28,7 @@ interface ChatMessage {
   type: string;
 }
 
-export default function ResForm() {
+export default function ChatbotResForm() {
   const { blue } = useRecoilValue(color);
   const [talk, setTalk] = useRecoilState(gptTalks);
   const [chat, setChat] = useRecoilState(chatTalks);

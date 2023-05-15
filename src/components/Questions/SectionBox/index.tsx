@@ -2,25 +2,34 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { SectionBoxWrapper } from './styles';
 import FormInput from '../../ui/FormInput';
 import { Select } from 'antd';
-import { useRecoilState } from 'recoil';
-import { changeSection, questions, sectionNames } from '../../../recoil/MakeForm/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  changeSection,
+  nowFocusIndex,
+  nowQuestion,
+  questions,
+  sectionLens,
+  sectionNames,
+} from '../../../recoil/MakeForm/atom';
 import { DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
 
 interface Props {
   children: React.ReactNode;
   index: number;
-  section: DescriptionQue | SelectionQue | GridQue;
 }
 
-export default function SectionBox({ children, index, section }: Props) {
+export default function SectionBox({ children, index }: Props) {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const [option, setOption] = useState<{ value: number; label: number; disabled: boolean }[]>([]);
   const [isChange, setIsChange] = useRecoilState(changeSection);
   const [sectionList, setSectionList] = useRecoilState(sectionNames);
+  const [nowIndex, setNowIndex] = useRecoilState(nowFocusIndex);
+  const accrueQue = useRecoilValue(sectionLens);
+  const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
 
   const onChangeSectionName = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      const temp = JSON.parse(JSON.stringify(sectionList));
+      const temp: string[] = JSON.parse(JSON.stringify(sectionList));
       temp[index] = e.target.value;
       setSectionList(temp);
     },
@@ -29,19 +38,30 @@ export default function SectionBox({ children, index, section }: Props) {
 
   const onChangeSection = useCallback(
     (value: string) => {
-      const temp = JSON.parse(JSON.stringify(questionList));
-      const sectionName = JSON.parse(JSON.stringify(sectionList));
+      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
+      const sectionName: string[] = JSON.parse(JSON.stringify(sectionList));
 
       const [target] = temp.splice(index, 1);
       temp.splice(+value, 0, target);
       const [targetName] = sectionName.splice(index, 1);
       sectionName.splice(+value, 0, targetName);
 
+      let idx = 0;
+      let count = 0;
+      if (+value !== 0) {
+        for (let i = 0; i < +value; i++) {
+          count += temp[i].length;
+        }
+        idx = count;
+      }
+
       setQuestionList(temp);
       setSectionList(sectionName);
       setIsChange(true);
+      setNowIndex(idx);
+      setNowQueInfo({ row: +value, col: 0 });
     },
-    [questionList, setQuestionList, isChange, sectionList]
+    [questionList, setQuestionList, isChange, sectionList, nowIndex, accrueQue, nowQueInfo]
   );
 
   useEffect(() => {
@@ -54,7 +74,7 @@ export default function SectionBox({ children, index, section }: Props) {
 
   useEffect(() => {
     if (index === questionList.length - 1 && isChange) {
-      const temp = JSON.parse(JSON.stringify(questionList));
+      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
 
       for (let i = 0; i < temp.length; i++) {
         for (let j = 0; j < temp[i].length; j++) {

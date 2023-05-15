@@ -3,25 +3,28 @@ import { FindWrapper, InputId, Logo, ResultWrapper } from './styles';
 import Button from '../../components/ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { ChangeEvent, useCallback, useState } from 'react';
-import { signInInfo } from '../../typings/user';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import FixedButton from '../../components/FixedButton';
+import { useMutation } from 'react-query';
+import { emailCheckNum } from '../../api/user';
 
+interface InputInfo {
+  email: string;
+}
 export default function FindPassword() {
   const { blue } = useRecoilValue(color);
 
-  const [info, setInfo] = useState<signInInfo>({
+  const [info, setInfo] = useState<InputInfo>({
     email: '',
-    password: '',
   });
+
   const { email } = info;
   const [sendId, setCheckId] = useState(false);
 
   const navigate = useNavigate();
 
   const onChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>, value: keyof signInInfo) => {
+    (e: ChangeEvent<HTMLInputElement>, value: keyof InputInfo) => {
       const temp = { ...info };
       temp[value] = e.target.value;
       setInfo(temp);
@@ -29,10 +32,18 @@ export default function FindPassword() {
     [info]
   );
 
-  const onCheck = () => {
-    //아이디 보내는 코드
-    setCheckId(true);
-  };
+  const { mutate: findPassword, isSuccess } = useMutation(emailCheckNum);
+
+  const onCheck = useCallback(() => {
+    const num = 1;
+    findPassword({ email, num });
+  }, [email]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setCheckId(true);
+    }
+  }, [isSuccess]);
 
   return (
     <FindWrapper>

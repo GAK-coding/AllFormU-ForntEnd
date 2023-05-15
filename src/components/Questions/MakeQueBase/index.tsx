@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import {
   CheckMark,
   QueBottom,
@@ -14,7 +14,14 @@ import {
 import FormInput from '../../ui/FormInput';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Select, Switch } from 'antd';
-import { nowQuestion, queSectionNum, questions, questionTypes, sectionLens } from '../../../recoil/MakeForm/atom';
+import {
+  nowFocusIndex,
+  nowQuestion,
+  queSectionNum,
+  questions,
+  questionTypes,
+  sectionLens,
+} from '../../../recoil/MakeForm/atom';
 import { TbTriangleInverted } from 'react-icons/tb';
 import { GrFormClose } from 'react-icons/gr';
 import {
@@ -41,6 +48,7 @@ import {
 import DescriptionBox from '../QueTypes/DescriptionBox';
 import SelectionBox from '../QueTypes/SelectionBox';
 import GridBox from '../QueTypes/GridBox';
+import { useMessage } from '../../../hooks/useMessage';
 
 interface Props {
   data: DescriptionQue | SelectionQue | GridQue;
@@ -50,7 +58,6 @@ interface Props {
   onClickQue: (row: number, col: number) => void;
   onDelete: (row: number, col: number) => void;
   onChangeTitle: (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => void;
-  // onChangeSectionNum: (value: string, row: number, col: number) => void;
 }
 
 const Types: QueType[] = [
@@ -67,44 +74,36 @@ const Types: QueType[] = [
   { value: GRID_CHECKBOX, label: '체크박스 그리드' },
 ];
 
-export default function MakeQueBase({
-  onClickQue,
-  data,
-  row,
-  col,
-  isClick,
-  onDelete,
-  onChangeTitle,
-}: // onChangeSectionNum,
-Props) {
+export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDelete, onChangeTitle }: Props) {
   const { title, type } = data;
   const [questionList, setQuestionList] = useRecoilState(questions);
   const queTypes = useRecoilValue(questionTypes);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
+  const [nowIndex, setNowIndex] = useRecoilState(nowFocusIndex);
+  const accrueQue = useRecoilValue(sectionLens);
   const [queSecNum, setQueSecNum] = useRecoilState(queSectionNum);
   const [nowType, setNowType] = useState(type);
+  const [nowSection, setNowSection] = useState('');
+  const [isChange, setIsChange] = useState(false);
+  const { showMessage, contextHolder } = useMessage();
 
-  const [test, setTest] = useState(-1);
+  const selectOpt: SectionType[] = queSecNum.map((opt) => {
+    if (+opt.value === row) {
+      return { ...opt, disabled: true };
+    } else return opt;
+  });
 
-  const onChangeSectionNum = useCallback(
-    (value: string) => {
-      const temp = JSON.parse(JSON.stringify(questionList));
+  const onSelectSectionNum = useCallback((option: SectionType) => {
+    if (nowQueInfo['row'] === 0 && questionList[0].length === 1) {
+      showMessage('warning', '첫번째 섹션의 질문 개수가 1개일 경우 해당 질문을 옮길 수 없습니다.');
+      return;
+    }
 
-      const [remove] = temp[row].splice(col, 1);
-      remove.sectionNum = +value;
-      temp[+value].push(remove);
+    const opt = { ...option };
 
-      if (temp[row].length === 0) {
-        temp.splice(row, 1);
-      }
-      setQuestionList(temp);
-      setNowQueInfo({ row: parseInt(value), col: temp[parseInt(value)].length - 1 });
-      setTest(parseInt(value));
-    },
-    [questionList, nowQueInfo, test]
-  );
-
-  console.log(test);
+    setNowSection(opt['value']);
+    setIsChange(true);
+  }, []);
 
   const onChangeType = useCallback(
     (value: DescriptionKinds | SelectionKinds | GridKinds) => {
@@ -139,15 +138,46 @@ Props) {
 
   const onChangeRequire = useCallback(
     (checked: boolean) => {
-      const temp = JSON.parse(JSON.stringify(questionList));
-      temp[row][col]['require'] = checked;
+      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
+      temp[row][col]['required'] = checked;
       setQuestionList(temp);
     },
     [questionList]
   );
 
+  useEffect(() => {
+    if (isChange) {
+      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
+      const tempQueSecNum: SectionType[] = JSON.parse(JSON.stringify(queSecNum));
+      const value = nowSection;
+
+      const [remove] = temp[row].splice(col, 1);
+      remove.sectionNum = +value;
+      temp[+value].push(remove);
+
+      const index =
+        +value === 0
+          ? temp[0].length - 1
+          : +value > row
+          ? accrueQue[+value - 1] + temp[+value].length - 1
+          : accrueQue[+value - 1] + temp[+value].length;
+
+      if (temp[row].length === 0) {
+        temp.splice(row, 1);
+        tempQueSecNum.pop();
+      }
+
+      setQuestionList(temp);
+      setQueSecNum(tempQueSecNum);
+      setNowQueInfo({ row: +value, col: temp[+value].length - 1 });
+      setNowIndex(index);
+      setIsChange(false);
+    }
+  }, [isChange, questionList, queSecNum, nowSection, nowQueInfo, nowIndex, accrueQue]);
+
   return (
     <QueWrapper>
+      {contextHolder}
       <DeleteBtn onClick={() => onDelete(row, col)}>
         <GrFormClose />
       </DeleteBtn>
@@ -189,9 +219,10 @@ Props) {
                 className="custom-select"
                 value={`${queSecNum[row].value}`}
                 style={{ width: 60 }}
-                onChange={onChangeSectionNum}
-                options={queSecNum}
+                onSelect={(value, option) => onSelectSectionNum(option)}
+                options={selectOpt}
                 suffixIcon={<TbTriangleInverted />}
+                size={'small'}
               />
             </div>
             <div>

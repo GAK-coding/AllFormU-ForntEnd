@@ -102,15 +102,14 @@ export const QueBottomLeft = styled.div`
 `;
 
 export const QueBottomRight = styled.div`
-  //border: 1px solid;
-
   width: 30%;
   min-height: 6rem;
 
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  justify-content: space-evenly;
+  align-items: center;
   padding: 0.5rem;
+  padding-top: 2rem;
   box-sizing: border-box;
 
   .custom-select .ant-select-selector {

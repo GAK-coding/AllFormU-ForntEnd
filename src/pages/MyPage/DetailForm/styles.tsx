@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseGbBoxWrapper } from '../../components/ui/BaseBgBox/styles';
+import { BaseGbBoxWrapper } from '../../../components/ui/BaseBgBox/styles';
 
 export const HeaderWrapper = styled.div`
   height: 20%;
