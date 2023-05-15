@@ -6,7 +6,7 @@ import { signUpInfo } from '../../typings/user';
 import Button from '../../components/ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { checkEmail, signUp } from '../../api/user';
+import { checkEmail, signUp, emailCheckNum } from '../../api/user';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signUpUserInfo } from '../../recoil/User/atom';
@@ -18,16 +18,18 @@ interface InputInfo {
 }
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const { blue } = useRecoilValue(color);
+
   const [userInfo, setUserInfo] = useRecoilState(signUpUserInfo);
   const { nickname, email, password } = useRecoilValue(signUpUserInfo);
 
+  const [isValid, setIsValid] = useState(false);
   const [checkPw, setCheckPw] = useState(false);
   const [checkENum, setCheckENum] = useState(false);
 
-  const [eamilNum, setEmailNum] = useState<string>('');
   // 이메일 인증번호 = ENum;
-  const ENum = '000';
+  // const ENum = '000';
 
   const [checkInfo, setCheckInfo] = useState<InputInfo>({
     checkEmail: '',
@@ -35,7 +37,6 @@ export default function SignUp() {
   });
 
   const { mutate: signUpRequest } = useMutation(signUp);
-  const navigate = useNavigate();
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -53,7 +54,7 @@ export default function SignUp() {
       signUpRequest({ nickname, email, password });
       navigate('/signin');
     },
-    [userInfo, checkInfo]
+    [userInfo, checkInfo, checkPw, checkENum]
   );
 
   const onChangeCheck = useCallback(
@@ -63,7 +64,7 @@ export default function SignUp() {
 
       setCheckInfo(temp);
     },
-    [checkInfo]
+    [checkInfo.checkEmail, checkInfo.checkPassword]
   );
 
   const onChange = useCallback(
@@ -71,26 +72,63 @@ export default function SignUp() {
       const temp = { ...userInfo };
       temp[value] = e.target.value;
 
+      if (value === 'password') {
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,15}$/;
+        setIsValid(passwordRegex.test(e.target.value));
+      }
+
       setUserInfo(temp);
     },
-    [userInfo]
+    [userInfo.nickname, userInfo.email, userInfo.password]
   );
 
-  const { mutate: sendEmail, data } = useMutation(checkEmail, {
-    // 값 변환되면 다시 설정하기
-    // onSuccess: (data) => {
-    //   setEmailNum(data);
-    // },
+  // 이메일 중복체크
+  const {
+    mutate: sendEmail,
+    data: emailStatus,
+    isSuccess: emailSuccess,
+  } = useMutation(checkEmail, {
+    onSuccess: (data) => {
+      console.log(data);
+    },
   });
 
-  const onSendEmail = () => {
+  const onCheckEmail = useCallback(() => {
+    sendEmail({ email });
+    console.log(emailStatus);
+  }, [userInfo.email]);
+
+  useEffect(() => {
+    if (emailSuccess) {
+      if (emailStatus.httpStatus === 'OK') {
+        console.log('성공' + emailStatus.httpStatus);
+        // 인증번호 요청보냄
+        onSendEmail();
+      } else {
+        console.log('실패' + emailStatus.httpStatus);
+      }
+    }
+  }, [emailSuccess]);
+
+  // 인증번호 전송
+  const [emailNum, setEmailNum] = useState<string>('');
+  const { mutate: sendEmailNum, data: checkNum, isSuccess: checkNumSucsess } = useMutation(emailCheckNum);
+
+  const onSendEmail = useCallback(() => {
     const num = 0;
-    sendEmail({ email, num });
-    alert(data);
-  };
+    sendEmailNum({ email, num });
+  }, [userInfo.email]);
+
+  useEffect(() => {
+    if (checkNumSucsess) {
+      console.log('이메일 인증번호 받기 성공' + checkNum);
+      setEmailNum(checkNum.message);
+      console.log('이메일 인증번호 번호 받고 나서임' + emailNum);
+    }
+  }, [checkNumSucsess]);
 
   const onCheck = () => {
-    if (checkInfo.checkEmail === ENum) {
+    if (checkInfo.checkEmail === emailNum) {
       alert('확인 되었습니다.');
       setCheckENum(true);
     } else alert('인증번호가 일치하지 않습니다.');
@@ -137,11 +175,16 @@ export default function SignUp() {
             height={1.8}
             size={1.4}
           />
-          <Button onClick={onSendEmail} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
+          <Button onClick={onCheckEmail} color={'black'} bgColor={blue} fontSize={1.3} width={8} height={3.5}>
             인증번호 전송
           </Button>
         </Line>
-
+        {emailSuccess && (
+          <Match>
+            <div />
+            {emailStatus.message}
+          </Match>
+        )}
         <Line>
           <span>인증번호</span>
 
@@ -154,7 +197,7 @@ export default function SignUp() {
             height={1.8}
             size={1.4}
           />
-          <Button onClick={onCheck} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
+          <Button onClick={onCheck} color={'black'} bgColor={blue} fontSize={1.3} width={8} height={3.5}>
             완료
           </Button>
         </Line>
@@ -173,6 +216,19 @@ export default function SignUp() {
           <button className={'disabled'} disabled={true} />
         </Line>
 
+        {password &&
+          (isValid ? (
+            <Match>
+              <div />
+              사용가능한 비밀번호입니다.
+            </Match>
+          ) : (
+            <MisMatch>
+              <div />
+              비밀번호는 8~15자리의 영문, 숫자, 특수문자 조합으로 입력해주세요.
+            </MisMatch>
+          ))}
+
         <Line>
           <span>비밀번호 확인</span>
           <Input
@@ -187,25 +243,26 @@ export default function SignUp() {
           <button className={'disabled'} disabled={true} />
         </Line>
 
-        {password && checkInfo.checkPassword && checkPw && (
-          <Match>
-            <div />
-            비밀번호가 일치합니다!
-          </Match>
-        )}
-
-        {password && checkInfo.checkPassword && !checkPw && (
-          <MisMatch>
-            {' '}
-            <div />
-            비밀번호가 불일치합니다.
-          </MisMatch>
-        )}
+        {password &&
+          checkInfo.checkPassword &&
+          (checkPw ? (
+            <Match>
+              <div />
+              비밀번호가 일치합니다.
+            </Match>
+          ) : (
+            <MisMatch>
+              <div />
+              비밀번호가 불일치합니다.
+            </MisMatch>
+          ))}
 
         <BtnBox>
           <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={15} height={4}>
             회원가입 완료
           </Button>
+
+          <GoogleAuth clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`} />
         </BtnBox>
       </Form>
     </BaseBgBox>

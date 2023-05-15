@@ -80,7 +80,7 @@ export const Line = styled.div`
 
   & > button {
     width: 50%;
-    margin-left: 4rem;
+    margin-left: 2rem;
     display: flex;
     align-self: flex-end;
     justify-content: center;
@@ -129,7 +129,8 @@ export const LoginLine = styled.div`
 
 export const Match = styled.span`
   margin-bottom: 1rem;
-  font-size: 1.5rem;
+  margin-top: -0.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #1daa8b;
 
@@ -137,14 +138,15 @@ export const Match = styled.span`
   display: flex;
 
   & > div {
-    width: 23%;
-    height: 10px;
+    width: 25%;
+    height: 15px;
   }
 `;
 
 export const MisMatch = styled.span`
   margin-bottom: 1rem;
-  font-size: 1.5rem;
+  margin-top: -0.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #f36767;
 
@@ -152,8 +154,8 @@ export const MisMatch = styled.span`
   display: flex;
 
   & > div {
-    width: 23%;
-    height: 10px;
+    width: 25%;
+    height: 15px;
   }
 `;
 
