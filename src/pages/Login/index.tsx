@@ -29,18 +29,24 @@ export default function SignIn() {
     [userInput]
   );
 
-  const { mutate, data, isSuccess } = useMutation(signIn, {
-    onSuccess: (data) => {
-      const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
-      setUserInfo(infoList);
-    },
-  });
+  const { mutate, data, isSuccess } = useMutation(signIn);
 
   useEffect(() => {
     if (isSuccess) {
-      const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
-      setUserInfo(infoList);
-      navigate('/');
+      if (data.httpStatus === 'CONFLICT') {
+        alert('비밀번호가 일치하지 않습니다.');
+        return;
+      } else if (data.httpStatus === 'NOT_FOUND') {
+        alert('존재하지 않는 이메일입니다.');
+        return;
+      } else if (data.httpsStatus === 'BAD_REQUEST') {
+        alert('휴면 계정입니다. 재회원가입을 통해 휴면 상태를 해제해주세요.');
+        return;
+      } else {
+        const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
+        setUserInfo(infoList);
+        navigate('/');
+      }
     }
   }, [isSuccess]);
 
