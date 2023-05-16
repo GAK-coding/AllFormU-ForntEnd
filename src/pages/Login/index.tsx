@@ -36,10 +36,12 @@ export default function SignIn() {
       if (data.httpStatus === 'CONFLICT') {
         alert('비밀번호가 일치하지 않습니다.');
         return;
-      } else if (data.httpStatus === 'NOT_FOUND') {
+      }
+      if (data.httpStatus === 'NOT_FOUND') {
         alert('존재하지 않는 이메일입니다.');
         return;
-      } else if (data.httpsStatus === 'BAD_REQUEST') {
+      }
+      if (data.httpStatus === 'BAD_REQUEST') {
         alert('휴면 계정입니다. 재회원가입을 통해 휴면 상태를 해제해주세요.');
         return;
       } else {
@@ -48,7 +50,7 @@ export default function SignIn() {
         navigate('/');
       }
     }
-  }, [isSuccess]);
+  }, [data, isSuccess]);
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
