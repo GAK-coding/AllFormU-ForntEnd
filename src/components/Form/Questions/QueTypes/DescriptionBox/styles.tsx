@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DESCRIPTION_LONG, DESCRIPTION_SHORT } from '../../../../typings/makeForm';
+import { DESCRIPTION_LONG, DESCRIPTION_SHORT } from '../../../../../typings/makeForm';
 
 export const Description = styled.div<{ type: string }>`
   display: flex;

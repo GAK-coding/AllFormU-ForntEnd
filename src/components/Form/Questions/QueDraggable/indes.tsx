@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import MakeQueBase from '../MakeQueBase';
 import { Draggable } from 'react-beautiful-dnd';
-import { DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
+import { DescriptionQue, GridQue, SelectionQue } from '../../../../typings/makeForm';
 
 interface Props {
   draggableId: string;

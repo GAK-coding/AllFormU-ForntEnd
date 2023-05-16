@@ -11,15 +11,15 @@ import {
   sectionNames,
 } from '../../../recoil/MakeForm/atom';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import FormTitle from '../../../components/Questions/FormTitle';
 import { v4 as uuid } from 'uuid';
 import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
-import SectionBox from '../../../components/Questions/SectionBox';
 import { DESCRIPTION_SHORT, DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
-import MakeFromModal from '../../../components/MakeForm/MakeFromModal';
-import QueDraggable from '../../../components/Questions/QueDraggable/indes';
 import { useMessage } from '../../../hooks/useMessage';
+import QueDraggable from '../../../components/Form/Questions/QueDraggable/indes';
+import MakeFromModal from '../../../components/Form/MakeForm/MakeFromModal';
+import SectionBox from '../../../components/Form/Questions/SectionBox';
+import FormTitle from '../../../components/Form/Questions/FormTitle';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);

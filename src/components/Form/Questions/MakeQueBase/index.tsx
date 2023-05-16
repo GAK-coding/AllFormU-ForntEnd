@@ -11,7 +11,7 @@ import {
   DeleteBtn,
   QueBottomRight,
 } from './styles';
-import FormInput from '../../ui/FormInput';
+import FormInput from '../../../ui/FormInput';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Select, Switch } from 'antd';
 import {
@@ -21,7 +21,7 @@ import {
   questions,
   questionTypes,
   sectionLens,
-} from '../../../recoil/MakeForm/atom';
+} from '../../../../recoil/MakeForm/atom';
 import { TbTriangleInverted } from 'react-icons/tb';
 import { GrFormClose } from 'react-icons/gr';
 import {
@@ -44,11 +44,11 @@ import {
   SELECTION_OPTION,
   SelectionKinds,
   SelectionQue,
-} from '../../../typings/makeForm';
+} from '../../../../typings/makeForm';
 import DescriptionBox from '../QueTypes/DescriptionBox';
 import SelectionBox from '../QueTypes/SelectionBox';
 import GridBox from '../QueTypes/GridBox';
-import { useMessage } from '../../../hooks/useMessage';
+import { useMessage } from '../../../../hooks/useMessage';
 import { useLocation } from 'react-router-dom';
 
 interface Props {

@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useCallback, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { formInfo } from '../../../recoil/MakeForm/atom';
+import { formInfo } from '../../../../recoil/MakeForm/atom';
 import { FormTitleWrapper, TitleInput } from './styles';
 import TextArea from 'antd/es/input/TextArea';
 import { QueWrapper } from '../MakeQueBase/styles';
 import { useMutation, useQuery } from 'react-query';
-import { editFormInfo } from '../../../api/editForm';
+import { editFormInfo } from '../../../../api/editForm';
 import { debounce } from 'lodash';
 
 interface Props {

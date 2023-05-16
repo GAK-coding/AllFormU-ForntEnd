@@ -9,7 +9,7 @@ import {
   DESCRIPTION_LONG,
   DESCRIPTION_SHORT,
   DESCRIPTION_TIME,
-} from '../../../../typings/makeForm';
+} from '../../../../../typings/makeForm';
 
 interface Props {
   type: string;

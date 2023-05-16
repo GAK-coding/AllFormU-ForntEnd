@@ -1,13 +1,12 @@
 import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { ResModal, ResModalInput, ResModalTalk, ResModalTitle } from './styles';
-import Input from '../../ui/Input';
-import Button from '../../ui/Button';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { color } from '../../../recoil/Color/atom';
-import { Chat } from '../../../typings/resForm';
 import ResFormChat from '../ResFormModalChat';
 import { message } from 'antd';
-import { gptLoading, gptTalks } from '../../../recoil/Gpt/atom';
+import { color } from '../../../../recoil/Color/atom';
+import { gptLoading, gptTalks } from '../../../../recoil/Gpt/atom';
+import Input from '../../../ui/Input';
+import Button from '../../../ui/Button';
 
 interface Props {
   open: boolean;

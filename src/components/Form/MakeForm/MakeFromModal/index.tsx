@@ -4,13 +4,13 @@ import { CreateForm, FormInfo, FormInfoWrapper, MakeFormModalWrapper } from './s
 import { DatePicker } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
-import Button from '../../ui/Button';
+import Button from '../../../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { color } from '../../../recoil/Color/atom';
-import { formFix, formInfo, questions } from '../../../recoil/MakeForm/atom';
+import { color } from '../../../../recoil/Color/atom';
+import { formFix, formInfo, questions } from '../../../../recoil/MakeForm/atom';
 import UrlModal from '../UrlModal';
 import { useMutation } from 'react-query';
-import { createForm } from '../../../api/makeform';
+import { createForm } from '../../../../api/makeform';
 
 interface Props {
   open: boolean;
