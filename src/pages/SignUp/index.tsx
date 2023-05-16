@@ -56,7 +56,7 @@ export default function SignUp() {
       signUpRequest({ nickname, email, password });
       navigate('/signin');
     },
-    [userInfo, checkInfo, checkPw, checkENum]
+    [userInfo, checkInfo, checkPw, checkENum, isValid]
   );
 
   const onChangeCheck = useCallback(
@@ -102,7 +102,7 @@ export default function SignUp() {
 
   useEffect(() => {
     if (emailSuccess) {
-      if (emailStatus.httpStatus === 'OK') {
+      if (emailStatus.httpStatus === 'OK' || emailStatus.httpStatus === 'BAD_REQUEST') {
         console.log('성공' + emailStatus.httpStatus);
         // 인증번호 요청보냄
         onSendEmail();
@@ -123,7 +123,7 @@ export default function SignUp() {
 
   useEffect(() => {
     if (checkNumSucsess) {
-      if (checkNum.httpStatus === 'OK' || checkNum.httpStatus === 'BAD_REQUEST') {
+      if (checkNum.httpStatus === 'OK') {
         setEmailNum(checkNum.message);
         console.log('이메일 인증번호 번호 ' + emailNum);
         alert('인증번호가 전송 되었습니다.');
@@ -185,10 +185,10 @@ export default function SignUp() {
         </Line>
 
         {emailSuccess &&
-          (emailStatus.httpStatus === 'OK' ? (
+          (emailStatus.httpStatus === 'OK' || emailStatus.httpStatus === 'BAD_REQUEST' ? (
             <Match>
               <div />
-              {emailStatus.message}
+              인증번호가 전송되었습니다.
             </Match>
           ) : (
             <MisMatch>
