@@ -11,7 +11,7 @@ import {
   DeleteBtn,
   QueBottomRight,
 } from './styles';
-import FormInput from '../../ui/FormInput';
+import FormInput from '../../../ui/FormInput';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Select, Switch } from 'antd';
 import {
@@ -21,7 +21,7 @@ import {
   questions,
   questionTypes,
   sectionLens,
-} from '../../../recoil/MakeForm/atom';
+} from '../../../../recoil/MakeForm/atom';
 import { TbTriangleInverted } from 'react-icons/tb';
 import { GrFormClose } from 'react-icons/gr';
 import {
@@ -44,11 +44,12 @@ import {
   SELECTION_OPTION,
   SelectionKinds,
   SelectionQue,
-} from '../../../typings/makeForm';
+} from '../../../../typings/makeForm';
 import DescriptionBox from '../QueTypes/DescriptionBox';
 import SelectionBox from '../QueTypes/SelectionBox';
 import GridBox from '../QueTypes/GridBox';
-import { useMessage } from '../../../hooks/useMessage';
+import { useMessage } from '../../../../hooks/useMessage';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   data: DescriptionQue | SelectionQue | GridQue;
@@ -86,6 +87,7 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
   const [nowSection, setNowSection] = useState('');
   const [isChange, setIsChange] = useState(false);
   const { showMessage, contextHolder } = useMessage();
+  const { pathname } = useLocation();
 
   const selectOpt: SectionType[] = queSecNum.map((opt) => {
     if (+opt.value === row) {
@@ -93,17 +95,20 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
     } else return opt;
   });
 
-  const onSelectSectionNum = useCallback((option: SectionType) => {
-    if (nowQueInfo['row'] === 0 && questionList[0].length === 1) {
-      showMessage('warning', '첫번째 섹션의 질문 개수가 1개일 경우 해당 질문을 옮길 수 없습니다.');
-      return;
-    }
+  const onSelectSectionNum = useCallback(
+    (option: SectionType) => {
+      if (nowQueInfo['row'] === 0 && questionList[0].length === 1) {
+        showMessage('warning', '첫번째 섹션의 질문 개수가 1개일 경우 해당 질문을 옮길 수 없습니다.');
+        return;
+      }
 
-    const opt = { ...option };
+      const opt = { ...option };
 
-    setNowSection(opt['value']);
-    setIsChange(true);
-  }, []);
+      setNowSection(opt['value']);
+      setIsChange(true);
+    },
+    [nowQueInfo]
+  );
 
   const onChangeType = useCallback(
     (value: DescriptionKinds | SelectionKinds | GridKinds) => {
@@ -194,14 +199,16 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
             />
           </QueTopLeft>
           <QueTopRight>
-            <Select
-              className="custom-select"
-              defaultValue={type}
-              style={{ width: 135 }}
-              onChange={onChangeType}
-              options={Types}
-              suffixIcon={<TbTriangleInverted />}
-            />
+            {pathname.slice(8, 16) !== 'editform' && (
+              <Select
+                className="custom-select"
+                defaultValue={type}
+                style={{ width: 135 }}
+                onChange={onChangeType}
+                options={Types}
+                suffixIcon={<TbTriangleInverted />}
+              />
+            )}
           </QueTopRight>
         </QueTop>
         <QueBottom>
@@ -227,7 +234,7 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
             </div>
             <div>
               <span>필수 응답</span>
-              <Switch onChange={onChangeRequire} size={'small'} />
+              <Switch defaultChecked={data.required} onChange={onChangeRequire} size={'small'} />
             </div>
           </QueBottomRight>
         </QueBottom>

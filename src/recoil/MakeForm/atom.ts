@@ -46,7 +46,7 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
     [
       {
         type: DESCRIPTION_SHORT,
-        id: uuid(),
+        tempId: uuid(),
         required: false,
         title: '',
         sectionNum: 0,

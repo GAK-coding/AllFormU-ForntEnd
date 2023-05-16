@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { SectionBoxWrapper } from './styles';
-import FormInput from '../../ui/FormInput';
 import { Select } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
@@ -10,8 +9,9 @@ import {
   questions,
   sectionLens,
   sectionNames,
-} from '../../../recoil/MakeForm/atom';
-import { DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
+} from '../../../../recoil/MakeForm/atom';
+import FormInput from '../../../ui/FormInput';
+import { DescriptionQue, GridQue, SelectionQue } from '../../../../typings/makeForm';
 
 interface Props {
   children: React.ReactNode;

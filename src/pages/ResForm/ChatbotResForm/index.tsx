@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import ResFormModal from '../../../components/ResForm/ResFormModal';
+
 import {
   ChatbotFunc,
   ChatbotResWrapper,
@@ -20,7 +20,7 @@ import Stomp from 'stompjs';
 import { gptLoading, gptTalks } from '../../../recoil/Gpt/atom';
 import { chatTalks } from '../../../recoil/Resform/atom';
 import Input from '../../../components/ui/Input';
-import BallonChat from '../../../components/ResForm/BallonChat';
+import ResFormModal from '../../../components/Form/ResForm/ResFormModal';
 
 interface ChatMessage {
   sender: string;

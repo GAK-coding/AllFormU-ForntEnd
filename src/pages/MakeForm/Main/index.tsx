@@ -1,15 +1,60 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { MakeFormBottom, MakeFormTop, MakeFormWrapper } from './styles';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
 import Button from '../../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { userInfo } from '../../../recoil/User/atom';
+import {
+  formFix,
+  formInfo,
+  nowFocusIndex,
+  nowQuestion,
+  queSectionNum,
+  questions,
+  sectionLens,
+  sectionNames,
+} from '../../../recoil/MakeForm/atom';
+import { DESCRIPTION_SHORT } from '../../../typings/makeForm';
+import { v4 as uuid } from 'uuid';
 
 export default function MakeForm() {
+  const setQuestionList = useSetRecoilState(questions);
+  const setInfo = useSetRecoilState(formInfo);
+  const setSecNames = useSetRecoilState(sectionNames);
+  const setLens = useSetRecoilState(sectionLens);
+  const setFix = useSetRecoilState(formFix);
+  const setNowQueInfo = useSetRecoilState(nowQuestion);
+  const setNotIndex = useSetRecoilState(nowFocusIndex);
+  const setQueSecNum = useSetRecoilState(queSectionNum);
+
   const { lightPurple } = useRecoilValue(color);
   const navigate = useNavigate();
   const { nickname } = useRecoilValue(userInfo);
+
+  const onClickBase = useCallback(() => {
+    navigate('/makeform/select');
+    setQuestionList([
+      [
+        {
+          type: DESCRIPTION_SHORT,
+          tempId: uuid(),
+          required: false,
+          title: '',
+          sectionNum: 0,
+          descriptions: [{ content: '' }],
+        },
+      ],
+    ]);
+    setInfo({ title: '', content: '' });
+    setSecNames(['']);
+    setLens([]);
+    setFix(false);
+    setNowQueInfo({ row: 0, col: 0 });
+    setNotIndex(0);
+    setQueSecNum([{ value: '0', label: '1' }]);
+  }, []);
+
   return (
     <MakeFormWrapper>
       <MakeFormTop>
@@ -20,7 +65,7 @@ export default function MakeForm() {
       </MakeFormTop>
       <MakeFormBottom>
         <Button
-          onClick={() => navigate('/makeform/select')}
+          onClick={onClickBase}
           color={'black'}
           bgColor={lightPurple}
           fontSize={2}
@@ -32,7 +77,9 @@ export default function MakeForm() {
           <span>챗봇</span>
         </Button>
         <Button
-          onClick={() => navigate('/makeform/select')}
+          onClick={() => {
+            navigate('/makeform/select');
+          }}
           color={'black'}
           bgColor={lightPurple}
           fontSize={2}

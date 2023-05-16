@@ -1,6 +1,6 @@
 import React from 'react';
-import { GridQue } from '../../../../typings/makeForm';
 import { GridBoxWrapper } from './styles';
+import { GridQue } from '../../../../../typings/makeForm';
 
 interface Props {
   data: GridQue;
