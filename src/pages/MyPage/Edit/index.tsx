@@ -4,56 +4,71 @@ import { color } from '../../../recoil/Color/atom';
 import Button from '../../../components/ui/Button';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
 import Input from '../../../components/ui/Input';
-import { ChangeEvent, useCallback, useState } from 'react';
-import { signInInfo } from '../../../typings/user';
-import { mypageInfo, userInfo } from '../../../recoil/User/atom';
-import { setDormant, setWithdrawal } from '../../../api/user';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { userInfo } from '../../../recoil/User/atom';
+import { changeNickname, changePwd, setDormant, setWithdrawal } from '../../../api/user';
 import { useMutation } from 'react-query';
+import { Match, MisMatch } from '../../SignUp/styles';
+import { send } from 'process';
 
 interface ChangeInfo {
+  newNickname: string;
+  newPassword: string;
   checkPassword: string;
 }
+
 export default function Edit() {
   const { blue, lightPurple } = useRecoilValue(color);
   const info = useRecoilValue(userInfo);
-  const username = '';
+  const [newInfo, setNewInfo] = useRecoilState(userInfo);
 
-  const [user, setInfo] = useState<signInInfo>({
-    email: '',
-    password: '',
-  });
+  const [checkPw, setCheckPw] = useState(false);
+  const [isValid, setIsValid] = useState(false);
 
   const [changeInfo, setChangeInfo] = useState<ChangeInfo>({
+    newNickname: '',
+    newPassword: '',
     checkPassword: '',
   });
 
-  const [checkPw, setCheckPw] = useState(false);
-
-  const onChangeCheck = useCallback(
+  const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: keyof ChangeInfo) => {
       const temp = { ...changeInfo };
       temp[value] = e.target.value;
 
+      if (value === 'newPassword') {
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,15}$/;
+        setIsValid(passwordRegex.test(e.target.value));
+      }
+
       setChangeInfo(temp);
     },
-    [changeInfo]
+    [changeInfo.newNickname, changeInfo.newPassword, changeInfo.checkPassword]
   );
 
-  const onChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>, value: keyof signInInfo) => {
-      const temp = { ...user };
-      temp[value] = e.target.value;
-      setInfo(temp);
-    },
-    [user]
-  );
+  // 비밀번호 확인
+  useEffect(() => {
+    if (changeInfo.newPassword === changeInfo.checkPassword) setCheckPw(true);
+    else setCheckPw(false);
+  }, [changeInfo.newPassword, changeInfo.newPassword]);
 
-  const onCheck = () => {
-    if (user.password == changeInfo.checkPassword) setCheckPw(true);
-  };
+  const { mutate: sendNewNickname, data: newNickName, isSuccess: newNick } = useMutation(changeNickname);
+  const { mutate: sendNewPwd, data: newPws, isSuccess: newPwd } = useMutation(changePwd);
 
-  const originInfo = useRecoilValue(mypageInfo);
-  const [editInfo, setEditInfo] = useRecoilState(mypageInfo);
+  const sendInfo = useCallback(() => {
+    if (!isValid) {
+      alert('비밀번호 조건이 일치하지 않습니다.');
+      return;
+    }
+
+    if (!checkPw) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    sendNewNickname({ id: info.id, newNickname: changeInfo.newNickname });
+    sendNewPwd({ id: info.id, password: info.password, newPwd: changeInfo.newPassword });
+  }, [isValid, checkPw, changeInfo, newInfo]);
 
   const { mutate: dormantUser, data: dormant } = useMutation(setDormant);
   const { mutate: withDrawalUser, data: withdrawal } = useMutation(setWithdrawal);
@@ -83,7 +98,7 @@ export default function Edit() {
 
         <InputWrapper>
           <BtnBox>
-            <Button color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
+            <Button onClick={sendInfo} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
               완료
             </Button>
           </BtnBox>
@@ -91,10 +106,10 @@ export default function Edit() {
           <div>
             <span>이름</span>
             <Input
-              type={'username'}
-              value={username}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
-              placeholder={originInfo.nickname}
+              type={'Nickname'}
+              value={changeInfo.newNickname}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'newNickname')}
+              placeholder={'새로운 닉네임'}
               width={25}
               height={2}
               size={1.3}
@@ -105,26 +120,53 @@ export default function Edit() {
             <span>비밀번호</span>
             <Input
               type={'password'}
-              value={username}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
+              value={changeInfo.newPassword}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'newPassword')}
               placeholder={'새로운 비밀번호'}
               width={25}
               height={2}
               size={1.3}
             />
+
+            {changeInfo.newPassword &&
+              (isValid ? (
+                <Match>
+                  <div />
+                  사용가능한 비밀번호입니다.
+                </Match>
+              ) : (
+                <MisMatch>
+                  <div />
+                  비밀번호는 8~15자리의 영문, 숫자, 특수문자 조합으로 입력해주세요.
+                </MisMatch>
+              ))}
           </div>
 
           <div>
             <span>비밀번호 확인</span>
             <Input
-              type={'checkPassword'}
-              value={username}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeCheck(e, 'checkPassword')}
+              type={'password'}
+              value={changeInfo.checkPassword}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'checkPassword')}
               placeholder={'비밀번호 확인'}
               width={25}
               height={2}
               size={1.3}
             />
+
+            {changeInfo.newPassword &&
+              changeInfo.checkPassword &&
+              (checkPw ? (
+                <Match>
+                  <div />
+                  비밀번호가 일치합니다.
+                </Match>
+              ) : (
+                <MisMatch>
+                  <div />
+                  비밀번호가 불일치합니다.
+                </MisMatch>
+              ))}
           </div>
 
           <StopUser>

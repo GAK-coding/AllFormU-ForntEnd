@@ -18,18 +18,8 @@ export interface sendEmail extends Pick<user, 'email'> {
   num?: number;
 }
 
-export interface myPageInfo {
-  id: number;
-  email: string;
-  nickname: string;
+export interface newInfo extends Pick<user, 'id'> {
+  newNickname?: string;
   password?: string;
-  userImg?: string;
-}
-
-export interface myPageEditInfo {
-  id: number;
-  nickname: string;
-  email: string;
-  password: string;
-  userImg: string;
+  newPwd?: string;
 }
