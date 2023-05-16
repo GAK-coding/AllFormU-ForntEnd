@@ -18,7 +18,7 @@ interface InputInfo {
 }
 
 export default function IdMordal({ open, onCancel }: Props) {
-  const { blue, lightPurple } = useRecoilValue(color);
+  const { lightPurple } = useRecoilValue(color);
 
   const [input, setInput] = useState<InputInfo>({
     email: '',
