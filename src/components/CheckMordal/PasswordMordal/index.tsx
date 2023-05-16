@@ -41,6 +41,8 @@ export default function PasswordMordal({ open, onCancel }: Props) {
   const onCheckPassword = useCallback(() => {
     if (info.password === password) {
       setCheck(true);
+    } else {
+      alert('비밀번호가 일치하지 않습니다.');
     }
   }, [password]);
 

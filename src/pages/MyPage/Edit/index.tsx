@@ -71,16 +71,13 @@ export default function Edit() {
   }, []);
 
   return (
-    <BaseBgBox>
-      <EditPageWrapper>
+    <EditPageWrapper>
+      <BaseBgBox>
         <SetUserImage>
           <div>프로필 수정</div>
           <img src="/images/userProfile.png" alt="userProfile" />
-          <Button color={'black'} bgColor={blue} fontSize={1.3} width={11} height={3.5}>
+          <Button color={'#696969'} bgColor={blue} fontSize={1.3} width={11} height={3.5}>
             사진 업로드
-          </Button>
-          <Button color={'black'} bgColor={blue} fontSize={1.3} width={13} height={3.5}>
-            변경사항 저장
           </Button>
         </SetUserImage>
 
@@ -98,9 +95,9 @@ export default function Edit() {
               value={username}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'email')}
               placeholder={originInfo.nickname}
-              width={30}
+              width={25}
               height={2}
-              size={1.5}
+              size={1.3}
             />
           </div>
 
@@ -111,9 +108,9 @@ export default function Edit() {
               value={username}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
               placeholder={'새로운 비밀번호'}
-              width={30}
+              width={25}
               height={2}
-              size={1.5}
+              size={1.3}
             />
           </div>
 
@@ -124,14 +121,10 @@ export default function Edit() {
               value={username}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeCheck(e, 'checkPassword')}
               placeholder={'비밀번호 확인'}
-              width={30}
+              width={25}
               height={2}
-              size={1.5}
+              size={1.3}
             />
-
-            <Button onClick={onCheck} color={'black'} bgColor={blue} fontSize={1.3} width={9} height={3.5}>
-              확인
-            </Button>
           </div>
 
           <StopUser>
@@ -157,7 +150,7 @@ export default function Edit() {
             </Button>
           </StopUser>
         </InputWrapper>
-      </EditPageWrapper>
-    </BaseBgBox>
+      </BaseBgBox>
+    </EditPageWrapper>
   );
 }
