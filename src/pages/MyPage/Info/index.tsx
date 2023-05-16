@@ -13,13 +13,12 @@ import { FiPlus } from 'react-icons/fi';
 import { useQuery } from 'react-query';
 import { getMakeForms } from '../../../api/getFormInfo';
 import { GetForm } from '../../../typings/getForm';
-import CheckModal from '../../../components/CheckMordal';
+import PasswordMordal from '../../../components/CheckMordal/PasswordMordal';
 
 export default function Info() {
   const navigate = useNavigate();
   const { blue } = useRecoilValue(color);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSend, setIsSend] = useState(false);
 
   const myInfo = useRecoilValue(userInfo);
 
@@ -81,7 +80,7 @@ export default function Info() {
               <Button onClick={showModal} color={'black'} bgColor={blue} fontSize={1.3} width={13} height={3.5}>
                 프로필 수정하기
               </Button>
-              <CheckModal open={isModalOpen} onCancel={handleCancel} />
+              <PasswordMordal open={isModalOpen} onCancel={handleCancel} />
             </div>
           </div>
         </UserInfo>

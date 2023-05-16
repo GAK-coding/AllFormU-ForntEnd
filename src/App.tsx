@@ -12,7 +12,6 @@ import MakeFormDirect from './pages/MakeForm/Direct';
 import MakeFormChatbot from './pages/MakeForm/Chatbot';
 import Info from './pages/MyPage/Info';
 import Edit from './pages/MyPage/Edit';
-import FindPassword from './pages/FindPassword';
 import FixedButton from './components/FixedButton';
 import ChatbotResForm from './pages/ResForm/ChatbotResForm';
 import DirectResForm from './pages/ResForm/DirectResForm';
@@ -39,7 +38,6 @@ function App() {
             <Route path={'/mypage/editform/:id'} element={<EditForm />} />
             <Route path={'/mypage/resform'} element={<ResFormList />} />
             <Route path={'/signin'} element={<SignIn />} />
-            <Route path={'/signin/findpassword'} element={<FindPassword />} />
             <Route path={'/resform/chatbot'} element={<ChatbotResForm />} />
             <Route path={'/resform/direct/:id'} element={<DirectResForm />} />
             <Route path={'/makeform'} element={<MakeForm />} />

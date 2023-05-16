@@ -1,10 +1,10 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { CheckModalWrapper, ModalTitle, UserInfo } from './styles';
+import { CheckModalWrapper, ModalTitle, UserInfo } from '../styles';
 import { Input } from 'antd';
-import Button from '../ui/Button';
+import Button from '../../ui/Button';
 import { useRecoilValue } from 'recoil';
-import { color } from '../../recoil/Color/atom';
-import { userInfo } from '../../recoil/User/atom';
+import { color } from '../../../recoil/Color/atom';
+import { userInfo } from '../../../recoil/User/atom';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -16,7 +16,7 @@ interface InputInfo {
   password: string;
 }
 
-export default function CheckModal({ open, onCancel }: Props) {
+export default function PasswordMordal({ open, onCancel }: Props) {
   const navigate = useNavigate();
   const { lightPurple } = useRecoilValue(color);
 
