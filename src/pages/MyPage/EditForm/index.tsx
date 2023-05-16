@@ -44,6 +44,7 @@ import MakeFromModal from '../../../components/Form/MakeForm/MakeFromModal';
 import QueDraggable from '../../../components/Form/Questions/QueDraggable/indes';
 import SectionBox from '../../../components/Form/Questions/SectionBox';
 import FormTitle from '../../../components/Form/Questions/FormTitle';
+import { useGetSingleForm } from '../../../components/Form/hooks/useGetSingleForm';
 
 const customData = (data: GetFormInfo) => {
   const tempQues: (DescriptionQue | SelectionQue | GridQue)[][] = [];
@@ -64,23 +65,24 @@ export default function EditForm() {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const queTypes = useRecoilValue(questionTypes);
 
-  const { data, isLoading, error, isError, isFetching } = useQuery<GetFormInfo>(
-    ['getFormInfo', id],
-    ({ signal }) => getFormInfo(1, +id!, signal!),
-    {
-      notifyOnChangeProps: ['data'],
-      onSuccess: (data) => {
-        setInfo(data);
-      },
-      staleTime: 600000, // 10분
-      cacheTime: 900000, // 15분
-      refetchOnMount: false, // 마운트(리렌더링)될 때 데이터를 다시 가져오지 않음
-      refetchOnWindowFocus: false, // 브라우저를 포커싱했을때 데이터를 가져오지 않음
-      refetchOnReconnect: false, // 네트워크가 다시 연결되었을때 다시 가져오지 않음
-    }
-  );
-
+  // const { data, isLoading, error, isError, isFetching } = useQuery<GetFormInfo>(
+  //   ['getFormInfo', id],
+  //   ({ signal }) => getFormInfo(1, +id!, signal!),
+  //   {
+  //     notifyOnChangeProps: ['data'],
+  //     onSuccess: (data) => {
+  //       setInfo(data);
+  //     },
+  //     staleTime: 600000, // 10분
+  //     cacheTime: 900000, // 15분
+  //     refetchOnMount: false, // 마운트(리렌더링)될 때 데이터를 다시 가져오지 않음
+  //     refetchOnWindowFocus: false, // 브라우저를 포커싱했을때 데이터를 가져오지 않음
+  //     refetchOnReconnect: false, // 네트워크가 다시 연결되었을때 다시 가져오지 않음
+  //   }
+  // );
   const queryClient = useQueryClient();
+
+  const [data, isLoading, isFetching] = useGetSingleForm(id!);
 
   const { mutate: deleteQueMutate, isLoading: deleteQueIsLoading } = useMutation(
     (queId: number) => deleteQue(+id!, queId),
@@ -88,17 +90,22 @@ export default function EditForm() {
       onMutate: async (queId) => {
         await queryClient.cancelQueries(['getFormInfo', id]);
 
-        const snapshot: GetFormInfo = queryClient.getQueryData(['getFormInfo', id])!;
+        const snapshot: GetFormInfo | undefined = queryClient.getQueryData(['getFormInfo', id]);
 
-        const deleteInfo = { ...snapshot }.questions.filter(
+        const deleteInfo = { ...snapshot }.questions?.filter(
           (info: DescriptionQue | SelectionQue | GridQue) => queId !== info.id
         );
 
-        queryClient.setQueryData(['getFormInfo', id], deleteInfo);
+        queryClient.setQueryData(['getFormInfo', id], {
+          ...snapshot,
+          deleteInfo,
+        });
 
         return { snapshot };
       },
-
+      onSuccess: (data) => {
+        queryClient.setQueryData(['getFormInfo', id], data);
+      },
       onError: (error, newData, context) => {
         if (context?.snapshot) {
           queryClient.setQueryData(['getFormInfo', id], context?.snapshot);
@@ -112,7 +119,7 @@ export default function EditForm() {
   );
 
   useEffect(() => {
-    setQuestionList(customData(data!));
+    if (data) setQuestionList(customData(data));
   }, [data]);
 
   // console.log(customData(data!));
