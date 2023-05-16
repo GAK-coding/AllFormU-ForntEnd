@@ -10,15 +10,13 @@ import { useNavigate } from 'react-router-dom';
 interface Props {
   open: boolean;
   onCancel: () => void;
-  setIsSend: (value: boolean) => void;
-  isSend: boolean;
 }
 
 interface InputInfo {
   password: string;
 }
 
-export default function CheckModal({ open, onCancel, setIsSend, isSend }: Props) {
+export default function CheckModal({ open, onCancel }: Props) {
   const navigate = useNavigate();
   const { lightPurple } = useRecoilValue(color);
 

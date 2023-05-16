@@ -81,7 +81,7 @@ export default function Info() {
               <Button onClick={showModal} color={'black'} bgColor={blue} fontSize={1.3} width={13} height={3.5}>
                 프로필 수정하기
               </Button>
-              <CheckModal open={isModalOpen} onCancel={handleCancel} isSend={isSend} setIsSend={setIsSend} />
+              <CheckModal open={isModalOpen} onCancel={handleCancel} />
             </div>
           </div>
         </UserInfo>
