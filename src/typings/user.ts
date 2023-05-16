@@ -14,6 +14,10 @@ export interface signUpInfo extends signInInfo {
   nickname: string;
 }
 
+export interface sendEmail extends Pick<user, 'email'> {
+  num?: number;
+}
+
 export interface myPageInfo {
   id: number;
   email: string;

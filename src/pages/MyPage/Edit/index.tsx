@@ -6,16 +6,19 @@ import BaseBgBox from '../../../components/ui/BaseBgBox';
 import Input from '../../../components/ui/Input';
 import { ChangeEvent, useCallback, useState } from 'react';
 import { signInInfo } from '../../../typings/user';
-import { mypageInfo } from '../../../recoil/User/atom';
+import { mypageInfo, userInfo } from '../../../recoil/User/atom';
+import { setDormant, setWithdrawal } from '../../../api/user';
+import { useMutation } from 'react-query';
 
 interface ChangeInfo {
   checkPassword: string;
 }
 export default function Edit() {
   const { blue, lightPurple } = useRecoilValue(color);
+  const info = useRecoilValue(userInfo);
   const username = '';
 
-  const [info, setInfo] = useState<signInInfo>({
+  const [user, setInfo] = useState<signInInfo>({
     email: '',
     password: '',
   });
@@ -38,19 +41,34 @@ export default function Edit() {
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: keyof signInInfo) => {
-      const temp = { ...info };
+      const temp = { ...user };
       temp[value] = e.target.value;
       setInfo(temp);
     },
-    [info]
+    [user]
   );
 
   const onCheck = () => {
-    if (info.password == changeInfo.checkPassword) setCheckPw(true);
+    if (user.password == changeInfo.checkPassword) setCheckPw(true);
   };
 
   const originInfo = useRecoilValue(mypageInfo);
   const [editInfo, setEditInfo] = useRecoilState(mypageInfo);
+
+  const { mutate: dormantUser, data: dormant } = useMutation(setDormant);
+  const { mutate: withDrawalUser, data: withdrawal } = useMutation(setWithdrawal);
+
+  const onChangeStatus = useCallback((action: '휴면계정' | '회원탈퇴') => {
+    if (action === '휴면계정') {
+      // 휴면계정 전환 상태 처리
+      dormantUser(info.id);
+      console.log('휴면계정 전환');
+    } else if (action === '회원탈퇴') {
+      // 회원탈퇴 상태 처리
+      withDrawalUser(info.id);
+      console.log('회원탈퇴');
+    }
+  }, []);
 
   return (
     <BaseBgBox>
@@ -117,10 +135,24 @@ export default function Edit() {
           </div>
 
           <StopUser>
-            <Button color={'#696969'} bgColor={lightPurple} fontSize={1.3} width={12} height={3.5}>
+            <Button
+              onClick={() => onChangeStatus('휴면계정')}
+              color={'#696969'}
+              bgColor={lightPurple}
+              fontSize={1.3}
+              width={12}
+              height={3.5}
+            >
               휴면계정 전환
             </Button>
-            <Button color={'#696969'} bgColor={lightPurple} fontSize={1.3} width={12} height={3.5}>
+            <Button
+              onClick={() => onChangeStatus('회원탈퇴')}
+              color={'#696969'}
+              bgColor={lightPurple}
+              fontSize={1.3}
+              width={12}
+              height={3.5}
+            >
               회원탈퇴
             </Button>
           </StopUser>

@@ -38,7 +38,7 @@ export const UserInfo = styled.div`
 
     img {
       width: 70%;
-      margin-top: 3rem;
+      margin-top: 5rem;
     }
 
     & > div:first-of-type {
@@ -54,10 +54,10 @@ export const UserInfo = styled.div`
       align-items: center;
 
       & > span:first-of-type {
-        margin-top: 8rem;
+        margin-top: 4rem;
         margin-bottom: 3rem;
-        font-size: 1.6rem;
-        font-weight: 600;
+        font-size: 1.8rem;
+        font-weight: 700;
       }
       & > span {
         margin-bottom: 1rem;
@@ -78,13 +78,13 @@ export const FormWrapper = styled.div`
 `;
 
 export const BtnBox = styled.div`
+  position: absolute;
   display: flex;
   justify-content: flex-end;
+  margin: auto;
 
-  height: 8%;
-
-  position: absolute;
-  top: -2.5rem;
+  height: 15%;
+  top: -2rem;
   right: 0;
 `;
 
@@ -93,48 +93,52 @@ export const Form = styled.div`
 
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
 
-  width: 90%;
+  width: 85%;
   height: 45%;
   margin: 0 auto;
+  /* margin-top: 2rem; */
 
   box-sizing: border-box;
   padding: 2rem;
-
   border-radius: 3rem;
   background-color: #fefefe;
 
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
 
   & > span {
     position: absolute;
-    cursor: pointer;
 
     font-size: 2.5rem;
     color: var(--color-light-purple);
 
     top: 1rem;
     right: 1.5rem;
+
+    cursor: pointer;
   }
 `;
 
 export const Line = styled.div`
   display: flex;
   margin-left: 1rem;
+  margin-bottom: 1rem;
 
   text-align: left;
   font-size: 1.6rem;
   font-weight: 700;
-
-  background-color: transparent;
-  cursor: pointer;
 `;
 
 export const AlignBox = styled.div`
-  height: 90%;
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60%;
+  width: 90%;
   margin-left: 2rem;
   margin-right: 2rem;
 `;
