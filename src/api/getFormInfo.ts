@@ -14,8 +14,8 @@ export const deleteFrom = async (id: number) =>
     .then((res) => alert('폼 삭제 성공!'))
     .catch((err) => console.error(err));
 
-export const getFormInfo = async (userId: number, formId: number) =>
+export const getFormInfo = async (userId: number, formId: number, signal: AbortSignal) =>
   await axios
-    .get(`/form/findform/${userId}/${formId}`)
+    .get(`/form/findform/${userId}/${formId}`, { signal })
     .then((res) => res.data)
     .catch((err) => console.error(err));
