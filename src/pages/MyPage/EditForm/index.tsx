@@ -1,6 +1,15 @@
-import React, { ChangeEvent, FormEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getFormInfo } from '../../../api/getFormInfo';
 import { GetFormInfo } from '../../../typings/getForm';
 import MakeFormDirect from '../../MakeForm/Direct';
@@ -25,40 +34,29 @@ import {
 } from '../../../typings/makeForm';
 import { Col, Row } from 'antd';
 import { AddQuestion, AddSection, DirectForm } from '../../MakeForm/Direct/styles';
-import FormTitle from '../../../components/Questions/FormTitle';
-import SectionBox from '../../../components/Questions/SectionBox';
-import QueDraggable from '../../../components/Questions/QueDraggable/indes';
 import Button from '../../../components/ui/Button';
-import MakeFromModal from '../../../components/MakeForm/MakeFromModal';
 import { useMessage } from '../../../hooks/useMessage';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { color } from '../../../recoil/Color/atom';
 import { v4 as uuid } from 'uuid';
+import { deleteQue } from '../../../api/editForm';
+import MakeFromModal from '../../../components/Form/MakeForm/MakeFromModal';
+import QueDraggable from '../../../components/Form/Questions/QueDraggable/indes';
+import SectionBox from '../../../components/Form/Questions/SectionBox';
+import FormTitle from '../../../components/Form/Questions/FormTitle';
 
-// import { DescriptionKinds, GridKinds, SelectionKinds } from '../../../typings/makeForm';
+const customData = (data: GetFormInfo) => {
+  const tempQues: (DescriptionQue | SelectionQue | GridQue)[][] = [];
 
-// interface GetFormInfo {
-//   id: number;
-//   title: string;
-//   content: string;
-//   fix: boolean;
-//   questions: GetQuestion[];
-// }
-//
-// interface GetQuestion {
-//   title: string;
-//   required: boolean;
-//   sectionNum: number;
-//   type: DescriptionKinds | SelectionKinds | GridKinds;
-//   id: number;
-//   description: GetDescription;
-// }
-//
-// interface GetDescription {
-//   id: number;
-//   title: string;
-//   quiz: boolean;
-// }
+  data?.questions?.map((que) => {
+    const { sectionNum } = que;
+
+    if (tempQues[sectionNum] === undefined) tempQues[sectionNum] = [];
+    tempQues[sectionNum].push({ ...que, tempId: uuid() });
+  });
+
+  return tempQues;
+};
 
 export default function EditForm() {
   const { id } = useParams();
@@ -66,35 +64,58 @@ export default function EditForm() {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const queTypes = useRecoilValue(questionTypes);
 
-  const { data, isLoading, error, isError } = useQuery<GetFormInfo>('getFormInfo', () => getFormInfo(1, +id!), {
-    onSuccess: (data) => {
-      setInfo(data);
-    },
-    // staleTime: 600000, // 10분
-    // cacheTime: 900000, // 15분
-    // refetchOnMount: false, // 마운트(리렌더링)될 때 데이터를 다시 가져오지 않음
-    // refetchOnWindowFocus: false, // 브라우저를 포커싱했을때 데이터를 가져오지 않음
-    // refetchOnReconnect: false, // 네트워크가 다시 연결되었을때 다시 가져오지 않음
-  });
+  const { data, isLoading, error, isError, isFetching } = useQuery<GetFormInfo>(
+    ['getFormInfo', id],
+    ({ signal }) => getFormInfo(1, +id!, signal!),
+    {
+      notifyOnChangeProps: ['data'],
+      onSuccess: (data) => {
+        setInfo(data);
+      },
+      staleTime: 600000, // 10분
+      cacheTime: 900000, // 15분
+      refetchOnMount: false, // 마운트(리렌더링)될 때 데이터를 다시 가져오지 않음
+      refetchOnWindowFocus: false, // 브라우저를 포커싱했을때 데이터를 가져오지 않음
+      refetchOnReconnect: false, // 네트워크가 다시 연결되었을때 다시 가져오지 않음
+    }
+  );
 
-  const customData = (data: GetFormInfo) => {
-    const tempQues: (DescriptionQue | SelectionQue | GridQue)[][] = [];
+  const queryClient = useQueryClient();
 
-    data?.questions.map((que) => {
-      const { sectionNum } = que;
+  const { mutate: deleteQueMutate, isLoading: deleteQueIsLoading } = useMutation(
+    (queId: number) => deleteQue(+id!, queId),
+    {
+      onMutate: async (queId) => {
+        await queryClient.cancelQueries(['getFormInfo', id]);
 
-      if (tempQues[sectionNum] === undefined) tempQues[sectionNum] = [];
-      tempQues[sectionNum].push({ ...que, tempId: uuid() });
-    });
+        const snapshot: GetFormInfo = queryClient.getQueryData(['getFormInfo', id])!;
 
-    return tempQues;
-  };
+        const deleteInfo = { ...snapshot }.questions.filter(
+          (info: DescriptionQue | SelectionQue | GridQue) => queId !== info.id
+        );
+
+        queryClient.setQueryData(['getFormInfo', id], deleteInfo);
+
+        return { snapshot };
+      },
+
+      onError: (error, newData, context) => {
+        if (context?.snapshot) {
+          queryClient.setQueryData(['getFormInfo', id], context?.snapshot);
+          alert('수정 실패!');
+        }
+      },
+      onSettled() {
+        queryClient.invalidateQueries(['getFormInfo', id]);
+      },
+    }
+  );
 
   useEffect(() => {
     setQuestionList(customData(data!));
-  }, []);
+  }, [data]);
 
-  // console.log(JSON.stringify(customData(data!).flat()));
+  // console.log(customData(data!));
 
   // 각 섹션이 몇 번 인덱스까지 사용하는지
   const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
@@ -176,15 +197,6 @@ export default function EditForm() {
     setNowIndex(accrueQue[accrueQue.length - 1] + 1);
   }, [questionList, nowIndex, accrueQue, nowQueInfo, sectionList, queSecNum]);
 
-  const onChangeTitle = useCallback(
-    (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => {
-      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
-      temp[row][col][name] = e.target.value;
-      setQuestionList(temp);
-    },
-    [questionList]
-  );
-
   const onDragEnd = useCallback(
     (result: DropResult, row: number) => {
       const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
@@ -202,44 +214,6 @@ export default function EditForm() {
     [questionList, nowIndex, accrueQue, nowQueInfo]
   );
 
-  const onDelete = useCallback(
-    (row: number, col: number) => {
-      if (row === 0 && questionList[row].length === 1) {
-        showMessage('warning', '질문은 최소 1개 이상이어야 합니다.');
-        return;
-      }
-
-      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
-      const sectionName: string[] = JSON.parse(JSON.stringify(sectionList));
-      const delIdx = row === 0 ? col : accrueQue[row - 1] + col + 1;
-
-      if (row !== 0 && questionList[row].length === 1) {
-        temp.splice(row, 1);
-        sectionName.splice(row, 1);
-        setQuestionList(temp);
-        setSectionList(sectionName);
-        setQueSecNum((prev) => {
-          const temp = [...prev];
-          temp.pop();
-
-          return temp;
-        });
-
-        if (delIdx === nowIndex) {
-          setNowIndex((prev) => prev - 1);
-        }
-        return;
-      }
-
-      temp[row].splice(col, 1);
-      setQuestionList(temp);
-      if (delIdx < nowIndex || (col !== 0 && delIdx === nowIndex)) {
-        setNowIndex((prev) => prev - 1);
-      }
-    },
-    [questionList, nowIndex, accrueQue, sectionList, queSecNum]
-  );
-
   const onClickQue = useCallback(
     (row: number, col: number) => {
       const index = row === 0 ? col : accrueQue[row - 1] + col + 1;
@@ -250,32 +224,36 @@ export default function EditForm() {
     [nowQueInfo, nowIndex, accrueQue]
   );
 
-  useLayoutEffect(() => {
-    const temp: number[] = [];
+  // useLayoutEffect(() => {
+  //   const temp: number[] = [];
+  //
+  //   for (let i = 0; i < questionList.length; i++) {
+  //     i === 0 ? temp.push(questionList[i].length - 1) : temp.push(temp[i - 1] + questionList[i].length);
+  //   }
+  //
+  //   setAccrueQue(temp);
+  // }, [addQuestion]);
 
-    for (let i = 0; i < questionList.length; i++) {
-      i === 0 ? temp.push(questionList[i].length - 1) : temp.push(temp[i - 1] + questionList[i].length);
-    }
+  // useLayoutEffect(() => {
+  //   ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // }, [questionList]);
 
-    setAccrueQue(temp);
-  }, [addQuestion]);
+  // useEffect(() => {}, []);
 
-  useLayoutEffect(() => {
-    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, [questionList]);
-
-  if (isLoading) {
-    return <div>로딩중...</div>;
+  if (isFetching) return <div style={{ position: 'fixed', top: '50px', right: '50px' }}>Loading...</div>;
+  if (isLoading || deleteQueIsLoading) {
+    return <div style={{ position: 'fixed', top: '50px', right: '50px' }}>로딩중...</div>;
   }
 
   return (
-    <Row>
+    <Row style={{ position: 'relative' }}>
       <Col span={4} />
       <Col span={16}>
         {contextHolder}
+        {isFetching && <div style={{ position: 'fixed', top: '50px', right: '50px' }}>Loading...</div>}
         <DirectForm onSubmit={showModal}>
-          <FormTitle isEdit={true} formId={id} />{' '}
-          {customData(data!)?.map((section, row) => (
+          <FormTitle isEdit={true} formId={id} />
+          {questionList?.map((section, row) => (
             <DragDropContext key={`section-${row}`} onDragEnd={(result) => onDragEnd(result, row)}>
               <SectionBox index={row}>
                 <Droppable droppableId="card" type="card" direction="vertical">
@@ -294,9 +272,15 @@ export default function EditForm() {
                                   row={row}
                                   col={col}
                                   isClick={focus}
-                                  onChangeTitle={onChangeTitle}
-                                  onClickQue={onClickQue}
-                                  onDelete={onDelete}
+                                  onChangeTitle={() => {
+                                    true;
+                                  }}
+                                  onClickQue={() => {
+                                    true;
+                                  }}
+                                  onDelete={() => {
+                                    deleteQueMutate(que.id!);
+                                  }}
                                 />
                               </div>
                             );
@@ -310,9 +294,13 @@ export default function EditForm() {
                                 row={row}
                                 col={col}
                                 isClick={focus}
-                                onChangeTitle={onChangeTitle}
+                                onChangeTitle={() => {
+                                  true;
+                                }}
                                 onClickQue={onClickQue}
-                                onDelete={onDelete}
+                                onDelete={() => {
+                                  true;
+                                }}
                               />
                             </div>
                           );
@@ -342,25 +330,4 @@ export default function EditForm() {
       </Col>
     </Row>
   );
-  // return <MakeFormDirect />;
-  // return (
-  //   <Row>
-  //     <Col span={4} />
-  //     <Col span={16}>
-  //       <DirectForm onSubmit={() => true}>
-  //         <FormTitle isEdit={true} formId={id} />
-  //       </DirectForm>
-  //
-  //       <MakeFromModal isCreate={false} setIsCreate={() => true} open={false} onCancel={() => true} />
-  //     </Col>
-  //     <Col span={4}>
-  //       <AddQuestion onClick={() => true}>
-  //         <span>질문 추가</span>
-  //       </AddQuestion>
-  //       <AddSection onClick={() => true}>
-  //         <span>섹션 추가</span>
-  //       </AddSection>
-  //     </Col>
-  //   </Row>
-  // );
 }
