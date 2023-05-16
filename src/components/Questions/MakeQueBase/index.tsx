@@ -49,6 +49,7 @@ import DescriptionBox from '../QueTypes/DescriptionBox';
 import SelectionBox from '../QueTypes/SelectionBox';
 import GridBox from '../QueTypes/GridBox';
 import { useMessage } from '../../../hooks/useMessage';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   data: DescriptionQue | SelectionQue | GridQue;
@@ -86,6 +87,7 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
   const [nowSection, setNowSection] = useState('');
   const [isChange, setIsChange] = useState(false);
   const { showMessage, contextHolder } = useMessage();
+  const { pathname } = useLocation();
 
   const selectOpt: SectionType[] = queSecNum.map((opt) => {
     if (+opt.value === row) {
@@ -197,14 +199,16 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
             />
           </QueTopLeft>
           <QueTopRight>
-            <Select
-              className="custom-select"
-              defaultValue={type}
-              style={{ width: 135 }}
-              onChange={onChangeType}
-              options={Types}
-              suffixIcon={<TbTriangleInverted />}
-            />
+            {pathname.slice(8, 16) !== 'editform' && (
+              <Select
+                className="custom-select"
+                defaultValue={type}
+                style={{ width: 135 }}
+                onChange={onChangeType}
+                options={Types}
+                suffixIcon={<TbTriangleInverted />}
+              />
+            )}
           </QueTopRight>
         </QueTop>
         <QueBottom>
