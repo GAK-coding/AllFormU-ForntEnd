@@ -56,7 +56,7 @@ export default function SignUp() {
       signUpRequest({ nickname, email, password });
       navigate('/signin');
     },
-    [userInfo, checkInfo, checkPw, checkENum]
+    [userInfo, checkInfo, checkPw, checkENum, isValid]
   );
 
   const onChangeCheck = useCallback(
