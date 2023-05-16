@@ -46,7 +46,7 @@ export default function Info() {
 
   const { data: makeFormInfo, isLoading, error, isError } = useQuery<GetForm[]>('myMakeForm', getMakeForms);
 
-  console.log('이거', makeFormInfo);
+  // console.log('이거', makeFormInfo);
 
   // redirect
   if (myInfo.id === -1) {
@@ -60,26 +60,22 @@ export default function Info() {
   return (
     <BaseBgBox>
       <MyPageWrapper>
-        <BtnBox>
-          <Button
-            onClick={() => navigate('/mypage/edit')}
-            color={'black'}
-            bgColor={blue}
-            fontSize={1.3}
-            width={12}
-            height={3.5}
-          >
-            프로필 수정
-          </Button>
-        </BtnBox>
-
         <UserInfo>
           <div>
             <div>My Page</div>
             <img src="/images/userProfile.png" alt="userProfile" />
             <div>
-              <span> 이름 : {myInfo.nickname} </span>
-              <span> email : {myInfo.email} </span>
+              <span>{myInfo.nickname} </span>
+              <Button
+                onClick={() => navigate('/mypage/edit')}
+                color={'black'}
+                bgColor={blue}
+                fontSize={1.3}
+                width={13}
+                height={3.5}
+              >
+                프로필 수정하기
+              </Button>
             </div>
           </div>
         </UserInfo>
@@ -92,6 +88,11 @@ export default function Info() {
             <Line>
               <span>내 생성폼</span>
             </Line>
+            <AlignBox>
+              {makeFormInfo?.map((formInfo: GetForm) => (
+                <FormBox key={formInfo.id}>{formInfo.title}</FormBox>
+              ))}
+            </AlignBox>
             <AlignBox>
               {makeFormInfo?.map((formInfo: GetForm) => (
                 <FormBox key={formInfo.id}>{formInfo.title}</FormBox>
