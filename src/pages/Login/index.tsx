@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
 import { Form, LoginBtn, LoginLine, LoginWrapper, PageInfo, Wrapper } from '../SignUp/styles';
 import Input from '../../components/ui/Input';
@@ -11,6 +11,7 @@ import { userInfo, signInUserInfo } from '../../recoil/User/atom';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signIn } from '../../api/user';
+import IdMordal from '../../components/CheckMordal/IdMordal';
 
 export default function SignIn() {
   const { blue } = useRecoilValue(color);
@@ -18,6 +19,15 @@ export default function SignIn() {
   const { email, password } = useRecoilValue(signInUserInfo);
   const setUserInfo = useSetRecoilState(userInfo);
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: keyof signInInfo) => {
@@ -99,8 +109,10 @@ export default function SignIn() {
           </LoginLine>
 
           <LoginLine>
-            <div onClick={() => navigate('/signin/findpassword')}>비밀번호 찾기</div>
+            <div onClick={showModal}>비밀번호 찾기</div>
           </LoginLine>
+          <IdMordal open={isModalOpen} onCancel={handleCancel} />
+
           <LoginWrapper>
             <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.5} width={11} height={4}>
               로그인

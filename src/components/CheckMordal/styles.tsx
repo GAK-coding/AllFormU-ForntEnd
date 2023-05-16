@@ -13,12 +13,6 @@ export const CheckModalWrapper = styled(Modal)`
     min-height: 30rem;
 
     padding: 1rem 3rem 1rem 3rem;
-    //& > div:first-of-type {
-    //  height: 4%;
-    //
-    //  display: flex;
-    //  align-items: center;
-    //}
   }
 
   .ant-modal-body {
@@ -34,7 +28,7 @@ export const ModalTitle = styled.h3`
 `;
 
 export const UserInfo = styled.div`
-  width: 70%;
+  width: 80%;
 
   display: flex;
   justify-items: center;
@@ -52,5 +46,31 @@ export const UserInfo = styled.div`
 
   & > button {
     margin-top: 2.5rem;
+  }
+`;
+
+export const ResultWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 3rem;
+  & > span {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #696969;
+  }
+
+  & > button {
+    margin-top: 3rem;
+  }
+
+  & > span:last-of-type {
+    margin-top: 2rem;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #f36767;
   }
 `;
