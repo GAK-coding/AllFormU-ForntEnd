@@ -5,7 +5,7 @@ import { color } from '../../../recoil/Color/atom';
 import { AlignBox, BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
 import { useNavigate, Route, Navigate, Routes } from 'react-router-dom';
 import { mypageInfo, userInfo } from '../../../recoil/User/atom';
-import { useEffect } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { MakeInfoList } from '../../../typings/makeForm';
 import { makeFormInfoList, resFormInfoList } from '../../../recoil/FormList/atom';
 import { resInfoList } from '../../../typings/resForm';
@@ -13,11 +13,23 @@ import { FiPlus } from 'react-icons/fi';
 import { useQuery } from 'react-query';
 import { getMakeForms } from '../../../api/getFormInfo';
 import { GetForm } from '../../../typings/getForm';
+import CheckModal from '../../../components/CheckMordal';
 
 export default function Info() {
   const navigate = useNavigate();
   const { blue } = useRecoilValue(color);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSend, setIsSend] = useState(false);
+
   const myInfo = useRecoilValue(userInfo);
+
+  const showModal = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
 
   const setResFormInfoList = useSetRecoilState(resFormInfoList);
   useEffect(() => {
@@ -46,7 +58,7 @@ export default function Info() {
 
   const { data: makeFormInfo, isLoading, error, isError } = useQuery<GetForm[]>('myMakeForm', getMakeForms);
 
-  console.log('이거', makeFormInfo);
+  // console.log('이거', makeFormInfo);
 
   // redirect
   if (myInfo.id === -1) {
@@ -60,26 +72,16 @@ export default function Info() {
   return (
     <BaseBgBox>
       <MyPageWrapper>
-        <BtnBox>
-          <Button
-            onClick={() => navigate('/mypage/edit')}
-            color={'black'}
-            bgColor={blue}
-            fontSize={1.3}
-            width={12}
-            height={3.5}
-          >
-            프로필 수정
-          </Button>
-        </BtnBox>
-
         <UserInfo>
           <div>
             <div>My Page</div>
             <img src="/images/userProfile.png" alt="userProfile" />
             <div>
-              <span> 이름 : {myInfo.nickname} </span>
-              <span> email : {myInfo.email} </span>
+              <span>{myInfo.nickname} </span>
+              <Button onClick={showModal} color={'black'} bgColor={blue} fontSize={1.3} width={13} height={3.5}>
+                프로필 수정하기
+              </Button>
+              <CheckModal open={isModalOpen} onCancel={handleCancel} />
             </div>
           </div>
         </UserInfo>
@@ -92,6 +94,11 @@ export default function Info() {
             <Line>
               <span>내 생성폼</span>
             </Line>
+            <AlignBox>
+              {makeFormInfo?.map((formInfo: GetForm) => (
+                <FormBox key={formInfo.id}>{formInfo.title}</FormBox>
+              ))}
+            </AlignBox>
             <AlignBox>
               {makeFormInfo?.map((formInfo: GetForm) => (
                 <FormBox key={formInfo.id}>{formInfo.title}</FormBox>
