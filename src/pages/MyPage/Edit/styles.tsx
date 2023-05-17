@@ -2,85 +2,81 @@ import styled from 'styled-components';
 
 export const EditPageWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 50rem;
+  margin: auto;
   padding: 3rem;
 `;
 
 export const SetUserImage = styled.div`
-  width: 30rem;
-  height: 45rem;
-
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   box-sizing: border-box;
   padding: 2rem;
-  margin: 2rem 0rem 2rem 2rem;
+  margin: 0rem 0rem 0rem 5rem;
 
   border-radius: 3rem;
   background-color: rgba(232, 211, 255, 0.6);
 
   & > img {
-    width: 65%;
-    margin-top: 3rem;
+    width: 80%;
+    margin-top: 5rem;
   }
 
   & > div:first-of-type {
+    margin-top: 2rem;
     font-size: 2.8rem;
     font-weight: 700;
     display: flex;
+    color: #696969;
   }
 
   & > button:first-of-type {
-    margin: 7rem 0rem 2rem 0rem;
+    margin: 5rem 0rem 2rem 0rem;
   }
 `;
 
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 70%;
 
   & > div:first-of-type {
-    margin-top: 8rem;
+    margin-top: 0rem;
   }
 
   & > div {
-    margin: 3rem 0rem 1rem 5rem;
+    margin: 3rem 0rem 1rem 3rem;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
 
     & > span {
-      width: 15%;
+      width: 20%;
       font-size: 1.5rem;
       font-weight: 700;
+      color: #696969;
       display: flex;
       justify-content: right;
       margin-right: 3rem;
-    }
-
-    & > button {
-      margin-left: 3rem;
-      display: flex;
-      align-self: flex-end;
-      justify-content: center;
-      justify-items: center;
     }
   }
 `;
 
 export const BtnBox = styled.nav`
-  height: 5%;
   display: flex;
-  flex-direction: row;
   justify-content: flex-end;
-  margin-left: 0 auto;
-
-  & > button:first-of-type {
-    margin-left: 40rem;
-  }
+  align-items: center;
+  margin-left: auto;
+  margin: 0rem 4rem 4rem 0rem;
 `;
 
 export const StopUser = styled.section`
@@ -88,9 +84,8 @@ export const StopUser = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  /* margin-left: 35rem; */
 
   & > button {
-    margin: 7rem 1rem 0rem 3rem;
+    margin: 5rem 1rem 0rem 3rem;
   }
 `;

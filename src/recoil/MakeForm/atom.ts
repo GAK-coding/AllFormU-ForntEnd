@@ -15,7 +15,7 @@ import {
   SELECTION_OPTION,
   GRID_RADIO,
   GRID_CHECKBOX,
-  sectionType,
+  SectionType,
 } from '../../typings/makeForm';
 import { v4 as uuid } from 'uuid';
 
@@ -28,9 +28,14 @@ export const questionTypes = atom({
   },
 });
 
-export const nowQuestion = atom<{ [key in string]: number }>({
+export const nowQuestion = atom<{ row: number; col: number }>({
   key: 'nowQuestion',
   default: { row: 0, col: 0 },
+});
+
+export const nowFocusIndex = atom<number>({
+  key: 'nowFocusIndex',
+  default: 0,
 });
 
 export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', content: '' } });
@@ -41,7 +46,7 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
     [
       {
         type: DESCRIPTION_SHORT,
-        id: uuid(),
+        tempId: uuid(),
         required: false,
         title: '',
         sectionNum: 0,
@@ -51,8 +56,12 @@ export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>(
   ],
 });
 
+export const sectionNames = atom<string[]>({ key: 'sectionNames', default: [''] });
+
 export const sectionLens = atom<number[]>({ key: 'sectionLens', default: [] });
 
 export const changeSection = atom<boolean>({ key: 'changeSection', default: false });
 
-export const queSectionNum = atom<sectionType[]>({ key: 'queSectionNum', default: [] });
+export const queSectionNum = atom<SectionType[]>({ key: 'queSectionNum', default: [{ value: '0', label: '1' }] });
+
+export const formFix = atom({ key: 'formFix', default: false });

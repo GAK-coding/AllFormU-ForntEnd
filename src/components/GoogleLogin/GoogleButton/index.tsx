@@ -2,7 +2,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import Button from '../../ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
-import { BtnBox } from '../../../pages/SignUp/styles';
+import { BtnBox, LoginBtnBox } from '../../../pages/SignUp/styles';
 import axios from 'axios';
 
 const GoogleButton = () => {
@@ -19,12 +19,12 @@ const GoogleButton = () => {
     flow: 'auth-code',
   });
   return (
-    <BtnBox>
-      <Button onClick={() => loginButtonOnclick()} color={'black'} bgColor={blue} fontSize={1.5} width={20} height={4}>
+    <LoginBtnBox>
+      <Button onClick={() => loginButtonOnclick()} color={'black'} bgColor={blue} fontSize={1.5} width={15} height={4}>
         <img src="/images/google.png" alt="google" />
-        구글 계정 사용하기
+        구글 로그인
       </Button>
-    </BtnBox>
+    </LoginBtnBox>
   );
 };
 

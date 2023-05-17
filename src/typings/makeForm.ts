@@ -11,7 +11,7 @@ export const GRID_RADIO = 'Grid_RADIO';
 export const GRID_CHECKBOX = 'Grid_CHECKBOX';
 
 export interface createFormData extends FormInfo {
-  questions: Array<Omit<DescriptionQue, 'id'> | Omit<SelectionQue, 'id'> | Omit<GridQue, 'id'>>;
+  questions: Array<Omit<DescriptionQue, 'tempId'> | Omit<SelectionQue, 'tempId'> | Omit<GridQue, 'tempId'>>;
 }
 
 export interface FormInfo {
@@ -28,18 +28,33 @@ export type DescriptionKinds =
 export type SelectionKinds = 'Selection_OPTION' | 'Selection_CHECKBOX' | 'Selection_DROPDOWN' | 'Selection_LINEAR';
 export type GridKinds = 'Grid_RADIO' | 'Grid_CHECKBOX';
 
+export interface Description {
+  content: string;
+  id?: number;
+  quiz?: boolean;
+  answer?: null | string;
+}
+
 export interface DescriptionQue {
   type: DescriptionKinds;
-  id: string;
+  tempId: string;
+  id?: number;
   required: boolean;
   title: string;
   sectionNum: number;
-  descriptions: Array<{ content: string }>;
+  descriptions: Description[];
+  fix?: boolean;
+}
+
+export interface Option {
+  content: string;
+  id?: number;
+  answer?: boolean;
 }
 
 export interface SelectionQue extends Omit<DescriptionQue, 'type' | 'descriptions'> {
   type: SelectionKinds;
-  options: Array<{ content: string }>;
+  options: Option[];
 }
 
 export interface GridQue extends Omit<DescriptionQue, 'type' | 'descriptions'> {
@@ -48,7 +63,7 @@ export interface GridQue extends Omit<DescriptionQue, 'type' | 'descriptions'> {
   cols: string[];
 }
 
-export interface makeInfoList {
+export interface MakeInfoList {
   id: number;
   title: string;
   description?: string;
@@ -59,6 +74,6 @@ export interface QueType {
   label: string;
 }
 
-export interface sectionType extends QueType {
-  disabled: boolean;
+export interface SectionType extends QueType {
+  disabled?: boolean;
 }

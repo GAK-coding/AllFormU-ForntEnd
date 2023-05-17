@@ -1,3 +1,5 @@
+import { DescriptionQue, FormInfo, SelectionQue } from './makeForm';
+
 interface Question {
   createdDate: string;
   modifiedDate: string;
@@ -19,17 +21,12 @@ interface Option {
   answer: boolean;
 }
 
-interface Description {
-  createdDate: string;
-  modifiedDate: string;
-  id: number;
+interface Description extends Option {
   title: string | null;
-  content: string | null;
-  answer: boolean | null;
   quiz: boolean;
 }
 
-export interface getForm {
+export interface GetForm {
   createdDate: string;
   modifiedDate: string;
   id: number;
@@ -39,4 +36,21 @@ export interface getForm {
   content: string | null;
   required: boolean;
   fix: boolean;
+}
+
+// getFormInfo
+export interface GetFormInfo extends FormInfo {
+  id: number;
+  questions: (DescriptionQue | SelectionQue)[];
+  fix: boolean;
+}
+
+interface GetDescription extends Omit<DescriptionQue, 'tempId'> {
+  id: number;
+  // descriptions: Description[];
+}
+
+interface GetSelection extends Omit<SelectionQue, 'tempId'> {
+  id: number;
+  // options: Option[];
 }

@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
-import { makeInfoList } from '../../typings/makeForm';
+import { MakeInfoList } from '../../typings/makeForm';
 import { resInfoList } from '../../typings/resForm';
 
-export const makeFormInfoList = atom<makeInfoList[]>({
+export const makeFormInfoList = atom<MakeInfoList[]>({
   key: 'makeformInfoList',
   default: [],
 });

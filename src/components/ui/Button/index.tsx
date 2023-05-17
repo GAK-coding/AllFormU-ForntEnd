@@ -11,6 +11,7 @@ export interface ButtonProps {
   height: number | string;
   children: ReactNode;
   radius?: number;
+  border?: string;
 }
 
 export default function Button({
@@ -23,6 +24,7 @@ export default function Button({
   width,
   height,
   children,
+  border,
 }: ButtonProps) {
   return (
     <BtnWrapper
@@ -34,6 +36,7 @@ export default function Button({
       height={height}
       bgColor={bgColor}
       radius={radius}
+      border={border}
     >
       <span>{children}</span>
     </BtnWrapper>
