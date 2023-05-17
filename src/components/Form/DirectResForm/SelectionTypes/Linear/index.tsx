@@ -1,5 +1,5 @@
 import React from 'react';
-import { LinearWrapper } from './styles';
+import { LinearWrapper, RadioGroup } from './styles';
 import { Radios } from '../Option/styles';
 import { Radio } from 'antd';
 import { SelectionQue } from '../../../../../typings/makeForm';
@@ -11,13 +11,13 @@ interface Props {
 export default function Linear({ data }: Props) {
   return (
     <LinearWrapper>
-      <Radio.Group name="radiogroup">
+      <RadioGroup name="radiogroup">
         {data.options.map((option) => (
           <Radio key={option.id} value={option.id}>
             {option.content}
           </Radio>
         ))}
-      </Radio.Group>
+      </RadioGroup>
     </LinearWrapper>
   );
 }

@@ -129,7 +129,8 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
         !temp[row][col]['options'] && (temp[row][col]['options'] = [{ content: '' }]);
 
         if (value === SELECTION_LINEAR) {
-          (temp[row][col] as SelectionQue).options = [{ content: '0' }, { content: '10' }];
+          (temp[row][col] as SelectionQue).options = [...Array(11)].map((_, i) => ({ content: `${i}` }));
+          // (temp[row][col] as SelectionQue).options = [{ content: '0' }, { content: '10' }];
         }
       } else if (queTypes['Grid'].includes(value)) {
         !!temp[row][col]['descriptions'] && delete temp[row][col]['descriptions'];

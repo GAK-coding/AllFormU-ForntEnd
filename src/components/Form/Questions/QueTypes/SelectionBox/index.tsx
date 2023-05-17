@@ -70,7 +70,19 @@ export default function SelectionBox({ data, row, col }: Props) {
   const onChangeDropDown = useCallback(
     (value: string, num: number) => {
       const temp = JSON.parse(JSON.stringify(questionList));
-      (temp[row][col] as SelectionQue).options[num].content = value;
+      let start = (temp[row][col] as SelectionQue).options[0].content;
+      let end = (temp[row][col] as SelectionQue).options[(temp[row][col] as SelectionQue).options.length - 1].content;
+
+      num === 0 ? (start = value) : (end = value);
+
+      const opt: { content: string }[] = [];
+
+      for (let i = +start; i <= +end; i++) {
+        opt.push({ content: i.toString() });
+      }
+
+      (temp[row][col] as SelectionQue).options = opt;
+
       setQuestionList(temp);
     },
     [questionList]
@@ -83,6 +95,8 @@ export default function SelectionBox({ data, row, col }: Props) {
       setQuestionList(temp);
     }
   }, [questionList]);
+
+  console.log(questionList);
 
   if (type === SELECTION_LINEAR) {
     return (
