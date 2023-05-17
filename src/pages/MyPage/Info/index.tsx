@@ -4,7 +4,7 @@ import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import { AlignBox, BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
 import { useNavigate, Route, Navigate, Routes } from 'react-router-dom';
-import { mypageInfo, userInfo } from '../../../recoil/User/atom';
+import { userInfo } from '../../../recoil/User/atom';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { MakeInfoList } from '../../../typings/makeForm';
 import { makeFormInfoList, resFormInfoList } from '../../../recoil/FormList/atom';
