@@ -100,15 +100,14 @@ export default function EditForm() {
           ...snapshot,
           deleteInfo,
         });
+        setQuestionList(customData(data!));
 
         return { snapshot };
-      },
-      onSuccess: (data) => {
-        queryClient.setQueryData(['getFormInfo', id], data);
       },
       onError: (error, newData, context) => {
         if (context?.snapshot) {
           queryClient.setQueryData(['getFormInfo', id], context?.snapshot);
+          setQuestionList(customData({ ...context?.snapshot }));
           alert('수정 실패!');
         }
       },
@@ -118,9 +117,9 @@ export default function EditForm() {
     }
   );
 
-  useEffect(() => {
-    if (data) setQuestionList(customData(data));
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) setQuestionList(customData(data));
+  // }, [data]);
 
   // console.log(customData(data!));
 
