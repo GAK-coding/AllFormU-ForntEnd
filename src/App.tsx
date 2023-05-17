@@ -39,7 +39,7 @@ function App() {
             <Route path={'/mypage/resform'} element={<ResFormList />} />
             <Route path={'/signin'} element={<SignIn />} />
             <Route path={'/resform/chatbot'} element={<ChatbotResForm />} />
-            <Route path={'/resform/direct/:id'} element={<DirectResForm />} />
+            <Route path={'/directres/:id'} element={<DirectResForm />} />
             <Route path={'/makeform'} element={<MakeForm />} />
             <Route path={'/makeform/select'} element={<MakeFormSelect />} />
             <Route path={'/makeform/direct'} element={<MakeFormDirect />} />

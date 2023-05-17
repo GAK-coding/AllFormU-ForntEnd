@@ -50,6 +50,8 @@ import SelectionBox from '../QueTypes/SelectionBox';
 import GridBox from '../QueTypes/GridBox';
 import { useMessage } from '../../../../hooks/useMessage';
 import { useLocation } from 'react-router-dom';
+import DescriptRes from '../../DirectResForm/DescriptionRes';
+import SelectionRes from '../../DirectResForm/SelectionRes';
 
 interface Props {
   data: DescriptionQue | SelectionQue | GridQue;
@@ -127,7 +129,8 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
         !temp[row][col]['options'] && (temp[row][col]['options'] = [{ content: '' }]);
 
         if (value === SELECTION_LINEAR) {
-          (temp[row][col] as SelectionQue).options = [{ content: '0' }, { content: '10' }];
+          (temp[row][col] as SelectionQue).options = [...Array(11)].map((_, i) => ({ content: `${i}` }));
+          // (temp[row][col] as SelectionQue).options = [{ content: '0' }, { content: '10' }];
         }
       } else if (queTypes['Grid'].includes(value)) {
         !!temp[row][col]['descriptions'] && delete temp[row][col]['descriptions'];
@@ -179,6 +182,15 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
       setIsChange(false);
     }
   }, [isChange, questionList, queSecNum, nowSection, nowQueInfo, nowIndex, accrueQue]);
+
+  if (pathname.slice(1, 10) === 'directres') {
+    if (queTypes['Description'].includes(data.type))
+      return (
+        <DescriptRes onClickQue={onClickQue} data={data as DescriptionQue} row={row} col={col} isClick={isClick} />
+      );
+    if (queTypes['Selection'].includes(data.type))
+      return <SelectionRes onClickQue={onClickQue} data={data as SelectionQue} row={row} col={col} isClick={isClick} />;
+  }
 
   return (
     <QueWrapper>
