@@ -45,19 +45,7 @@ import QueDraggable from '../../../components/Form/Questions/QueDraggable/indes'
 import SectionBox from '../../../components/Form/Questions/SectionBox';
 import FormTitle from '../../../components/Form/Questions/FormTitle';
 import { useGetSingleForm } from '../../../components/Form/hooks/useGetSingleForm';
-
-const customData = (data: GetFormInfo) => {
-  const tempQues: (DescriptionQue | SelectionQue | GridQue)[][] = [];
-
-  data?.questions?.map((que) => {
-    const { sectionNum } = que;
-
-    if (tempQues[sectionNum] === undefined) tempQues[sectionNum] = [];
-    tempQues[sectionNum].push({ ...que, tempId: uuid() });
-  });
-
-  return tempQues;
-};
+import { customData } from '../../../utils/customData';
 
 export default function EditForm() {
   const { id } = useParams();
@@ -65,21 +53,6 @@ export default function EditForm() {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const queTypes = useRecoilValue(questionTypes);
 
-  // const { data, isLoading, error, isError, isFetching } = useQuery<GetFormInfo>(
-  //   ['getFormInfo', id],
-  //   ({ signal }) => getFormInfo(1, +id!, signal!),
-  //   {
-  //     notifyOnChangeProps: ['data'],
-  //     onSuccess: (data) => {
-  //       setInfo(data);
-  //     },
-  //     staleTime: 600000, // 10분
-  //     cacheTime: 900000, // 15분
-  //     refetchOnMount: false, // 마운트(리렌더링)될 때 데이터를 다시 가져오지 않음
-  //     refetchOnWindowFocus: false, // 브라우저를 포커싱했을때 데이터를 가져오지 않음
-  //     refetchOnReconnect: false, // 네트워크가 다시 연결되었을때 다시 가져오지 않음
-  //   }
-  // );
   const queryClient = useQueryClient();
 
   const [data, isLoading, isFetching] = useGetSingleForm(id!);
