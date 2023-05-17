@@ -2,6 +2,7 @@ import React, { ChangeEvent } from 'react';
 import MakeQueBase from '../MakeQueBase';
 import { Draggable } from 'react-beautiful-dnd';
 import { DescriptionQue, GridQue, SelectionQue } from '../../../../typings/makeForm';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   draggableId: string;
