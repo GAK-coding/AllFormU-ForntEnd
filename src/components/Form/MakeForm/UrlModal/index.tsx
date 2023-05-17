@@ -2,12 +2,12 @@ import React, { useCallback } from 'react';
 import { ResModalTitle } from '../../ResForm/ResFormModal/styles';
 import { QRCode } from 'antd';
 import { UrlWrapper } from './styles';
-import { useCopyClipBoard } from '../../../../hooks/useCopyClipBoard';
 import Button from '../../../ui/Button';
 import { color } from '../../../../recoil/Color/atom';
 import { useRecoilValue } from 'recoil';
 import { MakeFormModalWrapper } from '../MakeFromModal/styles';
 import { useNavigate } from 'react-router-dom';
+import { useCopyClipBoard } from '../../hooks/useCopyClipBoard';
 
 interface Props {
   open: boolean;
