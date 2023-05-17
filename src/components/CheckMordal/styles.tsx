@@ -49,6 +49,10 @@ export const UserInfo = styled.div`
   }
 `;
 
+export const InputInfo = styled.div`
+  display: flex;
+  width: 70%;
+`;
 export const ResultWrapper = styled.div`
   display: flex;
   flex-direction: column;
