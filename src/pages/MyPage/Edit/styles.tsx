@@ -59,7 +59,7 @@ export const InputWrapper = styled.div`
     justify-content: flex-start;
     align-items: center;
 
-    & > span {
+    & > span:first-of-type {
       width: 20%;
       font-size: 1.5rem;
       font-weight: 700;
@@ -69,6 +69,14 @@ export const InputWrapper = styled.div`
       margin-right: 3rem;
     }
   }
+`;
+
+export const Line = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: 3rem;
 `;
 
 export const BtnBox = styled.nav`
