@@ -1,20 +1,21 @@
 import React, { ChangeEvent, useCallback, useEffect } from 'react';
+
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { DeleteOption, DropDownWrapper, SelectionBoxWrapper } from './styles';
+import { ImCheckboxUnchecked, ImRadioUnchecked } from 'react-icons/im';
+import { IoMdClose } from 'react-icons/io';
+import { Select } from 'antd';
 import {
   SELECTION_CHECKBOX,
   SELECTION_DROPDOWN,
   SELECTION_LINEAR,
   SELECTION_OPTION,
   SelectionQue,
-} from '../../../../typings/makeForm';
-import FormInput from '../../../ui/FormInput';
-import Button from '../../../ui/Button';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { color } from '../../../../recoil/Color/atom';
-import { questions } from '../../../../recoil/MakeForm/atom';
-import { DeleteOption, DropDownWrapper, SelectionBoxWrapper } from './styles';
-import { ImCheckboxUnchecked, ImRadioUnchecked } from 'react-icons/im';
-import { IoMdClose } from 'react-icons/io';
-import { Select } from 'antd';
+} from '../../../../../typings/makeForm';
+import { color } from '../../../../../recoil/Color/atom';
+import { questions } from '../../../../../recoil/MakeForm/atom';
+import Button from '../../../../ui/Button';
+import FormInput from '../../../../ui/FormInput';
 
 interface Props {
   data: SelectionQue;

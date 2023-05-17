@@ -6,7 +6,6 @@ import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { BiRightArrowAlt } from 'react-icons/bi';
-import BallonChat from '../../components/ResForm/BallonChat';
 import { userInfo } from '../../recoil/User/atom';
 
 export default function Home() {

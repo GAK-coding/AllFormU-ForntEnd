@@ -41,25 +41,16 @@ export interface GetForm {
 // getFormInfo
 export interface GetFormInfo extends FormInfo {
   id: number;
-  questions: (GetDescription | GetSelection)[];
+  questions: (DescriptionQue | SelectionQue)[];
   fix: boolean;
 }
 
-interface GetDescription extends Omit<DescriptionQue, 'id' | 'descriptions'> {
+interface GetDescription extends Omit<DescriptionQue, 'tempId'> {
   id: number;
-  descriptions: {
-    id: number;
-    content: string;
-    answer: null | string;
-    quiz: boolean;
-  };
+  // descriptions: Description[];
 }
 
-interface GetSelection extends Omit<SelectionQue, 'id' | 'options'> {
+interface GetSelection extends Omit<SelectionQue, 'tempId'> {
   id: number;
-  options: Array<{
-    id: number;
-    content: string;
-    answer: boolean;
-  }>;
+  // options: Option[];
 }
