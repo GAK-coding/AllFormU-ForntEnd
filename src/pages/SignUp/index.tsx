@@ -10,6 +10,7 @@ import { checkEmail, signUp, emailCheckNum } from '../../api/user';
 import { useMutation } from 'react-query';
 import { signUpUserInfo } from '../../recoil/User/atom';
 import { useNavigate } from 'react-router-dom';
+import { useMessage } from '../../hooks/useMessage';
 
 interface InputInfo {
   checkEmail: string;
@@ -34,27 +35,29 @@ export default function SignUp() {
 
   const { mutate: signUpRequest } = useMutation(signUp);
 
+  const { showMessage, contextHolder } = useMessage();
+
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
       if (!isValid) {
-        alert('비밀번호 조건이 일치하지 않습니다.');
+        showMessage('warning', '비밀번호 조건이 일치하지 않습니다.');
         return;
       }
 
       if (!checkPw) {
-        alert('비밀번호가 일치하지 않습니다.');
+        showMessage('error', '비밀번호가 일치하지 않습니다.');
         return;
       }
 
       if (!checkENum) {
-        alert('인증번호가 일치하지 않습니다.');
+        showMessage('error', '인증번호가 일치하지 않습니다.');
         return;
+      } else {
+        signUpRequest({ nickname, email, password });
+        navigate('/signin');
       }
-
-      e.preventDefault();
-
-      signUpRequest({ nickname, email, password });
-      navigate('/signin');
     },
     [userInfo, checkInfo, checkPw, checkENum, isValid]
   );
@@ -126,25 +129,29 @@ export default function SignUp() {
       if (checkNum.httpStatus === 'OK') {
         setEmailNum(checkNum.message);
         console.log('이메일 인증번호 번호 ' + emailNum);
-        alert('인증번호가 전송 되었습니다.');
+        showMessage('success', '인증번호가 전송 되었습니다.');
       }
     }
   }, [checkNumSucsess]);
 
   const onCheck = () => {
     if (checkInfo.checkEmail === emailNum) {
-      alert('확인 되었습니다.');
+      showMessage('success', '인증번호가 확인되었습니다.');
       setCheckENum(true);
-    } else alert('인증번호가 일치하지 않습니다.');
+    } else showMessage('error', '인증번호가 일치하지 않습니다.');
   };
 
   useEffect(() => {
-    if (userInfo.password === checkInfo.checkPassword) setCheckPw(true);
-    else setCheckPw(false);
+    if (userInfo.password === checkInfo.checkPassword) {
+      setCheckPw(true);
+    } else {
+      setCheckPw(false);
+    }
   }, [userInfo.password, checkInfo.checkPassword]);
 
   return (
     <BaseBgBox>
+      {contextHolder}
       <PageInfo>
         <div>Sign Up</div>
         <div>
