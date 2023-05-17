@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
 import { userInfo } from '../../../recoil/User/atom';
 import { useNavigate } from 'react-router-dom';
+import { useMessage } from '../../../hooks/useMessage';
 
 interface Props {
   open: boolean;
@@ -18,6 +19,8 @@ interface InputInfo {
 
 export default function PasswordMordal({ open, onCancel }: Props) {
   const navigate = useNavigate();
+  const { showMessage, contextHolder } = useMessage();
+
   const { lightPurple } = useRecoilValue(color);
 
   const [input, setInput] = useState<InputInfo>({
@@ -42,7 +45,7 @@ export default function PasswordMordal({ open, onCancel }: Props) {
     if (info.password === password) {
       setCheck(true);
     } else {
-      alert('비밀번호가 일치하지 않습니다.');
+      showMessage('error', '비밀번호가 일치하지 않습니다.');
     }
   }, [password]);
 

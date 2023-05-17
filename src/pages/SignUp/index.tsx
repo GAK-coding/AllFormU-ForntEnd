@@ -33,7 +33,7 @@ export default function SignUp() {
     checkPassword: '',
   });
 
-  const { mutate: signUpRequest } = useMutation(signUp);
+  const { mutate: signUpRequest, isSuccess } = useMutation(signUp);
 
   const { showMessage, contextHolder } = useMessage();
 
@@ -56,11 +56,17 @@ export default function SignUp() {
         return;
       } else {
         signUpRequest({ nickname, email, password });
-        navigate('/signin');
       }
     },
     [userInfo, checkInfo, checkPw, checkENum, isValid]
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/signin');
+      showMessage('success', '회원가입이 완료되었습니다.');
+    }
+  }, [isSuccess]);
 
   const onChangeCheck = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: keyof InputInfo) => {

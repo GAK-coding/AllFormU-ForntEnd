@@ -12,8 +12,10 @@ import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signIn } from '../../api/user';
 import IdMordal from '../../components/CheckMordal/IdMordal';
+import { useMessage } from '../../hooks/useMessage';
 
 export default function SignIn() {
+  const { showMessage, contextHolder } = useMessage();
   const { blue } = useRecoilValue(color);
   const [userInput, setUserInput] = useRecoilState(signInUserInfo);
   const { email, password } = useRecoilValue(signInUserInfo);
@@ -44,15 +46,15 @@ export default function SignIn() {
   useEffect(() => {
     if (isSuccess) {
       if (data.httpStatus === 'CONFLICT') {
-        alert('비밀번호가 일치하지 않습니다.');
+        showMessage('error', '비밀번호가 일치하지 않습니다.');
         return;
       }
       if (data.httpStatus === 'NOT_FOUND') {
-        alert('존재하지 않는 이메일입니다.');
+        showMessage('error', '존재하지 않는 이메일입니다.');
         return;
       }
       if (data.httpStatus === 'BAD_REQUEST') {
-        alert('휴면 계정입니다. 재회원가입을 통해 휴면 상태를 해제해주세요.');
+        showMessage('warning', '휴면 계정입니다. 재회원가입을 통해 휴면 상태를 해제해주세요.');
         return;
       } else {
         const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
@@ -73,6 +75,7 @@ export default function SignIn() {
 
   return (
     <Wrapper>
+      {contextHolder}
       <BaseBgBox>
         <PageInfo>
           <div>Sign In</div>

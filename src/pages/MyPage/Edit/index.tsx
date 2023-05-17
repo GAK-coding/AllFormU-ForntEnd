@@ -10,6 +10,7 @@ import { changeNickname, changePwd, setDormant, setWithdrawal } from '../../../a
 import { useMutation } from 'react-query';
 import { Match, MisMatch } from '../../SignUp/styles';
 import { send } from 'process';
+import { useMessage } from '../../../hooks/useMessage';
 
 interface ChangeInfo {
   newNickname: string;
@@ -19,6 +20,8 @@ interface ChangeInfo {
 
 export default function Edit() {
   const { blue, lightPurple } = useRecoilValue(color);
+  const { showMessage, contextHolder } = useMessage();
+
   const info = useRecoilValue(userInfo);
   const [newInfo, setNewInfo] = useRecoilState(userInfo);
 
@@ -57,12 +60,12 @@ export default function Edit() {
 
   const sendInfo = useCallback(() => {
     if (!isValid) {
-      alert('비밀번호 조건이 일치하지 않습니다.');
+      showMessage('warning', '비밀번호 조건이 일치하지 않습니다.');
       return;
     }
 
     if (!checkPw) {
-      alert('비밀번호가 일치하지 않습니다.');
+      showMessage('error', '비밀번호가 일치하지 않습니다.');
       return;
     }
 
