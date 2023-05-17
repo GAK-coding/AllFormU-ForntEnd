@@ -2,12 +2,11 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
 import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
-import { AlignBox, BtnBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
+import { AlignBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
 import { useNavigate, Route, Navigate, Routes } from 'react-router-dom';
 import { userInfo } from '../../../recoil/User/atom';
-import { FormEvent, useCallback, useEffect, useState } from 'react';
-import { MakeInfoList } from '../../../typings/makeForm';
-import { makeFormInfoList, resFormInfoList } from '../../../recoil/FormList/atom';
+import { useCallback, useEffect, useState } from 'react';
+import { resFormInfoList } from '../../../recoil/FormList/atom';
 import { resInfoList } from '../../../typings/resForm';
 import { FiPlus } from 'react-icons/fi';
 import { useQuery } from 'react-query';
@@ -94,14 +93,15 @@ export default function Info() {
               <span>내 생성폼</span>
             </Line>
             <AlignBox>
-              {makeFormInfo?.map((formInfo: GetForm) => (
-                <FormBox key={formInfo.id}>{formInfo.title}</FormBox>
-              ))}
+              {/* TODO : 4개만 보여주기 */}
+              {makeFormInfo?.map((formInfo: GetForm) => {
+                return <FormBox key={formInfo.id}>{formInfo.title}</FormBox>;
+              })}
             </AlignBox>
             <AlignBox>
-              {makeFormInfo?.map((formInfo: GetForm) => (
-                <FormBox key={formInfo.id}>{formInfo.title}</FormBox>
-              ))}
+              {makeFormInfo?.map((formInfo: GetForm) => {
+                return <FormBox key={formInfo.id}>{formInfo.title}</FormBox>;
+              })}
             </AlignBox>
           </Form>
 
