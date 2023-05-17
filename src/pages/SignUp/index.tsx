@@ -27,6 +27,7 @@ export default function SignUp() {
   const [isValid, setIsValid] = useState(false);
   const [checkPw, setCheckPw] = useState(false);
   const [checkENum, setCheckENum] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
 
   const [checkInfo, setCheckInfo] = useState<InputInfo>({
     checkEmail: '',
@@ -40,6 +41,11 @@ export default function SignUp() {
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
+
+      if (!isValidEmail) {
+        showMessage('warning', '이메일 형식이 올바르지 않습니다.');
+        return;
+      }
 
       if (!isValid) {
         showMessage('warning', '비밀번호 조건이 일치하지 않습니다.');
@@ -83,6 +89,11 @@ export default function SignUp() {
       const temp = { ...userInfo };
       temp[value] = e.target.value;
 
+      if (value === 'email') {
+        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+        setIsValidEmail(emailRegex.test(e.target.value));
+      }
+
       if (value === 'password') {
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,15}$/;
         setIsValid(passwordRegex.test(e.target.value));
@@ -105,8 +116,12 @@ export default function SignUp() {
   });
 
   const onCheckEmail = useCallback(() => {
-    sendEmail({ email });
-    console.log(emailStatus);
+    if (isValidEmail) {
+      sendEmail({ email });
+      console.log(emailStatus);
+    } else {
+      showMessage('warning', '이메일 형식이 올바르지 않습니다.');
+    }
   }, [userInfo.email]);
 
   useEffect(() => {
