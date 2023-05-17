@@ -4,8 +4,8 @@ import Stomp from 'stompjs';
 import { gptLoading, gptTalks } from '../../recoil/Gpt/atom';
 import SockJS from 'sockjs-client';
 import { userInfo } from '../../recoil/User/atom';
-import ResFormModal from '../ResForm/ResFormModal';
 import { chatTalks } from '../../recoil/Resform/atom';
+import ResFormModal from '../Form/ResForm/ResFormModal';
 
 interface Props {
   open: boolean;

@@ -44,7 +44,6 @@ function App() {
             <Route path={'/makeform/select'} element={<MakeFormSelect />} />
             <Route path={'/makeform/direct'} element={<MakeFormDirect />} />
             <Route path={'/makeform/chatbot'} element={<MakeFormChatbot />} />
-            <Route path={'/gpt'} element={<ConnectGPT open={true} />} />
           </Routes>
         </BrowserRouter>
       </RecoilRoot>
