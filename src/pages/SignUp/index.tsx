@@ -10,6 +10,7 @@ import { checkEmail, signUp, emailCheckNum } from '../../api/user';
 import { useMutation } from 'react-query';
 import { signUpUserInfo } from '../../recoil/User/atom';
 import { useNavigate } from 'react-router-dom';
+import { useMessage } from '../../hooks/useMessage';
 
 interface InputInfo {
   checkEmail: string;
@@ -26,38 +27,52 @@ export default function SignUp() {
   const [isValid, setIsValid] = useState(false);
   const [checkPw, setCheckPw] = useState(false);
   const [checkENum, setCheckENum] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
 
   const [checkInfo, setCheckInfo] = useState<InputInfo>({
     checkEmail: '',
     checkPassword: '',
   });
 
-  const { mutate: signUpRequest } = useMutation(signUp);
+  const { mutate: signUpRequest, isSuccess } = useMutation(signUp);
+
+  const { showMessage, contextHolder } = useMessage();
 
   const onClick = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      if (!isValidEmail) {
+        showMessage('warning', '이메일 형식이 올바르지 않습니다.');
+        return;
+      }
+
       if (!isValid) {
-        alert('비밀번호 조건이 일치하지 않습니다.');
+        showMessage('warning', '비밀번호 조건이 일치하지 않습니다.');
         return;
       }
 
       if (!checkPw) {
-        alert('비밀번호가 일치하지 않습니다.');
+        showMessage('error', '비밀번호가 일치하지 않습니다.');
         return;
       }
 
       if (!checkENum) {
-        alert('인증번호가 일치하지 않습니다.');
+        showMessage('error', '인증번호가 일치하지 않습니다.');
         return;
+      } else {
+        signUpRequest({ nickname, email, password });
       }
-
-      e.preventDefault();
-
-      signUpRequest({ nickname, email, password });
-      navigate('/signin');
     },
     [userInfo, checkInfo, checkPw, checkENum, isValid]
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/signin');
+      showMessage('success', '회원가입이 완료되었습니다.');
+    }
+  }, [isSuccess]);
 
   const onChangeCheck = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: keyof InputInfo) => {
@@ -73,6 +88,11 @@ export default function SignUp() {
     (e: ChangeEvent<HTMLInputElement>, value: keyof signUpInfo) => {
       const temp = { ...userInfo };
       temp[value] = e.target.value;
+
+      if (value === 'email') {
+        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+        setIsValidEmail(emailRegex.test(e.target.value));
+      }
 
       if (value === 'password') {
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,15}$/;
@@ -96,8 +116,12 @@ export default function SignUp() {
   });
 
   const onCheckEmail = useCallback(() => {
-    sendEmail({ email });
-    console.log(emailStatus);
+    if (isValidEmail) {
+      sendEmail({ email });
+      console.log(emailStatus);
+    } else {
+      showMessage('warning', '이메일 형식이 올바르지 않습니다.');
+    }
   }, [userInfo.email]);
 
   useEffect(() => {
@@ -126,25 +150,29 @@ export default function SignUp() {
       if (checkNum.httpStatus === 'OK') {
         setEmailNum(checkNum.message);
         console.log('이메일 인증번호 번호 ' + emailNum);
-        alert('인증번호가 전송 되었습니다.');
+        showMessage('success', '인증번호가 전송 되었습니다.');
       }
     }
   }, [checkNumSucsess]);
 
   const onCheck = () => {
     if (checkInfo.checkEmail === emailNum) {
-      alert('확인 되었습니다.');
+      showMessage('success', '인증번호가 확인되었습니다.');
       setCheckENum(true);
-    } else alert('인증번호가 일치하지 않습니다.');
+    } else showMessage('error', '인증번호가 일치하지 않습니다.');
   };
 
   useEffect(() => {
-    if (userInfo.password === checkInfo.checkPassword) setCheckPw(true);
-    else setCheckPw(false);
+    if (userInfo.password === checkInfo.checkPassword) {
+      setCheckPw(true);
+    } else {
+      setCheckPw(false);
+    }
   }, [userInfo.password, checkInfo.checkPassword]);
 
   return (
     <BaseBgBox>
+      {contextHolder}
       <PageInfo>
         <div>Sign Up</div>
         <div>

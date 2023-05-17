@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { sendEmail, signInInfo, signUpInfo } from '../typings/user';
+import { newInfo, sendEmail, signInInfo, signUpInfo } from '../typings/user';
 
 // 이메일 중복 확인
 export const checkEmail = async (data: sendEmail) => {
@@ -41,6 +41,30 @@ export const signUp = async (data: signUpInfo) => {
 export const signIn = async (data: signInInfo) => {
   try {
     const response = await axios.post('/member', data);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// nickname 변경
+export const changeNickname = async (data: newInfo) => {
+  try {
+    const response = await axios.patch('/member/update/nickname', data);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 비밀번호 변경
+export const changePwd = async (data: newInfo) => {
+  try {
+    const response = await axios.patch('/member/update/password', data);
     console.log(response.data);
     return response.data;
   } catch (error) {
