@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { EditPageWrapper, InputWrapper, SetUserImage, BtnBox, StopUser } from './styles';
+import { EditPageWrapper, InputWrapper, SetUserImage, BtnBox, StopUser, Line } from './styles';
 import { color } from '../../../recoil/Color/atom';
 import Button from '../../../components/ui/Button';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
@@ -9,7 +9,6 @@ import { userInfo } from '../../../recoil/User/atom';
 import { changeNickname, changePwd, setDormant, setWithdrawal } from '../../../api/user';
 import { useMutation } from 'react-query';
 import { Match, MisMatch } from '../../SignUp/styles';
-import { send } from 'process';
 import { useMessage } from '../../../hooks/useMessage';
 
 interface ChangeInfo {
@@ -46,35 +45,68 @@ export default function Edit() {
 
       setChangeInfo(temp);
     },
-    [changeInfo.newNickname, changeInfo.newPassword, changeInfo.checkPassword]
+    [changeInfo]
   );
 
   // 비밀번호 확인
   useEffect(() => {
-    if (changeInfo.newPassword === changeInfo.checkPassword) setCheckPw(true);
-    else setCheckPw(false);
-  }, [changeInfo.newPassword, changeInfo.newPassword]);
+    if (changeInfo.newPassword === changeInfo.checkPassword) {
+      setCheckPw(true);
+    } else setCheckPw(false);
+  }, [changeInfo.newPassword, changeInfo.checkPassword]);
 
-  const { mutate: sendNewNickname, data: newNickName, isSuccess: newNick } = useMutation(changeNickname);
-  const { mutate: sendNewPwd, data: newPws, isSuccess: newPwd } = useMutation(changePwd);
+  const {
+    mutate: sendNewNickname,
+    data: newNicknameData,
+    isSuccess: isNewNicknameSuccess,
+  } = useMutation(changeNickname);
+  const { mutate: sendNewPwd, data: newPasswordData, isSuccess: isNewPasswordSuccess } = useMutation(changePwd);
+
+  useEffect(() => {
+    if (isNewNicknameSuccess && newNicknameData) {
+      setNewInfo((prevInfo) => ({
+        ...prevInfo,
+        nickname: newNicknameData.nickname,
+      }));
+    }
+    if (isNewPasswordSuccess && newPasswordData) {
+      setNewInfo((prevInfo) => ({
+        ...prevInfo,
+        password: newPasswordData.password,
+      }));
+    }
+  }, [isNewNicknameSuccess, isNewPasswordSuccess, newNicknameData, newPasswordData]);
 
   const sendInfo = useCallback(() => {
-    if (!isValid) {
-      showMessage('warning', '비밀번호 조건이 일치하지 않습니다.');
-      return;
+    if (changeInfo.newNickname !== '') {
+      sendNewNickname({ id: info.id, newNickname: changeInfo.newNickname });
     }
 
-    if (!checkPw) {
-      showMessage('error', '비밀번호가 일치하지 않습니다.');
-      return;
+    if (changeInfo.newPassword !== '') {
+      if (!checkPw) {
+        showMessage('error', '비밀번호가 일치하지 않습니다.');
+        return;
+      }
+      if (!isValid) {
+        showMessage('warning', '비밀번호 조건이 일치하지 않습니다.');
+        return;
+      } else {
+        sendNewPwd({ id: info.id, password: info.password, newPwd: changeInfo.newPassword });
+      }
     }
-
-    sendNewNickname({ id: info.id, newNickname: changeInfo.newNickname });
-    sendNewPwd({ id: info.id, password: info.password, newPwd: changeInfo.newPassword });
   }, [isValid, checkPw, changeInfo, newInfo]);
 
-  const { mutate: dormantUser, data: dormant } = useMutation(setDormant);
-  const { mutate: withDrawalUser, data: withdrawal } = useMutation(setWithdrawal);
+  const { mutate: dormantUser } = useMutation(setDormant, {
+    onSuccess: () => {
+      showMessage('success', '휴면계정 전환 완료');
+    },
+  });
+
+  const { mutate: withDrawalUser } = useMutation(setWithdrawal, {
+    onSuccess: () => {
+      showMessage('success', '회원탈퇴 완료');
+    },
+  });
 
   const onChangeStatus = useCallback((action: '휴면계정' | '회원탈퇴') => {
     if (action === '휴면계정') {
@@ -90,6 +122,7 @@ export default function Edit() {
 
   return (
     <EditPageWrapper>
+      {contextHolder}
       <BaseBgBox>
         <SetUserImage>
           <div>프로필 수정</div>
@@ -109,7 +142,7 @@ export default function Edit() {
           <div>
             <span>이름</span>
             <Input
-              type={'Nickname'}
+              type={'name'}
               value={changeInfo.newNickname}
               onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'newNickname')}
               placeholder={'새로운 닉네임'}
@@ -130,7 +163,8 @@ export default function Edit() {
               height={2}
               size={1.3}
             />
-
+          </div>
+          <Line>
             {changeInfo.newPassword &&
               (isValid ? (
                 <Match>
@@ -143,7 +177,7 @@ export default function Edit() {
                   비밀번호는 8~15자리의 영문, 숫자, 특수문자 조합으로 입력해주세요.
                 </MisMatch>
               ))}
-          </div>
+          </Line>
 
           <div>
             <span>비밀번호 확인</span>
@@ -156,7 +190,8 @@ export default function Edit() {
               height={2}
               size={1.3}
             />
-
+          </div>
+          <Line>
             {changeInfo.newPassword &&
               changeInfo.checkPassword &&
               (checkPw ? (
@@ -170,7 +205,7 @@ export default function Edit() {
                   비밀번호가 불일치합니다.
                 </MisMatch>
               ))}
-          </div>
+          </Line>
 
           <StopUser>
             <Button

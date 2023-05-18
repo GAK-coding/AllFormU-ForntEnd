@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { CheckModalWrapper, ModalTitle, UserInfo } from '../styles';
+import { CheckModalWrapper, InputInfo, ModalTitle, UserInfo } from '../styles';
 import { Input } from 'antd';
 import Button from '../../ui/Button';
 import { useRecoilValue } from 'recoil';
@@ -64,15 +64,18 @@ export default function PasswordMordal({ open, onCancel }: Props) {
       footer={null}
       centered
     >
+      {contextHolder}
       <UserInfo>
         <span>비밀번호를 입력해주세요.</span>
-        <Input
-          type={'password'}
-          value={password}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
-          placeholder={'비밀번호'}
-          height={2}
-        />
+        <InputInfo>
+          <Input
+            type={'password'}
+            value={password}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'password')}
+            placeholder={'비밀번호'}
+            height={2}
+          />
+        </InputInfo>
 
         <Button onClick={onCheckPassword} color={'#696969'} bgColor={lightPurple} fontSize={1.3} width={7} height={4}>
           확인

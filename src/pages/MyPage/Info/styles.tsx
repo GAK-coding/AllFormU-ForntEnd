@@ -25,7 +25,6 @@ export const UserInfo = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-
     width: 90%;
     max-width: 32rem;
     height: 90%;
@@ -45,6 +44,7 @@ export const UserInfo = styled.div`
       font-size: 3rem;
       font-weight: 700;
       display: flex;
+      color: #696969;
     }
 
     & > div {
@@ -52,6 +52,7 @@ export const UserInfo = styled.div`
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
+      color: #2d2d2d;
 
       & > span:first-of-type {
         margin-top: 4rem;
