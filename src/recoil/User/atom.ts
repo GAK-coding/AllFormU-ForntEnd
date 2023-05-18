@@ -3,7 +3,10 @@ import { googleUser, signInInfo, signUpInfo, user } from '../../typings/user';
 
 export const userInfo = atom<user>({ key: 'userInfo', default: { id: -1, nickname: '', email: '', password: '' } });
 
-export const googleUserInfo = atom<googleUser>({ key: 'googleUserInfo', default: { nickname: '', email: '' } });
+export const googleUserInfo = atom<googleUser>({
+  key: 'googleUserInfo',
+  default: { nickname: '', email: '', token: '' },
+});
 
 export const signUpUserInfo = atom<signUpInfo>({
   key: 'signUpUserInfo',

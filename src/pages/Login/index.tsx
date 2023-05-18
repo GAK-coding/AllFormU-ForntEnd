@@ -8,7 +8,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
 import { userInfo, signInUserInfo } from '../../recoil/User/atom';
-import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
+import GoogleAuth from './GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signIn } from '../../api/user';
 import IdMordal from '../../components/CheckMordal/IdMordal';
@@ -60,6 +60,14 @@ export default function SignIn() {
         const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
         setUserInfo(infoList);
         navigate('/');
+
+        // 이걸 어쩌지
+        // showMessage('success', '로그인 되었습니다.');
+
+        // setTimeout(() => {
+        //   navigate('/');
+        //   showMessage('success', '로그인 되었습니다.');
+        // }, 1000);
       }
     }
   }, [data, isSuccess]);

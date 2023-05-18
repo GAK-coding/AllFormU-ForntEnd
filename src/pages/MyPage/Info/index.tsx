@@ -4,7 +4,7 @@ import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import { AlignBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
 import { useNavigate, Route, Navigate, Routes } from 'react-router-dom';
-import { userInfo } from '../../../recoil/User/atom';
+import { googleUserInfo, userInfo } from '../../../recoil/User/atom';
 import { useCallback, useEffect, useState } from 'react';
 import { resFormInfoList } from '../../../recoil/FormList/atom';
 import { resInfoList } from '../../../typings/resForm';
@@ -13,13 +13,16 @@ import { useQuery } from 'react-query';
 import { getMakeForms } from '../../../api/getFormInfo';
 import { GetForm } from '../../../typings/getForm';
 import PasswordMordal from '../../../components/CheckMordal/PasswordMordal';
+import { useMessage } from '../../../hooks/useMessage';
 
 export default function Info() {
   const navigate = useNavigate();
   const { blue } = useRecoilValue(color);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { showMessage, contextHolder } = useMessage();
 
   const myInfo = useRecoilValue(userInfo);
+  const googleInfo = useRecoilValue(googleUserInfo);
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
@@ -69,6 +72,7 @@ export default function Info() {
 
   return (
     <BaseBgBox>
+      {contextHolder}
       <MyPageWrapper>
         <UserInfo>
           <div>

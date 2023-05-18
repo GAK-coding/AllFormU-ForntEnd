@@ -14,9 +14,9 @@ export default function FixedButton() {
 
   useEffect(() => {
     const isExcludedPath = excludedPaths.some((path) => location.pathname.includes(path));
-    const isRootPath = location.pathname === '/';
+    // const isRootPath = location.pathname === '/';
 
-    if (isRootPath || isExcludedPath) {
+    if (isExcludedPath) {
       setRender(false);
       return;
     } else {

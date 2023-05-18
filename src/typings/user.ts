@@ -7,6 +7,7 @@ export interface user {
 
 export interface googleUser extends Pick<user, 'email'> {
   nickname: string;
+  token: string;
 }
 
 export interface signInInfo extends Pick<user, 'email'> {

@@ -1,10 +1,10 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import Button from '../../ui/Button';
+import Button from '../../../../components/ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { color } from '../../../recoil/Color/atom';
-import { LoginBtnBox } from '../../../pages/SignUp/styles';
+import { color } from '../../../../recoil/Color/atom';
+import { LoginBtnBox } from '../../../SignUp/styles';
 import { useNavigate } from 'react-router-dom';
-import { googleUserInfo } from '../../../recoil/User/atom';
+import { googleUserInfo } from '../../../../recoil/User/atom';
 
 const GoogleButton = () => {
   const { blue } = useRecoilValue(color);
@@ -28,9 +28,9 @@ const GoogleButton = () => {
           const { email, name } = data;
           console.log('User Email:', email);
           console.log('User Name:', name);
-          setInfo({ nickname: name, email: email });
+          console.log(access_token);
+          setInfo({ nickname: name, email: email, token: access_token });
           console.log(info);
-          // You can save the email and name to state variables or use them as needed
         })
         .catch((error) => console.log(error));
     },
