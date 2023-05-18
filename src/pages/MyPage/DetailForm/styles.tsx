@@ -69,14 +69,17 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 4rem;
+  margin: auto;
+  padding-right: 2rem;
 
   & > div:first-of-type {
     height: 100%;
 
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    flex-direction: row;
+    & > button {
+      margin-right: 1rem;
+    }
   }
 
   & > div:last-of-type {

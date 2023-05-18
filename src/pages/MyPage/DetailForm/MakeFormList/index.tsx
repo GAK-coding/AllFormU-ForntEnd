@@ -1,8 +1,8 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import Button from '../../../../components/ui/Button';
 import { ButtonWrapper, FormListWrapper, HeaderWrapper, Title } from '../styles';
 import { color } from '../../../../recoil/Color/atom';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { deleteFrom, getMakeForms } from '../../../../api/getFormInfo';
 import { Col, Row } from 'antd';
@@ -46,14 +46,6 @@ export default function MakeFormList() {
 
                 <ButtonWrapper>
                   <div>
-                    <Button color={'black'} bgColor={blue} fontSize={1.3} width={10} height={3.5}>
-                      응답보기
-                    </Button>
-                    <Button color={'black'} bgColor={blue} fontSize={1.3} width={10} height={3.5}>
-                      결과분석
-                    </Button>
-                  </div>
-                  <div>
                     <Button
                       onClick={() => navigate(`/mypage/editform/${formInfo.id}`)}
                       color={'black'}
@@ -73,6 +65,11 @@ export default function MakeFormList() {
                       height={8}
                     >
                       삭제
+                    </Button>
+                  </div>
+                  <div>
+                    <Button color={'black'} bgColor={blue} fontSize={1.3} width={10} height={3.5}>
+                      응답보기
                     </Button>
                   </div>
                 </ButtonWrapper>
