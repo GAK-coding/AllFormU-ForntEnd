@@ -1,22 +1,41 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import Button from '../../ui/Button';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
-import { BtnBox, LoginBtnBox } from '../../../pages/SignUp/styles';
-import axios from 'axios';
+import { LoginBtnBox } from '../../../pages/SignUp/styles';
+import { useNavigate } from 'react-router-dom';
+import { googleUserInfo } from '../../../recoil/User/atom';
 
 const GoogleButton = () => {
   const { blue } = useRecoilValue(color);
+  const navigate = useNavigate();
+  const [info, setInfo] = useRecoilState(googleUserInfo);
 
   const loginButtonOnclick = useGoogleLogin({
-    scope: 'email profile',
-    onSuccess: async (tokenResponse) => {
-      axios.post('http://localhost:3000/auth/google/callback', { tokenResponse }).then(({ data }) => {
-        console.log(data);
-      });
+    // scope: 'email profile',
+    onSuccess: (res) => {
+      const { access_token } = res;
+      console.log(res);
+      navigate('/');
+
+      fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const { email, name } = data;
+          console.log('User Email:', email);
+          console.log('User Name:', name);
+          setInfo({ nickname: name, email: email });
+          console.log(info);
+          // You can save the email and name to state variables or use them as needed
+        })
+        .catch((error) => console.log(error));
     },
     onError: (error) => console.log(error),
-    flow: 'auth-code',
+    // flow: 'auth-code',
   });
   return (
     <LoginBtnBox>
