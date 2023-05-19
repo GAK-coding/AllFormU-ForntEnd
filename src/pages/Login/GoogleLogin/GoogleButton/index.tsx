@@ -11,28 +11,33 @@ const GoogleButton = () => {
   const navigate = useNavigate();
   const [info, setInfo] = useRecoilState(googleUserInfo);
 
+  const loginSuccess = (res: any) => {
+    const { access_token } = res;
+    console.log(res);
+    navigate('/');
+
+    fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const { email, name } = data;
+        console.log('User Email:', email);
+        console.log('User Name:', name);
+
+        setInfo({ nickname: name, email: email });
+
+        // info를 api요청으로 보내기
+      })
+      .catch((error) => console.log(error));
+  };
+
   const loginButtonOnclick = useGoogleLogin({
     // scope: 'email profile',
     onSuccess: (res) => {
-      const { access_token } = res;
-      console.log(res);
-      navigate('/');
-
-      fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const { email, name } = data;
-          console.log('User Email:', email);
-          console.log('User Name:', name);
-          console.log(access_token);
-          setInfo({ nickname: name, email: email });
-          console.log(info);
-        })
-        .catch((error) => console.log(error));
+      loginSuccess(res);
     },
     onError: (error) => console.log(error),
     // flow: 'auth-code',
