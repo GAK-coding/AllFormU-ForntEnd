@@ -5,7 +5,7 @@ export const userInfo = atom<user>({ key: 'userInfo', default: { id: -1, nicknam
 
 export const googleUserInfo = atom<googleUser>({
   key: 'googleUserInfo',
-  default: { nickname: '', email: '', token: '' },
+  default: { nickname: '', email: '' },
 });
 
 export const signUpUserInfo = atom<signUpInfo>({

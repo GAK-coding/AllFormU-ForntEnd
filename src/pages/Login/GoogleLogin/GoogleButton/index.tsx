@@ -29,7 +29,7 @@ const GoogleButton = () => {
           console.log('User Email:', email);
           console.log('User Name:', name);
           console.log(access_token);
-          setInfo({ nickname: name, email: email, token: access_token });
+          setInfo({ nickname: name, email: email });
           console.log(info);
         })
         .catch((error) => console.log(error));
