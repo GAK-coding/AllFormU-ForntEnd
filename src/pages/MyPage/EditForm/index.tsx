@@ -31,6 +31,7 @@ export default function EditForm() {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const queryClient = useQueryClient();
 
+  // TODO: any 타입 해결하고 useGetSingleForm으로 대체하기
   const { data, isLoading, error, isError, isFetching } = useQuery<any>(
     ['getFormInfo', id],
     () => getFormInfo(1, +id!),
