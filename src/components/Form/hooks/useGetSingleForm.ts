@@ -4,6 +4,7 @@ import { getFormInfo } from '../../../api/getFormInfo';
 import { useRecoilState } from 'recoil';
 import { formInfo } from '../../../recoil/MakeForm/atom';
 
+//TODO: select도 되도록 수정하기
 export function useGetSingleForm(id: string): [data: GetFormInfo, isLoading: boolean, isFetching: boolean] {
   const [info, setInfo] = useRecoilState(formInfo);
 
