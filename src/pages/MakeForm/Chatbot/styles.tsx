@@ -5,15 +5,17 @@ export const Wrapper = styled.div`
   flex-direction: column;
   height: 100%;
 `;
+
 export const ViewWrapper = styled.div`
   width: 100%;
   height: 70%;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: self-start;
   margin: auto;
 
+  padding: 4rem;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
@@ -21,11 +23,25 @@ export const ViewWrapper = styled.div`
   }
 `;
 
+export const ChatbotWrapper = styled.div`
+  width: 50%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  grid-template-rows: 50% 50%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: self-start;
+  margin: auto;
+`;
+
 export const InPutWrapper = styled.div`
   width: 100%;
   height: 30%;
   display: flex;
   flex-direction: column;
-  justify-content: end;
-  align-items: self-end;
+  justify-content: center;
+  align-items: center;
+
+  padding: 3rem;
 `;
