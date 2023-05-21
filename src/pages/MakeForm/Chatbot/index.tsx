@@ -1,18 +1,22 @@
 import React from 'react';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
-import {
-  BallonWrapper,
-  ChatBallon,
-  ChatbotWrapper,
-  GAK,
-  InPutWrapper,
-  UserBallon,
-  UserWrapper,
-  ViewWrapper,
-  Wrapper,
-} from './styles';
+import { BallonWrapper, ChatBallon, ChatbotWrapper, GAK, InPutWrapper, ViewWrapper, Wrapper } from './styles';
 
 export default function MakeFormChatbot() {
+  const chat = [
+    {
+      chatbot: '챗봇 생성 시작?',
+      user: '시작',
+    },
+    {
+      chatbot: '챗봇 생성 시작?',
+      user: '시작',
+    },
+    {
+      chatbot: '챗봇 생성 시작?',
+      user: '시작',
+    },
+  ];
   return (
     <BaseBgBox>
       <Wrapper>
@@ -29,18 +33,9 @@ export default function MakeFormChatbot() {
             </BallonWrapper>
           </ChatbotWrapper>
 
-          {/* {chat?.map((message, idx) => {
-            const { user, chatbot } = message;
-
-            return <BallonChat key={idx} user={user} chatbot={chatbot} />;
+          {/* {chat.map((message, idx) => {
+            return <BallonChat key={idx} user={message.user} chatbot={message.chatbot} />;
           })} */}
-          <UserWrapper>
-            <UserBallon>
-              유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선
-              1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선
-              1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1
-            </UserBallon>
-          </UserWrapper>
         </ViewWrapper>
         <InPutWrapper>입력란</InPutWrapper>
       </Wrapper>

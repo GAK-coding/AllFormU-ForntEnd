@@ -115,14 +115,3 @@ export const UserBallon = styled.div`
   -webkit-box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
 `;
-
-export const InPutWrapper = styled.div`
-  width: 100%;
-  height: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  padding: 3rem;
-`;
