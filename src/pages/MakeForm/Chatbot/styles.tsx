@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 
 export const ViewWrapper = styled.div`
   width: 100%;
-  height: 80%;
+  height: 85%;
   display: flex;
   flex-direction: column;
   margin: auto;
@@ -25,7 +25,7 @@ export const ViewWrapper = styled.div`
 
 export const InPutWrapper = styled.div`
   width: 100%;
-  height: 20%;
+  height: 15%;
   display: flex;
   flex-direction: column;
   justify-content: center;
