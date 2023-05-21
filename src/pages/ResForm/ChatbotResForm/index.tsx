@@ -138,7 +138,6 @@ export default function ChatbotResForm() {
             '으악 \n 1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312으악1231231231321312312321312312312312321312312312312312312312312'
           }/> */}
         </Chatting>
-
         <ChattingBottom>
           <ChatbotFunc>
             <Line>
@@ -167,12 +166,10 @@ export default function ChatbotResForm() {
             <Input value={req} onChange={onChangeReq} placeholder={''} height={5} />
           </UserRes>
         </ChattingBottom>
-
         {/* 3. 백엔드와 socket 연동이 되어야만 GPT와 대화하는 모달을 열 수 있음 */}
         {connected && isModalOpen && (
           <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />
         )}
-        {isModalOpen && <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />}
       </div>
     </ChatbotResWrapper>
   );

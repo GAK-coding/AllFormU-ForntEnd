@@ -6,12 +6,13 @@ import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { BiRightArrowAlt } from 'react-icons/bi';
-import { userInfo } from '../../recoil/User/atom';
+import { googleUserInfo, userInfo } from '../../recoil/User/atom';
 
 export default function Home() {
   const { purple } = useRecoilValue(color);
   const navigate = useNavigate();
   const info = useRecoilValue(userInfo);
+  const googleInfo = useRecoilValue(googleUserInfo);
 
   const checkUser = useCallback(() => {
     if (info.id === -1) {
