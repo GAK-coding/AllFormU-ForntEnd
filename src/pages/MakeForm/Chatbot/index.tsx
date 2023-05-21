@@ -24,27 +24,16 @@ export default function MakeFormChatbot() {
                 <span>GAK</span>
               </GAK>
               <ChatBallon>
-                챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선
-                1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선
-                1챗봇 말풍선 1
+                <span>안녕하세요, All Form U 챗봇 설문 생성 서비스입니다 ☺️</span>
               </ChatBallon>
             </BallonWrapper>
-            <BallonWrapper>
-              <GAK>
-                <img src="/images/gak_chatbot.png" alt="gak" />
-                <span>GAK</span>
-              </GAK>
-              <ChatBallon>말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1챗봇 말풍선 1</ChatBallon>
-            </BallonWrapper>
-
-            <BallonWrapper>
-              <GAK>
-                <img src="/images/gak_chatbot.png" alt="gak" />
-                <span>GAK</span>
-              </GAK>
-              <ChatBallon>말풍선</ChatBallon>
-            </BallonWrapper>
           </ChatbotWrapper>
+
+          {/* {chat?.map((message, idx) => {
+            const { user, chatbot } = message;
+
+            return <BallonChat key={idx} user={user} chatbot={chatbot} />;
+          })} */}
           <UserWrapper>
             <UserBallon>
               유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선 1유저 말풍선
