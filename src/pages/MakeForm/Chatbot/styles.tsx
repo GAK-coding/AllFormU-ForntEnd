@@ -24,6 +24,7 @@ export const ViewWrapper = styled.div`
 
 export const ChatbotWrapper = styled.div`
   width: 50%;
+  min-width: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -96,10 +97,11 @@ export const ChatBallon = styled.div`
 
 export const UserWrapper = styled.div`
   width: 50%;
+  /* min-width: fit-content; */
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: self-end;
+  /* justify-content: right;
+  align-items: right; */
   margin-left: auto;
 `;
 

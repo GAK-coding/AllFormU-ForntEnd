@@ -1,5 +1,27 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 4rem;
+`;
+
+export const ViewWrapper = styled.div`
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+
+  padding-top: 2rem;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+  }
+`;
+
 export const ChatbotWrapper = styled.div`
   width: 50%;
   display: flex;
@@ -114,4 +136,15 @@ export const UserBallon = styled.div`
   box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
+`;
+
+export const InPutWrapper = styled.div`
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 3rem;
 `;
