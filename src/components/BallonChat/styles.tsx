@@ -1,29 +1,8 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 4rem;
-`;
-
-export const ViewWrapper = styled.div`
-  width: 100%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-
-  padding-top: 2rem;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    display: none; /* 크롬, 사파리, 오페라, 엣지 */
-  }
-`;
-
 export const ChatbotWrapper = styled.div`
   width: 50%;
+  min-width: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -108,6 +87,7 @@ export const UserBallon = styled.div`
   font-size: 1.2rem;
   font-weight: 700;
   line-height: 2rem;
+
   max-width: 75%;
   background: #f7e9a6;
   border-radius: 4rem;
@@ -119,6 +99,10 @@ export const UserBallon = styled.div`
   word-wrap: break-word;
   margin-right: 1rem;
 
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-left: auto;
   &:before {
     content: '';
     width: 0px;
@@ -136,15 +120,4 @@ export const UserBallon = styled.div`
   box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.1);
-`;
-
-export const InPutWrapper = styled.div`
-  width: 100%;
-  height: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  padding: 3rem;
 `;
