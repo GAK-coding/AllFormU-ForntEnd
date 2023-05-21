@@ -35,7 +35,7 @@ export const FloatButton = styled.button`
   cursor: pointer;
 `;
 
-export const ModalOpen = styled.div`
+export const ButtonOpen = styled.div`
   width: 70px;
   height: 350px;
   padding: 2rem;
