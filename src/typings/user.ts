@@ -5,6 +5,10 @@ export interface user {
   password: string;
 }
 
+export interface googleUser extends Pick<user, 'email'> {
+  nickname: string;
+}
+
 export interface signInInfo extends Pick<user, 'email'> {
   password: string;
 }

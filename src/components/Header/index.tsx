@@ -4,7 +4,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { userInfo } from '../../recoil/User/atom';
+import { googleUserInfo, userInfo } from '../../recoil/User/atom';
+import { useMessage } from '../../hooks/useMessage';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -12,12 +13,14 @@ export default function Header() {
 
   const { pathname } = useLocation();
   const [info, setInfo] = useRecoilState(userInfo);
+  const [googleInfo, setGoogleInfo] = useRecoilState(googleUserInfo);
+  const { showMessage, contextHolder } = useMessage();
 
   const checkLogout = useCallback(() => {
     if (info.id !== -1) {
       setInfo({ id: -1, nickname: '', email: '', password: '' });
       navigate('/');
-      alert('로그아웃 되었습니다.');
+      showMessage('success', '로그아웃 되었습니다.');
     } else {
       navigate('/signin');
     }
@@ -25,6 +28,7 @@ export default function Header() {
 
   return (
     <HeaderWrapper>
+      {contextHolder}
       <Title>
         {pathname !== '/' && (
           <Link to={'/'}>
