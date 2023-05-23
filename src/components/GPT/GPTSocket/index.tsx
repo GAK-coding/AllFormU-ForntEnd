@@ -1,7 +1,7 @@
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
-import ResFormModal from '../Form/ResForm/ResFormModal';
-import { gptLoading, gptOpen, gptTalks } from '../../recoil/Gpt/atom';
-import { chatTalks } from '../../recoil/Resform/atom';
+import ResFormModal from '../GPTModal';
+import { gptLoading, gptOpen, gptTalks } from '../../../recoil/Gpt/atom';
+import { chatTalks } from '../../../recoil/Resform/atom';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
@@ -12,7 +12,7 @@ interface ChatMessage {
   type: string;
 }
 
-export default function GPT() {
+export default function GPTSocket() {
   const [talk, setTalk] = useRecoilState(gptTalks);
   const [chat, setChat] = useRecoilState(chatTalks);
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);

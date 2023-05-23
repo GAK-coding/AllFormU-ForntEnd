@@ -18,7 +18,7 @@ import {
 } from '../styles';
 import { BallonWrapper, ChatBallon, ChatbotWrapper, GAK } from '../../../components/Chatbot/BallonChat/styles';
 import Ballon from '../../../components/Chatbot/BallonChat';
-import GPT from '../../../components/GPT';
+import GPTSocket from '../../../components/GPT/GPTSocket';
 
 export default function ChatbotResForm() {
   const { blue } = useRecoilValue(color);
@@ -77,7 +77,7 @@ export default function ChatbotResForm() {
               </Button>
             </FunctionContent>
           </FunctionWrapper>
-          {isOpen && <GPT />}
+          {isOpen && <GPTSocket />}
 
           <UserResWrapper></UserResWrapper>
           {/* <UserRes>

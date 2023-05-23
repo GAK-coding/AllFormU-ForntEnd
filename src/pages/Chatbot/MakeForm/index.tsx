@@ -13,7 +13,7 @@ import { BallonWrapper, ChatBallon, ChatbotWrapper, GAK } from '../../../compone
 import Ballon from '../../../components/Chatbot/BallonChat';
 import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
-import GPT from '../../../components/GPT';
+import GPTSocket from '../../../components/GPT/GPTSocket';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { gptOpen } from '../../../recoil/Gpt/atom';
 
@@ -75,7 +75,7 @@ export default function MakeFormChatbot() {
             </FunctionContent>
           </FunctionWrapper>
 
-          {isOpen && <GPT />}
+          {isOpen && <GPTSocket />}
           <UserResWrapper></UserResWrapper>
         </InPutWrapper>
       </Wrapper>

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { ResModalTitle } from '../../ResForm/ResFormModal/styles';
+import { ResModalTitle } from '../../../GPT/GPTModal/styles';
 import { QRCode } from 'antd';
 import { UrlWrapper } from './styles';
 import Button from '../../../ui/Button';

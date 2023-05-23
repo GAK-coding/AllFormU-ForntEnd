@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { ResModal, ResModalInput, ResModalTalk, ResModalTitle } from './styles';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import ResFormChat from '../ResFormModalChat';
+import ResFormChat from '../GPTModalChat';
 import { message } from 'antd';
-import { color } from '../../../../recoil/Color/atom';
-import { gptLoading, gptTalks } from '../../../../recoil/Gpt/atom';
-import Input from '../../../ui/Input';
-import Button from '../../../ui/Button';
+import { color } from '../../../recoil/Color/atom';
+import { gptLoading, gptTalks } from '../../../recoil/Gpt/atom';
+import Input from '../../ui/Input';
+import Button from '../../ui/Button';
 
 interface Props {
   open: boolean;
@@ -14,7 +14,7 @@ interface Props {
   sendMessage: (req: string) => void;
 }
 
-export default function ResFormModal({ open, onCancel, sendMessage }: Props) {
+export default function GPTModal({ open, onCancel, sendMessage }: Props) {
   const { purple } = useRecoilValue(color);
   const [talk, setTalk] = useRecoilState(gptTalks);
   const [req, setReq] = useState('');
