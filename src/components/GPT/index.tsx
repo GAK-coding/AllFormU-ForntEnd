@@ -1,10 +1,11 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import ResFormModal from '../Form/ResForm/ResFormModal';
-import { gptLoading, gptTalks } from '../../recoil/Gpt/atom';
+import { gptLoading, gptOpen, gptTalks } from '../../recoil/Gpt/atom';
 import { chatTalks } from '../../recoil/Resform/atom';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
+import { userInfo } from '../../recoil/User/atom';
 
 interface ChatMessage {
   sender: string;
@@ -13,18 +14,18 @@ interface ChatMessage {
 }
 const [talk, setTalk] = useRecoilState(gptTalks);
 const [chat, setChat] = useRecoilState(chatTalks);
-const [req, setReq] = useState('');
-const [isModalOpen, setIsModalOpen] = useState(false);
+const [open, setOpen] = useRecoilState(gptOpen);
 
-const showModal = useCallback(() => {
-  setIsModalOpen(true);
-}, []);
+const resetGptTalks = useResetRecoilState(gptTalks);
+const resetChatTalks = useResetRecoilState(chatTalks);
 
 const handleCancel = useCallback(() => {
-  setIsModalOpen(false);
+  setOpen(false);
+  resetGptTalks();
+  resetChatTalks();
 }, []);
 
-const [username, setUsername] = useState('');
+const info = useRecoilValue(userInfo);
 const [connected, setConnected] = useState(false);
 const stompClient = useRef<Stomp.Client | null>(null);
 const [res, setRes] = useState('');
@@ -60,7 +61,7 @@ const connect = () => {
 const sendMessage = (req: string) => {
   if (stompClient.current) {
     const chatMessage: ChatMessage = {
-      sender: username,
+      sender: info.nickname,
       content: req,
       type: 'CHAT',
     };
@@ -96,5 +97,5 @@ useEffect(() => {
 }, []);
 
 export default function GPT() {
-  return <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />;
+  return <ResFormModal open={open} onCancel={handleCancel} sendMessage={sendMessage} />;
 }

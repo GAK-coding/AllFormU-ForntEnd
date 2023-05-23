@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import Button from '../../../components/ui/Button';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import { gptLoading, gptTalks } from '../../../recoil/Gpt/atom';
+import { gptLoading, gptOpen, gptTalks } from '../../../recoil/Gpt/atom';
 import { chatTalks } from '../../../recoil/Resform/atom';
 import Input from '../../../components/ui/Input';
 import ResFormModal from '../../../components/Form/ResForm/ResFormModal';
@@ -32,19 +32,17 @@ export default function ChatbotResForm() {
   const { blue } = useRecoilValue(color);
   const [talk, setTalk] = useRecoilState(gptTalks);
   const [chat, setChat] = useRecoilState(chatTalks);
-  const [req, setReq] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [open, setOpen] = useRecoilState(gptOpen);
+  const resetGptTalks = useResetRecoilState(gptTalks);
+  const resetChatTalks = useResetRecoilState(chatTalks);
   const showModal = useCallback(() => {
-    setIsModalOpen(true);
+    setOpen(true);
   }, []);
 
   const handleCancel = useCallback(() => {
-    setIsModalOpen(false);
-  }, []);
-
-  const onChangeReq = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setReq(e.target.value);
+    setOpen(false);
+    resetGptTalks();
+    resetChatTalks();
   }, []);
 
   const [username, setUsername] = useState('');
@@ -166,9 +164,7 @@ export default function ChatbotResForm() {
               </Button>
             </FunctionContent>
           </FunctionWrapper>
-          {connected && isModalOpen && (
-            <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />
-          )}
+          {connected && open && <ResFormModal open={open} onCancel={handleCancel} sendMessage={sendMessage} />}
 
           <UserResWrapper></UserResWrapper>
           {/* <UserRes>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
 import {
   FunctionContent,
@@ -19,10 +19,10 @@ import { gptOpen } from '../../../recoil/Gpt/atom';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
-  const [open, setOpen] = useRecoilState(gptOpen);
+  // const [open, setOpen] = useRecoilState(gptOpen);
 
   const showModal = useCallback(() => {
-    setOpen(true);
+    // setOpen(true);
   }, []);
 
   const chattt = [
@@ -75,7 +75,7 @@ export default function MakeFormChatbot() {
             </FunctionContent>
           </FunctionWrapper>
 
-          {open && <GPT />}
+          {/* {open && <GPT />} */}
           <UserResWrapper></UserResWrapper>
         </InPutWrapper>
       </Wrapper>
