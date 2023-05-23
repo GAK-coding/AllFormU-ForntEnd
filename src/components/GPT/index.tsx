@@ -1,11 +1,10 @@
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import ResFormModal from '../Form/ResForm/ResFormModal';
 import { gptLoading, gptOpen, gptTalks } from '../../recoil/Gpt/atom';
 import { chatTalks } from '../../recoil/Resform/atom';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
-import { userInfo } from '../../recoil/User/atom';
 
 interface ChatMessage {
   sender: string;
