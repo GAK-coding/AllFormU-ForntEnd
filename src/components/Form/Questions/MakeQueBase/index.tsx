@@ -60,7 +60,7 @@ interface Props {
   isClick: boolean;
   onClickQue: (row: number, col: number) => void;
   onDelete: (row: number, col: number) => void;
-  onChangeTitle: (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => void;
+  onChangeTitle?: (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => void;
 }
 
 const Types: QueType[] = [
@@ -130,7 +130,6 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
 
         if (value === SELECTION_LINEAR) {
           (temp[row][col] as SelectionQue).options = [...Array(11)].map((_, i) => ({ content: `${i}` }));
-          // (temp[row][col] as SelectionQue).options = [{ content: '0' }, { content: '10' }];
         }
       } else if (queTypes['Grid'].includes(value)) {
         !!temp[row][col]['descriptions'] && delete temp[row][col]['descriptions'];
@@ -148,6 +147,15 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
     (checked: boolean) => {
       const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
       temp[row][col]['required'] = checked;
+      setQuestionList(temp);
+    },
+    [questionList]
+  );
+
+  const onEditTitle = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const temp = JSON.parse(JSON.stringify(questionList));
+      temp[row][col]['title'] = e.target.value;
       setQuestionList(temp);
     },
     [questionList]
@@ -203,8 +211,9 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
         <QueTop>
           <QueTopLeft>
             <FormInput
+              onChange={onEditTitle}
+              queId={data.id}
               value={title}
-              onChange={(e) => onChangeTitle(e, 'title', row, col)}
               width={'75%'}
               fontSize={1.6}
               placeholder={'질문'}
@@ -232,22 +241,26 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
             {queTypes['Grid'].includes(nowType) && <GridBox data={data as GridQue} row={row} col={col} />}
           </QueBottomLeft>
           <QueBottomRight>
-            <div>
-              <span>섹션</span>
-              <Select
-                className="custom-select"
-                value={`${queSecNum[row].value}`}
-                style={{ width: 60 }}
-                onSelect={(value, option) => onSelectSectionNum(option)}
-                options={selectOpt}
-                suffixIcon={<TbTriangleInverted />}
-                size={'small'}
-              />
-            </div>
-            <div>
-              <span>필수 응답</span>
-              <Switch defaultChecked={data.required} onChange={onChangeRequire} size={'small'} />
-            </div>
+            {pathname.slice(8, 16) !== 'editform' && (
+              <>
+                <div>
+                  <span>섹션</span>
+                  <Select
+                    className="custom-select"
+                    value={`${queSecNum[row].value}`}
+                    style={{ width: 60 }}
+                    onSelect={(value, option) => onSelectSectionNum(option)}
+                    options={selectOpt}
+                    suffixIcon={<TbTriangleInverted />}
+                    size={'small'}
+                  />
+                </div>
+                <div>
+                  <span>필수 응답</span>
+                  <Switch defaultChecked={data.required} onChange={onChangeRequire} size={'small'} />
+                </div>
+              </>
+            )}
           </QueBottomRight>
         </QueBottom>
       </QueBody>

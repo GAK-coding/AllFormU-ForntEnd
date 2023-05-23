@@ -16,7 +16,7 @@ import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import { DESCRIPTION_SHORT, DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
 import { useMessage } from '../../../hooks/useMessage';
-import QueDraggable from '../../../components/Form/Questions/QueDraggable/indes';
+import QueDraggable from '../../../components/Form/Questions/QueDraggable';
 import MakeFromModal from '../../../components/Form/MakeForm/MakeFromModal';
 import SectionBox from '../../../components/Form/Questions/SectionBox';
 import FormTitle from '../../../components/Form/Questions/FormTitle';
@@ -186,6 +186,8 @@ export default function MakeFormDirect() {
 
     setAccrueQue(temp);
   }, [addQuestion]);
+
+  console.log(questionList);
 
   useLayoutEffect(() => {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });

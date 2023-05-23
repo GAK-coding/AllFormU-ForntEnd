@@ -92,7 +92,7 @@ export default function SectionBox({ children, index }: Props) {
     <SectionBoxWrapper>
       <div>
         <FormInput
-          value={sectionList[index]}
+          value={sectionList[index] || ''}
           onChange={onChangeSectionName}
           width={'50%'}
           fontSize={1.8}
