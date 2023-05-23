@@ -41,9 +41,10 @@ export const ResModalTitle = styled.h2`
 export const ResModalTalk = styled.div`
   border-bottom: none;
 
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   height: 90%;
 
+  overflow: auto;
   &::-webkit-scrollbar {
     display: none; /* 크롬, 사파리, 오페라, 엣지 */
   }
