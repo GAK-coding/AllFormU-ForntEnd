@@ -7,7 +7,7 @@ import Button from '../../components/ui/Button';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
-import { userInfo, signInUserInfo } from '../../recoil/User/atom';
+import { userInfo, signInUserInfo, isLogin } from '../../recoil/User/atom';
 import GoogleAuth from './GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signIn } from '../../api/user';
@@ -22,6 +22,7 @@ export default function SignIn() {
   const setUserInfo = useSetRecoilState(userInfo);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [login, setLogin] = useRecoilState(isLogin);
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
@@ -59,6 +60,9 @@ export default function SignIn() {
       } else {
         const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
         setUserInfo(infoList);
+        //TODO: 나중에 jwt 넣으면 될듯
+        localStorage.setItem('accessToken', 'true');
+        setLogin(true);
         navigate('/');
 
         // 이걸 어쩌지
