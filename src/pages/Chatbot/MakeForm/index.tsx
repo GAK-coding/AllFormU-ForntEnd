@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
 import {
   FunctionContent,
@@ -12,13 +12,20 @@ import {
 import { BallonWrapper, ChatBallon, ChatbotWrapper, GAK } from '../../../components/Chatbot/BallonChat/styles';
 import Ballon from '../../../components/Chatbot/BallonChat';
 import Button from '../../../components/ui/Button';
-import { useRecoilValue } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
+import GPT from '../../../components/GPT';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { gptOpen } from '../../../recoil/Gpt/atom';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
+  const [open, setOpen] = useRecoilState(gptOpen);
 
-  const chat = [
+  const showModal = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+  const chattt = [
     {
       chatbot: '챗봇 생성 시작?',
       user: '시작',
@@ -32,6 +39,7 @@ export default function MakeFormChatbot() {
       user: '시작',
     },
   ];
+
   return (
     <BaseBgBox>
       <Wrapper>
@@ -48,7 +56,7 @@ export default function MakeFormChatbot() {
             </BallonWrapper>
           </ChatbotWrapper>
 
-          {chat.map((message, idx) => {
+          {chattt.map((message, idx) => {
             return <Ballon key={idx} user={message.user} chatbot={message.chatbot} />;
           })}
         </ViewWrapper>
@@ -61,12 +69,13 @@ export default function MakeFormChatbot() {
               <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
                 폼 미리보기
               </Button>
-              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
+              <Button onClick={showModal} color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
                 GPT 이용하기
               </Button>
             </FunctionContent>
           </FunctionWrapper>
 
+          {open && <GPT />}
           <UserResWrapper></UserResWrapper>
         </InPutWrapper>
       </Wrapper>
