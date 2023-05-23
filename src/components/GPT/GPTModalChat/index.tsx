@@ -1,9 +1,9 @@
 import React from 'react';
 import { ChatBox } from './styles';
 import { Skeleton } from 'antd';
-import { Chat } from '../../../../typings/resForm';
+import { Chat } from '../../../typings/resForm';
 
-export default function ResFormModalChat({ myReq, gptRes }: Chat) {
+export default function GPTModalChat({ myReq, gptRes }: Chat) {
   return (
     <div>
       <ChatBox type={'user'}>
