@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
-import { InPutWrapper, ViewWrapper, Wrapper } from './styles';
+import { InPutWrapper, ViewWrapper, Wrapper } from '../styles';
 import {
   BallonWrapper,
   ChatBallon,
@@ -8,8 +8,8 @@ import {
   GAK,
   UserBallon,
   UserWrapper,
-} from '../../../components/BallonChat/styles';
-import Ballon from '../../../components/BallonChat';
+} from '../../../components/Form/BallonChat/styles';
+import Ballon from '../../../components/Form/BallonChat';
 
 export default function MakeFormChatbot() {
   const chat = [

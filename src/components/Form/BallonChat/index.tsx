@@ -1,4 +1,4 @@
-import { BallonChat } from '../../typings/chatbot';
+import { BallonChat } from '../../../typings/chatbot';
 import { BallonWrapper, ChatBallon, ChatbotWrapper, GAK, UserBallon, UserWrapper } from './styles';
 
 export default function Ballon({ chatbot, user }: BallonChat) {
