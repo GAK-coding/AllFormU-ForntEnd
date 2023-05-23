@@ -4,12 +4,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { googleUserInfo, userInfo } from '../../recoil/User/atom';
+import { googleUserInfo, isLogin, userInfo } from '../../recoil/User/atom';
 import { useMessage } from '../../hooks/useMessage';
 
 export default function Header() {
   const navigate = useNavigate();
   const { purple } = useRecoilValue(color);
+  const [login, setLogin] = useRecoilState(isLogin);
 
   const { pathname } = useLocation();
   const [info, setInfo] = useRecoilState(userInfo);
@@ -17,8 +18,10 @@ export default function Header() {
   const { showMessage, contextHolder } = useMessage();
 
   const checkLogout = useCallback(() => {
-    if (info.id !== -1) {
+    if (login) {
       setInfo({ id: -1, nickname: '', email: '', password: '' });
+      setLogin(false);
+      localStorage.removeItem('accessToken');
       navigate('/');
       showMessage('success', '로그아웃 되었습니다.');
     } else {
@@ -39,7 +42,7 @@ export default function Header() {
         )}
       </Title>
       <BtnBox>
-        {info.id !== -1 && (
+        {login && (
           <Button
             onClick={() => navigate('/mypage')}
             fontSize={1.4}
@@ -53,7 +56,7 @@ export default function Header() {
         )}
 
         <Button onClick={checkLogout} fontSize={1.4} bgColor={purple} width={11} height={4} color={'white'}>
-          {info.id === -1 ? 'Login' : 'Logout'}
+          {!login ? 'Login' : 'Logout'}
         </Button>
       </BtnBox>
     </HeaderWrapper>

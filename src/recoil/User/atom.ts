@@ -17,3 +17,5 @@ export const signInUserInfo = atom<signInInfo>({
   key: 'signInUserInfo',
   default: { email: '', password: '' },
 });
+
+export const isLogin = atom({ key: 'isLogin', default: !!localStorage.getItem('accessToken') });

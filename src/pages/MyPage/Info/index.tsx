@@ -1,10 +1,10 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
 import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import { AlignBox, Form, FormBox, FormWrapper, Line, MyPageWrapper, UserInfo } from './styles';
 import { useNavigate, Route, Navigate, Routes } from 'react-router-dom';
-import { googleUserInfo, userInfo } from '../../../recoil/User/atom';
+import { googleUserInfo, isLogin, userInfo } from '../../../recoil/User/atom';
 import { useCallback, useEffect, useState } from 'react';
 import { resFormInfoList } from '../../../recoil/FormList/atom';
 import { resInfoList } from '../../../typings/resForm';
@@ -20,6 +20,7 @@ export default function Info() {
   const { blue } = useRecoilValue(color);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { showMessage, contextHolder } = useMessage();
+  const [login, setLogin] = useRecoilState(isLogin);
 
   const myInfo = useRecoilValue(userInfo);
   const googleInfo = useRecoilValue(googleUserInfo);
@@ -62,7 +63,7 @@ export default function Info() {
   // console.log('이거', makeFormInfo);
 
   // redirect
-  if (myInfo.id === -1) {
+  if (!login) {
     return (
       <Routes>
         <Route path="/" element={<Navigate replace to="/signin" />} />;
