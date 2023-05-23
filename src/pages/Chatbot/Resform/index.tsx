@@ -33,8 +33,10 @@ export default function ChatbotResForm() {
   const [talk, setTalk] = useRecoilState(gptTalks);
   const [chat, setChat] = useRecoilState(chatTalks);
   const [open, setOpen] = useRecoilState(gptOpen);
+
   const resetGptTalks = useResetRecoilState(gptTalks);
   const resetChatTalks = useResetRecoilState(chatTalks);
+
   const showModal = useCallback(() => {
     setOpen(true);
   }, []);

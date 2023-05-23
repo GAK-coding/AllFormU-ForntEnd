@@ -19,10 +19,10 @@ import { gptOpen } from '../../../recoil/Gpt/atom';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
-  // const [open, setOpen] = useRecoilState(gptOpen);
+  const [isOpen, setIsOpen] = useRecoilState(gptOpen);
 
   const showModal = useCallback(() => {
-    // setOpen(true);
+    setIsOpen(true);
   }, []);
 
   const chattt = [
@@ -75,7 +75,7 @@ export default function MakeFormChatbot() {
             </FunctionContent>
           </FunctionWrapper>
 
-          {/* {open && <GPT />} */}
+          {isOpen && <GPT />}
           <UserResWrapper></UserResWrapper>
         </InPutWrapper>
       </Wrapper>
