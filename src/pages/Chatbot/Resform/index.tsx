@@ -9,6 +9,18 @@ import { gptLoading, gptTalks } from '../../../recoil/Gpt/atom';
 import { chatTalks } from '../../../recoil/Resform/atom';
 import Input from '../../../components/ui/Input';
 import ResFormModal from '../../../components/Form/ResForm/ResFormModal';
+import BaseBgBox from '../../../components/ui/BaseBgBox';
+import {
+  FunctionContent,
+  FunctionTitle,
+  FunctionWrapper,
+  InPutWrapper,
+  UserResWrapper,
+  ViewWrapper,
+  Wrapper,
+} from '../styles';
+import { BallonWrapper, ChatBallon, ChatbotWrapper, GAK } from '../../../components/Chatbot/BallonChat/styles';
+import Ballon from '../../../components/Chatbot/BallonChat';
 
 interface ChatMessage {
   sender: string;
@@ -106,51 +118,64 @@ export default function ChatbotResForm() {
     setChat(temp);
   }, []);
 
+  const chatt = [
+    {
+      chatbot: '챗봇 생성 시작?',
+      user: '시작',
+    },
+    {
+      chatbot: '챗봇 생성 시작?',
+      user: '시작',
+    },
+    {
+      chatbot: '챗봇 생성 시작?',
+      user: '시작',
+    },
+  ];
   return (
-    // <ChatbotResWrapper>
-    //   <div>
-    //     <Chatting>
-    //       {chat?.map((message, idx) => {
-    //         const { user, chatbot } = message;
+    <BaseBgBox>
+      <Wrapper>
+        <ViewWrapper>
+          <ChatbotWrapper>
+            <BallonWrapper>
+              <GAK>
+                <img src="/images/gak_chatbot.png" alt="gak" />
+                <span>GAK</span>
+              </GAK>
+              <ChatBallon>
+                <span>안녕하세요, All Form U 챗봇 설문 생성 서비스입니다 ☺️</span>
+              </ChatBallon>
+            </BallonWrapper>
+          </ChatbotWrapper>
 
-    //         return <ChatBox key={idx} user={user} chatbot={chatbot} />;
-    //       })}
+          {chatt.map((message, idx) => {
+            return <Ballon key={idx} user={message.user} chatbot={message.chatbot} />;
+          })}
+        </ViewWrapper>
+        <InPutWrapper>
+          <FunctionWrapper>
+            <FunctionTitle>
+              <span>부가 기능 사용하기</span>
+            </FunctionTitle>
+            <FunctionContent>
+              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1} width={9.8} height={3}>
+                응답 저장
+              </Button>
+              <Button onClick={showModal} color={'#2d2d2d'} bgColor={blue} fontSize={1} width={9.8} height={3}>
+                GPT 이용하기
+              </Button>
+            </FunctionContent>
+          </FunctionWrapper>
+          {connected && isModalOpen && (
+            <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />
+          )}
 
-    //     </Chatting>
-    //     <ChattingBottom>
-    //       <ChatbotFunc>
-    //         <Line>
-    //           챗봇기능
-    //           <br />
-    //           사용하기
-    //         </Line>
-    //         <BtnBoxWrapper>
-    //           <BtnBox>
-    //             <Button color={'black'} bgColor={blue} fontSize={1} width={9.8} height={3}>
-    //               질문 읽어주기
-    //             </Button>
-    //             <Button onClick={showModal} color={'black'} bgColor={blue} fontSize={1} width={9.8} height={3}>
-    //               GPT 이용하기
-    //             </Button>
-    //           </BtnBox>
-    //           <BtnBox>
-    //             <Button color={'black'} bgColor={blue} fontSize={1} width={9.8} height={3}>
-    //               기타문의
-    //             </Button>
-    //           </BtnBox>
-    //         </BtnBoxWrapper>
-    //       </ChatbotFunc>
-
-    //       <UserRes>
-    //         <Input value={req} onChange={onChangeReq} placeholder={''} height={5} />
-    //       </UserRes>
-    //     </ChattingBottom>
-    //     {/* 3. 백엔드와 socket 연동이 되어야만 GPT와 대화하는 모달을 열 수 있음 */}
-    //     {connected && isModalOpen && (
-    //       <ResFormModal open={isModalOpen} onCancel={handleCancel} sendMessage={sendMessage} />
-    //     )}
-    //   </div>
-    // </ChatbotResWrapper>
-    <></>
+          <UserResWrapper></UserResWrapper>
+          {/* <UserRes>
+            <Input value={req} onChange={onChangeReq} placeholder={''} height={5} />
+          </UserRes> */}
+        </InPutWrapper>
+      </Wrapper>
+    </BaseBgBox>
   );
 }
