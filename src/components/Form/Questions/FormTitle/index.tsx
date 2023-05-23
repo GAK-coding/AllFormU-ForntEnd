@@ -7,6 +7,8 @@ import { QueWrapper } from '../MakeQueBase/styles';
 import { useMutation, useQuery } from 'react-query';
 import { editFormInfo } from '../../../../api/editForm';
 import { debounce } from 'lodash';
+import { useMessage } from '../../../../hooks/useMessage';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   isEdit?: boolean;
@@ -16,6 +18,8 @@ interface Props {
 export default function FormTitle({ isEdit, formId }: Props) {
   const [info, setInfo] = useRecoilState(formInfo);
   const { mutate, isLoading, error, isError } = useMutation(() => editFormInfo(1, +formId!, info.title, info.content));
+  const { showMessage, contextHolder } = useMessage();
+  const { pathname } = useLocation();
 
   const onEnter = useCallback((e: any) => {
     if (e.key === 'Enter') e.preventDefault();
@@ -37,15 +41,19 @@ export default function FormTitle({ isEdit, formId }: Props) {
 
   const onBlur = useCallback(
     debounce(() => {
+      if (pathname.slice(1, 16) !== 'mypage/editform') return;
+
       if (isEdit) {
         mutate();
       }
+      showMessage('success', '업데이트 완료!');
     }, 1000),
     [isEdit, info]
   );
 
   return (
     <QueWrapper style={{ backgroundColor: '#F5F5F5' }}>
+      {contextHolder}
       <FormTitleWrapper>
         <TitleInput
           value={info.title}

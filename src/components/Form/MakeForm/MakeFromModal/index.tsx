@@ -40,7 +40,7 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
         return rest;
       });
 
-      mutate({ title, content: content, questions });
+      mutate({ title, content, questions });
       setIsCreate(true);
     }
   }, [title, content, questionList, isCreate]);

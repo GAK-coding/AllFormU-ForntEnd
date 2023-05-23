@@ -1,11 +1,10 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getFormInfo } from '../../../api/getFormInfo';
 import { GetFormInfo } from '../../../typings/getForm';
 import { useRecoilState } from 'recoil';
 import {
-  formInfo,
   nowFocusIndex,
   nowQuestion,
   queSectionNum,
@@ -20,39 +19,18 @@ import { useMessage } from '../../../hooks/useMessage';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuid } from 'uuid';
 import { deleteQue } from '../../../api/editForm';
-import QueDraggable from '../../../components/Form/Questions/QueDraggable/indes';
+import QueDraggable from '../../../components/Form/Questions/QueDraggable';
 import SectionBox from '../../../components/Form/Questions/SectionBox';
 import FormTitle from '../../../components/Form/Questions/FormTitle';
+import { useGetSingleForm } from '../../../components/Form/hooks/useGetSingleForm';
 import { customData } from '../../../utils/customData';
 
 export default function EditForm() {
   const { id } = useParams();
-  const [info, setInfo] = useRecoilState(formInfo);
   const [questionList, setQuestionList] = useRecoilState(questions);
   const queryClient = useQueryClient();
 
-  const { data, isLoading, error, isError, isFetching } = useQuery<any>(
-    ['getFormInfo', id],
-    () => getFormInfo(1, +id!),
-    {
-      select: (data) => {
-        return customData(data);
-      },
-      onSuccess: (data) => {
-        setInfo(data);
-      },
-      staleTime: 10000, // 10분
-      cacheTime: 20000, // 15분
-      refetchOnMount: false, // 마운트(리렌더링)될 때 데이터를 다시 가져오지 않음
-      refetchOnWindowFocus: false, // 브라우저를 포커싱했을때 데이터를 가져오지 않음
-      refetchOnReconnect: false, // 네트워크가 다시 연결되었을때 다시 가져오지 않음
-    }
-  );
-
-  // const [data, isLoading, isFetching]: [data: any, isLoading: boolean, isFetching: boolean] = useGetSingleForm(
-  //   id!,
-  //   true
-  // );
+  const [data, isLoading, isFetching] = useGetSingleForm(id!);
 
   const { mutate: deleteQueMutate, isLoading: deleteQueIsLoading } = useMutation(
     (queId: number) => deleteQue(+id!, queId),
@@ -169,6 +147,10 @@ export default function EditForm() {
     [nowQueInfo, nowIndex, accrueQue]
   );
 
+  useEffect(() => {
+    setQuestionList(customData(data!));
+  }, [data]);
+
   if (isLoading) {
     return <div style={{ position: 'fixed', top: '50px', right: '50px' }}>로딩중...</div>;
   }
@@ -182,7 +164,7 @@ export default function EditForm() {
 
         <DirectForm>
           <FormTitle isEdit={true} formId={id} />
-          {data?.map((section: (DescriptionQue | SelectionQue | GridQue)[], row: number) => (
+          {questionList?.map((section: (DescriptionQue | SelectionQue | GridQue)[], row: number) => (
             <DragDropContext key={`section-${row}`} onDragEnd={() => true}>
               <SectionBox index={row}>
                 <Droppable droppableId="card" type="card" direction="vertical">
@@ -201,9 +183,9 @@ export default function EditForm() {
                                   row={row}
                                   col={col}
                                   isClick={focus}
-                                  onChangeTitle={() => {
-                                    true;
-                                  }}
+                                  // onChangeTitle={() => {
+                                  //   true;
+                                  // }}
                                   onClickQue={() => {
                                     true;
                                   }}

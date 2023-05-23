@@ -1,8 +1,5 @@
 import React, { FormEvent, useCallback, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
-import { getFormInfo } from '../../../api/getFormInfo';
-import { GetFormInfo } from '../../../typings/getForm';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   formInfo,
@@ -14,17 +11,15 @@ import {
   sectionLens,
   sectionNames,
 } from '../../../recoil/MakeForm/atom';
-import { DESCRIPTION_SHORT, DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
+import { DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
 import { Col, Row } from 'antd';
 import { AddQuestion, AddSection, DirectForm } from '../../MakeForm/Direct/styles';
 import Button from '../../../components/ui/Button';
 import { useMessage } from '../../../hooks/useMessage';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { color } from '../../../recoil/Color/atom';
-import { v4 as uuid } from 'uuid';
-import { deleteQue } from '../../../api/editForm';
 import MakeFromModal from '../../../components/Form/MakeForm/MakeFromModal';
-import QueDraggable from '../../../components/Form/Questions/QueDraggable/indes';
+import QueDraggable from '../../../components/Form/Questions/QueDraggable';
 import SectionBox from '../../../components/Form/Questions/SectionBox';
 import FormTitle from '../../../components/Form/Questions/FormTitle';
 import { useGetSingleForm } from '../../../components/Form/hooks/useGetSingleForm';

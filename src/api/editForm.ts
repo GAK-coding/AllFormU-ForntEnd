@@ -16,3 +16,50 @@ export const deleteQue = async (formId: number, queId: number) => {
     console.error(error);
   }
 };
+
+export const selectInfoUpdate = async (
+  formId: number,
+  queId: number,
+  title?: string,
+  required?: boolean,
+  sectionNum?: number
+) => {
+  try {
+    // const res = await axios.put(`/question/UpdateSelectQuestion/${formId}/${queId}`, {
+    //   title,
+    //   required,
+    //   sectionNum,
+    // });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateContent = async (formId: number, queId: number, content: string) => {
+  try {
+    await axios.put(`/selection/updateContent/${formId}/${queId}`, {
+      content,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteContent = async (optId: number) => {
+  try {
+    await axios.delete(`/selection/deleteSelection/${optId}`);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const addContent = async (data: { queId: number; content: string }) => {
+  try {
+    const { queId, content } = data;
+    const { data: id } = await axios.post(`/selection/createSelection/${queId}`, { content });
+
+    return id[id.length - 1];
+  } catch (error) {
+    console.error(error);
+  }
+};

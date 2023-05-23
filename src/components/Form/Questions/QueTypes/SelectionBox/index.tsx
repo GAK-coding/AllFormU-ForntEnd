@@ -16,6 +16,10 @@ import { color } from '../../../../../recoil/Color/atom';
 import { questions } from '../../../../../recoil/MakeForm/atom';
 import Button from '../../../../ui/Button';
 import FormInput from '../../../../ui/FormInput';
+import { useLocation } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { addContent, deleteContent } from '../../../../../api/editForm';
+import { useMessage } from '../../../../../hooks/useMessage';
 
 interface Props {
   data: SelectionQue;
@@ -27,6 +31,9 @@ export default function SelectionBox({ data, row, col }: Props) {
   const { blue } = useRecoilValue(color);
   const [questionList, setQuestionList] = useRecoilState(questions);
   const { options, type } = data;
+  const { pathname } = useLocation();
+  const { mutate: deleteContentMutate } = useMutation((optId: number) => deleteContent(optId));
+  const { showMessage, contextHolder } = useMessage();
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, num: number) => {
@@ -57,12 +64,21 @@ export default function SelectionBox({ data, row, col }: Props) {
   }, [questionList, data, row, col, options]);
 
   const onDelete = useCallback(
-    (num: number) => {
+    (num: number, optId?: number) => {
       if (options.length === 1) return;
 
-      const temp = JSON.parse(JSON.stringify(questionList));
-      (temp[row][col] as SelectionQue).options.splice(num, 1);
-      setQuestionList(temp);
+      if (pathname.slice(1, 16) !== 'mypage/editform') {
+        const temp = JSON.parse(JSON.stringify(questionList));
+        (temp[row][col] as SelectionQue).options.splice(num, 1);
+        setQuestionList(temp);
+      } else {
+        const temp = JSON.parse(JSON.stringify(questionList));
+        temp[row][col].options.splice(num, 1);
+        setQuestionList(temp);
+
+        deleteContentMutate(optId!);
+        showMessage('success', '옵션 삭제 완료!');
+      }
     },
     [questionList]
   );
@@ -96,11 +112,11 @@ export default function SelectionBox({ data, row, col }: Props) {
     }
   }, [questionList]);
 
-  console.log(questionList);
-
   if (type === SELECTION_LINEAR) {
     return (
       <DropDownWrapper>
+        {contextHolder}
+
         <Select
           defaultValue="0"
           onChange={(e) => onChangeDropDown(e, 0)}
@@ -133,6 +149,7 @@ export default function SelectionBox({ data, row, col }: Props) {
 
   return (
     <SelectionBoxWrapper>
+      {contextHolder}
       {options.map((option, idx) => (
         <div key={idx}>
           <span>
@@ -146,12 +163,17 @@ export default function SelectionBox({ data, row, col }: Props) {
           </span>
           <FormInput
             value={option.content}
+            // isAdded={!!option.id}
             onChange={(e) => onChange(e, idx)}
             width={'40%'}
             fontSize={1.6}
             placeholder={`옵션${idx + 1}`}
+            queId={data.id}
+            optId={option.id}
+            row={row}
+            col={col}
           />
-          <DeleteOption onClick={() => onDelete(idx)}>
+          <DeleteOption onClick={() => onDelete(idx, option.id!)}>
             <IoMdClose />
           </DeleteOption>
           {options.length - 1 === idx && (
