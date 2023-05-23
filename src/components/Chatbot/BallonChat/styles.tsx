@@ -40,7 +40,7 @@ export const GAK = styled.div`
 
 export const ChatBallon = styled.div`
   position: relative;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   line-height: 2rem;
   max-width: 75%;
@@ -84,7 +84,7 @@ export const UserWrapper = styled.div`
 
 export const UserBallon = styled.div`
   position: relative;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   line-height: 2rem;
 

@@ -64,7 +64,7 @@ export const FunctionTitle = styled.div`
 
 export const FunctionContent = styled.div`
   height: 70%;
-  padding: 2rem;
+  padding: 1.5rem 1.2rem 0rem 1.2rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -158,10 +158,10 @@ export default function ChatbotResForm() {
               <span>부가 기능 사용하기</span>
             </FunctionTitle>
             <FunctionContent>
-              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1} width={9.8} height={3}>
+              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
                 응답 저장
               </Button>
-              <Button onClick={showModal} color={'#2d2d2d'} bgColor={blue} fontSize={1} width={9.8} height={3}>
+              <Button onClick={showModal} color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
                 GPT 이용하기
               </Button>
             </FunctionContent>

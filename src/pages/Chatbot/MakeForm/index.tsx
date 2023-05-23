@@ -58,10 +58,10 @@ export default function MakeFormChatbot() {
               <span>부가 기능 사용하기</span>
             </FunctionTitle>
             <FunctionContent>
-              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1} width={9.8} height={3}>
+              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
                 폼 미리보기
               </Button>
-              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1} width={9.8} height={3}>
+              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
                 GPT 이용하기
               </Button>
             </FunctionContent>
