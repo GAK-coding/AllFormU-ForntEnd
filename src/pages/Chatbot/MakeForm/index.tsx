@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
 import {
   FunctionContent,
@@ -43,6 +43,11 @@ export default function MakeFormChatbot() {
     },
     [userInput]
   );
+
+  const talkRef = useRef<HTMLDivElement>(null); // Ref 생성
+  useEffect(() => {
+    talkRef.current?.scrollTo(0, talkRef.current.scrollHeight); // Ref를 사용하여 스크롤 내리기
+  }, [initMessage, detailMessage, userInput]); // talk 상태가 변경될 때마다 실행
 
   return (
     <BaseBgBox>
