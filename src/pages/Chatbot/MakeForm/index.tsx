@@ -16,6 +16,7 @@ import { color } from '../../../recoil/Color/atom';
 import GPTSocket from '../../../components/GPT/GPTSocket';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { gptOpen } from '../../../recoil/Gpt/atom';
+import { directChatMessage } from './DirectChatMessage';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
@@ -25,20 +26,7 @@ export default function MakeFormChatbot() {
     setIsOpen(true);
   }, []);
 
-  const chattt = [
-    {
-      chatbot: '챗봇 생성 시작?',
-      user: '시작',
-    },
-    {
-      chatbot: '챗봇 생성 시작?',
-      user: '시작',
-    },
-    {
-      chatbot: '챗봇 생성 시작?',
-      user: '시작',
-    },
-  ];
+  const { initMessage, detailMessage } = directChatMessage();
 
   return (
     <BaseBgBox>
@@ -56,8 +44,8 @@ export default function MakeFormChatbot() {
             </BallonWrapper>
           </ChatbotWrapper>
 
-          {chattt.map((message, idx) => {
-            return <Ballon key={idx} user={message.user} chatbot={message.chatbot} />;
+          {initMessage.message.map((message, idx) => {
+            return <Ballon key={idx} user={''} chatbot={message} />;
           })}
         </ViewWrapper>
         <InPutWrapper>
