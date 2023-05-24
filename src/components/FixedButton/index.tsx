@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { gptOpen } from '../../recoil/Gpt/atom';
 import GPTSocket from '../GPT/GPTSocket';
+import { openFloatButton } from '../../recoil/Button/atom';
 
 export default function FixedButton() {
   const [buttonOpen, setButtonOpen] = useState(false);
@@ -11,6 +12,14 @@ export default function FixedButton() {
 
   const showModal = useCallback(() => {
     setIsOpen(true);
+  }, []);
+
+  const openFloat = useCallback(() => {
+    setButtonOpen(true);
+  }, []);
+
+  const closeFloat = useCallback(() => {
+    setButtonOpen(false);
   }, []);
 
   const navigate = useNavigate();
@@ -37,11 +46,7 @@ export default function FixedButton() {
       {render && (
         <>
           {!buttonOpen && (
-            <FloatButton
-              onClick={() => {
-                setButtonOpen(true);
-              }}
-            >
+            <FloatButton onClick={openFloat}>
               <img src="/images/gak.png" alt="gak" />
               <span>GAK</span>
             </FloatButton>
@@ -49,17 +54,13 @@ export default function FixedButton() {
 
           {buttonOpen && (
             <ButtonOpen>
-              <CloseBtn
-                onClick={() => {
-                  setButtonOpen(false);
-                }}
-              >
+              <CloseBtn onClick={closeFloat}>
                 <img src="/images/closeFloatBtn.png" alt="close" />
               </CloseBtn>
               <FunctionBtn
                 onClick={() => {
                   navigate('/makeform');
-                  setButtonOpen(false);
+                  closeFloat();
                 }}
               >
                 <img src="/images/makeFloatBtn.png" alt="makeform" />
@@ -68,7 +69,7 @@ export default function FixedButton() {
               <FunctionBtn
                 onClick={() => {
                   navigate('/resform');
-                  setButtonOpen(false);
+                  closeFloat();
                 }}
               >
                 <img src="/images/resFloatBtn.png" alt="resform" />
@@ -78,15 +79,15 @@ export default function FixedButton() {
               <FunctionBtn
                 onClick={() => {
                   showModal();
-                  setButtonOpen(false);
+                  closeFloat();
                 }}
               >
                 <img src="/images/gptFloatBtn.png" alt="gpt" />
                 <span>GPT</span>
               </FunctionBtn>
-              {isOpen && <GPTSocket />}
             </ButtonOpen>
           )}
+          {isOpen && <GPTSocket />}
         </>
       )}
     </>
