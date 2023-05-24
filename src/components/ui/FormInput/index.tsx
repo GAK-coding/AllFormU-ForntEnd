@@ -12,7 +12,6 @@ import { SelectionQue } from '../../../typings/makeForm';
 interface Props {
   width?: string;
   fontSize: number;
-  // isAdded?: boolean;
   placeholder: string;
   value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -26,7 +25,6 @@ interface Props {
 export default function FormInput({
   value,
   onChange,
-  // isAdded,
   width = '50%',
   queId,
   optId,
@@ -53,11 +51,10 @@ export default function FormInput({
   const onBlur = useCallback(
     debounce(() => {
       if (pathname.slice(1, 16) !== 'mypage/editform') return;
-
-      if (!optId) {
-        addContentMutate();
-      } else if (placeholder === '질문') {
+      if (placeholder === '질문') {
         selectInfoUpdateMutate();
+      } else if (!optId) {
+        addContentMutate();
       } else {
         updateContentMutate();
       }
@@ -68,7 +65,7 @@ export default function FormInput({
   );
 
   useEffect(() => {
-    if (pushOptId !== -1) {
+    if (pushOptId !== -1 && row && col) {
       const temp = JSON.parse(JSON.stringify(questionList));
       temp[row!][col!].options[temp[row!][col!].options.length - 1].id = pushOptId;
       setQuestionList(temp);
