@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { gptOpen } from '../../recoil/Gpt/atom';
 import GPTSocket from '../GPT/GPTSocket';
-import { openFloatButton } from '../../recoil/Button/atom';
 
 export default function FixedButton() {
   const [buttonOpen, setButtonOpen] = useState(false);
