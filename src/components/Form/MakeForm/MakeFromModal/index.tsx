@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { ResModalTitle } from '../../ResForm/ResFormModal/styles';
+import { ResModalTitle } from '../../../GPT/GPTModal/styles';
 import { CreateForm, FormInfo, FormInfoWrapper, MakeFormModalWrapper } from './styles';
 import { DatePicker } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
