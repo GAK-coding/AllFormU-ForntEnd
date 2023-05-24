@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useRef } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
 import {
   FunctionContent,
@@ -33,6 +33,7 @@ export default function MakeFormChatbot() {
 
   const { initMessage, detailMessage } = directChatMessage();
   const [userInput, setUserInput] = useRecoilState(userChat);
+  const [sendMessage, setSendMessage] = useState<string>('');
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: keyof UserChat) => {
@@ -66,7 +67,7 @@ export default function MakeFormChatbot() {
           </ChatbotWrapper>
 
           {initMessage.message.map((message, idx) => {
-            return <Ballon key={idx} user={''} chatbot={message} />;
+            return <Ballon key={idx} user={sendMessage} chatbot={message} />;
           })}
         </ViewWrapper>
         <InPutWrapper>
@@ -93,12 +94,11 @@ export default function MakeFormChatbot() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'message')}
                 placeholder={''}
                 width={'100%'}
-                height={'70%'}
                 size={1.3}
               ></Input>
             </UserInput>
             <SubmitBtn>
-              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={7} height={3}>
+              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.3} width={8} height={4}>
                 전송
               </Button>
             </SubmitBtn>

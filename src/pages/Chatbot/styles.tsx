@@ -75,7 +75,6 @@ export const UserResWrapper = styled.div`
   width: 65%;
   height: 100%;
   padding: 1.5rem;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,13 +88,13 @@ export const UserResWrapper = styled.div`
 `;
 
 export const UserInput = styled.div`
-  width: 85%;
+  width: 80%;
   height: 80%;
 
   display: flex;
   justify-content: start;
   align-content: center;
-  margin-right: auto;
+  margin: 0rem 1rem 0rem 2rem;
 
   box-sizing: border-box;
   border-radius: 3rem;
@@ -103,7 +102,7 @@ export const UserInput = styled.div`
 `;
 
 export const SubmitBtn = styled.div`
-  width: 15%;
+  width: 20%;
   height: 80%;
   display: flex;
   justify-content: center;
