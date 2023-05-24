@@ -74,9 +74,13 @@ export const FunctionContent = styled.div`
 export const UserResWrapper = styled.div`
   width: 65%;
   height: 100%;
-  padding: 2rem;
+  padding: 1.5rem;
 
   display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: row;
   margin-left: 3rem;
   margin-right: 5rem;
   box-sizing: border-box;
@@ -84,6 +88,27 @@ export const UserResWrapper = styled.div`
   background-color: #f7e9a6;
 `;
 
+export const UserInput = styled.div`
+  width: 85%;
+  height: 80%;
+
+  display: flex;
+  justify-content: start;
+  align-content: center;
+  margin-right: auto;
+
+  box-sizing: border-box;
+  border-radius: 3rem;
+  border: 3px solid #fefefe;
+`;
+
+export const SubmitBtn = styled.div`
+  width: 15%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 export const UserRes = styled.div`
   display: flex;
   flex-direction: column;

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import BaseBgBox from '../../../components/ui/BaseBgBox';
 import {
   FunctionContent,
@@ -8,6 +8,8 @@ import {
   UserResWrapper,
   ViewWrapper,
   Wrapper,
+  UserInput,
+  SubmitBtn,
 } from '../styles';
 import { BallonWrapper, ChatBallon, ChatbotWrapper, GAK } from '../../../components/Chatbot/BallonChat/styles';
 import Ballon from '../../../components/Chatbot/BallonChat';
@@ -17,6 +19,9 @@ import GPTSocket from '../../../components/GPT/GPTSocket';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { gptOpen } from '../../../recoil/Gpt/atom';
 import { directChatMessage } from './DirectChatMessage';
+import Input from '../../../components/ui/Input';
+import { UserChat } from '../../../typings/chatbot';
+import { userChat } from '../../../recoil/Chatbot/atom';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
@@ -27,6 +32,17 @@ export default function MakeFormChatbot() {
   }, []);
 
   const { initMessage, detailMessage } = directChatMessage();
+  const [userInput, setUserInput] = useRecoilState(userChat);
+
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, value: keyof UserChat) => {
+      const temp = { ...userInput };
+      temp[value] = e.target.value;
+
+      setUserInput(temp);
+    },
+    [userInput]
+  );
 
   return (
     <BaseBgBox>
@@ -64,7 +80,24 @@ export default function MakeFormChatbot() {
           </FunctionWrapper>
 
           {isOpen && <GPTSocket />}
-          <UserResWrapper></UserResWrapper>
+          <UserResWrapper>
+            <UserInput>
+              <Input
+                type={'text'}
+                value={userInput.message}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'message')}
+                placeholder={''}
+                width={'100%'}
+                height={'70%'}
+                size={1.3}
+              ></Input>
+            </UserInput>
+            <SubmitBtn>
+              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={7} height={3}>
+                전송
+              </Button>
+            </SubmitBtn>
+          </UserResWrapper>
         </InPutWrapper>
       </Wrapper>
     </BaseBgBox>
