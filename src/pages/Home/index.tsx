@@ -1,21 +1,22 @@
 import React, { useCallback } from 'react';
 import { Arrow, Explanation, ExplanationAbove, ExplanationBelow, ExplanationMiddle, HomeWrapper, Img } from './styles';
 import Button from '../../components/ui/Button';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { BiRightArrowAlt } from 'react-icons/bi';
-import { googleUserInfo, userInfo } from '../../recoil/User/atom';
+import { googleUserInfo, isLogin, userInfo } from '../../recoil/User/atom';
 
 export default function Home() {
   const { purple } = useRecoilValue(color);
   const navigate = useNavigate();
   const info = useRecoilValue(userInfo);
+  const [login, setLogin] = useRecoilState(isLogin);
   const googleInfo = useRecoilValue(googleUserInfo);
 
   const checkUser = useCallback(() => {
-    if (info.id === -1) {
+    if (!login) {
       navigate('/signin');
     } else {
       navigate('/makeform');
