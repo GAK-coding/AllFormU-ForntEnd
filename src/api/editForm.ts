@@ -25,11 +25,9 @@ export const selectInfoUpdate = async (
   sectionNum?: number
 ) => {
   try {
-    // const res = await axios.put(`/question/UpdateSelectQuestion/${formId}/${queId}`, {
-    //   title,
-    //   required,
-    //   sectionNum,
-    // });
+    await axios.put(`/question/UpdateSelectQuestion/${formId}/${queId}`, {
+      title,
+    });
   } catch (error) {
     console.error(error);
   }
