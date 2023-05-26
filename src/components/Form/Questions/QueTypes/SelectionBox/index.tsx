@@ -163,7 +163,6 @@ export default function SelectionBox({ data, row, col }: Props) {
           </span>
           <FormInput
             value={option.content}
-            // isAdded={!!option.id}
             onChange={(e) => onChange(e, idx)}
             width={'40%'}
             fontSize={1.6}
