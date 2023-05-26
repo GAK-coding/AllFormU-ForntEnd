@@ -21,10 +21,13 @@ import { gptOpen } from '../../../recoil/Gpt/atom';
 import { directChatMessage } from './DirectChatMessage';
 import Input from '../../../components/ui/Input';
 import { UserChat } from '../../../typings/chatbot';
-import { userChat } from '../../../recoil/Chatbot/atom';
+import { userChat, userLoading } from '../../../recoil/Chatbot/atom';
+import { useMessage } from '../../../hooks/useMessage';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
+  const { showMessage, contextHolder } = useMessage();
+
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
 
   const showModal = useCallback(() => {
@@ -34,6 +37,7 @@ export default function MakeFormChatbot() {
   const { initMessage, detailMessage } = directChatMessage();
   const [userInput, setUserInput] = useRecoilState(userChat);
   const [sendMessage, setSendMessage] = useState<string>('');
+  const [loading, setLoading] = useRecoilState(userLoading);
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: keyof UserChat) => {
@@ -45,6 +49,19 @@ export default function MakeFormChatbot() {
     [userInput]
   );
 
+  const onSubmit = useCallback(
+    (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      if (loading) {
+        showMessage('warning', '챗봇 답변에 응답해주세요.');
+        return;
+      }
+
+      setLoading(true);
+    },
+    [loading]
+  );
   const talkRef = useRef<HTMLDivElement>(null); // Ref 생성
   useEffect(() => {
     talkRef.current?.scrollTo(0, talkRef.current.scrollHeight); // Ref를 사용하여 스크롤 내리기
@@ -53,7 +70,7 @@ export default function MakeFormChatbot() {
   return (
     <BaseBgBox>
       <Wrapper>
-        <ViewWrapper>
+        <ViewWrapper ref={talkRef}>
           <ChatbotWrapper>
             <BallonWrapper>
               <GAK>
@@ -87,7 +104,7 @@ export default function MakeFormChatbot() {
 
           {isOpen && <GPTSocket />}
           <UserResWrapper>
-            <UserInput>
+            <UserInput onSubmit={onSubmit}>
               <Input
                 type={'text'}
                 value={userInput.message}

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BaseInput } from '../../components/ui/Input/styles';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -87,7 +88,7 @@ export const UserResWrapper = styled.div`
   background-color: #f7e9a6;
 `;
 
-export const UserInput = styled.div`
+export const UserInput = styled.form`
   width: 80%;
   height: 80%;
 
@@ -97,8 +98,17 @@ export const UserInput = styled.div`
   margin: 0rem 1rem 0rem 2rem;
 
   box-sizing: border-box;
-  border-radius: 3rem;
-  border: 3px solid #fefefe;
+  border-radius: 2rem;
+  border: 2px solid #fefefe;
+
+  & > input {
+    outline: none;
+    border: 0;
+    letter-spacing: 0.2rem;
+    font-weight: 600;
+    background-color: transparent;
+    margin-left: 1rem;
+  }
 `;
 
 export const SubmitBtn = styled.div`
