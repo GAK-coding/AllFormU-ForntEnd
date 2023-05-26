@@ -35,19 +35,13 @@ export default function MakeFormChatbot() {
   }, []);
 
   const { initMessage, detailMessage } = directChatMessage();
-  const [userInput, setUserInput] = useRecoilState(userChat);
-  const [sendMessage, setSendMessage] = useState<string>('');
+  const [userInput, setUserInput] = useState<string>('');
+  const [sendMessage, setSendMessage] = useRecoilState(userChat);
   const [loading, setLoading] = useRecoilState(userLoading);
 
-  const onChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>, value: keyof UserChat) => {
-      const temp = { ...userInput };
-      temp[value] = e.target.value;
-
-      setUserInput(temp);
-    },
-    [userInput]
-  );
+  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setUserInput(e.target.value);
+  }, []);
 
   const onSubmit = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -59,6 +53,8 @@ export default function MakeFormChatbot() {
       }
 
       setLoading(true);
+      setSendMessage((prev) => [...prev, { message: userInput }]);
+      setUserInput('');
     },
     [loading]
   );
@@ -84,7 +80,7 @@ export default function MakeFormChatbot() {
           </ChatbotWrapper>
 
           {initMessage.message.map((message, idx) => {
-            return <Ballon key={idx} user={sendMessage} chatbot={message} />;
+            return <Ballon key={idx} user={userInput} chatbot={message} />;
           })}
         </ViewWrapper>
         <InPutWrapper>
@@ -107,15 +103,15 @@ export default function MakeFormChatbot() {
             <UserInput onSubmit={onSubmit}>
               <Input
                 type={'text'}
-                value={userInput.message}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, 'message')}
+                value={userInput}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
                 placeholder={''}
                 width={'100%'}
                 size={1.3}
               ></Input>
             </UserInput>
             <SubmitBtn>
-              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.3} width={8} height={4}>
+              <Button type={'submit'} color={'#2d2d2d'} bgColor={blue} fontSize={1.3} width={8} height={4}>
                 전송
               </Button>
             </SubmitBtn>
