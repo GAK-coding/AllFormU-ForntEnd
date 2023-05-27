@@ -66,8 +66,9 @@ export default function MakeFormDirect() {
     });
 
     setQuestionList(temp);
+    setNowQueInfo({ row: row, col: col + 1 });
     setNowIndex((prev) => prev + 1);
-  }, [questionList, nowQueInfo, nowIndex]);
+  }, [questionList, nowQueInfo, nowIndex, nowQueInfo]);
 
   const addSection = useCallback(() => {
     const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
@@ -145,6 +146,9 @@ export default function MakeFormDirect() {
         sectionName.splice(row, 1);
         setQuestionList(temp);
         setSectionList(sectionName);
+        if (col === 0) {
+          setNowQueInfo({ row: row - 1, col: questionList[row - 1].length - 1 });
+        }
         setQueSecNum((prev) => {
           const temp = [...prev];
           temp.pop();
@@ -160,11 +164,12 @@ export default function MakeFormDirect() {
 
       temp[row].splice(col, 1);
       setQuestionList(temp);
+      setNowQueInfo({ row: row, col: col - 1 });
       if (delIdx < nowIndex || (col !== 0 && delIdx === nowIndex)) {
         setNowIndex((prev) => prev - 1);
       }
     },
-    [questionList, nowIndex, accrueQue, sectionList, queSecNum]
+    [questionList, nowIndex, accrueQue, sectionList, queSecNum, nowQueInfo]
   );
 
   const onClickQue = useCallback(
@@ -187,7 +192,7 @@ export default function MakeFormDirect() {
     setAccrueQue(temp);
   }, [addQuestion]);
 
-  console.log(questionList);
+  console.log(questionList, nowQueInfo);
 
   useLayoutEffect(() => {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
