@@ -43,6 +43,7 @@ export default function MakeFormChatbot() {
       setCurrentMessageIndex(currentMessageIndex + 1);
       setSendMessage((prev) => [...prev, { message: userInput }]);
       setUserInput('');
+      console.log(sendMessage);
     },
     [currentMessageIndex, setSendMessage, userInput]
   );
@@ -68,10 +69,10 @@ export default function MakeFormChatbot() {
             </BallonWrapper>
           </ChatbotWrapper>
           {initMessage.map((initMessage, idx) => {
-            if (idx < currentMessageIndex) {
-              const lastUserMessage = sendMessage.length > 0 ? sendMessage[sendMessage.length - 1].message : '';
+            const lastUserMessage = sendMessage.length > 0 ? sendMessage[sendMessage.length - 1].message : '';
 
-              return <Ballon key={idx} user={lastUserMessage} chatbot={initMessage.message} />;
+            if (idx < currentMessageIndex) {
+              return <Ballon key={idx} user={sendMessage[idx].message} chatbot={initMessage.message} />;
             } else if (idx === currentMessageIndex) {
               return <Ballon key={idx} user={userInput} chatbot={initMessage.message} />;
             }
