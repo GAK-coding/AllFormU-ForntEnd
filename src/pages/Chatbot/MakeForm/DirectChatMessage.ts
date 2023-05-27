@@ -10,7 +10,7 @@ export const directChatMessage = (): { detailMessage: Chatbot[]; initMessage: Ch
       message: '설문 설명을 입력해주세요.',
     },
     {
-      message: '생성할 섹션의 개수를 입력해주세요.',
+      message: '생성할 섹션의 개수를 입력해주세요. ex) 2개',
     },
   ];
 
@@ -21,7 +21,7 @@ export const directChatMessage = (): { detailMessage: Chatbot[]; initMessage: Ch
       message: '섹션의 제목을 입력해주세요.',
     },
     {
-      message: '생성할 질문의 개수를 입력해주세요.',
+      message: '생성할 질문의 개수를 입력해주세요. ex) 5개',
     },
     {
       message: '기본 설정이 모두 완료 되었습니다!',

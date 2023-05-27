@@ -33,19 +33,27 @@ export default function MakeFormChatbot() {
 
   const { initMessage, detailMessage } = directChatMessage();
   const [userInput, setUserInput] = useState<string>('');
+  const [initUserInput, setInitUserInput] = useState<string>('');
+  const [detailUserInput, setDetailUserInput] = useState<string>('');
   const [sendMessage, setSendMessage] = useRecoilState(userChat);
-  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
+  const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
 
   const onSubmit = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      setCurrentMessageIndex(currentMessageIndex + 1);
+      setCurrentInitialIndex(currentInitialIndex + 1);
+
+      if (currentInitialIndex >= 2) {
+        setCurrentDetailIndex(currentDetailIndex + 1);
+      }
+
       setSendMessage((prev) => [...prev, { message: userInput }]);
       setUserInput('');
       console.log(sendMessage);
     },
-    [currentMessageIndex, setSendMessage, userInput]
+    [currentInitialIndex, setSendMessage, setSendMessage, userInput]
   );
 
   const talkRef = useRef<HTMLDivElement>(null); // Ref 생성
@@ -68,15 +76,29 @@ export default function MakeFormChatbot() {
               </ChatBallon>
             </BallonWrapper>
           </ChatbotWrapper>
-          {initMessage.map((initMessage, idx) => {
-            const lastUserMessage = sendMessage.length > 0 ? sendMessage[sendMessage.length - 1].message : '';
 
-            if (idx < currentMessageIndex) {
+          {initMessage.map((initMessage, idx) => {
+            // const lastUserMessage = sendMessage.length > 0 ? sendMessage[sendMessage.length - 1].message : '';
+
+            if (idx < currentInitialIndex) {
               return <Ballon key={idx} user={sendMessage[idx].message} chatbot={initMessage.message} />;
-            } else if (idx === currentMessageIndex) {
-              return <Ballon key={idx} user={userInput} chatbot={initMessage.message} />;
+            } else if (idx === currentInitialIndex) {
+              return <Ballon key={idx} user={initUserInput} chatbot={initMessage.message} />;
             }
+
+            return null;
           })}
+
+          {/* {currentInitialIndex >= initMessage.length && */}
+          {/*   detailMessage.map((detailMessage, idx) => { */}
+          {/*     if (idx < currentDetailIndex) { */}
+          {/*       return <Ballon key={idx} user={sendMessage[idx].message} chatbot={detailMessage.message} />; */}
+          {/*     } else if (idx === currentDetailIndex) { */}
+          {/*       return <Ballon key={idx} user={detailUserInput} chatbot={detailMessage.message} />; */}
+          {/*     } */}
+
+          {/*     return null; */}
+          {/*   })} */}
         </ViewWrapper>
         <InPutWrapper>
           <FunctionWrapper>
