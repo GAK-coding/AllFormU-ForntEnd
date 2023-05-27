@@ -20,13 +20,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { gptOpen } from '../../../recoil/Gpt/atom';
 import { directChatMessage } from './DirectChatMessage';
 import Input from '../../../components/ui/Input';
-import { UserChat } from '../../../typings/chatbot';
-import { userChat, userLoading } from '../../../recoil/Chatbot/atom';
-import { useMessage } from '../../../hooks/useMessage';
+import { userChat } from '../../../recoil/Chatbot/atom';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
-  const { showMessage, contextHolder } = useMessage();
 
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
 
@@ -37,27 +34,19 @@ export default function MakeFormChatbot() {
   const { initMessage, detailMessage } = directChatMessage();
   const [userInput, setUserInput] = useState<string>('');
   const [sendMessage, setSendMessage] = useRecoilState(userChat);
-  const [loading, setLoading] = useRecoilState(userLoading);
-
-  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setUserInput(e.target.value);
-  }, []);
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 
   const onSubmit = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (loading) {
-        showMessage('warning', '챗봇 답변에 응답해주세요.');
-        return;
-      }
-
-      setLoading(true);
+      setCurrentMessageIndex(currentMessageIndex + 1);
       setSendMessage((prev) => [...prev, { message: userInput }]);
       setUserInput('');
     },
-    [loading]
+    [currentMessageIndex, setSendMessage, userInput]
   );
+
   const talkRef = useRef<HTMLDivElement>(null); // Ref 생성
   useEffect(() => {
     talkRef.current?.scrollTo(0, talkRef.current.scrollHeight); // Ref를 사용하여 스크롤 내리기
@@ -78,9 +67,14 @@ export default function MakeFormChatbot() {
               </ChatBallon>
             </BallonWrapper>
           </ChatbotWrapper>
+          {initMessage.map((initMessage, idx) => {
+            if (idx < currentMessageIndex) {
+              const lastUserMessage = sendMessage.length > 0 ? sendMessage[sendMessage.length - 1].message : '';
 
-          {initMessage.message.map((message, idx) => {
-            return <Ballon key={idx} user={userInput} chatbot={message} />;
+              return <Ballon key={idx} user={lastUserMessage} chatbot={initMessage.message} />;
+            } else if (idx === currentMessageIndex) {
+              return <Ballon key={idx} user={userInput} chatbot={initMessage.message} />;
+            }
           })}
         </ViewWrapper>
         <InPutWrapper>
@@ -104,8 +98,8 @@ export default function MakeFormChatbot() {
               <Input
                 type={'text'}
                 value={userInput}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
-                placeholder={''}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setUserInput(e.target.value)}
+                placeholder={'챗봇에게 메시지를 입력하세요.'}
                 width={'100%'}
                 size={1.3}
               ></Input>
