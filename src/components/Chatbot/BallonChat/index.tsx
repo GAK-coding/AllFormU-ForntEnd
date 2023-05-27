@@ -13,9 +13,11 @@ export default function Ballon({ chatbot, user }: BallonChat) {
           <ChatBallon>{chatbot}</ChatBallon>
         </BallonWrapper>
       </ChatbotWrapper>
-      <UserWrapper>
-        <UserBallon>{user}</UserBallon>
-      </UserWrapper>
+      {user !== '' && (
+        <UserWrapper>
+          <UserBallon>{user}</UserBallon>
+        </UserWrapper>
+      )}
     </>
   );
 }
