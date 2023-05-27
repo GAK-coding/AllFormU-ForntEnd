@@ -107,7 +107,7 @@ export const QueBottomRight = styled.div`
 
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: flex-end;
   padding: 0.5rem;
   padding-top: 2rem;
   box-sizing: border-box;
@@ -118,6 +118,12 @@ export const QueBottomRight = styled.div`
     color: #696969;
 
     text-align: center;
+  }
+
+  & > div {
+    height: 10%;
+    display: flex;
+    align-items: center;
   }
 
   & > div > span {
