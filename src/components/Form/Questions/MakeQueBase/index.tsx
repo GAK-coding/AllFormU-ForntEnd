@@ -49,9 +49,11 @@ import DescriptionBox from '../QueTypes/DescriptionBox';
 import SelectionBox from '../QueTypes/SelectionBox';
 import GridBox from '../QueTypes/GridBox';
 import { useMessage } from '../../../../hooks/useMessage';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import DescriptRes from '../../DirectResForm/DescriptionRes';
 import SelectionRes from '../../DirectResForm/SelectionRes';
+import { selectInfoUpdate } from '../../../../api/editForm';
+import { useMutation } from 'react-query';
 
 interface Props {
   data: DescriptionQue | SelectionQue | GridQue;
@@ -90,6 +92,7 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
   const [isChange, setIsChange] = useState(false);
   const { showMessage, contextHolder } = useMessage();
   const { pathname } = useLocation();
+  const { id } = useParams<{ id: string }>();
 
   const selectOpt: SectionType[] = queSecNum.map((opt) => {
     if (+opt.value === row) {
@@ -143,11 +146,20 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
     [questionList]
   );
 
+  const { mutate: requiredChangeMutate } = useMutation((required: boolean) =>
+    selectInfoUpdate(+id!, data.id!, data.title, required)
+  );
+
   const onChangeRequire = useCallback(
     (checked: boolean) => {
-      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
-      temp[row][col]['required'] = checked;
-      setQuestionList(temp);
+      if (pathname.slice(1, 16) === 'mypage/editform') {
+        requiredChangeMutate(checked);
+        showMessage('success', '필수 응답 변경!');
+      } else {
+        const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
+        temp[row][col]['required'] = checked;
+        setQuestionList(temp);
+      }
     },
     [questionList]
   );
@@ -242,25 +254,23 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
           </QueBottomLeft>
           <QueBottomRight>
             {pathname.slice(8, 16) !== 'editform' && (
-              <>
-                <div>
-                  <span>섹션</span>
-                  <Select
-                    className="custom-select"
-                    value={`${queSecNum[row].value}`}
-                    style={{ width: 60 }}
-                    onSelect={(value, option) => onSelectSectionNum(option)}
-                    options={selectOpt}
-                    suffixIcon={<TbTriangleInverted />}
-                    size={'small'}
-                  />
-                </div>
-                <div>
-                  <span>필수 응답</span>
-                  <Switch defaultChecked={data.required} onChange={onChangeRequire} size={'small'} />
-                </div>
-              </>
+              <div>
+                <span>섹션</span>
+                <Select
+                  className="custom-select"
+                  value={`${queSecNum[row].value}`}
+                  style={{ width: 60 }}
+                  onSelect={(value, option) => onSelectSectionNum(option)}
+                  options={selectOpt}
+                  suffixIcon={<TbTriangleInverted />}
+                  size={'small'}
+                />
+              </div>
             )}
+            <div>
+              <span>필수 응답</span>
+              <Switch defaultChecked={data.required} onChange={onChangeRequire} size={'small'} />
+            </div>
           </QueBottomRight>
         </QueBottom>
       </QueBody>
