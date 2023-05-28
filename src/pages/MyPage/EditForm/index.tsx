@@ -141,7 +141,7 @@ export default function EditForm() {
     (row: number, col: number) => {
       const index = row === 0 ? col : accrueQue[row - 1] + col + 1;
 
-      setNowIndex(index);
+      // setNowIndex(index);
       setNowQueInfo({ row, col });
     },
     [nowQueInfo, nowIndex, accrueQue]
@@ -186,9 +186,7 @@ export default function EditForm() {
                                   // onChangeTitle={() => {
                                   //   true;
                                   // }}
-                                  onClickQue={() => {
-                                    true;
-                                  }}
+                                  onClickQue={onClickQue}
                                   onDelete={() => {
                                     deleteQuestion(que.id!);
                                   }}

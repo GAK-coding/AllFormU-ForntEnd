@@ -27,6 +27,7 @@ export const selectInfoUpdate = async (
   try {
     await axios.put(`/question/UpdateSelectQuestion/${formId}/${queId}`, {
       title,
+      required,
     });
   } catch (error) {
     console.error(error);
