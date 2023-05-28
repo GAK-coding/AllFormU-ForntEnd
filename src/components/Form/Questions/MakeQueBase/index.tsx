@@ -62,7 +62,7 @@ interface Props {
   isClick: boolean;
   onClickQue: (row: number, col: number) => void;
   onDelete: (row: number, col: number) => void;
-  onChangeTitle?: (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => void;
+  // onChangeTitle?: (e: ChangeEvent<HTMLInputElement>, name: 'title', row: number, col: number) => void;
 }
 
 const Types: QueType[] = [
@@ -79,7 +79,7 @@ const Types: QueType[] = [
   { value: GRID_CHECKBOX, label: '체크박스 그리드' },
 ];
 
-export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDelete, onChangeTitle }: Props) {
+export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDelete }: Props) {
   const { title, type } = data;
   const [questionList, setQuestionList] = useRecoilState(questions);
   const queTypes = useRecoilValue(questionTypes);
