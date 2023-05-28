@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { DeleteOption, DropDownWrapper, SelectionBoxWrapper } from './styles';
@@ -6,6 +6,7 @@ import { ImCheckboxUnchecked, ImRadioUnchecked } from 'react-icons/im';
 import { IoMdClose } from 'react-icons/io';
 import { Select } from 'antd';
 import {
+  Option,
   SELECTION_CHECKBOX,
   SELECTION_DROPDOWN,
   SELECTION_LINEAR,
@@ -13,13 +14,14 @@ import {
   SelectionQue,
 } from '../../../../../typings/makeForm';
 import { color } from '../../../../../recoil/Color/atom';
-import { questions } from '../../../../../recoil/MakeForm/atom';
+import { questions, questionTypes } from '../../../../../recoil/MakeForm/atom';
 import Button from '../../../../ui/Button';
 import FormInput from '../../../../ui/FormInput';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { addContent, deleteContent } from '../../../../../api/editForm';
 import { useMessage } from '../../../../../hooks/useMessage';
+import { linearList } from '../../../../../utils/linearList';
 
 interface Props {
   data: SelectionQue;
@@ -34,6 +36,9 @@ export default function SelectionBox({ data, row, col }: Props) {
   const { pathname } = useLocation();
   const { mutate: deleteContentMutate } = useMutation((optId: number) => deleteContent(optId));
   const { showMessage, contextHolder } = useMessage();
+  const [optDataTemp, setOptDataTemp] = useState<Option[]>([]);
+  const [isLinearChange, setIsLinearChange] = useState(false);
+  const { id } = useParams();
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, num: number) => {
@@ -64,7 +69,7 @@ export default function SelectionBox({ data, row, col }: Props) {
   }, [questionList, data, row, col, options]);
 
   const onDelete = useCallback(
-    (num: number, optId?: number) => {
+    (num: number, optId?: number, linear?: boolean) => {
       if (options.length === 1) return;
 
       if (pathname.slice(1, 16) !== 'mypage/editform') {
@@ -77,14 +82,18 @@ export default function SelectionBox({ data, row, col }: Props) {
         setQuestionList(temp);
 
         deleteContentMutate(optId!);
-        showMessage('success', '옵션 삭제 완료!');
+        !!linear && showMessage('success', '옵션 삭제 완료!');
       }
     },
     [questionList]
   );
 
-  const onChangeDropDown = useCallback(
+  const onChangeLinear = useCallback(
     (value: string, num: number) => {
+      if (pathname.slice(1, 16) === 'mypage/editform') {
+        setOptDataTemp(data.options);
+        setIsLinearChange(true);
+      }
       const temp = JSON.parse(JSON.stringify(questionList));
       let start = (temp[row][col] as SelectionQue).options[0].content;
       let end = (temp[row][col] as SelectionQue).options[(temp[row][col] as SelectionQue).options.length - 1].content;
@@ -101,8 +110,28 @@ export default function SelectionBox({ data, row, col }: Props) {
 
       setQuestionList(temp);
     },
-    [questionList]
+    [questionList, optDataTemp, isLinearChange]
   );
+
+  console.log(questionList);
+  const { mutate: addContentMutate } = useMutation((value: string) => addContent({ queId: data.id!, content: value }), {
+    // onSuccess: (data) => {
+    //   setPushOptId(data!);
+    // },
+  });
+
+  useEffect(() => {
+    if (data.type === SELECTION_LINEAR && isLinearChange) {
+      optDataTemp.map((opt) => {
+        onDelete(+id!, opt.id, true);
+      });
+
+      (questionList[row][col] as SelectionQue)['options'].map((opt) => {
+        addContentMutate(opt.content);
+      });
+      setIsLinearChange(false);
+    }
+  }, [onChangeLinear, optDataTemp, onDelete, isLinearChange]);
 
   useEffect(() => {
     if (type === SELECTION_DROPDOWN && options[options.length - 1].content === '기타') {
@@ -113,35 +142,27 @@ export default function SelectionBox({ data, row, col }: Props) {
   }, [questionList]);
 
   if (type === SELECTION_LINEAR) {
+    // console.log('linear', +data.options[0].content);
+    // console.log(queTypes.Selection.includes(data.type), data.type, data.options);
+
     return (
       <DropDownWrapper>
         {contextHolder}
 
         <Select
-          defaultValue="0"
-          onChange={(e) => onChangeDropDown(e, 0)}
+          defaultValue={`${pathname.slice(1, 16) !== 'mypage/editform' ? 0 : data?.options[0]?.content || 0}`}
+          onChange={(e) => onChangeLinear(e, 0)}
           style={{ width: 70 }}
-          options={[
-            { value: '0', label: '0' },
-            { value: '1', label: '1' },
-          ]}
+          options={linearList(0, 1)}
         />
         <span>~</span>
         <Select
-          defaultValue="10"
-          onChange={(e) => onChangeDropDown(e, 1)}
+          defaultValue={`${
+            pathname.slice(1, 16) !== 'mypage/editform' ? 10 : data?.options[data.options.length - 1]?.content || 10
+          }`}
+          onChange={(e) => onChangeLinear(e, 1)}
           style={{ width: 70 }}
-          options={[
-            { value: '2', label: '2' },
-            { value: '3', label: '3' },
-            { value: '4', label: '4' },
-            { value: '5', label: '5' },
-            { value: '6', label: '6' },
-            { value: '7', label: '7' },
-            { value: '8', label: '8' },
-            { value: '9', label: '9' },
-            { value: '10', label: '10' },
-          ]}
+          options={linearList(2, 10)}
         />
       </DropDownWrapper>
     );
@@ -180,7 +201,7 @@ export default function SelectionBox({ data, row, col }: Props) {
               <Button onClick={addOption} color={'black'} bgColor={blue} fontSize={1.4} width={8} height={3.5}>
                 추가
               </Button>
-              {type !== SELECTION_DROPDOWN && (
+              {type !== SELECTION_DROPDOWN && pathname.slice(1, 16) !== 'mypage/editform' && (
                 <Button onClick={addEtc} color={'black'} bgColor={blue} fontSize={1.4} width={8} height={3.5}>
                   기타
                 </Button>
