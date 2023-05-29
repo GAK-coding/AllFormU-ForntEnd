@@ -4,10 +4,10 @@ interface Chatbot {
 export const directChatMessage = (): { detailMessage: Chatbot[]; initMessage: Chatbot[] } => {
   const initMessage = [
     {
-      message: '설문 제목을 입력해주세요.',
+      message: '생성할 설문 제목을 입력해주세요.',
     },
     {
-      message: '설문 설명을 입력해주세요.',
+      message: '설문의 상세 설명을 입력해주세요.',
     },
     {
       message: '생성할 섹션의 개수를 입력해주세요. ex) 2개',

@@ -26,6 +26,7 @@ export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
 
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
+  const [checking, setChecking] = useState<boolean>(false);
 
   const showModal = useCallback(() => {
     setIsOpen(true);
@@ -46,6 +47,7 @@ export default function MakeFormChatbot() {
       setCurrentInitialIndex(currentInitialIndex + 1);
 
       if (currentInitialIndex >= 2) {
+        setChecking(true);
         setCurrentDetailIndex(currentDetailIndex + 1);
       }
 
@@ -89,16 +91,17 @@ export default function MakeFormChatbot() {
             return null;
           })}
 
-          {/* {currentInitialIndex >= initMessage.length && */}
-          {/*   detailMessage.map((detailMessage, idx) => { */}
-          {/*     if (idx < currentDetailIndex) { */}
-          {/*       return <Ballon key={idx} user={sendMessage[idx].message} chatbot={detailMessage.message} />; */}
-          {/*     } else if (idx === currentDetailIndex) { */}
-          {/*       return <Ballon key={idx} user={detailUserInput} chatbot={detailMessage.message} />; */}
-          {/*     } */}
+          {checking &&
+            currentInitialIndex >= initMessage.length &&
+            detailMessage.map((detailMessage, idx) => {
+              if (idx < currentDetailIndex) {
+                return <Ballon key={idx} user={sendMessage[idx].message} chatbot={detailMessage.message} />;
+              } else if (idx === currentDetailIndex) {
+                return <Ballon key={idx} user={detailUserInput} chatbot={detailMessage.message} />;
+              }
 
-          {/*     return null; */}
-          {/*   })} */}
+              return null;
+            })}
         </ViewWrapper>
         <InPutWrapper>
           <FunctionWrapper>
