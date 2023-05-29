@@ -1,5 +1,8 @@
 import { BallonChat } from '../../../typings/chatbot';
 import { BallonWrapper, ChatBallon, ChatbotWrapper, GAK, UserBallon, UserWrapper } from './styles';
+import { useRecoilState } from 'recoil';
+import { userLoading } from '../../../recoil/Chatbot/atom';
+import { useEffect } from 'react';
 
 export default function Ballon({ chatbot, user }: BallonChat) {
   return (
