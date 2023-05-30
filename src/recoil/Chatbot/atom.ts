@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
 import { UserChat } from '../../typings/chatbot';
 
-export const userChat = atom<UserChat[]>({ key: 'userChat', default: [] });
+export const initialChat = atom<UserChat[]>({ key: 'initialChat', default: [] });
+export const detailChat = atom<UserChat[]>({ key: 'detailChat', default: [] });

@@ -20,7 +20,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { gptOpen } from '../../../recoil/Gpt/atom';
 import { directChatMessage } from './DirectChatMessage';
 import Input from '../../../components/ui/Input';
-import { userChat } from '../../../recoil/Chatbot/atom';
+import { detailChat, initialChat } from '../../../recoil/Chatbot/atom';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
@@ -34,9 +34,8 @@ export default function MakeFormChatbot() {
 
   const { initMessage, detailMessage } = directChatMessage();
   const [userInput, setUserInput] = useState<string>('');
-  const [initUserInput, setInitUserInput] = useState<string>('');
-  const [detailUserInput, setDetailUserInput] = useState<string>('');
-  const [sendMessage, setSendMessage] = useRecoilState(userChat);
+  const [sendInitMessage, setSendInitMessage] = useRecoilState(initialChat);
+  const [sendDetailMessage, setSendDetailMessage] = useRecoilState(detailChat);
   const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
 
@@ -51,11 +50,18 @@ export default function MakeFormChatbot() {
         setCurrentDetailIndex(currentDetailIndex + 1);
       }
 
-      setSendMessage((prev) => [...prev, { message: userInput }]);
+      if (!checking) {
+        setSendInitMessage((prev) => [...prev, { message: userInput }]);
+        console.log(sendInitMessage);
+      } else {
+        setSendDetailMessage((prev) => [...prev, { message: userInput }]);
+        console.log(sendInitMessage);
+
+        // console.log(sendDetailMessage);
+      }
       setUserInput('');
-      console.log(sendMessage);
     },
-    [currentInitialIndex, setSendMessage, setSendMessage, userInput]
+    [currentInitialIndex, currentDetailIndex, setUserInput, userInput, setSendDetailMessage, setSendInitMessage]
   );
 
   const talkRef = useRef<HTMLDivElement>(null); // Ref 생성
@@ -80,28 +86,26 @@ export default function MakeFormChatbot() {
           </ChatbotWrapper>
 
           {initMessage.map((initMessage, idx) => {
-            // const lastUserMessage = sendMessage.length > 0 ? sendMessage[sendMessage.length - 1].message : '';
-
-            if (idx < currentInitialIndex) {
-              return <Ballon key={idx} user={sendMessage[idx].message} chatbot={initMessage.message} />;
+            if (idx < currentInitialIndex && sendInitMessage[idx]?.message !== undefined) {
+              return <Ballon key={idx} user={sendInitMessage[idx].message} chatbot={initMessage.message} />;
             } else if (idx === currentInitialIndex) {
-              return <Ballon key={idx} user={initUserInput} chatbot={initMessage.message} />;
+              return <Ballon key={idx} user={''} chatbot={initMessage.message} />;
             }
 
             return null;
           })}
 
-          {checking &&
-            currentInitialIndex >= initMessage.length &&
-            detailMessage.map((detailMessage, idx) => {
-              if (idx < currentDetailIndex) {
-                return <Ballon key={idx} user={sendMessage[idx].message} chatbot={detailMessage.message} />;
-              } else if (idx === currentDetailIndex) {
-                return <Ballon key={idx} user={detailUserInput} chatbot={detailMessage.message} />;
-              }
+          {/* {checking && */}
+          {/*   currentInitialIndex >= initMessage.length && */}
+          {/*   detailMessage.map((detailMessage, idx) => { */}
+          {/*     if (idx < currentDetailIndex && sendDetailMessage[idx]?.message !== undefined) { */}
+          {/*       return <Ballon key={idx} user={sendDetailMessage[idx].message} chatbot={detailMessage.message} />; */}
+          {/*     } else if (idx === currentDetailIndex) { */}
+          {/*       return <Ballon key={idx} user={userInput} chatbot={detailMessage.message} />; */}
+          {/*     } */}
 
-              return null;
-            })}
+          {/*     return null; */}
+          {/*   })} */}
         </ViewWrapper>
         <InPutWrapper>
           <FunctionWrapper>
