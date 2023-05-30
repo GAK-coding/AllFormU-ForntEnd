@@ -12,7 +12,7 @@ export default function MakeForm() {
   const { nickname } = useRecoilValue(userInfo);
 
   const onClickBase = useCallback(() => {
-    navigate('/makeform/select');
+    navigate('/makeform/chatbot');
   }, []);
 
   return (
