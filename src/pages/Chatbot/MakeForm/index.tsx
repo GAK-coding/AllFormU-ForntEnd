@@ -95,17 +95,16 @@ export default function MakeFormChatbot() {
             return null;
           })}
 
-          {/* {checking && */}
-          {/*   currentInitialIndex >= initMessage.length && */}
-          {/*   detailMessage.map((detailMessage, idx) => { */}
-          {/*     if (idx < currentDetailIndex && sendDetailMessage[idx]?.message !== undefined) { */}
-          {/*       return <Ballon key={idx} user={sendDetailMessage[idx].message} chatbot={detailMessage.message} />; */}
-          {/*     } else if (idx === currentDetailIndex) { */}
-          {/*       return <Ballon key={idx} user={userInput} chatbot={detailMessage.message} />; */}
-          {/*     } */}
+          {checking &&
+            detailMessage.map((detailMessage, idx) => {
+              if (idx < currentDetailIndex && sendDetailMessage[idx]?.message !== undefined) {
+                return <Ballon key={idx} user={sendDetailMessage[idx].message} chatbot={detailMessage.message} />;
+              } else if (idx === currentDetailIndex) {
+                return <Ballon key={idx} user={''} chatbot={detailMessage.message} />;
+              }
 
-          {/*     return null; */}
-          {/*   })} */}
+              return null;
+            })}
         </ViewWrapper>
         <InPutWrapper>
           <FunctionWrapper>
