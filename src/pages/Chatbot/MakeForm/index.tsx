@@ -43,22 +43,23 @@ export default function MakeFormChatbot() {
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      setCurrentInitialIndex(currentInitialIndex + 1);
-
-      if (currentInitialIndex >= 2) {
-        setChecking(true);
-        setCurrentDetailIndex(currentDetailIndex + 1);
-      }
-
       if (!checking) {
         setSendInitMessage((prev) => [...prev, { message: userInput }]);
         console.log(sendInitMessage);
       } else {
         setSendDetailMessage((prev) => [...prev, { message: userInput }]);
-        console.log(sendInitMessage);
-
-        // console.log(sendDetailMessage);
+        console.log(sendDetailMessage);
       }
+
+      if (currentInitialIndex < 2) {
+        setCurrentInitialIndex(currentInitialIndex + 1);
+      } else if (currentInitialIndex === 2) {
+        setChecking(true);
+        setCurrentInitialIndex(currentInitialIndex + 1);
+      } else if (currentInitialIndex > 2) {
+        setCurrentDetailIndex(currentDetailIndex + 1);
+      }
+
       setUserInput('');
     },
     [currentInitialIndex, currentDetailIndex, setUserInput, userInput, setSendDetailMessage, setSendInitMessage]
@@ -86,7 +87,7 @@ export default function MakeFormChatbot() {
           </ChatbotWrapper>
 
           {initMessage.map((initMessage, idx) => {
-            if (idx < currentInitialIndex && sendInitMessage[idx]?.message !== undefined) {
+            if (idx < currentInitialIndex) {
               return <Ballon key={idx} user={sendInitMessage[idx].message} chatbot={initMessage.message} />;
             } else if (idx === currentInitialIndex) {
               return <Ballon key={idx} user={''} chatbot={initMessage.message} />;
@@ -97,7 +98,7 @@ export default function MakeFormChatbot() {
 
           {checking &&
             detailMessage.map((detailMessage, idx) => {
-              if (idx < currentDetailIndex && sendDetailMessage[idx]?.message !== undefined) {
+              if (idx < currentDetailIndex) {
                 return <Ballon key={idx} user={sendDetailMessage[idx].message} chatbot={detailMessage.message} />;
               } else if (idx === currentDetailIndex) {
                 return <Ballon key={idx} user={''} chatbot={detailMessage.message} />;
@@ -105,6 +106,23 @@ export default function MakeFormChatbot() {
 
               return null;
             })}
+
+          {currentDetailIndex >= 2 && (
+            <ChatbotWrapper>
+              <BallonWrapper>
+                <GAK>
+                  <img src="/images/gak_chatbot.png" alt="gak" />
+                  <span>GAK</span>
+                </GAK>
+                <ChatBallon>
+                  <span>
+                    기본 설정이 모두 완료 되었습니다! <br />
+                    상세 내용은 직접설정에서 설정해주세요 😊
+                  </span>
+                </ChatBallon>
+              </BallonWrapper>
+            </ChatbotWrapper>
+          )}
         </ViewWrapper>
         <InPutWrapper>
           <FunctionWrapper>

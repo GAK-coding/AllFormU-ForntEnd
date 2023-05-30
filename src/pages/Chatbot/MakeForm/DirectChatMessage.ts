@@ -23,9 +23,6 @@ export const directChatMessage = (): { detailMessage: Chatbot[]; initMessage: Ch
     {
       message: '생성할 질문의 개수를 입력해주세요. ex) 5개',
     },
-    {
-      message: '기본 설정이 모두 완료 되었습니다!',
-    },
   ];
 
   return { initMessage, detailMessage };
