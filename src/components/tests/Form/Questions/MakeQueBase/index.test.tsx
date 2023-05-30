@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import MakeQueBase from '../../Form/Questions/MakeQueBase';
+import MakeQueBase from '../../../../Form/Questions/MakeQueBase';
 import { MemoryRouter } from 'react-router-dom';
 import { RecoilRoot, snapshot_UNSTABLE, useRecoilValue } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { DescriptionQue, GridQue, SELECTION_OPTION, SelectionQue } from '../../../typings/makeForm';
+import { DescriptionQue, GridQue, SELECTION_OPTION, SelectionQue } from '../../../../../typings/makeForm';
 import { v4 as uuid } from 'uuid';
-import { nowQuestion } from '../../../recoil/MakeForm/atom';
+import { nowQuestion } from '../../../../../recoil/MakeForm/atom';
 import { act, renderHook } from '@testing-library/react';
 import { createRoot } from 'react-dom/client';
 
@@ -66,7 +66,7 @@ describe('MakeQueBase', () => {
     // console.log(result);
 
     expect({ row, col }).toEqual({ row: row, col: col });
-    expect({ isClick }).toEqual({ isClick: isClick });
-    // expect(screen.getByText(data.title)).toBeInTheDocument();
+    expect(isClick).toEqual(isClick);
+    // expect(screen.getByText('필수 응답')).toBeInTheDocument();
   });
 });
