@@ -20,7 +20,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { gptOpen } from '../../../recoil/Gpt/atom';
 import { directChatMessage } from './DirectChatMessage';
 import Input from '../../../components/ui/Input';
-import { userChat } from '../../../recoil/Chatbot/atom';
+import { detailChat, initialChat } from '../../../recoil/Chatbot/atom';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
@@ -34,28 +34,36 @@ export default function MakeFormChatbot() {
 
   const { initMessage, detailMessage } = directChatMessage();
   const [userInput, setUserInput] = useState<string>('');
-  const [initUserInput, setInitUserInput] = useState<string>('');
-  const [detailUserInput, setDetailUserInput] = useState<string>('');
-  const [sendMessage, setSendMessage] = useRecoilState(userChat);
+  const [sendInitMessage, setSendInitMessage] = useRecoilState(initialChat);
+  const [sendDetailMessage, setSendDetailMessage] = useRecoilState(detailChat);
   const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
+  const [repeatCount, setRepeatCount] = useState<number>(1);
 
   const onSubmit = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      setCurrentInitialIndex(currentInitialIndex + 1);
+      if (!checking) {
+        setSendInitMessage((prev) => [...prev, { message: userInput }]);
+        console.log(sendInitMessage);
+      } else {
+        setSendDetailMessage((prev) => [...prev, { message: userInput }]);
+        console.log(sendDetailMessage);
+      }
 
-      if (currentInitialIndex >= 2) {
+      if (currentInitialIndex < 2) {
+        setCurrentInitialIndex(currentInitialIndex + 1);
+      } else if (currentInitialIndex === 2) {
         setChecking(true);
+        setCurrentInitialIndex(currentInitialIndex + 1);
+      } else if (currentInitialIndex > 2) {
         setCurrentDetailIndex(currentDetailIndex + 1);
       }
 
-      setSendMessage((prev) => [...prev, { message: userInput }]);
       setUserInput('');
-      console.log(sendMessage);
     },
-    [currentInitialIndex, setSendMessage, setSendMessage, userInput]
+    [currentInitialIndex, currentDetailIndex, setUserInput, userInput, setSendDetailMessage, setSendInitMessage]
   );
 
   const talkRef = useRef<HTMLDivElement>(null); // Ref 생성
@@ -80,28 +88,42 @@ export default function MakeFormChatbot() {
           </ChatbotWrapper>
 
           {initMessage.map((initMessage, idx) => {
-            // const lastUserMessage = sendMessage.length > 0 ? sendMessage[sendMessage.length - 1].message : '';
-
             if (idx < currentInitialIndex) {
-              return <Ballon key={idx} user={sendMessage[idx].message} chatbot={initMessage.message} />;
+              return <Ballon key={idx} user={sendInitMessage[idx].message} chatbot={initMessage.message} />;
             } else if (idx === currentInitialIndex) {
-              return <Ballon key={idx} user={initUserInput} chatbot={initMessage.message} />;
+              return <Ballon key={idx} user={''} chatbot={initMessage.message} />;
             }
 
             return null;
           })}
 
           {checking &&
-            currentInitialIndex >= initMessage.length &&
             detailMessage.map((detailMessage, idx) => {
               if (idx < currentDetailIndex) {
-                return <Ballon key={idx} user={sendMessage[idx].message} chatbot={detailMessage.message} />;
+                return <Ballon key={idx} user={sendDetailMessage[idx].message} chatbot={detailMessage.message} />;
               } else if (idx === currentDetailIndex) {
-                return <Ballon key={idx} user={detailUserInput} chatbot={detailMessage.message} />;
+                return <Ballon key={idx} user={''} chatbot={detailMessage.message} />;
               }
 
               return null;
             })}
+
+          {currentDetailIndex >= 2 && (
+            <ChatbotWrapper>
+              <BallonWrapper>
+                <GAK>
+                  <img src="/images/gak_chatbot.png" alt="gak" />
+                  <span>GAK</span>
+                </GAK>
+                <ChatBallon>
+                  <span>
+                    기본 설정이 모두 완료 되었습니다! <br />
+                    상세 내용은 직접설정에서 설정해주세요 😊
+                  </span>
+                </ChatBallon>
+              </BallonWrapper>
+            </ChatbotWrapper>
+          )}
         </ViewWrapper>
         <InPutWrapper>
           <FunctionWrapper>
@@ -121,15 +143,18 @@ export default function MakeFormChatbot() {
           {isOpen && <GPTSocket />}
           <UserResWrapper>
             <UserInput onSubmit={onSubmit}>
-              <Input
-                type={'text'}
-                value={userInput}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setUserInput(e.target.value)}
-                placeholder={'챗봇에게 메시지를 입력하세요.'}
-                width={'100%'}
-                size={1.3}
-              ></Input>
+              {currentDetailIndex < 2 && (
+                <Input
+                  type={'text'}
+                  value={userInput}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUserInput(e.target.value)}
+                  placeholder={'챗봇에게 메시지를 입력하세요.'}
+                  width={'100%'}
+                  size={1.3}
+                ></Input>
+              )}
             </UserInput>
+
             <SubmitBtn>
               <Button type={'submit'} color={'#2d2d2d'} bgColor={blue} fontSize={1.3} width={8} height={4}>
                 전송
