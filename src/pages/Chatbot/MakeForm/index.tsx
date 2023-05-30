@@ -38,6 +38,7 @@ export default function MakeFormChatbot() {
   const [sendDetailMessage, setSendDetailMessage] = useRecoilState(detailChat);
   const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
+  const [repeatCount, setRepeatCount] = useState<number>(1);
 
   const onSubmit = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -142,15 +143,18 @@ export default function MakeFormChatbot() {
           {isOpen && <GPTSocket />}
           <UserResWrapper>
             <UserInput onSubmit={onSubmit}>
-              <Input
-                type={'text'}
-                value={userInput}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setUserInput(e.target.value)}
-                placeholder={'챗봇에게 메시지를 입력하세요.'}
-                width={'100%'}
-                size={1.3}
-              ></Input>
+              {currentDetailIndex < 2 && (
+                <Input
+                  type={'text'}
+                  value={userInput}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUserInput(e.target.value)}
+                  placeholder={'챗봇에게 메시지를 입력하세요.'}
+                  width={'100%'}
+                  size={1.3}
+                ></Input>
+              )}
             </UserInput>
+
             <SubmitBtn>
               <Button type={'submit'} color={'#2d2d2d'} bgColor={blue} fontSize={1.3} width={8} height={4}>
                 전송
