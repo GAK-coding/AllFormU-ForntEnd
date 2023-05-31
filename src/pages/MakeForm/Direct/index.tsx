@@ -9,6 +9,14 @@ import { v4 as uuid } from 'uuid';
 import MakeQueBase from '../../../components/Questions/MakeQueBase';
 import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
+import { DESCRIPTION_SHORT, DescriptionQue, GridQue, SelectionQue } from '../../../typings/makeForm';
+import { useMessage } from '../../../hooks/useMessage';
+import QueDraggable from '../../../components/Form/Questions/QueDraggable';
+import MakeFromModal from '../../../components/Form/MakeForm/MakeFromModal';
+import SectionBox from '../../../components/Form/Questions/SectionBox';
+import FormTitle from '../../../components/Form/Questions/FormTitle';
+import { useLocation } from 'react-router-dom';
+import { detailChat } from '../../../recoil/Chatbot/atom';
 import SectionBox from '../../../components/Questions/SectionBox';
 import { DESCRIPTION_SHORT } from '../../../typings/makeForm';
 import { useMutation } from 'react-query';
@@ -23,6 +31,58 @@ export default function MakeFormDirect() {
   const { title, content } = useRecoilValue(formInfo);
   const { blue } = useRecoilValue(color);
 
+  const { state } = useLocation();
+  const [isRendering, setIsRendering] = useState(true);
+  const detailMessage = useRecoilValue(detailChat);
+
+  useEffect(() => {
+    if (isRendering && state) {
+      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
+
+      for (let i = 0; i < detailMessage.length; i = i + 2) {
+        const sectionTitle = detailMessage[i].message;
+        const queNum = detailMessage[i + 1].message;
+        const sectionIndex = i / 2;
+
+        setSectionList((prev) => [...prev, sectionTitle]);
+
+        // 첫 번째가 아닌 경우엔 섹션 생성
+        if (sectionIndex !== 0) {
+          temp.push([
+            {
+              type: DESCRIPTION_SHORT,
+              tempId: uuid(),
+              required: false,
+              title: '',
+              sectionNum: temp.length,
+              descriptions: [{ content: '' }],
+            },
+          ]);
+          setQueSecNum((prev) => [...prev, { value: sectionIndex.toString(), label: (sectionIndex + 1).toString() }]);
+        }
+
+        // 질문개수 추가
+        for (let j = 0; j < +queNum.slice(0, 1) - 1; j++) {
+          temp[sectionIndex].push({
+            type: DESCRIPTION_SHORT,
+            tempId: uuid(),
+            required: false,
+            title: '',
+            sectionNum: 0,
+            descriptions: [{ content: '' }],
+          });
+        }
+      }
+
+      // 렌더링 false로 변경
+      // json형식 다시 변경
+      setIsRendering(false);
+      setQuestionList(temp);
+    }
+  }, [detailChat]);
+
+  const showModal = useCallback((e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
   const { mutate, isLoading, isError, error, isSuccess } = useMutation(createForm);
 
   const onSubmit = useCallback(
@@ -146,13 +206,10 @@ export default function MakeFormDirect() {
     setAccrueQue(temp);
   }, [addQuestion]);
 
-<<<<<<< Updated upstream
-=======
   useLayoutEffect(() => {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [questionList]);
 
->>>>>>> Stashed changes
   return (
     <Row>
       <Col span={4} />
