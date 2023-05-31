@@ -146,6 +146,13 @@ export default function MakeFormDirect() {
     setAccrueQue(temp);
   }, [addQuestion]);
 
+<<<<<<< Updated upstream
+=======
+  useLayoutEffect(() => {
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [questionList]);
+
+>>>>>>> Stashed changes
   return (
     <Row>
       <Col span={4} />
