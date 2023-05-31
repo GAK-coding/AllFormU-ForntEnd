@@ -64,13 +64,11 @@ export default function MakeFormDirect() {
               descriptions: [{ content: '' }],
             },
           ]);
+          setQueSecNum((prev) => [...prev, { value: sectionIndex.toString(), label: (sectionIndex + 1).toString() }]);
         }
 
         // 질문개수 추가
-        for (let j = 0; j < +queNum.slice(0, 1); j++) {
-          if (sectionIndex === 0) {
-            j++;
-          }
+        for (let j = 0; j < +queNum.slice(0, 1) - 1; j++) {
           temp[sectionIndex].push({
             type: DESCRIPTION_SHORT,
             tempId: uuid(),
