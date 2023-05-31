@@ -8,7 +8,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
 import { userInfo, signInUserInfo, isLogin } from '../../recoil/User/atom';
-import GoogleAuth from './GoogleLogin/GoogleAuth';
+import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signIn } from '../../api/user';
 import IdMordal from '../../components/CheckModal/IdModal';

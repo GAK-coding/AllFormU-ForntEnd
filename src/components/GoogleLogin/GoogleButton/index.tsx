@@ -1,10 +1,10 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import Button from '../../../../components/ui/Button';
+import Button from '../../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { color } from '../../../../recoil/Color/atom';
-import { LoginBtnBox } from '../../../SignUp/styles';
+import { color } from '../../../recoil/Color/atom';
+import { LoginBtnBox } from '../../../pages/SignUp/styles';
 import { useNavigate } from 'react-router-dom';
-import { googleUserInfo } from '../../../../recoil/User/atom';
+import { googleUserInfo } from '../../../recoil/User/atom';
 
 const GoogleButton = () => {
   const { blue } = useRecoilValue(color);
