@@ -106,7 +106,7 @@ export default function Info() {
             </AlignBox>
             <AlignBox>
               {makeFormInfo?.map((formInfo: GetForm, idx: number) => {
-                if (idx > 4) return;
+                if (idx > 3) return;
 
                 if (idx > 1) return <FormBox key={formInfo.id}>{`${idx + 1}. ${formInfo.title}`}</FormBox>;
               })}
@@ -130,7 +130,7 @@ export default function Info() {
             </AlignBox>
             <AlignBox>
               {resFormInfo.map((formInfo, idx: number) => {
-                if (idx > 4) return;
+                if (idx > 3) return;
 
                 if (idx > 1)
                   return (
