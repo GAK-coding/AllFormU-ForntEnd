@@ -38,7 +38,8 @@ export default function MakeFormChatbot() {
   const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
   const [repeatCount, setRepeatCount] = useState<number>(1);
-  const numRange = ['1', '2', '3', '4', '5'];
+  const sectionNumRange = ['1', '2', '3', '4', '5'];
+  const queNumRange = Array.from({ length: 100 }, (_, index) => (index + 1).toString());
 
   const navigate = useNavigate();
 
@@ -54,27 +55,48 @@ export default function MakeFormChatbot() {
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (!checking) {
-        setSendInitMessage((prev) => [...prev, { message: userInput }]);
-        console.log(sendInitMessage);
-      } else {
-        setSendDetailMessage((prev) => [...prev, { message: userInput }]);
-        console.log(sendDetailMessage);
-      }
+      // if (!checking) {
+      //   setSendInitMessage((prev) => [...prev, { message: userInput }]);
+      // } else {
+      //   setSendDetailMessage((prev) => [...prev, { message: userInput }]);
+      // }
+      //
+      // if (checking && currentDetailIndex > 0) {
+      //   if (currentDetailIndex % 2 === 0) {
+      //     const includeRange = queNumRange.some((path) => userInput.slice(0, 1).includes(path));
+      //     if (!includeRange) {
+      //       showMessage('warning', '1 ~ 100 사이의 숫자를 입력해주세요');
+      //       return;
+      //     }
+      //   }
+      // }
 
-      if (currentInitialIndex < 2) {
-        setCurrentInitialIndex(currentInitialIndex + 1);
-      } else if (currentInitialIndex === 2) {
-        const includeRange = numRange.some((path) => userInput.slice(0, 1).includes(path));
+      if (currentInitialIndex <= 2) {
+        if (currentInitialIndex === 2) {
+          const includeRange = sectionNumRange.some((path) => userInput.slice(0, 1).includes(path));
 
-        if (!includeRange) {
-          showMessage('warning', '1 ~ 5 사이의 숫자를 입력해주세요');
-          return;
+          if (!includeRange) {
+            showMessage('warning', '1 ~ 5 사이의 숫자를 입력해주세요');
+            return;
+          }
+          setChecking(true);
+          setRepeatCount(+userInput.slice(0, 1));
         }
-        setChecking(true);
-        setRepeatCount(+userInput.slice(0, 1));
+        setSendInitMessage((prev) => [...prev, { message: userInput }]);
         setCurrentInitialIndex(currentInitialIndex + 1);
-      } else if (currentInitialIndex > 2) {
+      }
+      // else if (currentInitialIndex > 2) {
+      else {
+        if (currentDetailIndex > 0) {
+          if (currentDetailIndex % 2 !== 0) {
+            const includeRange = queNumRange.some((path) => userInput.slice(0, 1).includes(path));
+            if (!includeRange) {
+              showMessage('warning', '1 ~ 100 사이의 숫자를 입력해주세요');
+              return;
+            }
+          }
+        }
+        setSendDetailMessage((prev) => [...prev, { message: userInput }]);
         setCurrentDetailIndex(currentDetailIndex + 1);
       }
 
@@ -88,6 +110,7 @@ export default function MakeFormChatbot() {
       sendInitMessage,
       setSendDetailMessage,
       setSendInitMessage,
+      checking,
     ]
   );
 
