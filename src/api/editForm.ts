@@ -57,8 +57,6 @@ export const addContent = async (data: { queId: number; content: string; linear?
     const { queId, content, linear } = data;
     const { data: id } = await axios.post(`/selection/createSelection/${queId}`, { content });
 
-    if (linear) return { id: id[id.length - 1], content };
-
     return id[id.length - 1];
   } catch (error) {
     console.error(error);
