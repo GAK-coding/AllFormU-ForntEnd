@@ -23,10 +23,11 @@ import Input from '../../../components/ui/Input';
 import { detailChat, initialChat } from '../../../recoil/Chatbot/atom';
 import { formInfo } from '../../../recoil/MakeForm/atom';
 import { useNavigate } from 'react-router-dom';
+import { useMessage } from '../../../hooks/useMessage';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
-
+  const { showMessage, contextHolder } = useMessage();
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
   const [checking, setChecking] = useState<boolean>(false);
 
@@ -37,6 +38,9 @@ export default function MakeFormChatbot() {
   const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
   const [repeatCount, setRepeatCount] = useState<number>(1);
+  const sectionNumRange = ['1', '2', '3', '4', '5'];
+  const queNumRange = Array.from({ length: 100 }, (_, index) => (index + 1).toString());
+
   const navigate = useNavigate();
 
   const showModal = useCallback(() => {
@@ -51,21 +55,48 @@ export default function MakeFormChatbot() {
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (!checking) {
-        setSendInitMessage((prev) => [...prev, { message: userInput }]);
-        console.log(sendInitMessage);
-      } else {
-        setSendDetailMessage((prev) => [...prev, { message: userInput }]);
-        console.log(sendDetailMessage);
-      }
+      // if (!checking) {
+      //   setSendInitMessage((prev) => [...prev, { message: userInput }]);
+      // } else {
+      //   setSendDetailMessage((prev) => [...prev, { message: userInput }]);
+      // }
+      //
+      // if (checking && currentDetailIndex > 0) {
+      //   if (currentDetailIndex % 2 === 0) {
+      //     const includeRange = queNumRange.some((path) => userInput.slice(0, 1).includes(path));
+      //     if (!includeRange) {
+      //       showMessage('warning', '1 ~ 100 사이의 숫자를 입력해주세요');
+      //       return;
+      //     }
+      //   }
+      // }
 
-      if (currentInitialIndex < 2) {
+      if (currentInitialIndex <= 2) {
+        if (currentInitialIndex === 2) {
+          const includeRange = sectionNumRange.some((path) => userInput.slice(0, 1).includes(path));
+
+          if (!includeRange) {
+            showMessage('warning', '1 ~ 5 사이의 숫자를 입력해주세요');
+            return;
+          }
+          setChecking(true);
+          setRepeatCount(+userInput.slice(0, 1));
+        }
+        setSendInitMessage((prev) => [...prev, { message: userInput }]);
         setCurrentInitialIndex(currentInitialIndex + 1);
-      } else if (currentInitialIndex === 2) {
-        setChecking(true);
-        setRepeatCount(+userInput.slice(0, 1));
-        setCurrentInitialIndex(currentInitialIndex + 1);
-      } else if (currentInitialIndex > 2) {
+      }
+      // else if (currentInitialIndex > 2) {
+      else {
+        if (currentDetailIndex > 0) {
+          if (currentDetailIndex % 2 !== 0) {
+            const includeRange = queNumRange.some((path) => userInput.slice(0, 1).includes(path));
+            if (!includeRange) {
+              showMessage('warning', '1 ~ 100 사이의 숫자를 입력해주세요');
+              return;
+            }
+          }
+        }
+        setSendDetailMessage((prev) => [...prev, { message: userInput }]);
         setCurrentDetailIndex(currentDetailIndex + 1);
       }
 
@@ -79,6 +110,7 @@ export default function MakeFormChatbot() {
       sendInitMessage,
       setSendDetailMessage,
       setSendInitMessage,
+      checking,
     ]
   );
 
@@ -89,6 +121,7 @@ export default function MakeFormChatbot() {
 
   return (
     <BaseBgBox>
+      {contextHolder}
       <Wrapper>
         <ViewWrapper ref={talkRef}>
           <ChatbotWrapper>

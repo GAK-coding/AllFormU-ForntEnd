@@ -50,10 +50,11 @@ export default function MakeFormDirect() {
         const queNum = detailMessage[i + 1].message;
         const sectionIndex = i / 2;
 
-        setSectionList((prev) => [...prev, sectionTitle]);
-
+        if (sectionIndex === 0) {
+          setSectionList([sectionTitle]);
+        }
         // 첫 번째가 아닌 경우엔 섹션 생성
-        if (sectionIndex !== 0) {
+        else {
           temp.push([
             {
               type: DESCRIPTION_SHORT,
@@ -64,6 +65,7 @@ export default function MakeFormDirect() {
               descriptions: [{ content: '' }],
             },
           ]);
+          setSectionList((prev) => [...prev, sectionTitle]);
           setQueSecNum((prev) => [...prev, { value: sectionIndex.toString(), label: (sectionIndex + 1).toString() }]);
         }
 
