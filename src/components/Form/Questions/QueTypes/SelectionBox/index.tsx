@@ -18,7 +18,7 @@ import { questions, questionTypes } from '../../../../../recoil/MakeForm/atom';
 import Button from '../../../../ui/Button';
 import FormInput from '../../../../ui/FormInput';
 import { useLocation, useParams } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { addContent, deleteContent } from '../../../../../api/editForm';
 import { useMessage } from '../../../../../hooks/useMessage';
 import { linearList } from '../../../../../utils/linearList';
@@ -36,9 +36,28 @@ export default function SelectionBox({ data, row, col }: Props) {
   const { pathname } = useLocation();
   const { mutate: deleteContentMutate } = useMutation((optId: number) => deleteContent(optId));
   const { showMessage, contextHolder } = useMessage();
-  const [optDataTemp, setOptDataTemp] = useState<Option[]>([]);
   const [isLinearChange, setIsLinearChange] = useState(false);
   const { id } = useParams();
+  const [opts, setOpts] = useState<{ id: number; content: string }[]>([]);
+  const [addLast, setAddLast] = useState(false);
+
+  function getContentByValue(options: Option[], value: string): string | undefined {
+    if (options.length === 0) {
+      return undefined;
+    }
+    if (value === '1') {
+      const maxItem = options.reduce((prev, curr) => {
+        return parseInt(curr.content) > parseInt(prev.content) ? curr : prev;
+      });
+      return maxItem.content;
+    } else if (value === '0') {
+      const minItem = options.reduce((prev, curr) => {
+        return parseInt(curr.content) < parseInt(prev.content) ? curr : prev;
+      });
+      return minItem.content;
+    }
+    return undefined;
+  }
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, num: number) => {
@@ -88,50 +107,100 @@ export default function SelectionBox({ data, row, col }: Props) {
     [questionList]
   );
 
-  const onChangeLinear = useCallback(
-    (value: string, num: number) => {
-      if (pathname.slice(1, 16) === 'mypage/editform') {
-        setOptDataTemp(data.options);
-        setIsLinearChange(true);
-      }
-      const temp = JSON.parse(JSON.stringify(questionList));
-      let start = (temp[row][col] as SelectionQue).options[0].content;
-      let end = (temp[row][col] as SelectionQue).options[(temp[row][col] as SelectionQue).options.length - 1].content;
+  const { mutate: addContentMutate } = useMutation(
+    (value: string) => addContent({ queId: data.id!, content: value, linear: true }),
+    {
+      onSuccess: (data) => {
+        const temp = JSON.parse(JSON.stringify(questionList));
+        temp[row][col].options.push(data);
 
-      num === 0 ? (start = value) : (end = value);
-
-      const opt: { content: string }[] = [];
-
-      for (let i = +start; i <= +end; i++) {
-        opt.push({ content: i.toString() });
-      }
-
-      (temp[row][col] as SelectionQue).options = opt;
-
-      setQuestionList(temp);
-    },
-    [questionList, optDataTemp, isLinearChange]
+        setQuestionList(temp);
+        // setOpts((prev) => [...prev, data]);
+        // setAddLast(true);
+      },
+    }
   );
 
-  console.log(questionList);
-  const { mutate: addContentMutate } = useMutation((value: string) => addContent({ queId: data.id!, content: value }), {
-    // onSuccess: (data) => {
-    //   setPushOptId(data!);
-    // },
-  });
+  function createArray(start: number, end: number): number[] {
+    const arr: number[] = [];
 
-  useEffect(() => {
-    if (data.type === SELECTION_LINEAR && isLinearChange) {
-      optDataTemp.map((opt) => {
-        onDelete(+id!, opt.id, true);
-      });
-
-      (questionList[row][col] as SelectionQue)['options'].map((opt) => {
-        addContentMutate(opt.content);
-      });
-      setIsLinearChange(false);
+    for (let i = start; i <= end; i++) {
+      arr.push(i);
     }
-  }, [onChangeLinear, optDataTemp, onDelete, isLinearChange]);
+
+    return arr;
+  }
+
+  const onChangeLinear = useCallback(
+    async (value: string, num: number) => {
+      const temp = JSON.parse(JSON.stringify(questionList));
+      let start = getContentByValue((temp[row][col] as SelectionQue).options, '0')!;
+      // let start = (temp[row][col] as SelectionQue).options[0].content;
+      let end = getContentByValue((temp[row][col] as SelectionQue).options, '1')!;
+      num === 0 ? (start = value) : (end = value);
+
+      if (pathname.slice(1, 16) === 'mypage/editform') {
+        // setOptDataTemp(data.options);
+        setIsLinearChange(true);
+        const deleteOpts = async () => {
+          for (const opt of data.options) {
+            await onDelete(+id!, opt.id, false);
+          }
+        };
+
+        // data.options.map((opt) => {
+        //   onDelete(+id!, opt.id, false);
+        // });
+
+        const range = createArray(+start, +end);
+
+        const addOpts = async () => {
+          for (const opt of range) {
+            try {
+              await addContentMutate(opt.toString());
+              if (opt === range[range.length - 1]) setAddLast(true);
+            } catch (err) {
+              console.log(err);
+            }
+          }
+        };
+
+        try {
+          await deleteOpts().then(() => {
+            temp[row][col].options = [];
+            setQuestionList(temp);
+          });
+          await addOpts();
+          setAddLast(true);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        const opt: { content: string }[] = [];
+
+        for (let i = +start; i <= +end; i++) {
+          opt.push({ content: i.toString() });
+        }
+
+        (temp[row][col] as SelectionQue).options = opt;
+
+        setQuestionList(temp);
+      }
+    },
+    [questionList, isLinearChange, addLast]
+  );
+
+  // useEffect(() => {
+  //   if (addLast) {
+  //     const temp = JSON.parse(JSON.stringify(questionList));
+  //     (temp[row][col] as SelectionQue).options = opts;
+  //     setQuestionList(temp);
+  //
+  //     console.log(opts);
+  //     // setAddLast(false);
+  //     // setOpts([]);
+  //   }
+  // }, [addLast]);
 
   useEffect(() => {
     if (type === SELECTION_DROPDOWN && options[options.length - 1].content === '기타') {
@@ -142,15 +211,15 @@ export default function SelectionBox({ data, row, col }: Props) {
   }, [questionList]);
 
   if (type === SELECTION_LINEAR) {
-    // console.log('linear', +data.options[0].content);
-    // console.log(queTypes.Selection.includes(data.type), data.type, data.options);
+    console.log('여기', data?.options);
 
     return (
       <DropDownWrapper>
         {contextHolder}
-
         <Select
-          defaultValue={`${pathname.slice(1, 16) !== 'mypage/editform' ? 0 : data?.options[0]?.content || 0}`}
+          defaultValue={`${
+            pathname.slice(1, 16) !== 'mypage/editform' ? 0 : getContentByValue(data?.options, '0') || 0
+          }`}
           onChange={(e) => onChangeLinear(e, 0)}
           style={{ width: 70 }}
           options={linearList(0, 1)}
@@ -158,7 +227,7 @@ export default function SelectionBox({ data, row, col }: Props) {
         <span>~</span>
         <Select
           defaultValue={`${
-            pathname.slice(1, 16) !== 'mypage/editform' ? 10 : data?.options[data.options.length - 1]?.content || 10
+            pathname.slice(1, 16) !== 'mypage/editform' ? 10 : getContentByValue(data?.options, '1') || 10
           }`}
           onChange={(e) => onChangeLinear(e, 1)}
           style={{ width: 70 }}

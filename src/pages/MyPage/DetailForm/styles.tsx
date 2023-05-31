@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { BaseGbBoxWrapper } from '../../../components/ui/BaseBgBox/styles';
 
 export const HeaderWrapper = styled.div`
-  height: 20%;
+  height: 10rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,6 +31,11 @@ export const FormListWrapper = styled.div`
       width: 50%;
     }
   }
+`;
+
+export const BottomBox = styled.div`
+  width: 100%;
+  height: 4rem;
 `;
 
 export const FormBox = styled(BaseGbBoxWrapper)`

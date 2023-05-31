@@ -7,10 +7,13 @@ import dayjs from 'dayjs';
 import Button from '../../../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../../../recoil/Color/atom';
-import { formFix, formInfo, questions } from '../../../../recoil/MakeForm/atom';
+import { formFix, formInfo, period, questions } from '../../../../recoil/MakeForm/atom';
 import UrlModal from '../UrlModal';
 import { useMutation } from 'react-query';
 import { createForm } from '../../../../api/makeform';
+import { useMessage } from '../../../../hooks/useMessage';
+
+const { RangePicker } = DatePicker;
 
 interface Props {
   open: boolean;
@@ -24,8 +27,10 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
   const { title, content } = useRecoilValue(formInfo);
   const { blue, lightPurple } = useRecoilValue(color);
   const [fix, setFix] = useRecoilState(formFix);
+  const [time, setTime] = useRecoilState(period);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formId, setFormId] = useState(-1);
+  const { showMessage, contextHolder } = useMessage();
 
   const { mutate, data, isLoading, isError, error, isSuccess } = useMutation(createForm, {
     onSuccess: (data) => {
@@ -34,20 +39,28 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
   });
 
   const formCreate = useCallback(() => {
+    if (time.length === 0) return;
+
     if (!isCreate) {
       const questions = questionList.flat().map((item) => {
         const { tempId, ...rest } = item;
         return rest;
       });
 
-      mutate({ title, content, questions });
+      mutate({ title, fix, timeout: time, content, questions });
       setIsCreate(true);
+      setTime([]);
     }
-  }, [title, content, questionList, isCreate]);
+  }, [title, content, questionList, isCreate, fix, time]);
 
   const showModal = useCallback(() => {
+    if (time.length === 0) {
+      showMessage('warning', '설문 기간을 설정해주세요.');
+      return;
+    }
+
     setIsModalOpen(true);
-  }, []);
+  }, [time]);
 
   const handleCancel = useCallback(() => {
     setIsModalOpen(false);
@@ -61,36 +74,39 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
     setFix(false);
   }, [fix]);
 
-  const range = (start: number, end: number) => {
-    const result = [];
-    for (let i = start; i < end; i++) {
-      result.push(i);
-    }
-    return result;
-  };
+  const disabledDate = (current: dayjs.ConfigType) => {
+    const currentDate = dayjs().startOf('day');
+    const currentTime = dayjs().startOf('second');
+    const selectedDateTime = dayjs(current);
 
-  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-    // Can not select days before today and today
-    return current && current < dayjs().endOf('day');
+    return (
+      selectedDateTime.isBefore(currentDate) ||
+      (selectedDateTime.isSame(currentDate) && selectedDateTime.isBefore(currentTime))
+    );
   };
 
   return (
     <MakeFormModalWrapper
       title={<ResModalTitle>질문 세부 설명</ResModalTitle>}
-      width={500}
+      width={550}
       open={open}
       onCancel={onCancel}
       footer={null}
       centered
     >
+      {contextHolder}
       <FormInfoWrapper>
         <FormInfo>
-          <span>마감 기간</span>
+          <span>설문 기간</span>
           <span>
-            <DatePicker
-              format="YYYY-MM-DD HH:mm:ss"
+            <RangePicker
+              onChange={(value) => {
+                value?.[0] &&
+                  value?.[1] &&
+                  setTime([value[0]?.format('YYYY MM DD HH mm ss'), value[1]?.format('YYYY MM DD HH mm ss')]);
+              }}
+              showTime
               disabledDate={disabledDate}
-              showTime={{ defaultValue: dayjs('00:00:00', 'HH:mm:ss') }}
             />
           </span>
         </FormInfo>
