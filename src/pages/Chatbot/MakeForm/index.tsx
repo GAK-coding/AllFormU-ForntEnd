@@ -28,10 +28,6 @@ export default function MakeFormChatbot() {
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
   const [checking, setChecking] = useState<boolean>(false);
 
-  const showModal = useCallback(() => {
-    setIsOpen(true);
-  }, []);
-
   const { initMessage, detailMessage } = directChatMessage();
   const [userInput, setUserInput] = useState<string>('');
   const [sendInitMessage, setSendInitMessage] = useRecoilState(initialChat);
@@ -39,6 +35,14 @@ export default function MakeFormChatbot() {
   const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
   const [repeatCount, setRepeatCount] = useState<number>(1);
+
+  const showModal = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
+  const showPreview = useCallback(() => {
+    window.open('/makeform/chatbot/preview', '_blank');
+  }, [sendInitMessage, sendDetailMessage, setSendInitMessage, setSendDetailMessage]);
 
   const onSubmit = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -131,7 +135,7 @@ export default function MakeFormChatbot() {
               <span>부가 기능 사용하기</span>
             </FunctionTitle>
             <FunctionContent>
-              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
+              <Button onClick={showPreview} color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
                 폼 미리보기
               </Button>
               <Button onClick={showModal} color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>

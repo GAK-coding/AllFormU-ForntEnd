@@ -19,6 +19,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import MakeFormList from './pages/MyPage/DetailForm/MakeFormList';
 import ResFormList from './pages/MyPage/DetailForm/ResFomList';
 import EditForm from './pages/MyPage/EditForm';
+import PreviewChatbot from './pages/Chatbot/Preview';
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ function App() {
             <Route path={'/makeform/select'} element={<MakeFormSelect />} />
             <Route path={'/makeform/direct'} element={<MakeFormDirect />} />
             <Route path={'/makeform/chatbot'} element={<MakeFormChatbot />} />
+            <Route path={'/makeform/chatbot/preview'} element={<PreviewChatbot />} />
           </Routes>
         </BrowserRouter>
       </RecoilRoot>
