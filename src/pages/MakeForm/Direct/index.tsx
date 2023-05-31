@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useCallback, useLayoutEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Alert, Col, message, Row } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { AddQuestion, AddSection, DirectForm } from './styles';
@@ -20,6 +20,8 @@ import QueDraggable from '../../../components/Form/Questions/QueDraggable';
 import MakeFromModal from '../../../components/Form/MakeForm/MakeFromModal';
 import SectionBox from '../../../components/Form/Questions/SectionBox';
 import FormTitle from '../../../components/Form/Questions/FormTitle';
+import { useLocation } from 'react-router-dom';
+import { initialChat } from '../../../recoil/Chatbot/atom';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);

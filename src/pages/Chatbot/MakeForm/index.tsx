@@ -22,16 +22,13 @@ import { directChatMessage } from './DirectChatMessage';
 import Input from '../../../components/ui/Input';
 import { detailChat, initialChat } from '../../../recoil/Chatbot/atom';
 import { formInfo } from '../../../recoil/MakeForm/atom';
+import { useNavigate } from 'react-router-dom';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
 
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
   const [checking, setChecking] = useState<boolean>(false);
-
-  const showModal = useCallback(() => {
-    setIsOpen(true);
-  }, []);
 
   const { initMessage, detailMessage } = directChatMessage();
   const [userInput, setUserInput] = useState<string>('');
@@ -40,7 +37,16 @@ export default function MakeFormChatbot() {
   const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
   const [repeatCount, setRepeatCount] = useState<number>(1);
-  const [formData, setFormData] = useRecoilState(formInfo);
+  const navigate = useNavigate();
+
+  const showModal = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
+  const showPreview = useCallback(() => {
+    // window.open('/makeform/direct', '_blank');
+    navigate('/makeform/direct', { state: { isChatbot: true } });
+  }, []);
 
   const onSubmit = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -58,6 +64,7 @@ export default function MakeFormChatbot() {
         setCurrentInitialIndex(currentInitialIndex + 1);
       } else if (currentInitialIndex === 2) {
         setChecking(true);
+        setRepeatCount(+userInput.slice(0, 1));
         setCurrentInitialIndex(currentInitialIndex + 1);
       } else if (currentInitialIndex > 2) {
         setCurrentDetailIndex(currentDetailIndex + 1);
@@ -65,21 +72,21 @@ export default function MakeFormChatbot() {
 
       setUserInput('');
     },
-    [currentInitialIndex, currentDetailIndex, setUserInput, userInput, setSendDetailMessage, setSendInitMessage]
+    [
+      currentInitialIndex,
+      currentDetailIndex,
+      setUserInput,
+      userInput,
+      sendInitMessage,
+      setSendDetailMessage,
+      setSendInitMessage,
+    ]
   );
 
   const talkRef = useRef<HTMLDivElement>(null); // Ref 생성
   useEffect(() => {
     talkRef.current?.scrollTo(0, talkRef.current.scrollHeight); // Ref를 사용하여 스크롤 내리기
   }, [initMessage, detailMessage, userInput]); // talk 상태가 변경될 때마다 실행
-
-  useEffect(() => {
-    if (sendInitMessage.length >= 2) {
-      setFormData({ title: sendInitMessage[0].message, content: sendInitMessage[1].message });
-    }
-  }, [sendInitMessage]);
-
-  console.log('formData', formData);
 
   return (
     <BaseBgBox>
@@ -103,22 +110,26 @@ export default function MakeFormChatbot() {
             } else if (idx === currentInitialIndex) {
               return <Ballon key={idx} user={''} chatbot={initMessage.message} />;
             }
-
-            return null;
           })}
 
           {checking &&
-            detailMessage.map((detailMessage, idx) => {
-              if (idx < currentDetailIndex) {
-                return <Ballon key={idx} user={sendDetailMessage[idx].message} chatbot={detailMessage.message} />;
-              } else if (idx === currentDetailIndex) {
-                return <Ballon key={idx} user={''} chatbot={detailMessage.message} />;
-              }
-
-              return null;
+            [...Array(repeatCount)].map((v, index) => {
+              return detailMessage.map((detailMessage, idx) => {
+                if (idx + index * 2 < currentDetailIndex) {
+                  return (
+                    <Ballon
+                      key={idx + index * 2}
+                      user={sendDetailMessage[idx + index * 2].message}
+                      chatbot={detailMessage.message}
+                    />
+                  );
+                } else if (idx + index * 2 === currentDetailIndex) {
+                  return <Ballon key={idx + index * 2} user={''} chatbot={detailMessage.message} />;
+                }
+              });
             })}
 
-          {currentDetailIndex >= 2 && (
+          {currentDetailIndex >= 2 * repeatCount && (
             <ChatbotWrapper>
               <BallonWrapper>
                 <GAK>
@@ -141,7 +152,7 @@ export default function MakeFormChatbot() {
               <span>부가 기능 사용하기</span>
             </FunctionTitle>
             <FunctionContent>
-              <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
+              <Button onClick={showPreview} color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
                 폼 미리보기
               </Button>
               <Button onClick={showModal} color={'#2d2d2d'} bgColor={blue} fontSize={1.2} width={11} height={3.5}>
@@ -153,7 +164,7 @@ export default function MakeFormChatbot() {
           {isOpen && <GPTSocket />}
           <UserResWrapper>
             <UserInput onSubmit={onSubmit}>
-              {currentDetailIndex < 2 && (
+              {currentDetailIndex < 2 * repeatCount && (
                 <Input
                   type={'text'}
                   value={userInput}

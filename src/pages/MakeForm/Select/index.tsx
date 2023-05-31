@@ -67,7 +67,7 @@ export default function MakeFormSelect() {
           },
         ],
       ]);
-      setInfo({ title: '', content: '' });
+      setInfo({ title: '제발', content: '제발' });
       setSecNames(['']);
       setLens([]);
       setFix(false);
