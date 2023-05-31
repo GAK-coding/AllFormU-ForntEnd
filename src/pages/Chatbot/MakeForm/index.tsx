@@ -43,7 +43,7 @@ export default function MakeFormChatbot() {
   }, []);
 
   const showPreview = useCallback(() => {
-    window.open('/makeform/chatbot/preview', '_blank');
+    window.open('/makeform/direct', '_blank');
   }, [sendInitMessage, sendDetailMessage, setSendInitMessage, setSendDetailMessage]);
 
   const onSubmit = useCallback(
