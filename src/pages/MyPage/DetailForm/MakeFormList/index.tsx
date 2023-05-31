@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import Button from '../../../../components/ui/Button';
-import { ButtonWrapper, FormListWrapper, HeaderWrapper, Title } from '../styles';
+import { BottomBox, ButtonWrapper, FormListWrapper, HeaderWrapper, Title } from '../styles';
 import { color } from '../../../../recoil/Color/atom';
 import { useCallback } from 'react';
 import { useMutation, useQuery } from 'react-query';
@@ -77,6 +77,7 @@ export default function MakeFormList() {
             );
           })}
         </FormListWrapper>
+        <BottomBox />
       </Col>
 
       <Col span={4} />

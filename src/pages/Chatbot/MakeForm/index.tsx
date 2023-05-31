@@ -21,6 +21,7 @@ import { gptOpen } from '../../../recoil/Gpt/atom';
 import { directChatMessage } from './DirectChatMessage';
 import Input from '../../../components/ui/Input';
 import { detailChat, initialChat } from '../../../recoil/Chatbot/atom';
+import { formInfo } from '../../../recoil/MakeForm/atom';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
@@ -35,6 +36,7 @@ export default function MakeFormChatbot() {
   const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
   const [repeatCount, setRepeatCount] = useState<number>(1);
+  const [formData, setFormData] = useRecoilState(formInfo);
 
   const showModal = useCallback(() => {
     setIsOpen(true);
@@ -74,6 +76,14 @@ export default function MakeFormChatbot() {
   useEffect(() => {
     talkRef.current?.scrollTo(0, talkRef.current.scrollHeight); // Ref를 사용하여 스크롤 내리기
   }, [initMessage, detailMessage, userInput]); // talk 상태가 변경될 때마다 실행
+
+  useEffect(() => {
+    if (sendInitMessage.length >= 2) {
+      setFormData({ title: sendInitMessage[0].message, content: sendInitMessage[1].message });
+    }
+  }, [sendInitMessage]);
+
+  console.log('formData', formData);
 
   return (
     <BaseBgBox>
