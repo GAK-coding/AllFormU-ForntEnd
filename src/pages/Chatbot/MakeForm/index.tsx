@@ -22,6 +22,7 @@ import { directChatMessage } from './DirectChatMessage';
 import Input from '../../../components/ui/Input';
 import { detailChat, initialChat } from '../../../recoil/Chatbot/atom';
 import { formInfo } from '../../../recoil/MakeForm/atom';
+import { useNavigate } from 'react-router-dom';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
@@ -37,14 +38,16 @@ export default function MakeFormChatbot() {
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
   const [repeatCount, setRepeatCount] = useState<number>(1);
   const [formData, setFormData] = useRecoilState(formInfo);
+  const navigate = useNavigate();
 
   const showModal = useCallback(() => {
     setIsOpen(true);
   }, []);
 
   const showPreview = useCallback(() => {
-    window.open('/makeform/direct', '_blank');
-  }, [sendInitMessage, sendDetailMessage, setSendInitMessage, setSendDetailMessage]);
+    // window.open('/makeform/direct', '_blank');
+    navigate('/makeform/direct', { state: { isChatbot: true } });
+  }, []);
 
   const onSubmit = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
@@ -77,13 +80,13 @@ export default function MakeFormChatbot() {
     talkRef.current?.scrollTo(0, talkRef.current.scrollHeight); // Ref를 사용하여 스크롤 내리기
   }, [initMessage, detailMessage, userInput]); // talk 상태가 변경될 때마다 실행
 
-  useEffect(() => {
-    if (sendInitMessage.length >= 2) {
-      setFormData({ title: sendInitMessage[0].message, content: sendInitMessage[1].message });
-    }
-  }, [sendInitMessage]);
-
-  console.log('formData', formData);
+  // useEffect(() => {
+  //   if (sendInitMessage.length >= 2) {
+  //     setFormData({ title: sendInitMessage[0].message, content: sendInitMessage[1].message });
+  //   }
+  // }, [sendInitMessage]);
+  //
+  // console.log('formData', formData);
 
   return (
     <BaseBgBox>
