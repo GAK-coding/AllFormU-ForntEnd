@@ -23,10 +23,11 @@ import Input from '../../../components/ui/Input';
 import { detailChat, initialChat } from '../../../recoil/Chatbot/atom';
 import { formInfo } from '../../../recoil/MakeForm/atom';
 import { useNavigate } from 'react-router-dom';
+import { useMessage } from '../../../hooks/useMessage';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
-
+  const { showMessage, contextHolder } = useMessage();
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
   const [checking, setChecking] = useState<boolean>(false);
 
@@ -37,6 +38,8 @@ export default function MakeFormChatbot() {
   const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
   const [repeatCount, setRepeatCount] = useState<number>(1);
+  const numRange = ['1', '2', '3', '4', '5'];
+
   const navigate = useNavigate();
 
   const showModal = useCallback(() => {
@@ -62,6 +65,12 @@ export default function MakeFormChatbot() {
       if (currentInitialIndex < 2) {
         setCurrentInitialIndex(currentInitialIndex + 1);
       } else if (currentInitialIndex === 2) {
+        const includeRange = numRange.some((path) => userInput.slice(0, 1).includes(path));
+
+        if (!includeRange) {
+          showMessage('warning', '1 ~ 5 사이의 숫자를 입력해주세요');
+          return;
+        }
         setChecking(true);
         setRepeatCount(+userInput.slice(0, 1));
         setCurrentInitialIndex(currentInitialIndex + 1);
@@ -89,6 +98,7 @@ export default function MakeFormChatbot() {
 
   return (
     <BaseBgBox>
+      {contextHolder}
       <Wrapper>
         <ViewWrapper ref={talkRef}>
           <ChatbotWrapper>
