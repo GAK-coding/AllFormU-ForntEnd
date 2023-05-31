@@ -21,7 +21,7 @@ import MakeFromModal from '../../../components/Form/MakeForm/MakeFromModal';
 import SectionBox from '../../../components/Form/Questions/SectionBox';
 import FormTitle from '../../../components/Form/Questions/FormTitle';
 import { useLocation } from 'react-router-dom';
-import { initialChat } from '../../../recoil/Chatbot/atom';
+import { detailChat } from '../../../recoil/Chatbot/atom';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
@@ -36,6 +36,58 @@ export default function MakeFormDirect() {
   const ref = useRef<HTMLDivElement>(null);
   const { showMessage, contextHolder } = useMessage();
   const { blue } = useRecoilValue(color);
+
+  const { state } = useLocation();
+  const [isRendering, setIsRendering] = useState(true);
+  const detailMessage = useRecoilValue(detailChat);
+
+  useEffect(() => {
+    if (isRendering && state) {
+      const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
+
+      for (let i = 0; i < detailMessage.length; i = i + 2) {
+        const sectionTitle = detailMessage[i].message;
+        const queNum = detailMessage[i + 1].message;
+        const sectionIndex = i / 2;
+
+        setSectionList((prev) => [...prev, sectionTitle]);
+
+        // 첫 번째가 아닌 경우엔 섹션 생성
+        if (sectionIndex !== 0) {
+          temp.push([
+            {
+              type: DESCRIPTION_SHORT,
+              tempId: uuid(),
+              required: false,
+              title: '',
+              sectionNum: temp.length,
+              descriptions: [{ content: '' }],
+            },
+          ]);
+        }
+
+        // 질문개수 추가
+        for (let j = 0; j < +queNum.slice(0, 1); j++) {
+          if (sectionIndex === 0) {
+            j++;
+          }
+          temp[sectionIndex].push({
+            type: DESCRIPTION_SHORT,
+            tempId: uuid(),
+            required: false,
+            title: '',
+            sectionNum: 0,
+            descriptions: [{ content: '' }],
+          });
+        }
+      }
+
+      // 렌더링 false로 변경
+      // json형식 다시 변경
+      setIsRendering(false);
+      setQuestionList(temp);
+    }
+  }, [detailChat]);
 
   const showModal = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

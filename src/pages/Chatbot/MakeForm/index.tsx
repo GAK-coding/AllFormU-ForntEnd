@@ -44,7 +44,6 @@ export default function MakeFormChatbot() {
   }, []);
 
   const showPreview = useCallback(() => {
-    // window.open('/makeform/direct', '_blank');
     navigate('/makeform/direct', { state: { isChatbot: true } });
   }, []);
 
