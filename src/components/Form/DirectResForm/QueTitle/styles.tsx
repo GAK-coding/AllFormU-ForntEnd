@@ -5,4 +5,5 @@ export const QueTitleWrapper = styled.div`
 
   font-size: 2rem;
   font-weight: 700;
+  color: #696969;
 `;

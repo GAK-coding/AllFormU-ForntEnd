@@ -12,6 +12,7 @@ import {
 } from '../../../../recoil/MakeForm/atom';
 import FormInput from '../../../ui/FormInput';
 import { DescriptionQue, GridQue, SelectionQue } from '../../../../typings/makeForm';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   children: React.ReactNode;
@@ -26,6 +27,7 @@ export default function SectionBox({ children, index }: Props) {
   const [nowIndex, setNowIndex] = useRecoilState(nowFocusIndex);
   const accrueQue = useRecoilValue(sectionLens);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
+  const { pathname } = useLocation();
 
   const onChangeSectionName = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -98,10 +100,12 @@ export default function SectionBox({ children, index }: Props) {
           fontSize={1.8}
           placeholder={'섹션 이름'}
         />
-        <span>
-          <span>섹션 순서</span>
-          <Select value={`${index + 1}`} style={{ width: 100 }} onChange={onChangeSection} options={option} />
-        </span>
+        {pathname.slice(1, 10) !== 'directres' && (
+          <span>
+            <span>섹션 순서</span>
+            <Select value={`${index + 1}`} style={{ width: 100 }} onChange={onChangeSection} options={option} />
+          </span>
+        )}
       </div>
       {children}
     </SectionBoxWrapper>
