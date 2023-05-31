@@ -99,13 +99,16 @@ export default function Info() {
             </Line>
             <AlignBox>
               {/* TODO : 4개만 보여주기 */}
-              {makeFormInfo?.map((formInfo: GetForm) => {
-                return <FormBox key={formInfo.id}>{formInfo.title}</FormBox>;
+              {makeFormInfo?.map((formInfo: GetForm, idx: number) => {
+                if (idx > 1) return;
+                return <FormBox key={formInfo.id}>{`${idx + 1}. ${formInfo.title}`}</FormBox>;
               })}
             </AlignBox>
             <AlignBox>
-              {makeFormInfo?.map((formInfo: GetForm) => {
-                return <FormBox key={formInfo.id}>{formInfo.title}</FormBox>;
+              {makeFormInfo?.map((formInfo: GetForm, idx: number) => {
+                if (idx > 3) return;
+
+                if (idx > 1) return <FormBox key={formInfo.id}>{`${idx + 1}. ${formInfo.title}`}</FormBox>;
               })}
             </AlignBox>
           </Form>
@@ -116,26 +119,26 @@ export default function Info() {
             </span>
             <Line>내 응답</Line>
             <AlignBox>
-              {resFormInfo
-                .filter((formInfo) => formInfo.id < 3)
-                .map((formInfo, idx) => {
-                  return (
-                    <FormBox key={idx} onClick={() => true}>
-                      {formInfo.title}
-                    </FormBox>
-                  );
-                })}
+              {resFormInfo.map((formInfo, idx: number) => {
+                if (idx > 1) return;
+                return (
+                  <FormBox key={idx} onClick={() => true}>
+                    {formInfo.title}
+                  </FormBox>
+                );
+              })}
             </AlignBox>
             <AlignBox>
-              {resFormInfo
-                .filter((formInfo) => formInfo.id > 2 && formInfo.id < 5)
-                .map((formInfo, idx) => {
+              {resFormInfo.map((formInfo, idx: number) => {
+                if (idx > 3) return;
+
+                if (idx > 1)
                   return (
                     <FormBox key={idx} onClick={() => true}>
                       {formInfo.title}
                     </FormBox>
                   );
-                })}
+              })}
             </AlignBox>
           </Form>
         </FormWrapper>

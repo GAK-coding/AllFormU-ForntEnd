@@ -37,19 +37,6 @@ export const BottomBox = styled.div`
   width: 100%;
   height: 4rem;
 `;
-
-export const FormBox = styled(BaseGbBoxWrapper)`
-  //width: 60%;
-  //height: 14rem;
-  //border-radius: 3rem;
-  //border: none;
-  //background-color: rgba(232, 211, 255, 0.3);
-  //
-  //margin-top: 2rem;
-  //
-  //display: flex;
-`;
-
 export const Title = styled.div`
   display: flex;
   flex-direction: column;
@@ -94,5 +81,3 @@ export const ButtonWrapper = styled.div`
     }
   }
 `;
-
-export const ButtonView = styled.div``;
