@@ -39,12 +39,11 @@ export default function MakeFormDirect() {
 
   const { state } = useLocation();
   const [isRendering, setIsRendering] = useState(true);
-  const detailMessage = useRecoilValue(detailChat);
+  const [detailMessage, setDetailMessage] = useRecoilState(detailChat);
 
   useEffect(() => {
     if (isRendering && state) {
       const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
-      // const temp: Array<DescriptionQue | SelectionQue | GridQue>[];
 
       for (let i = 0; i < detailMessage.length; i = i + 2) {
         const sectionTitle = detailMessage[i].message;
@@ -87,6 +86,9 @@ export default function MakeFormDirect() {
       // json형식 다시 변경
       setIsRendering(false);
       setQuestionList(temp);
+
+      // message 초기화
+      setDetailMessage([]);
     }
   }, [detailChat]);
 

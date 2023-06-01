@@ -16,7 +16,7 @@ import Ballon from '../../../components/Chatbot/BallonChat';
 import Button from '../../../components/ui/Button';
 import { color } from '../../../recoil/Color/atom';
 import GPTSocket from '../../../components/GPT/GPTSocket';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { gptOpen } from '../../../recoil/Gpt/atom';
 import { directChatMessage } from './DirectChatMessage';
 import Input from '../../../components/ui/Input';
@@ -33,7 +33,7 @@ export default function MakeFormChatbot() {
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
   const [checking, setChecking] = useState<boolean>(false);
 
-  const [questionList, setQuestionList] = useRecoilState(questions);
+  const setQuestionList = useSetRecoilState(questions);
   const [userInput, setUserInput] = useState<string>('');
   const [sendInitMessage, setSendInitMessage] = useRecoilState(initialChat);
   const [sendDetailMessage, setSendDetailMessage] = useRecoilState(detailChat);
@@ -49,7 +49,10 @@ export default function MakeFormChatbot() {
 
   const showModal = useCallback(() => {
     setIsOpen(true);
+  }, []);
 
+  const showPreview = useCallback(() => {
+    navigate('/makeform/direct', { state: { isChatbot: true } });
     setQuestionList([
       [
         {
@@ -62,10 +65,6 @@ export default function MakeFormChatbot() {
         },
       ],
     ]);
-  }, []);
-
-  const showPreview = useCallback(() => {
-    navigate('/makeform/direct', { state: { isChatbot: true } });
   }, []);
 
   const onSubmit = useCallback(
