@@ -21,9 +21,11 @@ import { gptOpen } from '../../../recoil/Gpt/atom';
 import { directChatMessage } from './DirectChatMessage';
 import Input from '../../../components/ui/Input';
 import { detailChat, initialChat } from '../../../recoil/Chatbot/atom';
-import { formInfo } from '../../../recoil/MakeForm/atom';
+import { formInfo, questions } from '../../../recoil/MakeForm/atom';
 import { useNavigate } from 'react-router-dom';
 import { useMessage } from '../../../hooks/useMessage';
+import { DESCRIPTION_SHORT } from '../../../typings/makeForm';
+import { v4 as uuid } from 'uuid';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
@@ -31,6 +33,7 @@ export default function MakeFormChatbot() {
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
   const [checking, setChecking] = useState<boolean>(false);
 
+  const [questionList, setQuestionList] = useRecoilState(questions);
   const { initMessage, detailMessage } = directChatMessage();
   const [userInput, setUserInput] = useState<string>('');
   const [sendInitMessage, setSendInitMessage] = useRecoilState(initialChat);
@@ -49,6 +52,18 @@ export default function MakeFormChatbot() {
 
   const showPreview = useCallback(() => {
     navigate('/makeform/direct', { state: { isChatbot: true } });
+    setQuestionList([
+      [
+        {
+          type: DESCRIPTION_SHORT,
+          tempId: uuid(),
+          required: false,
+          title: '',
+          sectionNum: 0,
+          descriptions: [{ content: '' }],
+        },
+      ],
+    ]);
   }, []);
 
   const onSubmit = useCallback(

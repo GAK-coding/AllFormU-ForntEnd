@@ -44,6 +44,7 @@ export default function MakeFormDirect() {
   useEffect(() => {
     if (isRendering && state) {
       const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
+      // const temp: Array<DescriptionQue | SelectionQue | GridQue>[];
 
       for (let i = 0; i < detailMessage.length; i = i + 2) {
         const sectionTitle = detailMessage[i].message;
