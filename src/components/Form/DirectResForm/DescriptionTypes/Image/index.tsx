@@ -5,7 +5,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../../../../recoil/Color/atom';
 import Button from '../../../../ui/Button';
 
-export default function Image() {
+interface Props {
+  id: number;
+}
+
+export default function Image({ id }: Props) {
   const [images, setImages] = React.useState([]);
   const { blue } = useRecoilValue(color);
   const maxNumber = 1;

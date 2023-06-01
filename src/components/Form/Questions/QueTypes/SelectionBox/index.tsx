@@ -18,7 +18,7 @@ import Button from '../../../../ui/Button';
 import FormInput from '../../../../ui/FormInput';
 import { useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
-import { addContent, deleteContent, updateContent } from '../../../../../api/editForm';
+import { addContent, deleteContent, updateContent, updateLinear } from '../../../../../api/editForm';
 import { useMessage } from '../../../../../hooks/useMessage';
 import { linearList } from '../../../../../utils/linearList';
 import { getContentByValue } from '../../../../../utils/getContentByValue';
@@ -38,7 +38,6 @@ export default function SelectionBox({ data, row, col }: Props) {
   const [isLinearChange, setIsLinearChange] = useState(false);
   const [addLast, setAddLast] = useState(false);
   const [range, setRange] = useState(-1);
-  const [opts, setOpts] = useState<{ id: number; content: string }[]>([]);
 
   const { mutate: deleteContentMutate } = useMutation((optId: number) => deleteContent(optId));
 
@@ -91,51 +90,35 @@ export default function SelectionBox({ data, row, col }: Props) {
     [questionList]
   );
 
-  const { mutate: addContentMutate, data: addData } = useMutation(
-    (value: string) => addContent({ queId: data.id!, content: value, linear: true })
-    // {
-    //   onSuccess: (data) => {
-    //     console.log(data);
-    //     if (opts.length < data.length) setOpts(data);
-    //   },
-    // }
-  );
-
-  console.log(opts);
-  // const {mutate: deleteContentMutate} = useMutation()
-
-  function createArray(start: number, end: number): number[] {
-    const arr: number[] = [];
+  function createArray(start: number, end: number): string[] {
+    const arr: string[] = [];
 
     for (let i = start; i <= end; i++) {
-      arr.push(i);
+      arr.push(i.toString());
     }
 
     return arr;
   }
 
+  const { mutate: updateLinearMutate } = useMutation(
+    (content: string[]) => updateLinear({ queId: data.id!, content }),
+    {
+      onSuccess: (data) => {
+        const temp = JSON.parse(JSON.stringify(questionList));
+        temp[row][col].options = data;
+        setQuestionList(temp);
+      },
+    }
+  );
+
   const onChangeLinear = useCallback(
     async (value: string, num: number) => {
       if (pathname.slice(1, 16) === 'mypage/editform') {
-        const temp = JSON.parse(JSON.stringify(questionList));
-        let start = getContentByValue((temp[row][col] as SelectionQue).options, '0')!;
-        let end = getContentByValue((temp[row][col] as SelectionQue).options, '1')!;
+        let start = data?.options[0].content;
+        let end = data?.options[data?.options.length - 1].content;
         num === 0 ? (start = value) : (end = value);
-        setRange(+end - +start + 1);
 
-        data.options.map((opt, idx) => onDelete(idx, opt.id, true));
-
-        // createArray(+start, +end).map(async (num) => await addContentMutate(num.toString()));
-
-        const numArray = createArray(+start, +end);
-
-        for (const num of numArray) {
-          await addContentMutate(num.toString());
-
-          console.log(addData);
-        }
-
-        // console.log(createArray(+start, +end));
+        updateLinearMutate(createArray(+start, +end));
       } else {
         const temp = JSON.parse(JSON.stringify(questionList));
         let start = (temp[row][col] as SelectionQue).options[0].content;
@@ -170,9 +153,7 @@ export default function SelectionBox({ data, row, col }: Props) {
       <DropDownWrapper>
         {contextHolder}
         <Select
-          defaultValue={`${
-            pathname.slice(1, 16) !== 'mypage/editform' ? 0 : getContentByValue(data?.options, '0') || 0
-          }`}
+          defaultValue={`${pathname.slice(1, 16) !== 'mypage/editform' ? 0 : data?.options[0].content || 0}`}
           onChange={(e) => onChangeLinear(e, 0)}
           style={{ width: 70 }}
           options={linearList(0, 1)}
@@ -180,7 +161,7 @@ export default function SelectionBox({ data, row, col }: Props) {
         <span>~</span>
         <Select
           defaultValue={`${
-            pathname.slice(1, 16) !== 'mypage/editform' ? 10 : getContentByValue(data?.options, '1') || 10
+            pathname.slice(1, 16) !== 'mypage/editform' ? 10 : data?.options[data?.options.length - 1].content || 10
           }`}
           onChange={(e) => onChangeLinear(e, 1)}
           style={{ width: 70 }}
