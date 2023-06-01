@@ -55,12 +55,23 @@ export const deleteContent = async (optId: number) => {
 export const addContent = async (data: { queId: number; content: string; linear?: boolean }) => {
   try {
     const { queId, content, linear } = data;
-    const { data: resData } = await axios.post(`/selection/createSelection/${queId}`, { content });
+    const { data: id } = await axios.post(`/selection/createSelection/${queId}`, { content });
 
-    if (linear) return resData;
-
-    return resData[resData.length - 1].id;
+    return id[id.length - 1];
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const updateLinear = async (data: { content: string[]; queId: number }) => {
+  try {
+    const { content, queId } = data;
+    const res: { data: { id: number; content: string }[] } = await axios.post(`/selection/createLinear/${queId}`, {
+      content,
+    });
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
   }
 };
