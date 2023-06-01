@@ -21,11 +21,8 @@ import { gptOpen } from '../../../recoil/Gpt/atom';
 import { directChatMessage } from './DirectChatMessage';
 import Input from '../../../components/ui/Input';
 import { detailChat, initialChat } from '../../../recoil/Chatbot/atom';
-import { formInfo, questions } from '../../../recoil/MakeForm/atom';
 import { useNavigate } from 'react-router-dom';
 import { useMessage } from '../../../hooks/useMessage';
-import { DESCRIPTION_SHORT } from '../../../typings/makeForm';
-import { v4 as uuid } from 'uuid';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
@@ -33,14 +30,14 @@ export default function MakeFormChatbot() {
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
   const [checking, setChecking] = useState<boolean>(false);
 
-  const [questionList, setQuestionList] = useRecoilState(questions);
-  const { initMessage, detailMessage } = directChatMessage();
   const [userInput, setUserInput] = useState<string>('');
   const [sendInitMessage, setSendInitMessage] = useRecoilState(initialChat);
   const [sendDetailMessage, setSendDetailMessage] = useRecoilState(detailChat);
   const [currentInitialIndex, setCurrentInitialIndex] = useState(0);
   const [currentDetailIndex, setCurrentDetailIndex] = useState(0);
   const [repeatCount, setRepeatCount] = useState<number>(1);
+  const { initMessage, detailMessage } = directChatMessage({ repeat: repeatCount });
+
   const sectionNumRange = ['1', '2', '3', '4', '5'];
   const queNumRange = Array.from({ length: 100 }, (_, index) => (index + 1).toString());
 
@@ -52,39 +49,11 @@ export default function MakeFormChatbot() {
 
   const showPreview = useCallback(() => {
     navigate('/makeform/direct', { state: { isChatbot: true } });
-    setQuestionList([
-      [
-        {
-          type: DESCRIPTION_SHORT,
-          tempId: uuid(),
-          required: false,
-          title: '',
-          sectionNum: 0,
-          descriptions: [{ content: '' }],
-        },
-      ],
-    ]);
   }, []);
 
   const onSubmit = useCallback(
     (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
-
-      // if (!checking) {
-      //   setSendInitMessage((prev) => [...prev, { message: userInput }]);
-      // } else {
-      //   setSendDetailMessage((prev) => [...prev, { message: userInput }]);
-      // }
-      //
-      // if (checking && currentDetailIndex > 0) {
-      //   if (currentDetailIndex % 2 === 0) {
-      //     const includeRange = queNumRange.some((path) => userInput.slice(0, 1).includes(path));
-      //     if (!includeRange) {
-      //       showMessage('warning', '1 ~ 100 사이의 숫자를 입력해주세요');
-      //       return;
-      //     }
-      //   }
-      // }
 
       if (currentInitialIndex <= 2) {
         if (currentInitialIndex === 2) {
@@ -99,9 +68,7 @@ export default function MakeFormChatbot() {
         }
         setSendInitMessage((prev) => [...prev, { message: userInput }]);
         setCurrentInitialIndex(currentInitialIndex + 1);
-      }
-      // else if (currentInitialIndex > 2) {
-      else {
+      } else {
         if (currentDetailIndex > 0) {
           if (currentDetailIndex % 2 !== 0) {
             const includeRange = queNumRange.some((path) => userInput.slice(0, 1).includes(path));
@@ -159,21 +126,30 @@ export default function MakeFormChatbot() {
             }
           })}
 
+          {/* {checking && */}
+          {/*   [...Array(repeatCount)].map((v, index) => { */}
+          {/*     return detailMessage.map((detailMessage, idx) => { */}
+          {/*       if (idx + index * 2 < currentDetailIndex) { */}
+          {/*         return ( */}
+          {/*           <Ballon */}
+          {/*             key={idx + index * 2} */}
+          {/*             user={sendDetailMessage[idx + index * 2].message} */}
+          {/*             chatbot={detailMessage.message} */}
+          {/*           /> */}
+          {/*         ); */}
+          {/*       } else if (idx + index * 2 === currentDetailIndex) { */}
+          {/*         return <Ballon key={idx + index * 2} user={''} chatbot={detailMessage.message} />; */}
+          {/*       } */}
+          {/*     }); */}
+          {/*   })} */}
+
           {checking &&
-            [...Array(repeatCount)].map((v, index) => {
-              return detailMessage.map((detailMessage, idx) => {
-                if (idx + index * 2 < currentDetailIndex) {
-                  return (
-                    <Ballon
-                      key={idx + index * 2}
-                      user={sendDetailMessage[idx + index * 2].message}
-                      chatbot={detailMessage.message}
-                    />
-                  );
-                } else if (idx + index * 2 === currentDetailIndex) {
-                  return <Ballon key={idx + index * 2} user={''} chatbot={detailMessage.message} />;
-                }
-              });
+            detailMessage.map((detailMessage, idx) => {
+              if (idx < currentDetailIndex) {
+                return <Ballon key={idx} user={sendDetailMessage[idx].message} chatbot={detailMessage.message} />;
+              } else if (idx === currentDetailIndex) {
+                return <Ballon key={idx} user={''} chatbot={detailMessage.message} />;
+              }
             })}
 
           {currentDetailIndex >= 2 * repeatCount && (
