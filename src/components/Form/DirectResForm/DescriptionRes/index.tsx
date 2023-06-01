@@ -31,11 +31,11 @@ export default function DescriptionRes({ data, row, col, isClick, onClickQue }: 
     <QueWrapper>
       <DescriptionResWrapper>
         <QueTitle data={data} />
-        {data.type === DESCRIPTION_SHORT && <Short />}
-        {data.type === DESCRIPTION_LONG && <Long />}
-        {data.type === DESCRIPTION_DATE && <Date />}
-        {data.type === DESCRIPTION_TIME && <Time />}
-        {data.type === DESCRIPTION_IMG && <Image />}
+        {data.type === DESCRIPTION_SHORT && <Short id={data.id!} />}
+        {data.type === DESCRIPTION_LONG && <Long id={data.id!} />}
+        {data.type === DESCRIPTION_DATE && <Date id={data.id!} />}
+        {data.type === DESCRIPTION_TIME && <Time id={data.id!} />}
+        {data.type === DESCRIPTION_IMG && <Image id={data.id!} />}
       </DescriptionResWrapper>
     </QueWrapper>
   );

@@ -7,5 +7,10 @@ interface Props {
 }
 
 export default function QueTitle({ data }: Props) {
-  return <QueTitleWrapper>{data.title}</QueTitleWrapper>;
+  return (
+    <QueTitleWrapper>
+      {data.title}
+      <span>{data.required && '*'}</span>
+    </QueTitleWrapper>
+  );
 }

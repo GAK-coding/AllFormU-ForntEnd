@@ -3,7 +3,11 @@ import { TimeWrapper } from './styles';
 import { TimePicker } from 'antd';
 import type { Dayjs } from 'dayjs';
 
-export default function Time() {
+interface Props {
+  id: number;
+}
+
+export default function Time({ id }: Props) {
   const onChange = (time: Dayjs | null, timeString: string) => {
     console.log(time, timeString);
   };

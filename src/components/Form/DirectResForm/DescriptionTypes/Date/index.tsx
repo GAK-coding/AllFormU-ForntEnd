@@ -3,7 +3,11 @@ import { DateWrapper } from './styles';
 import type { DatePickerProps } from 'antd';
 import { DatePicker } from 'antd';
 
-export default function Date() {
+interface Props {
+  id: number;
+}
+
+export default function Date({ id }: Props) {
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
   };
