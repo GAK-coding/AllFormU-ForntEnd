@@ -38,7 +38,7 @@ export default function SelectionBox({ data, row, col }: Props) {
   const [isLinearChange, setIsLinearChange] = useState(false);
   const [addLast, setAddLast] = useState(false);
   const [range, setRange] = useState(-1);
-  const [optIds, setOptIds] = useState<number[]>([]);
+  const [opts, setOpts] = useState<{ id: number; content: string }[]>([]);
 
   const { mutate: deleteContentMutate } = useMutation((optId: number) => deleteContent(optId));
 
@@ -91,12 +91,17 @@ export default function SelectionBox({ data, row, col }: Props) {
     [questionList]
   );
 
-  const { mutate: addContentMutate } = useMutation((value: string) => addContent({ queId: data.id!, content: value }), {
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
+  const { mutate: addContentMutate, data: addData } = useMutation(
+    (value: string) => addContent({ queId: data.id!, content: value, linear: true })
+    // {
+    //   onSuccess: (data) => {
+    //     console.log(data);
+    //     if (opts.length < data.length) setOpts(data);
+    //   },
+    // }
+  );
 
+  console.log(opts);
   // const {mutate: deleteContentMutate} = useMutation()
 
   function createArray(start: number, end: number): number[] {
@@ -120,7 +125,15 @@ export default function SelectionBox({ data, row, col }: Props) {
 
         data.options.map((opt, idx) => onDelete(idx, opt.id, true));
 
-        createArray(+start, +end).map(async (num) => await addContentMutate(num.toString()));
+        // createArray(+start, +end).map(async (num) => await addContentMutate(num.toString()));
+
+        const numArray = createArray(+start, +end);
+
+        for (const num of numArray) {
+          await addContentMutate(num.toString());
+
+          console.log(addData);
+        }
 
         // console.log(createArray(+start, +end));
       } else {
@@ -143,9 +156,6 @@ export default function SelectionBox({ data, row, col }: Props) {
     },
     [questionList, isLinearChange, addLast, range]
   );
-
-  console.log(data.options);
-  console.log(range);
 
   useEffect(() => {
     if (type === SELECTION_DROPDOWN && options[options.length - 1].content === '기타') {

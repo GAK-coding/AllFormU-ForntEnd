@@ -55,9 +55,11 @@ export const deleteContent = async (optId: number) => {
 export const addContent = async (data: { queId: number; content: string; linear?: boolean }) => {
   try {
     const { queId, content, linear } = data;
-    const { data: id } = await axios.post(`/selection/createSelection/${queId}`, { content });
+    const { data: resData } = await axios.post(`/selection/createSelection/${queId}`, { content });
 
-    return id[id.length - 1];
+    if (linear) return resData;
+
+    return resData[resData.length - 1].id;
   } catch (error) {
     console.error(error);
   }
