@@ -39,7 +39,7 @@ export default function MakeFormDirect() {
 
   const { state } = useLocation();
   const [isRendering, setIsRendering] = useState(true);
-  const detailMessage = useRecoilValue(detailChat);
+  const [detailMessage, setDetailMessage] = useRecoilState(detailChat);
 
   useEffect(() => {
     if (isRendering && state) {
@@ -86,6 +86,9 @@ export default function MakeFormDirect() {
       // json형식 다시 변경
       setIsRendering(false);
       setQuestionList(temp);
+
+      // message 초기화
+      setDetailMessage([]);
     }
   }, [detailChat]);
 
