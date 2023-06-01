@@ -2,7 +2,11 @@ import React from 'react';
 import TextArea from 'antd/es/input/TextArea';
 import { LongWrapper } from './styles';
 
-export default function Long() {
+interface Props {
+  id: number;
+}
+
+export default function Long({ id }: Props) {
   return (
     <LongWrapper>
       <TextArea
@@ -11,7 +15,7 @@ export default function Long() {
         style={{ height: 80, resize: 'none' }}
         value={''}
         onChange={() => true}
-        placeholder="설문 설명"
+        placeholder="내 답변"
         required
       />
     </LongWrapper>
