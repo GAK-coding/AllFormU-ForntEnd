@@ -23,6 +23,9 @@ import Input from '../../../components/ui/Input';
 import { detailChat, initialChat } from '../../../recoil/Chatbot/atom';
 import { useNavigate } from 'react-router-dom';
 import { useMessage } from '../../../hooks/useMessage';
+import { questions } from '../../../recoil/MakeForm/atom';
+import { DESCRIPTION_SHORT } from '../../../typings/makeForm';
+import { v4 as uuid } from 'uuid';
 
 export default function MakeFormChatbot() {
   const { blue } = useRecoilValue(color);
@@ -30,6 +33,7 @@ export default function MakeFormChatbot() {
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
   const [checking, setChecking] = useState<boolean>(false);
 
+  const [questionList, setQuestionList] = useRecoilState(questions);
   const [userInput, setUserInput] = useState<string>('');
   const [sendInitMessage, setSendInitMessage] = useRecoilState(initialChat);
   const [sendDetailMessage, setSendDetailMessage] = useRecoilState(detailChat);
@@ -45,6 +49,19 @@ export default function MakeFormChatbot() {
 
   const showModal = useCallback(() => {
     setIsOpen(true);
+
+    setQuestionList([
+      [
+        {
+          type: DESCRIPTION_SHORT,
+          tempId: uuid(),
+          required: false,
+          title: '',
+          sectionNum: 0,
+          descriptions: [{ content: '' }],
+        },
+      ],
+    ]);
   }, []);
 
   const showPreview = useCallback(() => {
