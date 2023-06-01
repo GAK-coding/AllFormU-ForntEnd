@@ -24,8 +24,6 @@ export default function FormTitle({ isEdit, formId }: Props) {
 
   const [sendInitMessage, setSendInitMessage] = useRecoilState(initialChat);
 
-  console.log(state);
-
   useEffect(() => {
     if (state && sendInitMessage.length >= 2) {
       setInfo({ title: sendInitMessage[0].message, content: sendInitMessage[1].message });
