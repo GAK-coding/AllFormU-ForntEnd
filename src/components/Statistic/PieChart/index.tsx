@@ -158,7 +158,7 @@ export default function PieChart() {
   );
 
   return (
-    <div style={{ height: '500px' }}>
+    <div style={{ width: '800px', height: '500px', margin: '0 auto' }}>
       <MyResponsivePie data={data} />
     </div>
   );

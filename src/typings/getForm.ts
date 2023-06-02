@@ -43,8 +43,7 @@ export interface GetFormInfo extends FormInfo {
   id: number;
   questions: (DescriptionQue | SelectionQue)[];
   fix: boolean;
-  createdData?: string;
-  endDate?: string;
+  timeout?: string[];
 }
 
 interface GetDescription extends Omit<DescriptionQue, 'tempId'> {
