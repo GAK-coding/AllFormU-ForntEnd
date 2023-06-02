@@ -27,7 +27,7 @@ export default function Header() {
     } else {
       navigate('/signin');
     }
-  }, [info.id]);
+  }, [info.id, login]);
 
   return (
     <HeaderWrapper>
