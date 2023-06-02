@@ -17,7 +17,7 @@ export interface Chatbot {
 export interface ResDescription {
   member_id: number;
   question_id: number;
-  content: string | null;
+  content: string;
 }
 
 export interface ResSelection {
