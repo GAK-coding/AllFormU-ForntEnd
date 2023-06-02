@@ -96,8 +96,9 @@ export default function Edit() {
   }, [isNewNicknameSuccess, isNewPasswordSuccess, newNicknameData, newPasswordData]);
 
   const sendInfo = useCallback(() => {
+    console.log('유저 id' + info.id);
     if (images.length !== 0) {
-      changeImgMutate();
+      changeImgMutate({ img: images[0].file as File, userId: info.id });
       showMessage('success', '프로필 사진 변경 성공!');
     }
 
@@ -147,7 +148,9 @@ export default function Edit() {
     setImages(imageList as never[]);
   };
 
-  const { mutate: changeImgMutate } = useMutation(() => changeUrl({ img: images[0].file as File, userId: info.id }));
+  const { mutate: changeImgMutate } = useMutation(changeUrl, {
+    onSuccess: () => setImages([]),
+  });
 
   console.log(images);
 

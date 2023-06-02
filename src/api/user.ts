@@ -85,7 +85,12 @@ export const changeUrl = async (data: { img: File; userId: number }) => {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
-    await changeImg({ id: 2, newImage: url.data });
+    try {
+      await changeImg({ id: userId, newImage: url.data });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   } catch (error) {
     console.error(error);
     throw error;
