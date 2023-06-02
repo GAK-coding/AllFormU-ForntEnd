@@ -6,7 +6,7 @@ import BaseBgBox from '../../../components/ui/BaseBgBox';
 import Input from '../../../components/ui/Input';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { userInfo } from '../../../recoil/User/atom';
-import { changeNickname, changePwd, setDormant, setWithdrawal } from '../../../api/user';
+import { changeImg, changeNickname, changePwd, changeUrl, setDormant, setWithdrawal } from '../../../api/user';
 import { useMutation } from 'react-query';
 import { Match, MisMatch } from '../../SignUp/styles';
 import { useMessage } from '../../../hooks/useMessage';
@@ -28,6 +28,9 @@ export default function Edit() {
 
   const [checkPw, setCheckPw] = useState(false);
   const [isValid, setIsValid] = useState(false);
+
+  const [images, setImages] = useState<{ dataURL: string; file: File }[]>([]);
+  const maxNumber = 1;
 
   const [changeInfo, setChangeInfo] = useState<ChangeInfo>({
     newNickname: '',
@@ -93,6 +96,11 @@ export default function Edit() {
   }, [isNewNicknameSuccess, isNewPasswordSuccess, newNicknameData, newPasswordData]);
 
   const sendInfo = useCallback(() => {
+    if (images.length !== 0) {
+      changeImgMutate();
+      showMessage('success', '프로필 사진 변경 성공!');
+    }
+
     if (changeInfo.newNickname !== '') {
       sendNewNickname({ id: info.id, newNickname: changeInfo.newNickname });
     }
@@ -109,7 +117,7 @@ export default function Edit() {
         sendNewPwd({ id: info.id, password: info.password, newPwd: changeInfo.newPassword });
       }
     }
-  }, [isValid, checkPw, changeInfo, newInfo]);
+  }, [isValid, checkPw, changeInfo, newInfo, images]);
 
   const { mutate: dormantUser } = useMutation(setDormant, {
     onSuccess: () => {
@@ -135,12 +143,13 @@ export default function Edit() {
     }
   }, []);
 
-  const [images, setImages] = useState([]);
-  const maxNumber = 1;
-
   const onChangeImg = (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
     setImages(imageList as never[]);
   };
+
+  const { mutate: changeImgMutate } = useMutation(() => changeUrl({ img: images[0].file as File, userId: info.id }));
+
+  console.log(images);
 
   return (
     <EditPageWrapper>
@@ -157,7 +166,7 @@ export default function Edit() {
           >
             {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
               <div>
-                <img src={images.length >= 1 ? imageList[0].dataURL : info.image} alt="userProfile" />
+                <img src={images.length >= 1 ? images[0].dataURL : info.image} alt="userProfile" />
                 <Button
                   color={'#696969'}
                   bgColor={blue}

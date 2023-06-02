@@ -74,11 +74,18 @@ export const changePwd = async (data: newInfo) => {
 };
 
 // 사진 url 변경
-export const changeUrl = async (data: FormData) => {
+export const changeUrl = async (data: { img: File; userId: number }) => {
   try {
-    const response = await axios.post('/files/upload', data, { headers: { 'Content-Type': 'multipart/form-data' } });
-    console.log(response.data);
-    return response.data;
+    const { img, userId } = data;
+
+    const formData = new FormData();
+    formData.append('file', img);
+
+    const url: { data: string } = await axios.post('/files/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    await changeImg({ id: 2, newImage: url.data });
   } catch (error) {
     console.error(error);
     throw error;
@@ -86,17 +93,16 @@ export const changeUrl = async (data: FormData) => {
 };
 
 // 사진 변경
-export const changeImg = async (data: newInfo) => {
+export const changeImg = async (data: { id: number; newImage: string }) => {
   try {
-    const response = await axios.patch('/member/update/image', data);
+    const response = await axios.patch('/member/update/image', { newImage: data.newImage, id: data.id });
     console.log(response.data);
-    return response.data;
+    // return response.data;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
-
 // 휴면계정 변환
 export const setDormant = async (id: number) => {
   try {
