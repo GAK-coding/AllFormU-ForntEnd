@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CheckBoxWrapper, CustomCheckBoxGroup } from './styles';
 import { SelectionQue } from '../../../../../typings/makeForm';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
@@ -15,6 +15,13 @@ export default function CheckBox({ data }: Props) {
   const onChange = (list: CheckboxValueType[]) => {
     setCheckedList(list);
   };
+
+  useEffect(() => {
+    checkedList.map((item) => console.log('여기', plainOptions.indexOf(item.toString())));
+  });
+
+  console.log(checkedList);
+  // plainOptions.indexOf(item)
 
   return (
     <CheckBoxWrapper>
