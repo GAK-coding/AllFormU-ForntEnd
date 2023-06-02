@@ -10,6 +10,8 @@ import { changeNickname, changePwd, setDormant, setWithdrawal } from '../../../a
 import { useMutation } from 'react-query';
 import { Match, MisMatch } from '../../SignUp/styles';
 import { useMessage } from '../../../hooks/useMessage';
+import { differenceBy } from 'lodash';
+import ImageUploading, { ImageListType } from 'react-images-uploading';
 
 interface ChangeInfo {
   newNickname: string;
@@ -133,16 +135,46 @@ export default function Edit() {
     }
   }, []);
 
+  const [images, setImages] = useState([]);
+  const maxNumber = 1;
+
+  const onChangeImg = (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
+    setImages(imageList as never[]);
+  };
+
   return (
     <EditPageWrapper>
       {contextHolder}
       <BaseBgBox>
         <SetUserImage>
           <div>프로필 수정</div>
-          <img src={info.image} alt="userProfile" />
-          <Button color={'#696969'} bgColor={blue} fontSize={1.3} width={11} height={3.5}>
-            사진 업로드
-          </Button>
+
+          <ImageUploading
+            acceptType={['jpg', 'jpeg', 'png']}
+            value={images}
+            onChange={onChangeImg}
+            maxNumber={maxNumber}
+          >
+            {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
+              <div>
+                <img src={images.length >= 1 ? imageList[0].dataURL : info.image} alt="userProfile" />
+                <Button
+                  color={'#696969'}
+                  bgColor={blue}
+                  fontSize={1.3}
+                  width={11}
+                  height={3.5}
+                  onClick={onImageUpload}
+                  {...dragProps}
+                >
+                  사진 업로드
+                </Button>
+              </div>
+            )}
+          </ImageUploading>
+          {/* <Button color={'#696969'} bgColor={blue} fontSize={1.3} width={11} height={3.5}> */}
+          {/*   사진 업로드 */}
+          {/* </Button> */}
         </SetUserImage>
 
         <InputWrapper>
