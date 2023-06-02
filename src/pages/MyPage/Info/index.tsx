@@ -78,7 +78,7 @@ export default function Info() {
         <UserInfo>
           <div>
             <div>My Page</div>
-            <img src="/images/userProfile.png" alt="userProfile" />
+            <img src={myInfo.image} alt="userProfile" />
             <div>
               <span>{myInfo.nickname} </span>
               <Button onClick={showModal} color={'black'} bgColor={blue} fontSize={1.3} width={13} height={3.5}>
