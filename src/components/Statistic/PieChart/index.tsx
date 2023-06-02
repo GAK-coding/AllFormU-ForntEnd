@@ -1,5 +1,4 @@
 import { ResponsivePie } from '@nivo/pie';
-import { Chart } from './styles';
 interface Props {
   data: object[];
 }
