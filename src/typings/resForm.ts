@@ -26,6 +26,10 @@ export interface ResSelection {
   num: number | null;
 }
 
+export interface ResSelections {
+  [key: number]: ResSelection | ResSelection[];
+}
+
 // TODO: 이거는 백엔드 수정되면 변수명 수정해야됨
 export interface ResInfos {
   res: (ResDescription | ResSelection)[];
