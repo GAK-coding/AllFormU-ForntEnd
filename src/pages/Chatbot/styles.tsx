@@ -89,60 +89,34 @@ export const UserResWrapper = styled.div`
 `;
 
 export const UserInput = styled.form`
-  width: 80%;
+  width: 100%;
   height: 80%;
 
   display: flex;
+  flex-direction: row;
   justify-content: start;
   align-content: center;
   margin: 0rem 1rem 0rem 2rem;
 
-  box-sizing: border-box;
-  border-radius: 2rem;
-  border: 2px solid #fefefe;
-
   & > input {
+    width: 80%;
     outline: none;
-    border: 0;
     letter-spacing: 0.2rem;
     font-weight: 600;
     background-color: transparent;
-    margin-left: 1rem;
+
+    margin-right: 1rem;
+
+    box-sizing: border-box;
+    border-radius: 2rem;
+    border: 2px solid #fefefe;
   }
 `;
 
 export const SubmitBtn = styled.div`
   width: 20%;
-  height: 80%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-export const UserRes = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  width: 60%;
-  height: 12rem;
-  padding: 2rem;
-  margin-left: 3rem;
-  margin-right: 5rem;
-
-  box-sizing: border-box;
-  border-radius: 3rem;
-  background-color: #f7e9a6;
-  //border: 3px solid #fefefe;
-
-  & > span {
-    display: flex;
-    font-weight: 700;
-    font-size: 2rem;
-    text-align: center;
-    align-items: center;
-  }
-
-  & > button {
-    display: inline-block;
-    float: right;
-  }
 `;

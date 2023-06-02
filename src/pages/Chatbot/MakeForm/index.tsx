@@ -213,13 +213,12 @@ export default function MakeFormChatbot() {
                   size={1.3}
                 ></Input>
               )}
+              <SubmitBtn>
+                <Button type={'submit'} color={'#2d2d2d'} bgColor={blue} fontSize={1.3} width={8} height={4}>
+                  전송
+                </Button>
+              </SubmitBtn>
             </UserInput>
-
-            <SubmitBtn>
-              <Button type={'submit'} color={'#2d2d2d'} bgColor={blue} fontSize={1.3} width={8} height={4}>
-                전송
-              </Button>
-            </SubmitBtn>
           </UserResWrapper>
         </InPutWrapper>
       </Wrapper>
