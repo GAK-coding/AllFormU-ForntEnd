@@ -19,6 +19,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import MakeFormList from './pages/MyPage/DetailForm/MakeFormList';
 import ResFormList from './pages/MyPage/DetailForm/ResFomList';
 import EditForm from './pages/MyPage/EditForm';
+import PieChart from './components/Statistic/PieChart';
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ function App() {
             <Route path={'/makeform/select'} element={<MakeFormSelect />} />
             <Route path={'/makeform/direct'} element={<MakeFormDirect />} />
             <Route path={'/makeform/chatbot'} element={<MakeFormChatbot />} />
+            <Route path={'/statistic'} element={<PieChart />} />
           </Routes>
         </BrowserRouter>
       </RecoilRoot>
