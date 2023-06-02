@@ -48,6 +48,7 @@ export default function Edit() {
     [changeInfo]
   );
 
+  // const upLoadImage = useEffect(() => {}, []);
   // 비밀번호 확인
   useEffect(() => {
     if (changeInfo.newPassword === changeInfo.checkPassword) {

@@ -1,7 +1,10 @@
 import { atom } from 'recoil';
 import { user } from '../../typings/user';
 
-export const userInfo = atom<user>({ key: 'userInfo', default: { id: -1, nickname: '', email: '', password: '' } });
+export const userInfo = atom<user>({
+  key: 'userInfo',
+  default: { id: -1, nickname: '', email: '', password: '', image: '/images/userProfile.png' },
+});
 
 export const googleUserInfo = atom({
   key: 'googleUserInfo',
@@ -10,7 +13,7 @@ export const googleUserInfo = atom({
 
 export const signUpUserInfo = atom({
   key: 'signUpUserInfo',
-  default: { nickname: '', email: '', password: '' },
+  default: { nickname: '', email: '', password: '', image: '/images/userProfile.png' },
 });
 
 export const signInUserInfo = atom({

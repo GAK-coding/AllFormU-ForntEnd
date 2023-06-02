@@ -73,6 +73,30 @@ export const changePwd = async (data: newInfo) => {
   }
 };
 
+// 사진 url 변경
+export const changeUrl = async (data: FormData) => {
+  try {
+    const response = await axios.post('/files/upload', data, { headers: { 'Content-Type': 'multipart/form-data' } });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 사진 변경
+export const changeImg = async (data: newInfo) => {
+  try {
+    const response = await axios.patch('/member/update/image', data);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 // 휴면계정 변환
 export const setDormant = async (id: number) => {
   try {
