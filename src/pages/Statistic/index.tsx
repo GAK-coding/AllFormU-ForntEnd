@@ -29,6 +29,7 @@ export default function Statistic() {
     const [year, month, day] = dateTime.split(' ');
     return `${year}.${month}.${day}`;
   };
+
   return (
     <PageWrapper>
       <InfoWrapper>
@@ -54,7 +55,6 @@ export default function Statistic() {
       </InfoWrapper>
 
       <ChartWrapper>
-        {/* 질문 map으로 진행 */}
         {data?.questions.map((question, index) => {
           const [chartType, setChartType] = useState<'Pie Chart' | 'Bar Chart'>('Pie Chart');
 
@@ -102,35 +102,7 @@ export default function Statistic() {
             </QueWrapper>
           );
         })}
-
-        {/* <QueWrapper> */}
-        {/*   <QueTitle>1.질문 제목</QueTitle> */}
-        {/*   <ChartBtn> */}
-        {/*     <Button */}
-        {/*       onClick={() => onChangeStatus('Pie Chart')} */}
-        {/*       color={'#696969'} */}
-        {/*       bgColor={blue} */}
-        {/*       fontSize={1.2} */}
-        {/*       width={10} */}
-        {/*       height={4} */}
-        {/*     > */}
-        {/*       Pie Chart */}
-        {/*     </Button> */}
-        {/*     <Button */}
-        {/*       onClick={() => onChangeStatus('Bar Chart')} */}
-        {/*       color={'#696969'} */}
-        {/*       bgColor={blue} */}
-        {/*       fontSize={1.2} */}
-        {/*       width={10} */}
-        {/*       height={4} */}
-        {/*     > */}
-        {/*       Bar Chart */}
-        {/*     </Button> */}
-        {/*   </ChartBtn> */}
-        {/*   <QueChart>{pieChart ? <PieChart /> : <BarChart />}</QueChart> */}
-        {/* </QueWrapper> */}
       </ChartWrapper>
-      {/* <PieChart /> */}
     </PageWrapper>
   );
 }
