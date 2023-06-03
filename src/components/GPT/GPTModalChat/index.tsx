@@ -2,14 +2,17 @@ import React from 'react';
 import { ChatBox } from './styles';
 import { Skeleton } from 'antd';
 import { Chat } from '../../../typings/resForm';
+import { useRecoilValue } from 'recoil';
+import { userInfo } from '../../../recoil/User/atom';
 
 export default function GPTModalChat({ myReq, gptRes }: Chat) {
+  const info = useRecoilValue(userInfo);
   return (
     <div>
       <ChatBox type={'user'}>
         <div>
-          <img src={'/images/userProfile.png'} alt={'유저 프로필 사진'} />
-          <span>오현</span>
+          <img src={info.image} alt={'유저 프로필 사진'} />
+          <span>{info.nickname}</span>
         </div>
         <span>{myReq}</span>
       </ChatBox>

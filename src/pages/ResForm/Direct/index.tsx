@@ -26,6 +26,8 @@ import { useGetSingleForm } from '../../../components/Form/hooks/useGetSingleFor
 import { customData } from '../../../utils/customData';
 import { checkRequired, resDescriptionSets } from '../../../recoil/Resform/atom';
 import { ResDescription, ResSelection } from '../../../typings/resForm';
+import { createDescription } from '../../../api/resFrom';
+import { useMutation } from 'react-query';
 
 function isDescriptionQue(que: DescriptionQue | SelectionQue | GridQue): que is DescriptionQue {
   return (
@@ -53,6 +55,17 @@ export default function EditForm() {
   const ref = useRef<HTMLDivElement>(null);
   const { showMessage, contextHolder } = useMessage();
   const { blue } = useRecoilValue(color);
+
+  const { mutate: resDescriptionMutate } = useMutation(createDescription);
+
+  const onClickRes = useCallback(
+    (e: React.MouseEvent<HTMLFormElement>) => {
+      //TODO: 멤버 하드코딩됨
+      e.preventDefault();
+      resDescriptionMutate({ formId: +id!, memberId: 4, forms: resData });
+    },
+    [resData]
+  );
 
   const showModal = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -101,8 +114,6 @@ export default function EditForm() {
         que.required && required.push(que.id!);
         if (isDescriptionQue(que)) {
           resQues.push({
-            // TODO: 유저 id 부분 하드코딩됨
-            member_id: 152,
             question_id: que.id!,
             content: '',
           });
@@ -134,7 +145,7 @@ export default function EditForm() {
       <Col span={16}>
         {contextHolder}
         {isFetching && <div style={{ position: 'fixed', top: '50px', right: '50px' }}>Loading...</div>}
-        <DirectForm onSubmit={showModal}>
+        <DirectForm onSubmit={onClickRes}>
           <FormTitle isEdit={true} formId={id} />
           {customData(data)?.map((section, row) => (
             <DragDropContext key={`section-${row}`} onDragEnd={(result) => onDragEnd(result, row)}>
@@ -170,7 +181,7 @@ export default function EditForm() {
             </DragDropContext>
           ))}
           <Button type={'submit'} color={'black'} bgColor={blue} fontSize={1.6} width={14} height={4.5}>
-            폼 생성하기
+            응답하기
           </Button>
         </DirectForm>
 

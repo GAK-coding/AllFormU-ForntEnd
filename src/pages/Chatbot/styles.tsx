@@ -113,6 +113,18 @@ export const UserInput = styled.form`
   }
 `;
 
+export const EndInput = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-content: center;
+  margin: 0rem 1rem 0rem 2rem;
+
+  box-sizing: border-box;
+  border-radius: 2rem;
+  border: 2px solid #fefefe;
+`;
 export const SubmitBtn = styled.div`
   width: 20%;
   height: 100%;
