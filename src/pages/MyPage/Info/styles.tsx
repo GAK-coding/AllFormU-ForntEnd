@@ -35,8 +35,8 @@ export const UserInfo = styled.div`
     border-radius: 3rem;
     background-color: rgba(232, 211, 255, 0.6);
 
-    img {
-      width: 70%;
+    & > img {
+      width: 60%;
       margin-top: 5rem;
     }
 
