@@ -14,7 +14,7 @@ import { formInfo } from '../../../../recoil/MakeForm/atom';
 export default function MakeFormList() {
   const { blue, lightPurple } = useRecoilValue(color);
   const navigate = useNavigate();
-  let page = 0;
+  const page = 0;
 
   const {
     data,
