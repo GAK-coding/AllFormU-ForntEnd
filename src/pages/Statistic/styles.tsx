@@ -17,23 +17,23 @@ export const InfoWrapper = styled.div`
   padding: 2rem;
 
   & > span {
-    margin: 10rem 0rem 5rem 0rem;
-    font-size: 3rem;
+    width: 80%;
+    margin: 7rem 0rem 5rem 0rem;
+    text-align: center;
+    font-size: 2.5rem;
     font-weight: 700;
-    color: black;
+    color: #2d2d2d;
   }
 
   & > img {
     width: 70%;
-    margin-bottom: 8rem;
+    margin-bottom: 5rem;
   }
-
-  //border: 1px solid black;
 `;
 
-export const DateWrapper = styled.div`
+export const HeadWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: auto;
@@ -41,21 +41,22 @@ export const DateWrapper = styled.div`
   font-weight: 700;
 
   & > span {
-    width: 20%;
-    margin-right: 2rem;
+    width: 100%;
+    margin-bottom: 1rem;
   }
   color: #696969;
 `;
 
-export const Date = styled.div`
+export const Info = styled.div`
   width: 80%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 3rem;
 
   font-size: 1.5rem;
+  text-align: left;
   font-weight: 700;
 `;
 export const ChartWrapper = styled.div`
