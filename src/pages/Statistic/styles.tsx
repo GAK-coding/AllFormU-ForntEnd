@@ -13,7 +13,7 @@ export const InfoWrapper = styled.div`
   position: fixed;
 
   left: 80px;
-  bottom: 70px;
+  bottom: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
