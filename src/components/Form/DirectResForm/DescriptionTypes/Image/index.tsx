@@ -28,13 +28,19 @@ export default function Image({ id }: Props) {
     },
   });
 
-  console.log(resData);
+  const onChange = useCallback(
+    (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
+      // data for submit
+      setImages(imageList as never[]);
+    },
+    [images]
+  );
 
-  const onChange = (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList as never[]);
-  };
+  const deleteImg = useCallback(() => {
+    const temp = JSON.parse(JSON.stringify(resData));
+    (temp[idx] as ResDescription).content = '';
+    setResData(temp);
+  }, [resData]);
 
   useEffect(() => {
     if (images.length >= 1) {
@@ -81,7 +87,10 @@ export default function Image({ id }: Props) {
                   </Button>
                   <Button
                     type={'button'}
-                    onClick={() => onImageRemove(index)}
+                    onClick={() => {
+                      onImageRemove(index);
+                      deleteImg();
+                    }}
                     color={'black'}
                     bgColor={blue}
                     fontSize={1.6}

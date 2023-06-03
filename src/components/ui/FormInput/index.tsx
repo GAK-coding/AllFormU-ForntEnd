@@ -85,7 +85,7 @@ export default function FormInput({
         fontSize={fontSize}
         disabled={disabled}
         placeholder={placeholder}
-        required
+        required={pathname.slice(1, 10) !== 'directres'}
       />
     </>
   );
