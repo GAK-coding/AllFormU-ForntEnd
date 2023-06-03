@@ -19,6 +19,10 @@ export default function Date({ id }: Props) {
       const temp = JSON.parse(JSON.stringify(resData));
       (temp[idx] as ResDescription).content = date.format('YYYY-MM-DD');
       setResData(temp);
+    } else {
+      const temp = JSON.parse(JSON.stringify(resData));
+      (temp[idx] as ResDescription).content = '';
+      setResData(temp);
     }
   };
 
