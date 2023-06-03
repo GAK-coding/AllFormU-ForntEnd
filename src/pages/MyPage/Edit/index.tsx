@@ -6,10 +6,11 @@ import BaseBgBox from '../../../components/ui/BaseBgBox';
 import Input from '../../../components/ui/Input';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { userInfo } from '../../../recoil/User/atom';
-import { changeNickname, changePwd, setDormant, setWithdrawal } from '../../../api/user';
+import { changeImg, changeNickname, changePwd, changeUrl, setDormant, setWithdrawal } from '../../../api/user';
 import { useMutation } from 'react-query';
 import { Match, MisMatch } from '../../SignUp/styles';
 import { useMessage } from '../../../hooks/useMessage';
+import ImageUploading, { ImageListType } from 'react-images-uploading';
 
 interface ChangeInfo {
   newNickname: string;
@@ -27,6 +28,9 @@ export default function Edit() {
   const [checkPw, setCheckPw] = useState(false);
   const [isValid, setIsValid] = useState(false);
 
+  const [images, setImages] = useState<{ dataURL: string; file: File }[]>([]);
+  const maxNumber = 1;
+  const [check, setCheck] = useState(true);
   const [changeInfo, setChangeInfo] = useState<ChangeInfo>({
     newNickname: '',
     newPassword: '',
@@ -48,6 +52,8 @@ export default function Edit() {
     [changeInfo]
   );
 
+  // const upLoadImage = useEffect(() => {}, []);
+
   // 비밀번호 확인
   useEffect(() => {
     if (changeInfo.newPassword === changeInfo.checkPassword) {
@@ -55,12 +61,27 @@ export default function Edit() {
     } else setCheckPw(false);
   }, [changeInfo.newPassword, changeInfo.checkPassword]);
 
+  // axios 통신
   const {
     mutate: sendNewNickname,
     data: newNicknameData,
     isSuccess: isNewNicknameSuccess,
   } = useMutation(changeNickname);
+
   const { mutate: sendNewPwd, data: newPasswordData, isSuccess: isNewPasswordSuccess } = useMutation(changePwd);
+
+  const {
+    mutate: changeImgMutate,
+    data: imgUrl,
+    isSuccess: isChangeUrlSuccess,
+  } = useMutation(changeUrl, {
+    onSuccess: () => setImages([]),
+  });
+
+  const { mutate: changeImage, data: newImageUrl, isSuccess: isChangeImageSuccess } = useMutation(changeImg);
+  const onChangeImg = (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
+    setImages(imageList as never[]);
+  };
 
   useEffect(() => {
     if (isNewNicknameSuccess && newNicknameData) {
@@ -68,16 +89,43 @@ export default function Edit() {
         ...prevInfo,
         nickname: newNicknameData.nickname,
       }));
+      showMessage('success', '닉네임이 변경되었습니다.');
     }
+  }, [isNewNicknameSuccess, newNicknameData]);
+
+  useEffect(() => {
     if (isNewPasswordSuccess && newPasswordData) {
       setNewInfo((prevInfo) => ({
         ...prevInfo,
         password: newPasswordData.password,
       }));
+      showMessage('success', '비밀번호가 변경되었습니다.');
     }
-  }, [isNewNicknameSuccess, isNewPasswordSuccess, newNicknameData, newPasswordData]);
+  }, [isNewPasswordSuccess, newPasswordData]);
+
+  useEffect(() => {
+    if (isChangeUrlSuccess) {
+      changeImage({ id: info.id, newImage: imgUrl.url });
+    }
+  }, [isChangeUrlSuccess]);
+
+  useEffect(() => {
+    if (isChangeImageSuccess) {
+      setNewInfo((prevInfo) => ({
+        ...prevInfo,
+        image: newImageUrl.image,
+      }));
+      showMessage('success', '프로필 사진이 변경되었습니다.');
+    }
+  }, [isChangeImageSuccess]);
 
   const sendInfo = useCallback(() => {
+    console.log('유저 id' + info.id);
+
+    if (images.length !== 0) {
+      changeImgMutate({ image: images[0].file as File });
+    }
+
     if (changeInfo.newNickname !== '') {
       sendNewNickname({ id: info.id, newNickname: changeInfo.newNickname });
     }
@@ -94,7 +142,7 @@ export default function Edit() {
         sendNewPwd({ id: info.id, password: info.password, newPwd: changeInfo.newPassword });
       }
     }
-  }, [isValid, checkPw, changeInfo, newInfo]);
+  }, [isValid, checkPw, changeInfo, newInfo, images]);
 
   const { mutate: dormantUser } = useMutation(setDormant, {
     onSuccess: () => {
@@ -112,11 +160,9 @@ export default function Edit() {
     if (action === '휴면계정') {
       // 휴면계정 전환 상태 처리
       dormantUser(info.id);
-      console.log('휴면계정 전환');
     } else if (action === '회원탈퇴') {
       // 회원탈퇴 상태 처리
       withDrawalUser(info.id);
-      console.log('회원탈퇴');
     }
   }, []);
 
@@ -126,10 +172,30 @@ export default function Edit() {
       <BaseBgBox>
         <SetUserImage>
           <div>프로필 수정</div>
-          <img src="/images/userProfile.png" alt="userProfile" />
-          <Button color={'#696969'} bgColor={blue} fontSize={1.3} width={11} height={3.5}>
-            사진 업로드
-          </Button>
+
+          <ImageUploading
+            acceptType={['jpg', 'jpeg', 'png']}
+            value={images}
+            onChange={onChangeImg}
+            maxNumber={maxNumber}
+          >
+            {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
+              <div>
+                <img src={images.length >= 1 ? images[0].dataURL : info.image} alt="userProfile" />
+                <Button
+                  color={'#696969'}
+                  bgColor={blue}
+                  fontSize={1.3}
+                  width={11}
+                  height={3.5}
+                  onClick={onImageUpload}
+                  {...dragProps}
+                >
+                  사진 업로드
+                </Button>
+              </div>
+            )}
+          </ImageUploading>
         </SetUserImage>
 
         <InputWrapper>

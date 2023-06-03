@@ -22,7 +22,7 @@ export default function SignUp() {
   const { blue } = useRecoilValue(color);
 
   const [userInfo, setUserInfo] = useRecoilState(signUpUserInfo);
-  const { nickname, email, password } = useRecoilValue(signUpUserInfo);
+  const { nickname, email, password, image } = useRecoilValue(signUpUserInfo);
 
   const [isValid, setIsValid] = useState(false);
   const [checkPw, setCheckPw] = useState(false);
@@ -61,7 +61,7 @@ export default function SignUp() {
         showMessage('error', '인증번호가 일치하지 않습니다.');
         return;
       } else {
-        signUpRequest({ nickname, email, password });
+        signUpRequest({ nickname, email, password, image });
       }
     },
     [userInfo, checkInfo, checkPw, checkENum, isValid]

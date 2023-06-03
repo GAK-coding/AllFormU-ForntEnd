@@ -24,7 +24,7 @@ import SectionBox from '../../../components/Form/Questions/SectionBox';
 import FormTitle from '../../../components/Form/Questions/FormTitle';
 import { useGetSingleForm } from '../../../components/Form/hooks/useGetSingleForm';
 import { customData } from '../../../utils/customData';
-import { checkRequired, resSets } from '../../../recoil/Resform/atom';
+import { checkRequired, resDescriptionSets } from '../../../recoil/Resform/atom';
 import { ResDescription, ResSelection } from '../../../typings/resForm';
 
 function isDescriptionQue(que: DescriptionQue | SelectionQue | GridQue): que is DescriptionQue {
@@ -42,7 +42,7 @@ export default function EditForm() {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const [data, isLoading, isFetching] = useGetSingleForm(id!);
   const [isRendering, setIsRendering] = useState(true);
-  const [resData, setResData] = useRecoilState(resSets);
+  const [resData, setResData] = useRecoilState(resDescriptionSets);
   const [chkRequired, setChkRequired] = useRecoilState(checkRequired);
 
   const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
@@ -94,7 +94,7 @@ export default function EditForm() {
   useEffect(() => {
     if (!!data && isRendering) {
       const { questions } = data;
-      const resQues: (ResDescription | ResSelection)[] = [];
+      const resQues: ResDescription[] = [];
       const required: number[] = [];
 
       questions.map((que, idx) => {
@@ -104,16 +104,17 @@ export default function EditForm() {
             // TODO: 유저 id 부분 하드코딩됨
             member_id: 152,
             question_id: que.id!,
-            content: null,
-          });
-        } else {
-          resQues.push({
-            // TODO: 유저 id 부분 하드코딩됨
-            responsorId: 152,
-            questionId: que.id!,
-            num: null,
+            content: '',
           });
         }
+        // else {
+        //   resQues.push({
+        //     // TODO: 유저 id 부분 하드코딩됨
+        //     responsorId: 152,
+        //     questionId: que.id!,
+        //     num: null,
+        //   });
+        // }
       });
 
       setChkRequired(required);
@@ -121,9 +122,6 @@ export default function EditForm() {
       setIsRendering(false);
     }
   }, [data, isRendering]);
-
-  console.log(chkRequired);
-  console.log('응답', resData);
 
   if (isFetching) return <div style={{ position: 'fixed', top: '50px', right: '50px' }}>Loading...</div>;
   if (isLoading) {
@@ -145,44 +143,24 @@ export default function EditForm() {
                   {(provided) => (
                     <div>
                       <div {...provided.droppableProps} ref={provided.innerRef}>
-                        {section?.map((que, col) => {
-                          const focus = row === 0 ? col === nowIndex : accrueQue[row - 1] + col + 1 === nowIndex;
-
-                          if (focus) {
-                            return (
-                              <div ref={ref} key={que.tempId}>
-                                <QueDraggable
-                                  draggableId={que.tempId}
-                                  data={que}
-                                  row={row}
-                                  col={col}
-                                  isClick={focus}
-                                  onClickQue={() => true}
-                                  onDelete={() => true}
-                                />
-                              </div>
-                            );
-                          }
-
-                          return (
-                            <div key={que.tempId}>
-                              <QueDraggable
-                                draggableId={que.tempId}
-                                data={que}
-                                row={row}
-                                col={col}
-                                isClick={focus}
-                                onChangeTitle={() => {
-                                  true;
-                                }}
-                                onClickQue={onClickQue}
-                                onDelete={() => {
-                                  true;
-                                }}
-                              />
-                            </div>
-                          );
-                        })}
+                        {section?.map((que, col) => (
+                          <div key={que.id!.toString()}>
+                            <QueDraggable
+                              draggableId={que.id!.toString()}
+                              data={que}
+                              row={row}
+                              col={col}
+                              isClick={true}
+                              onChangeTitle={() => {
+                                true;
+                              }}
+                              onClickQue={onClickQue}
+                              onDelete={() => {
+                                true;
+                              }}
+                            />
+                          </div>
+                        ))}
                       </div>
                       {provided.placeholder}
                     </div>
