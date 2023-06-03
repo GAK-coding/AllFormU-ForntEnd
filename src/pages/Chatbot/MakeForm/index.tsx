@@ -10,6 +10,7 @@ import {
   Wrapper,
   UserInput,
   SubmitBtn,
+  EndInput,
 } from '../styles';
 import { BallonWrapper, ChatBallon, ChatbotWrapper, GAK } from '../../../components/Chatbot/BallonChat/styles';
 import Ballon from '../../../components/Chatbot/BallonChat';
@@ -203,23 +204,34 @@ export default function MakeFormChatbot() {
           {isOpen && <GPTSocket />}
           <UserResWrapper>
             <UserInput onSubmit={onSubmit}>
-              {currentDetailIndex < 2 * repeatCount && (
-                <Input
-                  type={'text'}
-                  value={userInput}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setUserInput(e.target.value)}
-                  placeholder={'챗봇에게 메시지를 입력하세요.'}
-                  width={'100%'}
-                  size={1.3}
-                ></Input>
+              {currentDetailIndex < 2 * repeatCount ? (
+                <>
+                  <Input
+                    type={'text'}
+                    value={userInput}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setUserInput(e.target.value)}
+                    placeholder={'챗봇에게 메시지를 입력하세요.'}
+                    width={'100%'}
+                    size={1.3}
+                  ></Input>
+
+                  <SubmitBtn>
+                    <Button type={'submit'} color={'#2d2d2d'} bgColor={blue} fontSize={1.3} width={8} height={4}>
+                      전송
+                    </Button>
+                  </SubmitBtn>
+                </>
+              ) : (
+                <>
+                  <EndInput />
+                  <SubmitBtn>
+                    <Button color={'#2d2d2d'} bgColor={blue} fontSize={1.3} width={8} height={4}>
+                      전송
+                    </Button>
+                  </SubmitBtn>
+                </>
               )}
             </UserInput>
-
-            <SubmitBtn>
-              <Button type={'submit'} color={'#2d2d2d'} bgColor={blue} fontSize={1.3} width={8} height={4}>
-                전송
-              </Button>
-            </SubmitBtn>
           </UserResWrapper>
         </InPutWrapper>
       </Wrapper>

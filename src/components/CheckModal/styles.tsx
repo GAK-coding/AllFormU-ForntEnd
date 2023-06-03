@@ -27,7 +27,7 @@ export const ModalTitle = styled.h3`
   color: var(--color-main);
 `;
 
-export const UserInfo = styled.div`
+export const UserInfo = styled.form`
   width: 80%;
 
   display: flex;

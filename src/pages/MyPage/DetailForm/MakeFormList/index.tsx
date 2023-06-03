@@ -96,7 +96,14 @@ export default function MakeFormList() {
                     </Button>
                   </div>
                   <div>
-                    <Button color={'black'} bgColor={blue} fontSize={1.3} width={10} height={3.5}>
+                    <Button
+                      onClick={() => navigate(`/statistic/${formInfo.id}`)}
+                      color={'black'}
+                      bgColor={blue}
+                      fontSize={1.3}
+                      width={10}
+                      height={3.5}
+                    >
                       응답보기
                     </Button>
                   </div>

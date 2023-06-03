@@ -27,10 +27,10 @@ export default function SelectionRes({ data, row, col, isClick, onClickQue }: Pr
     <QueWrapper>
       <SelectionResWrapper>
         <QueTitle data={data} />
-        {data.type === SELECTION_OPTION && <Option data={data} />}
-        {data.type === SELECTION_CHECKBOX && <CheckBox data={data} />}
-        {data.type === SELECTION_DROPDOWN && <DropDown data={data} />}
-        {data.type === SELECTION_LINEAR && <Linear data={data} />}
+        {data.type === SELECTION_OPTION && <Option data={data} id={data.id!} />}
+        {data.type === SELECTION_CHECKBOX && <CheckBox data={data} id={data.id!} />}
+        {data.type === SELECTION_DROPDOWN && <DropDown data={data} id={data.id!} />}
+        {data.type === SELECTION_LINEAR && <Linear data={data} id={data.id!} />}
       </SelectionResWrapper>
     </QueWrapper>
   );

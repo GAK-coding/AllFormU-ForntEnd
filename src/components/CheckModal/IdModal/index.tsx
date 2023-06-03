@@ -58,7 +58,7 @@ export default function IdMordal({ open, onCancel }: Props) {
       footer={null}
       centered
     >
-      <UserInfo>
+      <UserInfo onSubmit={onCheck}>
         {!sendId && (
           <>
             <span>Email을 입력해주세요.</span>
@@ -73,7 +73,7 @@ export default function IdMordal({ open, onCancel }: Props) {
         )}
 
         {!sendId && (
-          <Button onClick={onCheck} color={'#696969'} bgColor={lightPurple} fontSize={1.3} width={7} height={4}>
+          <Button type={'submit'} color={'#696969'} bgColor={lightPurple} fontSize={1.3} width={7} height={4}>
             확인
           </Button>
         )}

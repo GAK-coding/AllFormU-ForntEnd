@@ -65,7 +65,7 @@ export default function PasswordMordal({ open, onCancel }: Props) {
       centered
     >
       {contextHolder}
-      <UserInfo>
+      <UserInfo onSubmit={onCheckPassword}>
         <span>비밀번호를 입력해주세요.</span>
         <InputInfo>
           <Input
@@ -77,7 +77,7 @@ export default function PasswordMordal({ open, onCancel }: Props) {
           />
         </InputInfo>
 
-        <Button onClick={onCheckPassword} color={'#696969'} bgColor={lightPurple} fontSize={1.3} width={7} height={4}>
+        <Button type={'submit'} color={'#696969'} bgColor={lightPurple} fontSize={1.3} width={7} height={4}>
           확인
         </Button>
       </UserInfo>

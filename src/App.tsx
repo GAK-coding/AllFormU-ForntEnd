@@ -19,6 +19,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import MakeFormList from './pages/MyPage/DetailForm/MakeFormList';
 import ResFormList from './pages/MyPage/DetailForm/ResFomList';
 import EditForm from './pages/MyPage/EditForm';
+import Statistic from './pages/Statistic';
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ function App() {
             <Route path={'/signin'} element={<SignIn />} />
             <Route path={'/resform/chatbot'} element={<ChatbotResForm />} />
             <Route path={'/directres/:id'} element={<DirectResForm />} />
+            <Route path={'/statistic/:id'} element={<Statistic />} />
             <Route path={'/makeform'} element={<MakeForm />} />
             <Route path={'/makeform/select'} element={<MakeFormSelect />} />
             <Route path={'/makeform/direct'} element={<MakeFormDirect />} />

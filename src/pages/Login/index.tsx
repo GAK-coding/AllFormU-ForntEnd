@@ -58,7 +58,13 @@ export default function SignIn() {
         showMessage('warning', '휴면 계정입니다. 재회원가입을 통해 휴면 상태를 해제해주세요.');
         return;
       } else {
-        const infoList = { id: data.id, nickname: data.nickname, email: data.email, password: data.password };
+        const infoList = {
+          id: data.id,
+          nickname: data.nickname,
+          email: data.email,
+          password: data.password,
+          image: data.image,
+        };
         setUserInfo(infoList);
         //TODO: 나중에 jwt 넣으면 될듯
         localStorage.setItem('accessToken', 'true');
