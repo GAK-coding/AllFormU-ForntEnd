@@ -8,6 +8,7 @@ import {
   QueWrapper,
   QueChart,
   ChartBtn,
+  ResTitle,
 } from './styles';
 import { useParams } from 'react-router-dom';
 import { useGetSingleForm } from '../../components/Form/hooks/useGetSingleForm';
@@ -17,6 +18,7 @@ import Button from '../../components/ui/Button';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { useCallback, useState } from 'react';
+import { DescriptionQue, SelectionQue } from '../../typings/makeForm';
 
 export default function Statistic() {
   const { blue } = useRecoilValue(color);
@@ -56,65 +58,75 @@ export default function Statistic() {
           <span>응답자</span>
 
           <Info>
-            <span>2명</span>
+            <span>{`${data?.responsor_count}명`}</span>
           </Info>
         </HeadWrapper>
       </InfoWrapper>
 
       <ChartWrapper>
-        <QueWrapper>
-          <QueTitle>1.질문 제목</QueTitle>
-          <ChartBtn>
-            <Button
-              onClick={() => onChangeStatus('Pie Chart')}
-              color={'#696969'}
-              bgColor={blue}
-              fontSize={1.2}
-              width={10}
-              height={4}
-            >
-              Pie Chart
-            </Button>
-            <Button
-              onClick={() => onChangeStatus('Bar Chart')}
-              color={'#696969'}
-              bgColor={blue}
-              fontSize={1.2}
-              width={10}
-              height={4}
-            >
-              Bar Chart
-            </Button>
-          </ChartBtn>
-          <QueChart>{pieChart ? <PieChart /> : <BarChart />}</QueChart>
-        </QueWrapper>
+        {/* 질문 map으로 진행 */}
+        {data?.questions.map((question, index) => (
+          <QueWrapper>
+            <QueTitle>
+              <span>{`Q${index + 1}. `} &nbsp;</span>
+              {question.title}
+            </QueTitle>
+            {/* TODO : 각 문항에 대한 응답자로 변경 */}
+            <ResTitle>
+              <span>{`응답자 : ${data?.responsor_count}명`}</span>
+            </ResTitle>
+            <ChartBtn>
+              <Button
+                onClick={() => onChangeStatus('Pie Chart')}
+                color={'#696969'}
+                bgColor={blue}
+                fontSize={1.2}
+                width={10}
+                height={4}
+              >
+                Pie Chart
+              </Button>
+              <Button
+                onClick={() => onChangeStatus('Bar Chart')}
+                color={'#696969'}
+                bgColor={blue}
+                fontSize={1.2}
+                width={10}
+                height={4}
+              >
+                Bar Chart
+              </Button>
+            </ChartBtn>
+            <QueChart>{pieChart ? <PieChart /> : <BarChart />}</QueChart>
+          </QueWrapper>
+        ))}
 
-        <QueWrapper>
-          <QueTitle>1.질문 제목</QueTitle>
-          <ChartBtn>
-            <Button
-              onClick={() => onChangeStatus('Pie Chart')}
-              color={'#696969'}
-              bgColor={blue}
-              fontSize={1.2}
-              width={10}
-              height={4}
-            >
-              Pie Chart
-            </Button>
-            <Button
-              onClick={() => onChangeStatus('Bar Chart')}
-              color={'#696969'}
-              bgColor={blue}
-              fontSize={1.2}
-              width={10}
-              height={4}
-            >
-              Bar Chart
-            </Button>
-          </ChartBtn>
-          <QueChart>{pieChart ? <PieChart /> : <BarChart />}</QueChart>
-        </QueWrapper>
+        {/* <QueWrapper> */}
+        {/*   <QueTitle>1.질문 제목</QueTitle> */}
+        {/*   <ChartBtn> */}
+        {/*     <Button */}
+        {/*       onClick={() => onChangeStatus('Pie Chart')} */}
+        {/*       color={'#696969'} */}
+        {/*       bgColor={blue} */}
+        {/*       fontSize={1.2} */}
+        {/*       width={10} */}
+        {/*       height={4} */}
+        {/*     > */}
+        {/*       Pie Chart */}
+        {/*     </Button> */}
+        {/*     <Button */}
+        {/*       onClick={() => onChangeStatus('Bar Chart')} */}
+        {/*       color={'#696969'} */}
+        {/*       bgColor={blue} */}
+        {/*       fontSize={1.2} */}
+        {/*       width={10} */}
+        {/*       height={4} */}
+        {/*     > */}
+        {/*       Bar Chart */}
+        {/*     </Button> */}
+        {/*   </ChartBtn> */}
+        {/*   <QueChart>{pieChart ? <PieChart /> : <BarChart />}</QueChart> */}
+        {/* </QueWrapper> */}
       </ChartWrapper>
       {/* <PieChart /> */}
     </PageWrapper>

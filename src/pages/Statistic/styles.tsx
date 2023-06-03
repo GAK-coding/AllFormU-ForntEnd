@@ -5,8 +5,6 @@ export const PageWrapper = styled.div`
   flex-direction: row;
   margin: auto;
   padding: 2rem 10rem 0 10rem;
-  //padding: 5rem;
-  //background-color: rgba(232, 211, 255, 0.3);
 `;
 
 export const InfoWrapper = styled.div`
@@ -101,11 +99,22 @@ export const QueTitle = styled.div`
   font-size: 1.8rem;
   font-weight: 700;
   color: #282c34;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   text-align: left;
-  //border: 1px solid black;
+
+  & > span {
+    color: #696969;
+  }
 `;
 
+export const ResTitle = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #696969;
+  margin-bottom: 4rem;
+`;
 export const ChartBtn = styled.div`
   display: flex;
   flex-direction: row;
@@ -121,5 +130,4 @@ export const QueChart = styled.div`
   box-sizing: border-box;
   border-radius: 3rem;
   background-color: #ffffff;
-  //padding: 3rem;
 `;
