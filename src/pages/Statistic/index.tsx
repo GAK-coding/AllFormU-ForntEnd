@@ -25,20 +25,10 @@ export default function Statistic() {
   const { id } = useParams();
   const [data, isLoading, isFetching] = useGetSingleForm(id!);
   console.log(data);
-  const [pieChart, setPieChart] = useState(true);
   const formatDateTime = (dateTime: string) => {
     const [year, month, day] = dateTime.split(' ');
     return `${year}.${month}.${day}`;
   };
-
-  const onChangeStatus = useCallback((action: 'Pie Chart' | 'Bar Chart') => {
-    if (action === 'Pie Chart') {
-      setPieChart(true);
-    } else if (action === 'Bar Chart') {
-      setPieChart(false);
-    }
-  }, []);
-
   return (
     <PageWrapper>
       <InfoWrapper>
@@ -65,41 +55,53 @@ export default function Statistic() {
 
       <ChartWrapper>
         {/* 질문 map으로 진행 */}
-        {data?.questions.map((question, index) => (
-          <QueWrapper>
-            <QueTitle>
-              <span>{`Q${index + 1}. `} &nbsp;</span>
-              {question.title}
-            </QueTitle>
-            {/* TODO : 각 문항에 대한 응답자로 변경 */}
-            <ResTitle>
-              <span>{`응답자 : ${data?.responsor_count}명`}</span>
-            </ResTitle>
-            <ChartBtn>
-              <Button
-                onClick={() => onChangeStatus('Pie Chart')}
-                color={'#696969'}
-                bgColor={blue}
-                fontSize={1.2}
-                width={10}
-                height={4}
-              >
-                Pie Chart
-              </Button>
-              <Button
-                onClick={() => onChangeStatus('Bar Chart')}
-                color={'#696969'}
-                bgColor={blue}
-                fontSize={1.2}
-                width={10}
-                height={4}
-              >
-                Bar Chart
-              </Button>
-            </ChartBtn>
-            <QueChart>{pieChart ? <PieChart /> : <BarChart />}</QueChart>
-          </QueWrapper>
-        ))}
+        {data?.questions.map((question, index) => {
+          const [chartType, setChartType] = useState<'Pie Chart' | 'Bar Chart'>('Pie Chart');
+
+          const onChangeStatus = useCallback((action: 'Pie Chart' | 'Bar Chart') => {
+            if (action === 'Pie Chart') {
+              setChartType('Pie Chart');
+            } else if (action === 'Bar Chart') {
+              setChartType('Bar Chart');
+            }
+          }, []);
+
+          return (
+            <QueWrapper key={index}>
+              <QueTitle>
+                <span>{`Q${index + 1}. `} &nbsp;</span>
+                {question.title}
+              </QueTitle>
+              {/* TODO : 각 문항에 대한 응답자로 변경 */}
+              <ResTitle>
+                <span>{`응답자 : ${data?.responsor_count}명`}</span>
+              </ResTitle>
+              <ChartBtn>
+                <Button
+                  onClick={() => onChangeStatus('Pie Chart')}
+                  color={'#696969'}
+                  bgColor={blue}
+                  fontSize={1.2}
+                  width={10}
+                  height={4}
+                >
+                  Pie Chart
+                </Button>
+                <Button
+                  onClick={() => onChangeStatus('Bar Chart')}
+                  color={'#696969'}
+                  bgColor={blue}
+                  fontSize={1.2}
+                  width={10}
+                  height={4}
+                >
+                  Bar Chart
+                </Button>
+              </ChartBtn>
+              <QueChart>{chartType === 'Pie Chart' ? <PieChart /> : <BarChart />}</QueChart>
+            </QueWrapper>
+          );
+        })}
 
         {/* <QueWrapper> */}
         {/*   <QueTitle>1.질문 제목</QueTitle> */}
