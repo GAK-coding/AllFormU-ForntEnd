@@ -55,3 +55,11 @@ interface GetSelection extends Omit<SelectionQue, 'tempId'> {
   id: number;
   // options: Option[];
 }
+
+export interface makePagingData {
+  id: number;
+  content: string;
+  title: string;
+  timeout: string[];
+  responsor: number;
+}
