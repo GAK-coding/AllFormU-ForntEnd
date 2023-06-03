@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageWrapper, Img, ImgUpload } from './styles';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function Image({ id }: Props) {
-  const [images, setImages] = React.useState([]);
+  const [images, setImages] = useState([]);
   const { blue } = useRecoilValue(color);
   const maxNumber = 1;
 

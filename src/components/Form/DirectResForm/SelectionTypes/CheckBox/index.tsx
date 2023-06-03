@@ -5,9 +5,10 @@ import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 
 interface Props {
   data: SelectionQue;
+  id: number;
 }
 
-export default function CheckBox({ data }: Props) {
+export default function CheckBox({ data, id }: Props) {
   const plainOptions = data.options.map((option) => option.content);
 
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
@@ -20,7 +21,7 @@ export default function CheckBox({ data }: Props) {
     checkedList.map((item) => console.log('여기', plainOptions.indexOf(item.toString())));
   });
 
-  console.log(checkedList);
+  // console.log(checkedList);
   // plainOptions.indexOf(item)
 
   return (
