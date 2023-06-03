@@ -10,7 +10,6 @@ import { changeImg, changeNickname, changePwd, changeUrl, setDormant, setWithdra
 import { useMutation } from 'react-query';
 import { Match, MisMatch } from '../../SignUp/styles';
 import { useMessage } from '../../../hooks/useMessage';
-import { differenceBy } from 'lodash';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
 
 interface ChangeInfo {
@@ -92,7 +91,9 @@ export default function Edit() {
       }));
       showMessage('success', '닉네임이 변경되었습니다.');
     }
+  }, [isNewNicknameSuccess, newNicknameData]);
 
+  useEffect(() => {
     if (isNewPasswordSuccess && newPasswordData) {
       setNewInfo((prevInfo) => ({
         ...prevInfo,
@@ -100,11 +101,13 @@ export default function Edit() {
       }));
       showMessage('success', '비밀번호가 변경되었습니다.');
     }
+  }, [isNewPasswordSuccess, newPasswordData]);
 
+  useEffect(() => {
     if (isChangeUrlSuccess) {
       changeImage({ id: info.id, newImage: imgUrl.url });
     }
-  }, [isNewNicknameSuccess, isNewPasswordSuccess, isChangeUrlSuccess, newNicknameData, newPasswordData]);
+  }, [isChangeUrlSuccess]);
 
   useEffect(() => {
     if (isChangeImageSuccess) {
@@ -157,11 +160,9 @@ export default function Edit() {
     if (action === '휴면계정') {
       // 휴면계정 전환 상태 처리
       dormantUser(info.id);
-      console.log('휴면계정 전환');
     } else if (action === '회원탈퇴') {
       // 회원탈퇴 상태 처리
       withDrawalUser(info.id);
-      console.log('회원탈퇴');
     }
   }, []);
 
