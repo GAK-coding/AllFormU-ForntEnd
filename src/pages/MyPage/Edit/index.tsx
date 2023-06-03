@@ -31,7 +31,7 @@ export default function Edit() {
 
   const [images, setImages] = useState<{ dataURL: string; file: File }[]>([]);
   const maxNumber = 1;
-
+  const [check, setCheck] = useState(true);
   const [changeInfo, setChangeInfo] = useState<ChangeInfo>({
     newNickname: '',
     newPassword: '',
@@ -54,6 +54,7 @@ export default function Edit() {
   );
 
   // const upLoadImage = useEffect(() => {}, []);
+
   // 비밀번호 확인
   useEffect(() => {
     if (changeInfo.newPassword === changeInfo.checkPassword) {
@@ -61,24 +62,27 @@ export default function Edit() {
     } else setCheckPw(false);
   }, [changeInfo.newPassword, changeInfo.checkPassword]);
 
+  // axios 통신
   const {
     mutate: sendNewNickname,
     data: newNicknameData,
     isSuccess: isNewNicknameSuccess,
-  } = useMutation(changeNickname, {
-    onSuccess: () => {
-      showMessage('success', '닉네임이 변경되었습니다.');
-    },
-  });
+  } = useMutation(changeNickname);
+
+  const { mutate: sendNewPwd, data: newPasswordData, isSuccess: isNewPasswordSuccess } = useMutation(changePwd);
+
   const {
-    mutate: sendNewPwd,
-    data: newPasswordData,
-    isSuccess: isNewPasswordSuccess,
-  } = useMutation(changePwd, {
-    onSuccess: () => {
-      showMessage('success', '비밀번호가 변경되었습니다.');
-    },
+    mutate: changeImgMutate,
+    data: imgUrl,
+    isSuccess: isChangeUrlSuccess,
+  } = useMutation(changeUrl, {
+    onSuccess: () => setImages([]),
   });
+
+  const { mutate: changeImage, data: newImageUrl, isSuccess: isChangeImageSuccess } = useMutation(changeImg);
+  const onChangeImg = (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
+    setImages(imageList as never[]);
+  };
 
   useEffect(() => {
     if (isNewNicknameSuccess && newNicknameData) {
@@ -86,20 +90,37 @@ export default function Edit() {
         ...prevInfo,
         nickname: newNicknameData.nickname,
       }));
+      showMessage('success', '닉네임이 변경되었습니다.');
     }
+
     if (isNewPasswordSuccess && newPasswordData) {
       setNewInfo((prevInfo) => ({
         ...prevInfo,
         password: newPasswordData.password,
       }));
+      showMessage('success', '비밀번호가 변경되었습니다.');
     }
-  }, [isNewNicknameSuccess, isNewPasswordSuccess, newNicknameData, newPasswordData]);
+
+    if (isChangeUrlSuccess) {
+      changeImage({ id: info.id, newImage: imgUrl.url });
+    }
+  }, [isNewNicknameSuccess, isNewPasswordSuccess, isChangeUrlSuccess, newNicknameData, newPasswordData]);
+
+  useEffect(() => {
+    if (isChangeImageSuccess) {
+      setNewInfo((prevInfo) => ({
+        ...prevInfo,
+        image: newImageUrl.image,
+      }));
+      showMessage('success', '프로필 사진이 변경되었습니다.');
+    }
+  }, [isChangeImageSuccess]);
 
   const sendInfo = useCallback(() => {
     console.log('유저 id' + info.id);
+
     if (images.length !== 0) {
-      changeImgMutate({ img: images[0].file as File, userId: info.id });
-      showMessage('success', '프로필 사진 변경 성공!');
+      changeImgMutate({ image: images[0].file as File });
     }
 
     if (changeInfo.newNickname !== '') {
@@ -144,16 +165,6 @@ export default function Edit() {
     }
   }, []);
 
-  const onChangeImg = (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
-    setImages(imageList as never[]);
-  };
-
-  const { mutate: changeImgMutate } = useMutation(changeUrl, {
-    onSuccess: () => setImages([]),
-  });
-
-  console.log(images);
-
   return (
     <EditPageWrapper>
       {contextHolder}
@@ -184,9 +195,6 @@ export default function Edit() {
               </div>
             )}
           </ImageUploading>
-          {/* <Button color={'#696969'} bgColor={blue} fontSize={1.3} width={11} height={3.5}> */}
-          {/*   사진 업로드 */}
-          {/* </Button> */}
         </SetUserImage>
 
         <InputWrapper>

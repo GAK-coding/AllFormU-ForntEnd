@@ -24,4 +24,5 @@ export interface newInfo extends Pick<user, 'id'> {
   newNickname?: string;
   password?: string;
   newPwd?: string;
+  newImage?: string;
 }

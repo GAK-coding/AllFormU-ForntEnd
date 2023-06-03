@@ -74,23 +74,19 @@ export const changePwd = async (data: newInfo) => {
 };
 
 // 사진 url 변경
-export const changeUrl = async (data: { img: File; userId: number }) => {
+export const changeUrl = async (data: { image: File }) => {
   try {
-    const { img, userId } = data;
+    // const { img, userId } = data;
 
     const formData = new FormData();
-    formData.append('file', img);
+    formData.append('file', data.image);
 
-    const url: { data: string } = await axios.post('/files/upload', formData, {
+    const url = await axios.post('/files/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
-    try {
-      await changeImg({ id: userId, newImage: url.data });
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    console.log(url.data);
+    return url.data;
   } catch (error) {
     console.error(error);
     throw error;
@@ -100,19 +96,20 @@ export const changeUrl = async (data: { img: File; userId: number }) => {
 // 사진 변경
 export const changeImg = async (data: { id: number; newImage: string }) => {
   try {
-    const response = await axios.patch('/member/update/image', { newImage: data.newImage, id: data.id });
+    const response = await axios.patch('/member/update/image', { id: data.id, newImage: data.newImage });
     console.log(response.data);
-    // return response.data;
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
+
 // 휴면계정 변환
 export const setDormant = async (id: number) => {
   try {
     const response = await axios.patch(`/member/dormant/${id}`);
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
