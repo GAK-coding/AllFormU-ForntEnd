@@ -2,6 +2,7 @@ import { ChartWrapper, InfoWrapper, PageWrapper, Info, HeadWrapper } from './sty
 import { useParams } from 'react-router-dom';
 import { useGetSingleForm } from '../../components/Form/hooks/useGetSingleForm';
 import PieChart from '../../components/Statistic/PieChart';
+import BarChart from '../../components/Statistic/BarChart';
 
 export default function Statistic() {
   const { id } = useParams();
@@ -39,6 +40,7 @@ export default function Statistic() {
       </InfoWrapper>
       <ChartWrapper>
         <PieChart />
+        <BarChart />
       </ChartWrapper>
       {/* <PieChart /> */}
     </PageWrapper>
