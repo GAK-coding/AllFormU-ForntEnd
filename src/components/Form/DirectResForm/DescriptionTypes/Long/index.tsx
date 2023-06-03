@@ -37,7 +37,7 @@ export default function Long({ id }: Props) {
         value={idx !== -1 ? (resData[idx] as ResDescription)['content'] : ''}
         onChange={onChange}
         placeholder="내 답변"
-        required
+        // required
       />
     </LongWrapper>
   );

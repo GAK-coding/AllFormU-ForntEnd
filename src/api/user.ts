@@ -76,8 +76,6 @@ export const changePwd = async (data: newInfo) => {
 // 사진 url 변경
 export const changeUrl = async (data: { image: File }) => {
   try {
-    // const { img, userId } = data;
-
     const formData = new FormData();
     formData.append('file', data.image);
 
@@ -85,7 +83,6 @@ export const changeUrl = async (data: { image: File }) => {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
-    console.log(url.data);
     return url.data;
   } catch (error) {
     console.error(error);
