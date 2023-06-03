@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { makePagingData } from '../typings/getForm';
 
 export const getMakeForms = async () =>
   await axios
@@ -19,3 +20,20 @@ export const getFormInfo = async (userId: number, formId: number) =>
     .get(`/form/findform/${userId}/${formId}`)
     .then((res) => res.data)
     .catch((err) => console.error(err));
+
+export const getPagingInfo = async (data: { userId: number; pageParam: number }) => {
+  try {
+    const { userId, pageParam } = data;
+    console.log(userId, pageParam);
+
+    const res: { data: { nextPage: boolean; pagingData: makePagingData[] } } = await axios.get(
+      `/form/pages/${userId}/${pageParam}`
+    );
+
+    // console.log('으악', res);
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
