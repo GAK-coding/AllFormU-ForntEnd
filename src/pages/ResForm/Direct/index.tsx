@@ -44,7 +44,7 @@ export default function EditForm() {
   const [questionList, setQuestionList] = useRecoilState(questions);
   const [data, isLoading, isFetching] = useGetSingleForm(id!);
   const [isRendering, setIsRendering] = useState(true);
-  const [resData, setResData] = useRecoilState(resDescriptionSets);
+  const [resDescriptionData, setResDescriptionData] = useRecoilState(resDescriptionSets);
   const [chkRequired, setChkRequired] = useRecoilState(checkRequired);
 
   const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
@@ -52,7 +52,6 @@ export default function EditForm() {
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
   const { showMessage, contextHolder } = useMessage();
   const { blue } = useRecoilValue(color);
 
@@ -60,18 +59,28 @@ export default function EditForm() {
 
   const onClickRes = useCallback(
     (e: React.MouseEvent<HTMLFormElement>) => {
-      //TODO: 멤버 하드코딩됨
       e.preventDefault();
-      resDescriptionMutate({ formId: +id!, memberId: 4, forms: resData });
+
+      const required = JSON.parse(JSON.stringify(chkRequired));
+
+      if (required.length > 0)
+        for (const data of resDescriptionData) {
+          if (required.includes(data.question_id)) {
+            if (data.content === '') break;
+            required.splice(required.indexOf(data.question_id), 1);
+          }
+        }
+
+      if (required.length !== 0) {
+        showMessage('warning', '필수 질문에 답변해주세요.');
+        return;
+      }
+
+      //TODO: 멤버 하드코딩됨
+      resDescriptionMutate({ formId: +id!, memberId: 4, forms: resDescriptionData });
     },
-    [resData]
+    [resDescriptionData, chkRequired]
   );
-
-  const showModal = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    setIsModalOpen(true);
-  }, []);
 
   const handleCancel = useCallback(() => {
     setIsModalOpen(false);
@@ -129,7 +138,7 @@ export default function EditForm() {
       });
 
       setChkRequired(required);
-      setResData(resQues);
+      setResDescriptionData(resQues);
       setIsRendering(false);
     }
   }, [data, isRendering]);
