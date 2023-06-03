@@ -1,10 +1,24 @@
-import { ChartWrapper, InfoWrapper, PageWrapper, Info, HeadWrapper } from './styles';
+import {
+  ChartWrapper,
+  InfoWrapper,
+  PageWrapper,
+  Info,
+  HeadWrapper,
+  QueTitle,
+  QueWrapper,
+  QueChart,
+  ChartBtn,
+} from './styles';
 import { useParams } from 'react-router-dom';
 import { useGetSingleForm } from '../../components/Form/hooks/useGetSingleForm';
 import PieChart from '../../components/Statistic/PieChart';
 import BarChart from '../../components/Statistic/BarChart';
+import Button from '../../components/ui/Button';
+import { useRecoilValue } from 'recoil';
+import { color } from '../../recoil/Color/atom';
 
 export default function Statistic() {
+  const { blue } = useRecoilValue(color);
   const { id } = useParams();
   const [data, isLoading, isFetching] = useGetSingleForm(id!);
   console.log(data);
@@ -39,8 +53,35 @@ export default function Statistic() {
         {/* 총 응답자  */}
       </InfoWrapper>
       <ChartWrapper>
-        <PieChart />
-        <BarChart />
+        <QueWrapper>
+          <QueTitle>1.질문 제목</QueTitle>
+          <ChartBtn>
+            <Button color={'#696969'} bgColor={blue} fontSize={1.2} width={10} height={4}>
+              Pie Chart
+            </Button>
+            <Button color={'#696969'} bgColor={blue} fontSize={1.2} width={10} height={4}>
+              Bar Chart
+            </Button>
+          </ChartBtn>
+          <QueChart>
+            <PieChart />
+          </QueChart>
+        </QueWrapper>
+
+        <QueWrapper>
+          <QueTitle>2.질문 제목</QueTitle>
+          <ChartBtn>
+            <Button color={'#696969'} bgColor={blue} fontSize={1.3} width={10} height={5}>
+              Pie Chart
+            </Button>
+            <Button color={'#696969'} bgColor={blue} fontSize={1.3} width={10} height={5}>
+              Bar Chart
+            </Button>
+          </ChartBtn>
+          <QueChart>
+            <BarChart />
+          </QueChart>
+        </QueWrapper>
       </ChartWrapper>
       {/* <PieChart /> */}
     </PageWrapper>

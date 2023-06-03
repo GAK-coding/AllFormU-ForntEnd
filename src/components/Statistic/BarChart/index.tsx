@@ -215,7 +215,7 @@ export default function BarChart() {
   );
 
   return (
-    <div style={{ width: '800px', height: '500px', margin: '0 auto' }}>
+    <div style={{ width: '600px', height: '400px', margin: '0 auto' }}>
       <MyResponsiveBar data={data} />
     </div>
   );

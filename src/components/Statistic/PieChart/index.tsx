@@ -41,23 +41,24 @@ export default function PieChart() {
     <ResponsivePie
       data={data}
       margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-      innerRadius={0.5}
-      padAngle={0.7}
+      innerRadius={0.4}
+      padAngle={1}
       cornerRadius={3}
       activeOuterRadiusOffset={8}
+      colors={{ scheme: 'accent' }}
       borderWidth={1}
       borderColor={{
         from: 'color',
-        modifiers: [['darker', 0.2]],
+        modifiers: [['darker', 0.4]],
       }}
-      arcLinkLabelsSkipAngle={10}
-      arcLinkLabelsTextColor="#333333"
-      arcLinkLabelsThickness={2}
+      arcLinkLabelsTextColor="#2d2d2d"
+      arcLinkLabelsStraightLength={17}
+      arcLinkLabelsThickness={3}
       arcLinkLabelsColor={{ from: 'color' }}
-      arcLabelsSkipAngle={10}
+      arcLabel="value"
       arcLabelsTextColor={{
         from: 'color',
-        modifiers: [['darker', 2]],
+        modifiers: [['darker', 3]],
       }}
       defs={[
         {
@@ -135,12 +136,12 @@ export default function PieChart() {
           direction: 'row',
           justify: false,
           translateX: 0,
-          translateY: 56,
+          translateY: 50,
           itemsSpacing: 0,
           itemWidth: 100,
           itemHeight: 18,
           itemTextColor: '#999',
-          itemDirection: 'left-to-right',
+          itemDirection: 'top-to-bottom',
           itemOpacity: 1,
           symbolSize: 18,
           symbolShape: 'circle',
@@ -158,7 +159,7 @@ export default function PieChart() {
   );
 
   return (
-    <div style={{ width: '800px', height: '500px', margin: '0 auto' }}>
+    <div style={{ width: '600px', height: '400px', margin: '0 auto' }}>
       <MyResponsivePie data={data} />
     </div>
   );
