@@ -25,11 +25,6 @@ export const SetUserImage = styled.div`
   border-radius: 3rem;
   background-color: rgba(232, 211, 255, 0.6);
 
-  & > img {
-    width: 80%;
-    margin-top: 5rem;
-  }
-
   & > div:first-of-type {
     margin-top: 2rem;
     font-size: 2.8rem;
@@ -38,8 +33,20 @@ export const SetUserImage = styled.div`
     color: #696969;
   }
 
-  & > button:first-of-type {
-    margin: 5rem 0rem 2rem 0rem;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    & > img {
+      width: 80%;
+      align-items: center;
+      justify-content: center;
+      margin-top: 5rem;
+    }
+    & > button {
+      margin: 5rem 0rem 2rem 0rem;
+    }
   }
 `;
 

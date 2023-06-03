@@ -19,7 +19,7 @@ export default function Header() {
 
   const checkLogout = useCallback(() => {
     if (login) {
-      setInfo({ id: -1, nickname: '', email: '', password: '' });
+      setInfo({ id: -1, nickname: '', email: '', password: '', image: '/images/userProfile.png' });
       setLogin(false);
       localStorage.removeItem('accessToken');
       navigate('/');
@@ -27,7 +27,7 @@ export default function Header() {
     } else {
       navigate('/signin');
     }
-  }, [info.id]);
+  }, [info.id, login]);
 
   return (
     <HeaderWrapper>
