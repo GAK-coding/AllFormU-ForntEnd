@@ -14,6 +14,8 @@ export default function Date({ id }: Props) {
   const [resData, setResData] = useRecoilState(resDescriptionSets);
   const [idx, setIdx] = useState(-1);
 
+  console.log(resData);
+
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     if (date) {
       const temp = JSON.parse(JSON.stringify(resData));

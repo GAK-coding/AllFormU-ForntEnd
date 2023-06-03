@@ -18,9 +18,9 @@ export default function DropDown({ data, id }: Props) {
 
   const handleChange = useCallback((value: string) => {
     setValue(value);
-    ref.current = plainOptions.map((opt, idx) => {
-      if (opt.value === value) return idx;
-    });
+    // ref.current = plainOptions.map((opt, idx) => {
+    //   if (opt.value === value) return idx;
+    // });
   }, []);
 
   return (
