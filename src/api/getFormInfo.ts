@@ -24,13 +24,10 @@ export const getFormInfo = async (userId: number, formId: number) =>
 export const getPagingInfo = async (data: { userId: number; pageParam: number }) => {
   try {
     const { userId, pageParam } = data;
-    console.log(userId, pageParam);
 
     const res: { data: { nextPage: boolean; pagingData: makePagingData[] } } = await axios.get(
       `/form/pages/${userId}/${pageParam}`
     );
-
-    // console.log('으악', res);
 
     return res.data;
   } catch (err) {
