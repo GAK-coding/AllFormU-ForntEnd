@@ -44,6 +44,7 @@ export interface GetFormInfo extends FormInfo {
   questions: (DescriptionQue | SelectionQue)[];
   fix: boolean;
   timeout?: string[];
+  fcolor: string;
 }
 
 interface GetDescription extends Omit<DescriptionQue, 'tempId'> {

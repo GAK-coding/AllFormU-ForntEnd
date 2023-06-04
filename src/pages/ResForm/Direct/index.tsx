@@ -149,7 +149,7 @@ export default function DirectResForm() {
   }
 
   return (
-    <Row style={{ position: 'relative' }}>
+    <Row style={{ position: 'relative', backgroundColor: `${data?.fcolor || ''}` }}>
       <Col span={4} />
       <Col span={16}>
         {contextHolder}

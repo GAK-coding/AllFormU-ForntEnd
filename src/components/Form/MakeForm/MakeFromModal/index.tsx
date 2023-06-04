@@ -52,7 +52,7 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
       setIsCreate(true);
       setTime([]);
     }
-  }, [title, content, questionList, isCreate, fix, time]);
+  }, [title, content, fimage, questionList, isCreate, fix, time]);
 
   const showModal = useCallback(() => {
     if (time.length === 0) {

@@ -27,3 +27,8 @@ export const SectionBoxWrapper = styled.div`
     }
   }
 `;
+
+export const SectionTitle = styled.h2`
+  margin: 0 -2rem;
+  color: #696969;
+`;

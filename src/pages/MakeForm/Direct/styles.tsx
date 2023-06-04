@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const DirectForm = styled.form`
+  margin-top: 2rem;
+
   & > button {
     margin: 0 auto;
     margin-bottom: 4rem;
@@ -11,7 +13,7 @@ export const AddQuestion = styled.button`
   width: 4rem;
   height: 13rem;
 
-  margin-top: 4rem;
+  margin-top: 6rem;
   position: fixed;
 
   border: transparent;

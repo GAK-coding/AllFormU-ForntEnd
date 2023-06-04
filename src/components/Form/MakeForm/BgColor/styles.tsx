@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const BgColorWrapper = styled.div`
-  margin-top: 0rem;
+  margin-top: 2rem;
   position: fixed;
 
   width: 100%;

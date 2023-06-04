@@ -17,6 +17,7 @@ import { ResDescription } from '../../../../typings/resForm';
 import { color } from '../../../../recoil/Color/atom';
 import { ImgArea } from '../../../../pages/MakeForm/Direct/styles';
 import { changeUrl } from '../../../../api/user';
+import ResFormInfo from '../../DirectResForm/ResFormInfo';
 
 interface Props {
   isEdit?: boolean;
@@ -34,7 +35,7 @@ export default function FormTitle({ isEdit, formId }: Props) {
   const { mutate: imageMutate } = useMutation(changeUrl, {
     onSuccess: (data) => {
       const temp = JSON.parse(JSON.stringify(info));
-      temp.image = data;
+      temp.fimage = data.url;
       setInfo(temp);
     },
   });
@@ -83,7 +84,7 @@ export default function FormTitle({ isEdit, formId }: Props) {
 
   const deleteImg = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(info));
-    temp.image = '';
+    temp.fimage = '';
     setInfo(temp);
   }, [info]);
 
@@ -101,6 +102,10 @@ export default function FormTitle({ isEdit, formId }: Props) {
     // messsage 다시 초기화
     setSendInitMessage([]);
   }, []);
+
+  if (pathname.slice(1, 10) === 'directres') {
+    return <ResFormInfo />;
+  }
 
   return (
     <QueWrapper style={{ backgroundColor: '#F5F5F5' }}>
