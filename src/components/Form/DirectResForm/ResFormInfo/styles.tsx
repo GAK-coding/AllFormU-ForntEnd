@@ -13,7 +13,10 @@ export const ResFormInfoWrapper = styled.div`
   }
 
   & > img {
-    width: 80%;
+    width: 50%;
+    height: 50%;
+    min-width: 20rem;
+    min-height: 20rem;
   }
 
   & > div {

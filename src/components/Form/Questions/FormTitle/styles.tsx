@@ -13,6 +13,15 @@ export const FormTitleWrapper = styled.div`
   border-radius: 2rem;
   padding: 2rem;
   background-color: #f5f5f5;
+
+  & > img {
+    width: 50%;
+    height: 50%;
+    min-width: 20rem;
+    min-height: 20rem;
+
+    margin: 1rem 0;
+  }
 `;
 
 export const TitleInput = styled.input`
