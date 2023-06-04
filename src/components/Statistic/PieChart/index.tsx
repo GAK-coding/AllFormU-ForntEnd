@@ -8,6 +8,7 @@ interface Props {
 }
 
 export default function PieChart({ queInfo }: QueResInfo) {
+  const { data } = ResponseData({ queInfo });
   const MyResponsivePie = ({ data }: Props) => (
     <ResponsivePie
       data={data}
@@ -131,14 +132,14 @@ export default function PieChart({ queInfo }: QueResInfo) {
   console.log(queInfo);
   return (
     <ChartSize>
-      {/* {data.length === 0 ? ( */}
-      {/*   <NotResponsor> */}
-      {/*     <span>응답자가 존재하지 않습니다!</span> */}
-      {/*     <img src={'/images/noResponser.png'} alt="noResponse" /> */}
-      {/*   </NotResponsor> */}
-      {/* ) : ( */}
-      {/*   <MyResponsivePie data={data} /> */}
-      {/* )} */}
+      {data.length === 0 ? (
+        <NotResponsor>
+          <span>응답자가 존재하지 않습니다!</span>
+          <img src={'/images/noResponser.png'} alt="noResponse" />
+        </NotResponsor>
+      ) : (
+        <MyResponsivePie data={data} />
+      )}
     </ChartSize>
   );
 }
