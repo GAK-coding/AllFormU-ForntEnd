@@ -14,11 +14,13 @@ export interface createFormData extends FormInfo {
   questions: Array<Omit<DescriptionQue, 'tempId'> | Omit<SelectionQue, 'tempId'> | Omit<GridQue, 'tempId'>>;
   fix: boolean;
   timeout: string[];
+  fcolor: string;
 }
 
 export interface FormInfo {
   title: string;
   content: string;
+  fimage?: string;
 }
 
 export type DescriptionKinds =

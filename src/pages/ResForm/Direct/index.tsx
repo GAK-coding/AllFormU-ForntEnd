@@ -39,7 +39,7 @@ function isDescriptionQue(que: DescriptionQue | SelectionQue | GridQue): que is 
   );
 }
 
-export default function EditForm() {
+export default function DirectResForm() {
   const { id } = useParams();
   const [questionList, setQuestionList] = useRecoilState(questions);
   const [data, isLoading, isFetching] = useGetSingleForm(id!);
@@ -77,7 +77,7 @@ export default function EditForm() {
       }
 
       //TODO: 멤버 하드코딩됨
-      resDescriptionMutate({ formId: +id!, memberId: 4, forms: resDescriptionData });
+      resDescriptionMutate({ formId: +id!, memberId: 1, forms: resDescriptionData });
     },
     [resDescriptionData, chkRequired]
   );
@@ -149,7 +149,7 @@ export default function EditForm() {
   }
 
   return (
-    <Row style={{ position: 'relative' }}>
+    <Row style={{ position: 'relative', backgroundColor: `${data?.fcolor || ''}` }}>
       <Col span={4} />
       <Col span={16}>
         {contextHolder}

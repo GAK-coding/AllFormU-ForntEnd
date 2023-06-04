@@ -9,3 +9,13 @@ export const getQueResCount = async (question_id: number) => {
     console.log(err);
   }
 };
+
+export const getStatisticEach = async (question_id: number) => {
+  try {
+    const res: { data: { count: number } } = await axios.get(`/description/statistic/${question_id}`);
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

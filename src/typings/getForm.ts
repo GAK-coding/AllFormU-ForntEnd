@@ -45,6 +45,7 @@ export interface GetFormInfo extends FormInfo {
   fix: boolean;
   timeout?: string[];
   responsor_count?: number;
+  fcolor: string;
 }
 
 interface GetDescription extends Omit<DescriptionQue, 'tempId'> {
