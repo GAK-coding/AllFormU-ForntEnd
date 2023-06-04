@@ -47,6 +47,7 @@ export default function Question({ id, index, title }: QueInfo) {
   //     setEachQueCount(queNull - queRes);
   //   }
   // }, [isQueResCount, isQueStatistic]);
+
   return (
     <QueWrapper key={index}>
       <QueTitle>
