@@ -1,4 +1,4 @@
-import { DescriptionResStatistic, QueInfo, SelectionResStatistic } from '../../../typings/statistic';
+import { DescriptionResStatistic, QueInfo } from '../../../typings/statistic';
 import { ChartBtn, QueChart, QueTitle, QueWrapper, ResTitle } from '../../../pages/Statistic/styles';
 import Button from '../../ui/Button';
 import PieChart from '../PieChart';
@@ -7,21 +7,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
 import { useQuery } from 'react-query';
-import {
-  getDescriptionResCount,
-  getDescriptionStatisticEach,
-  getSelectionResCount,
-  getSelectionStatisticEach,
-} from '../../../api/statistic';
+import { getDescriptionResCount, getDescriptionStatisticEach } from '../../../api/statistic';
+// import { getQueResCount, getStatisticEach } from '../../../api/statistic';
 
-type ResStatistic = DescriptionResStatistic | SelectionResStatistic;
-
-export default function Question({ id, index, title, type }: QueInfo) {
+export default function Question({ id, index, title }: QueInfo) {
   const { blue } = useRecoilValue(color);
+  const [eachQueInfo, setEachQueInfo] = useState<DescriptionResStatistic>();
   const [chartType, setChartType] = useState<'Pie Chart' | 'Bar Chart'>('Pie Chart');
-  const [resInfo, setResInfo] = useState<ResStatistic>();
-  const [eachQueCount, setEachQueCount] = useState<number>(0);
-
+  // const [eachQueCount, setEachQueCount] = useState<number>(0);
   const onChangeStatus = useCallback((action: 'Pie Chart' | 'Bar Chart') => {
     if (action === 'Pie Chart') {
       setChartType('Pie Chart');
@@ -30,55 +23,28 @@ export default function Question({ id, index, title, type }: QueInfo) {
     }
   }, []);
 
-  useEffect(() => {
-    if (type.includes('DESCRIPTION')) {
-      const { data: queResCount, isSuccess: isQueResCount } = useQuery(
-        ['queResCount', id],
-        () => getDescriptionResCount(id!),
-        {
-          onSuccess: (data) => {
-            setEachQueCount(data?.count!);
-          },
-        }
-      );
-      const { data: queStatistic, isSuccess: isQueStatistic } = useQuery(
-        ['queStatistic', id],
-        () => getDescriptionStatisticEach(id!),
-        {
-          onSuccess: (data) => {
-            setResInfo(data);
-          },
-        }
-      );
-    } else if (type.includes('SELECTION')) {
-      const { data: queResCount, isSuccess: isQueResCount } = useQuery(
-        ['queResCount', id],
-        () => getSelectionResCount(id!),
-        {
-          onSuccess: (data) => {
-            setEachQueCount(data?.count!);
-          },
-        }
-      );
-      const { data: queStatistic, isSuccess: isQueStatistic } = useQuery(
-        ['queStatistic', id],
-        () => getSelectionStatisticEach(id!),
-        {
-          onSuccess: (data) => {
-            setResInfo(data);
-          },
-        }
-      );
-    }
-    console.log(resInfo);
-  }, []);
+  //TODO : null인 것 count 하는 로직 추가
+  const { data: queResCount, isSuccess: isQueResCount } = useQuery(['queResCount', id], () =>
+    getDescriptionResCount(id!)
+  );
+  const { data: queStatistic, isSuccess: isQueStatistic } = useQuery(['queStatistic', id], () =>
+    getDescriptionStatisticEach(id!)
+  );
 
-  // TODO : 나중에 null 값 처리해야함
+  useEffect(() => {
+    setEachQueInfo(queStatistic);
+  }, [queStatistic]);
+
+  console.log(eachQueInfo);
+
+  //TODO : 나중에 null 값 처리해야함
   // useEffect(() => {
-  //   if (queResCount?.count && queStatistic?.num[0]) {
-  //     setEachQueCount(queResCount?.count - queStatistic?.num[0]);
+  //   if (isQueResCount && isQueStatistic) {
+  //     const queNull = queResCount?.count!;
+  //     const queRes = queResInfo?.num[0];
+  //     setEachQueCount(queNull - queRes);
   //   }
-  // }, [queResCount, queStatistic]);
+  // }, [isQueResCount, isQueStatistic]);
 
   return (
     <QueWrapper key={index}>
@@ -87,7 +53,7 @@ export default function Question({ id, index, title, type }: QueInfo) {
         {title}
       </QueTitle>
       <ResTitle>
-        <span>{`응답수 : ${eachQueCount}`}</span>
+        <span>{`응답자 : ${queResCount} 명`}</span>
       </ResTitle>
       <ChartBtn>
         <Button
@@ -111,7 +77,9 @@ export default function Question({ id, index, title, type }: QueInfo) {
           Bar Chart
         </Button>
       </ChartBtn>
-      <QueChart>{chartType === 'Pie Chart' && resInfo ? <PieChart queInfo={resInfo} /> : <BarChart />}</QueChart>
+      <QueChart>
+        {chartType === 'Pie Chart' && eachQueInfo ? <PieChart queInfo={eachQueInfo} /> : <BarChart />}
+      </QueChart>
     </QueWrapper>
   );
 }
