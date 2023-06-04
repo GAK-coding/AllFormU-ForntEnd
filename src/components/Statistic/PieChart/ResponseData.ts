@@ -1,5 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { descriptionResInfo } from '../../../recoil/Statistic/atom';
+import { QueResInfo } from '../../../typings/statistic';
 
 export interface DataItem {
   id: string;
@@ -12,8 +13,7 @@ export interface Data {
   data: DataItem[];
 }
 
-export const ResponseData = (): Data => {
-  const descriptionResultInfo = useRecoilValue(descriptionResInfo);
+export const ResponseData = (queInfo: QueResInfo): Data => {
   const colors = [
     'hsl(200, 70%, 50%)',
     'hsl(237, 70%, 50%)',
@@ -22,17 +22,18 @@ export const ResponseData = (): Data => {
     'hsl(91, 70%, 50%)',
   ];
 
+  console.log(queInfo);
   const data: DataItem[] = [];
-  descriptionResultInfo.opList.forEach((op, index) => {
-    if (op !== null) {
-      data.push({
-        id: op!,
-        label: op!,
-        value: descriptionResultInfo.num[index],
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-    }
-  });
+  // queInfo.opList.forEach((op, index) => {
+  //   if (op !== null) {
+  //     data.push({
+  //       id: op!,
+  //       label: op!,
+  //       value: descriptionResultInfo.num[index],
+  //       color: colors[Math.floor(Math.random() * colors.length)],
+  //     });
+  //   }
+  // });
   console.log(data);
   return {
     // data: [

@@ -14,3 +14,7 @@ export interface DescriptionResStatistic {
   opList: (string | null)[];
   num: number[];
 }
+
+export interface QueResInfo {
+  queInfo: DescriptionResStatistic;
+}
