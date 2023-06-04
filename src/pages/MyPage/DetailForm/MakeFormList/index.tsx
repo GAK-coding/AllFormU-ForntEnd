@@ -2,16 +2,19 @@ import { useRecoilValue } from 'recoil';
 import Button from '../../../../components/ui/Button';
 import { BottomBox, ButtonWrapper, FormListWrapper, HeaderWrapper, Title } from '../styles';
 import { color } from '../../../../recoil/Color/atom';
-import { useCallback } from 'react';
-import { useInfiniteQuery, useMutation } from 'react-query';
+import { useCallback, useRef } from 'react';
+import { useInfiniteQuery, useMutation, useQueryClient } from 'react-query';
 import { deleteFrom, getPagingInfo } from '../../../../api/getFormInfo';
 import { Col, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
+import { useMessage } from '../../../../hooks/useMessage';
 
 export default function MakeFormList() {
   const { blue, lightPurple } = useRecoilValue(color);
   const navigate = useNavigate();
+  const { showMessage, contextHolder } = useMessage();
+  const ref = useRef<number | null>(null);
 
   const {
     data,
@@ -36,16 +39,43 @@ export default function MakeFormList() {
     }
   );
 
+  const queryClient = useQueryClient();
+
   const {
     mutate: deleteMutate,
     isLoading: deleteIsLoading,
     isError: deleteIsError,
     error: deleteError,
     isSuccess: deleteIsSuccess,
-  } = useMutation(deleteFrom);
+  } = useMutation(deleteFrom, {
+    onMutate: async (id: number) => {
+      const snapshot = queryClient.getQueryData('makeForms');
+
+      queryClient.setQueryData('makeForms', (old: any) =>
+        old.pages[ref.current!].pagingData.filter((item: any) => {
+          return item.id !== id;
+        })
+      );
+
+      return { snapshot };
+    },
+    onError: (error, newData, context) => {
+      if (context?.snapshot) {
+        queryClient.setQueryData('makeForms', context.snapshot);
+        showMessage('error', '삭제에 실패했습니다.');
+      }
+    },
+    onSettled() {
+      queryClient.invalidateQueries('makeForms');
+    },
+  });
 
   const deleteForm = useCallback((id: number) => {
-    deleteMutate(id);
+    const confirmDelete = window.confirm('이 설문을 삭제하시겠습니까?');
+    if (confirmDelete) {
+      deleteMutate(id);
+      showMessage('success', '삭제되었습니다.');
+    }
   }, []);
 
   if (infiniteIsLoading) return <div>loading...</div>;
@@ -62,8 +92,9 @@ export default function MakeFormList() {
         {infiniteIsFetching && <div>loading...</div>}
         <InfiniteScroll loadMore={() => fetchNextPage({ pageParam: data?.pages.length })} hasMore={hasNextPage}>
           <FormListWrapper>
-            {data?.pages.map((page) =>
-              page?.pagingData.map((formInfo) => (
+            {contextHolder}
+            {data?.pages?.map((page) =>
+              page?.pagingData?.map((formInfo, idx) => (
                 <div key={formInfo.id}>
                   <Title>
                     <span>{formInfo.title}</span>
@@ -82,7 +113,10 @@ export default function MakeFormList() {
                         수정
                       </Button>
                       <Button
-                        onClick={() => deleteForm(formInfo.id)}
+                        onClick={() => {
+                          deleteForm(formInfo.id);
+                          ref.current = idx;
+                        }}
                         color={'black'}
                         bgColor={lightPurple}
                         fontSize={1.3}
