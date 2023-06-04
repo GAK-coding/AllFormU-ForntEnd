@@ -21,6 +21,7 @@ import { useCallback, useState } from 'react';
 import { DescriptionQue, SelectionQue } from '../../typings/makeForm';
 import { useQuery } from 'react-query';
 import { getQueResCount } from '../../api/statistic';
+import Question from '../../components/Statistic/Question';
 
 interface queResCount {
   question_id: number;
@@ -78,49 +79,41 @@ export default function Statistic() {
 
       <ChartWrapper>
         {data?.questions.map((question, index) => {
-          // const { data: queResCount } = useQuery(
-          //   `queResCount-${question.id}`, // 고유한 쿼리 키를 생성하기 위해 question.id를 사용
-          //   () => {
-          //     if (question.id) {
-          //       return getQueResCount(question.id); // question.id 값이 존재하는 경우에만 호출
-          //     }
-          //   }
-          // );
-
           return (
-            <QueWrapper key={index}>
-              <QueTitle>
-                <span>{`Q${index + 1}. `} &nbsp;</span>
-                {question.title}
-              </QueTitle>
-              {/* TODO : 각 문항에 대한 응답자로 변경 */}
-              <ResTitle>
-                <span>{`응답자 : ${queResCount}명`}</span>
-              </ResTitle>
-              <ChartBtn>
-                <Button
-                  onClick={() => onChangeStatus('Pie Chart')}
-                  color={'#696969'}
-                  bgColor={blue}
-                  fontSize={1.2}
-                  width={10}
-                  height={4}
-                >
-                  Pie Chart
-                </Button>
-                <Button
-                  onClick={() => onChangeStatus('Bar Chart')}
-                  color={'#696969'}
-                  bgColor={blue}
-                  fontSize={1.2}
-                  width={10}
-                  height={4}
-                >
-                  Bar Chart
-                </Button>
-              </ChartBtn>
-              <QueChart>{chartType === 'Pie Chart' ? <PieChart /> : <BarChart />}</QueChart>
-            </QueWrapper>
+            // <QueWrapper key={index}>
+            //   <QueTitle>
+            //     <span>{`Q${index + 1}. `} &nbsp;</span>
+            //     {question.title}
+            //   </QueTitle>
+            //   {/* TODO : 각 문항에 대한 응답자로 변경 */}
+            //   <ResTitle>
+            //     <span>{`응답자 : ${queResCount}명`}</span>
+            //   </ResTitle>
+            //   <ChartBtn>
+            //     <Button
+            //       onClick={() => onChangeStatus('Pie Chart')}
+            //       color={'#696969'}
+            //       bgColor={blue}
+            //       fontSize={1.2}
+            //       width={10}
+            //       height={4}
+            //     >
+            //       Pie Chart
+            //     </Button>
+            //     <Button
+            //       onClick={() => onChangeStatus('Bar Chart')}
+            //       color={'#696969'}
+            //       bgColor={blue}
+            //       fontSize={1.2}
+            //       width={10}
+            //       height={4}
+            //     >
+            //       Bar Chart
+            //     </Button>
+            //   </ChartBtn>
+            //   <QueChart>{chartType === 'Pie Chart' ? <PieChart /> : <BarChart />}</QueChart>
+            // </QueWrapper>
+            <Question id={id!} index={index} />
           );
         })}
       </ChartWrapper>

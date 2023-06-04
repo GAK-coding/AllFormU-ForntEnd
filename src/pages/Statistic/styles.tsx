@@ -10,8 +10,8 @@ export const PageWrapper = styled.div`
 export const InfoWrapper = styled.div`
   position: fixed;
 
-  left: 80px;
-  bottom: 100px;
+  left: 120px;
+  bottom: 105px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -81,7 +81,7 @@ export const ChartWrapper = styled.div`
   height: 100%;
 
   padding: 1rem;
-  margin-left: 35rem;
+  margin-left: 30rem;
 `;
 
 export const QueWrapper = styled.div`
