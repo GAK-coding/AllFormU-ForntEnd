@@ -8,10 +8,12 @@ import { deleteFrom, getPagingInfo } from '../../../../api/getFormInfo';
 import { Col, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
+import { useMessage } from '../../../../hooks/useMessage';
 
 export default function MakeFormList() {
   const { blue, lightPurple } = useRecoilValue(color);
   const navigate = useNavigate();
+  const { showMessage, contextHolder } = useMessage();
 
   const {
     data,
@@ -45,7 +47,11 @@ export default function MakeFormList() {
   } = useMutation(deleteFrom);
 
   const deleteForm = useCallback((id: number) => {
-    deleteMutate(id);
+    const confirmDelete = window.confirm('이 설문을 삭제하시겠습니까?');
+    if (confirmDelete) {
+      deleteMutate(id);
+      showMessage('success', '삭제되었습니다.');
+    }
   }, []);
 
   if (infiniteIsLoading) return <div>loading...</div>;
@@ -62,6 +68,7 @@ export default function MakeFormList() {
         {infiniteIsFetching && <div>loading...</div>}
         <InfiniteScroll loadMore={() => fetchNextPage({ pageParam: data?.pages.length })} hasMore={hasNextPage}>
           <FormListWrapper>
+            {contextHolder}
             {data?.pages.map((page) =>
               page?.pagingData.map((formInfo) => (
                 <div key={formInfo.id}>
