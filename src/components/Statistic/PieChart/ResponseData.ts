@@ -13,7 +13,7 @@ export interface Data {
   data: DataItem[];
 }
 
-export const ResponseData = (queInfo: QueResInfo): Data => {
+export const ResponseData = ({ queInfo }: QueResInfo): Data => {
   const colors = [
     'hsl(200, 70%, 50%)',
     'hsl(237, 70%, 50%)',
@@ -24,16 +24,16 @@ export const ResponseData = (queInfo: QueResInfo): Data => {
 
   console.log(queInfo);
   const data: DataItem[] = [];
-  // queInfo.opList.forEach((op, index) => {
-  //   if (op !== null) {
-  //     data.push({
-  //       id: op!,
-  //       label: op!,
-  //       value: descriptionResultInfo.num[index],
-  //       color: colors[Math.floor(Math.random() * colors.length)],
-  //     });
-  //   }
-  // });
+  queInfo.opList.forEach((op, index) => {
+    if (op !== null) {
+      data.push({
+        id: op!,
+        label: op!,
+        value: queInfo.num[index]!,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      });
+    }
+  });
   console.log(data);
   return {
     // data: [
