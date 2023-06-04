@@ -1,5 +1,6 @@
 import { BarDatum, ResponsiveBar } from '@nivo/bar';
 import { ResponseData } from './ResponseData';
+import { ChartProps } from '../../../typings/statistic';
 
 interface Props {
   data: BarDatum[];
@@ -75,7 +76,7 @@ const MyResponsiveBar = ({ data }: Props) => (
   />
 );
 
-export default function BarChart() {
+export default function BarChart({ id }: ChartProps) {
   const { data } = ResponseData();
 
   return (
