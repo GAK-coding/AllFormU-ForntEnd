@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import Button from '../../../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../../../recoil/Color/atom';
-import { formFix, formInfo, period, questions } from '../../../../recoil/MakeForm/atom';
+import { FormBgColor, formFix, formInfo, period, questions } from '../../../../recoil/MakeForm/atom';
 import UrlModal from '../UrlModal';
 import { useMutation } from 'react-query';
 import { createForm } from '../../../../api/makeform';
@@ -24,13 +24,14 @@ interface Props {
 
 export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }: Props) {
   const questionList = useRecoilValue(questions);
-  const { title, content } = useRecoilValue(formInfo);
+  const { title, content, fimage } = useRecoilValue(formInfo);
   const { blue, lightPurple } = useRecoilValue(color);
   const [fix, setFix] = useRecoilState(formFix);
   const [time, setTime] = useRecoilState(period);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formId, setFormId] = useState(-1);
   const { showMessage, contextHolder } = useMessage();
+  const fcolor = useRecoilValue(FormBgColor);
 
   const { mutate, data, isLoading, isError, error, isSuccess } = useMutation(createForm, {
     onSuccess: (data) => {
@@ -47,7 +48,7 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
         return rest;
       });
 
-      mutate({ title, fix, timeout: time, content, questions });
+      mutate({ title, fix, timeout: time, content, questions, fimage, fcolor });
       setIsCreate(true);
       setTime([]);
     }
