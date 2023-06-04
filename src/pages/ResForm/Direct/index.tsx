@@ -57,27 +57,39 @@ export default function DirectResForm() {
 
   const { mutate: resDescriptionMutate } = useMutation(createDescription);
 
+  console.log(resDescriptionData);
+
   const onClickRes = useCallback(
     (e: React.MouseEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       const required = JSON.parse(JSON.stringify(chkRequired));
+      const descriptionData: ResDescription[] = [];
 
-      if (required.length > 0)
-        for (const data of resDescriptionData) {
-          if (required.includes(data.question_id)) {
-            if (data.content === '') break;
-            required.splice(required.indexOf(data.question_id), 1);
-          }
+      for (const data of resDescriptionData) {
+        if (required.includes(data.question_id)) {
+          if (data.content === '') break;
+
+          required.splice(required.indexOf(data.question_id), 1);
         }
+        if (data.content !== '') descriptionData.push(data);
+      }
 
       if (required.length !== 0) {
         showMessage('warning', '필수 질문에 답변해주세요.');
         return;
       }
 
+      console.log(descriptionData);
+
+      if (descriptionData.length === 0) {
+        showMessage('warning', '답변한 질문이 없습니다.');
+        return;
+      }
+
       //TODO: 멤버 하드코딩됨
-      resDescriptionMutate({ formId: +id!, memberId: 1, forms: resDescriptionData });
+      resDescriptionMutate({ formId: +id!, memberId: 1, forms: descriptionData });
+      showMessage('success', '응답 완료!');
     },
     [resDescriptionData, chkRequired]
   );
