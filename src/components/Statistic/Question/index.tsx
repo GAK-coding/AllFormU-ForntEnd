@@ -48,6 +48,10 @@ export default function Question({ id, index, title, type }: QueInfo) {
       getDescriptionStatisticEach(id!)
     );
 
+    useEffect(() => {
+      setEachQueInfo(queStatistic);
+    }, [queStatistic]);
+
     return (
       <QueWrapper key={index}>
         <QueTitle>
@@ -91,6 +95,10 @@ export default function Question({ id, index, title, type }: QueInfo) {
     const { data: queStatistic, isSuccess: isQueStatistic } = useQuery(['queStatistic', id], () =>
       getSelectionStatisticEach(id!)
     );
+
+    useEffect(() => {
+      setEachQueInfo(queStatistic);
+    }, [queStatistic]);
 
     return (
       <QueWrapper key={index}>
