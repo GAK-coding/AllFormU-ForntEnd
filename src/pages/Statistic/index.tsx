@@ -36,23 +36,6 @@ export default function Statistic() {
     return `${year}.${month}.${day}`;
   };
 
-  //TODO :문항별로 차트 다르게 뜨게하기
-  const [chartType, setChartType] = useState<'Pie Chart' | 'Bar Chart'>('Pie Chart');
-
-  const onChangeStatus = useCallback((action: 'Pie Chart' | 'Bar Chart') => {
-    if (action === 'Pie Chart') {
-      setChartType('Pie Chart');
-    } else if (action === 'Bar Chart') {
-      setChartType('Bar Chart');
-    }
-  }, []);
-  const question_id = 105;
-  const {
-    data: queResCount,
-    isLoading: queResCountLoading,
-    isFetching: queResCountFetching,
-  } = useQuery('queResCount', () => getQueResCount(105));
-
   return (
     <PageWrapper>
       <InfoWrapper>

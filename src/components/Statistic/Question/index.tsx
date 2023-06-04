@@ -8,6 +8,8 @@ import { useGetSingleForm } from '../../Form/hooks/useGetSingleForm';
 import { useCallback, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
+import { useQuery } from 'react-query';
+import { getQueResCount } from '../../../api/statistic';
 
 export default function Question({ id, index }: QueInfo) {
   const { blue } = useRecoilValue(color);
@@ -22,14 +24,19 @@ export default function Question({ id, index }: QueInfo) {
       setChartType('Bar Chart');
     }
   }, []);
+
+  const question_id = data?.questions[index].id;
+  const { data: queResCount } = useQuery('queResCount', () => getQueResCount(question_id!));
+
   return (
     <QueWrapper key={index}>
       <QueTitle>
         <span>{`Q${index + 1}. `} &nbsp;</span>
         {data?.questions[index].title}
       </QueTitle>
-      {/* TODO : 각 문항에 대한 응답자로 변경 */}
-      <ResTitle>{/* <span>{`응답자 : ${queResCount}명`}</span> */}</ResTitle>
+      <ResTitle>
+        <span>{`응답자 : ${queResCount}명`}</span>
+      </ResTitle>
       <ChartBtn>
         <Button
           onClick={() => onChangeStatus('Pie Chart')}
