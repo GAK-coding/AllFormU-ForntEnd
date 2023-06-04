@@ -1,14 +1,13 @@
 import { ResponsivePie } from '@nivo/pie';
 import { ResponseData } from './ResponseData';
 import { ChartSize, NotResponsor } from '../../../pages/Statistic/styles';
+import { DescriptionResStatistic, QueResInfo } from '../../../typings/statistic';
 
 interface Props {
   data: object[];
 }
 
-export default function PieChart() {
-  const { data } = ResponseData();
-
+export default function PieChart({ queInfo }: QueResInfo) {
   const MyResponsivePie = ({ data }: Props) => (
     <ResponsivePie
       data={data}
@@ -129,17 +128,17 @@ export default function PieChart() {
       ]}
     />
   );
-
+  console.log(queInfo);
   return (
     <ChartSize>
-      {data.length === 0 ? (
-        <NotResponsor>
-          <span>응답자가 존재하지 않습니다!</span>
-          <img src={'/images/noResponser.png'} alt="noResponse" />
-        </NotResponsor>
-      ) : (
-        <MyResponsivePie data={data} />
-      )}
+      {/* {data.length === 0 ? ( */}
+      {/*   <NotResponsor> */}
+      {/*     <span>응답자가 존재하지 않습니다!</span> */}
+      {/*     <img src={'/images/noResponser.png'} alt="noResponse" /> */}
+      {/*   </NotResponsor> */}
+      {/* ) : ( */}
+      {/*   <MyResponsivePie data={data} /> */}
+      {/* )} */}
     </ChartSize>
   );
 }
