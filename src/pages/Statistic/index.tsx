@@ -20,7 +20,7 @@ import { color } from '../../recoil/Color/atom';
 import { useCallback, useState } from 'react';
 import { DescriptionQue, SelectionQue } from '../../typings/makeForm';
 import { useQuery } from 'react-query';
-import { getQueResCount } from '../../api/statistic';
+import { getDescriptionResCount } from '../../api/statistic';
 import Question from '../../components/Statistic/Question';
 
 export default function Statistic() {
@@ -59,7 +59,7 @@ export default function Statistic() {
 
       <ChartWrapper>
         {data?.questions.map((question, index) => {
-          return <Question id={question.id!} index={index} title={question.title} />;
+          return <Question id={question.id!} index={index} title={question.title} type={question.type} />;
         })}
       </ChartWrapper>
     </PageWrapper>

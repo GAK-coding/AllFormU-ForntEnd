@@ -2,6 +2,7 @@ export interface QueInfo {
   id: number;
   index: number;
   title: string;
+  type: string;
 }
 
 export interface ChartProps {
@@ -19,6 +20,11 @@ export interface DescriptionResStatistic {
   num: number[];
 }
 
+export interface SelectionResStatistic {
+  responses: ResponseItem[];
+  num: number[];
+}
+
 export interface QueResInfo {
-  queInfo: DescriptionResStatistic;
+  queInfo: DescriptionResStatistic | SelectionResStatistic;
 }

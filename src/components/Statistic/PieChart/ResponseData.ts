@@ -24,16 +24,22 @@ export const ResponseData = ({ queInfo }: QueResInfo): Data => {
 
   console.log(queInfo);
   const data: DataItem[] = [];
-  queInfo.opList.forEach((op, index) => {
-    if (op !== null) {
-      data.push({
-        id: op!,
-        label: op!,
-        value: queInfo.num[index]!,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-    }
-  });
+
+  if ('response' in queInfo) {
+    queInfo.opList.forEach((op, index) => {
+      if (op !== null) {
+        data.push({
+          id: op!,
+          label: op!,
+          value: queInfo.num[index]!,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        });
+      }
+    });
+  } else {
+    console.log('q');
+  }
+
   console.log(data);
   return {
     // data: [
