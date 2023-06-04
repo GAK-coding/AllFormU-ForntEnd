@@ -38,7 +38,9 @@ export const nowFocusIndex = atom<number>({
   default: 0,
 });
 
-export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', content: '' } });
+export const formInfo = atom<FormInfo>({ key: 'formInfo', default: { title: '', content: '', fimage: '' } });
+
+export const FormBgColor = atom({ key: 'BgColor', default: '#ffffff' });
 
 export const questions = atom<Array<DescriptionQue | SelectionQue | GridQue>[]>({
   key: 'questions',

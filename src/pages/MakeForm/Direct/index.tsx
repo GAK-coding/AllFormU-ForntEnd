@@ -3,6 +3,7 @@ import { Alert, Col, message, Row } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { AddQuestion, AddSection, DirectForm } from './styles';
 import {
+  FormBgColor,
   nowFocusIndex,
   nowQuestion,
   queSectionNum,
@@ -22,6 +23,7 @@ import SectionBox from '../../../components/Form/Questions/SectionBox';
 import FormTitle from '../../../components/Form/Questions/FormTitle';
 import { useLocation } from 'react-router-dom';
 import { detailChat } from '../../../recoil/Chatbot/atom';
+import BgColor from '../../../components/Form/MakeForm/BgColor';
 
 export default function MakeFormDirect() {
   const [questionList, setQuestionList] = useRecoilState(questions);
@@ -36,6 +38,7 @@ export default function MakeFormDirect() {
   const ref = useRef<HTMLDivElement>(null);
   const { showMessage, contextHolder } = useMessage();
   const { blue } = useRecoilValue(color);
+  const formBgColor = useRecoilValue(FormBgColor);
 
   const { state } = useLocation();
   const [isRendering, setIsRendering] = useState(true);
@@ -249,14 +252,12 @@ export default function MakeFormDirect() {
     setAccrueQue(temp);
   }, [addQuestion]);
 
-  console.log(questionList, nowQueInfo);
-
   useLayoutEffect(() => {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [questionList]);
 
   return (
-    <Row>
+    <Row style={{ backgroundColor: `${formBgColor}` }}>
       <Col span={4} />
       <Col span={16}>
         {contextHolder}
@@ -321,6 +322,7 @@ export default function MakeFormDirect() {
         <MakeFromModal isCreate={isCreate} setIsCreate={setIsCreate} open={isModalOpen} onCancel={handleCancel} />
       </Col>
       <Col span={4}>
+        <BgColor />
         <AddQuestion onClick={addQuestion}>
           <span>질문 추가</span>
         </AddQuestion>

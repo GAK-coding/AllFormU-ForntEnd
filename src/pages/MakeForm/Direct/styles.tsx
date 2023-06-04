@@ -11,7 +11,7 @@ export const AddQuestion = styled.button`
   width: 4rem;
   height: 13rem;
 
-  margin-top: 2rem;
+  margin-top: 4rem;
   position: fixed;
 
   border: transparent;
@@ -34,4 +34,18 @@ export const AddQuestion = styled.button`
 
 export const AddSection = styled(AddQuestion)`
   margin-left: 5em;
+`;
+
+export const ImgArea = styled.div`
+  width: 100%;
+
+  margin: 2rem 0;
+  text-align: center;
+
+  .image-item__btn-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 2%;
+    margin-top: 1rem;
+  }
 `;
