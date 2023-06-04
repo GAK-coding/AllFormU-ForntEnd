@@ -23,9 +23,6 @@ import { useQuery } from 'react-query';
 import { getQueResCount } from '../../api/statistic';
 import Question from '../../components/Statistic/Question';
 
-interface queResCount {
-  question_id: number;
-}
 export default function Statistic() {
   const { blue } = useRecoilValue(color);
   const { id } = useParams();
@@ -62,42 +59,7 @@ export default function Statistic() {
 
       <ChartWrapper>
         {data?.questions.map((question, index) => {
-          return (
-            // <QueWrapper key={index}>
-            //   <QueTitle>
-            //     <span>{`Q${index + 1}. `} &nbsp;</span>
-            //     {question.title}
-            //   </QueTitle>
-            //   {/* TODO : 각 문항에 대한 응답자로 변경 */}
-            //   <ResTitle>
-            //     <span>{`응답자 : ${queResCount}명`}</span>
-            //   </ResTitle>
-            //   <ChartBtn>
-            //     <Button
-            //       onClick={() => onChangeStatus('Pie Chart')}
-            //       color={'#696969'}
-            //       bgColor={blue}
-            //       fontSize={1.2}
-            //       width={10}
-            //       height={4}
-            //     >
-            //       Pie Chart
-            //     </Button>
-            //     <Button
-            //       onClick={() => onChangeStatus('Bar Chart')}
-            //       color={'#696969'}
-            //       bgColor={blue}
-            //       fontSize={1.2}
-            //       width={10}
-            //       height={4}
-            //     >
-            //       Bar Chart
-            //     </Button>
-            //   </ChartBtn>
-            //   <QueChart>{chartType === 'Pie Chart' ? <PieChart /> : <BarChart />}</QueChart>
-            // </QueWrapper>
-            <Question id={id!} index={index} />
-          );
+          return <Question id={question.id!} index={index} title={question.title} />;
         })}
       </ChartWrapper>
     </PageWrapper>
