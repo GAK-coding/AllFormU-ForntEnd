@@ -25,24 +25,16 @@ export default function MakeFormList() {
     'makeForms',
     ({ pageParam = 0 }) => getPagingInfo({ userId: 1, pageParam }), // pageParam의 초기값을 0으로 설정
     {
-      getNextPageParam: (lastPage) => {
+      getNextPageParam: (lastPage, allPages) => {
         if (lastPage?.nextPage) {
-          const nextPageNumber = lastPage.pagingData.length;
-          return nextPageNumber % 2 === 0 ? nextPageNumber + 1 : nextPageNumber;
-        } else {
-          return undefined;
+          return allPages.length + 1;
         }
       },
-      // onSuccess: (data) => {
-      //   console.log(data);
-      // },
       refetchOnMount: false, // 마운트(리렌더링)될 때 데이터를 다시 가져오지 않음
       refetchOnWindowFocus: false, // 브라우저를 포커싱했을때 데이터를 가져오지 않음
       refetchOnReconnect: false, // 네트워크가 다시 연결되었을때 다시 가져오지 않음
     }
   );
-
-  // const { data: makeFormInfo, isLoading, error, isError } = useQuery<GetForm[]>('myMakeForm', getMakeForms);
 
   const {
     mutate: deleteMutate,
@@ -56,13 +48,6 @@ export default function MakeFormList() {
     deleteMutate(id);
   }, []);
 
-  const loadMoreItems = useCallback(
-    (page: number) => {
-      fetchNextPage({ pageParam: page });
-    },
-    [fetchNextPage]
-  );
-
   if (infiniteIsLoading) return <div>loading...</div>;
   if (infiniteIsError) return <div>error...</div>;
 
@@ -75,7 +60,7 @@ export default function MakeFormList() {
         </HeaderWrapper>
 
         {infiniteIsFetching && <div>loading...</div>}
-        <InfiniteScroll loadMore={loadMoreItems} hasMore={hasNextPage}>
+        <InfiniteScroll loadMore={() => fetchNextPage({ pageParam: data?.pages.length })} hasMore={hasNextPage}>
           <FormListWrapper>
             {data?.pages.map((page) =>
               page?.pagingData.map((formInfo) => (
