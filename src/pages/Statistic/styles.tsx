@@ -39,7 +39,8 @@ export const InfoWrapper = styled.div`
 
   box-sizing: border-box;
   border-radius: 3rem;
-  background-color: rgba(232, 211, 255, 0.4);
+  background-color: rgba(232, 211, 255, 0.2);
+  border: 3px solid rgba(232, 211, 255, 1);
 `;
 
 export const HeadWrapper = styled.div`
@@ -91,7 +92,7 @@ export const QueWrapper = styled.div`
 
   box-sizing: border-box;
   border-radius: 3rem;
-  background-color: rgba(232, 211, 255, 0.3);
+  background-color: rgba(232, 211, 255, 0.2);
 `;
 export const QueTitle = styled.div`
   width: 80%;

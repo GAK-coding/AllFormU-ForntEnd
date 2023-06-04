@@ -19,7 +19,12 @@ import { useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { useCallback, useState } from 'react';
 import { DescriptionQue, SelectionQue } from '../../typings/makeForm';
+import { useQuery } from 'react-query';
+import { getQueResCount } from '../../api/statistic';
 
+interface queResCount {
+  question_id: number;
+}
 export default function Statistic() {
   const { blue } = useRecoilValue(color);
   const { id } = useParams();
@@ -40,6 +45,12 @@ export default function Statistic() {
       setChartType('Bar Chart');
     }
   }, []);
+  const question_id = 105;
+  const {
+    data: queResCount,
+    isLoading: queResCountLoading,
+    isFetching: queResCountFetching,
+  } = useQuery('queResCount', () => getQueResCount(105));
 
   return (
     <PageWrapper>
@@ -67,6 +78,15 @@ export default function Statistic() {
 
       <ChartWrapper>
         {data?.questions.map((question, index) => {
+          // const { data: queResCount } = useQuery(
+          //   `queResCount-${question.id}`, // 고유한 쿼리 키를 생성하기 위해 question.id를 사용
+          //   () => {
+          //     if (question.id) {
+          //       return getQueResCount(question.id); // question.id 값이 존재하는 경우에만 호출
+          //     }
+          //   }
+          // );
+
           return (
             <QueWrapper key={index}>
               <QueTitle>
@@ -75,7 +95,7 @@ export default function Statistic() {
               </QueTitle>
               {/* TODO : 각 문항에 대한 응답자로 변경 */}
               <ResTitle>
-                <span>{`응답자 : ${data?.responsor_count}명`}</span>
+                <span>{`응답자 : ${queResCount}명`}</span>
               </ResTitle>
               <ChartBtn>
                 <Button
