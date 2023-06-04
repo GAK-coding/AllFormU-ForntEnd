@@ -33,7 +33,6 @@ export default function Option({ data, id }: Props) {
 
       temp[id] = {
         [id]: {
-          responsorId: 152,
           questionId: id,
           num: ref.current,
         },
@@ -45,7 +44,6 @@ export default function Option({ data, id }: Props) {
         ...temp,
 
         [id]: {
-          responsorId: 152,
           questionId: id,
           num: ref.current,
         },
@@ -61,7 +59,7 @@ export default function Option({ data, id }: Props) {
             if (option.id === selectedOption) ref.current = idx;
 
             return (
-              <Radio key={option.id} value={option.id}>
+              <Radio key={idx} value={option.id}>
                 {option.content}
               </Radio>
             );

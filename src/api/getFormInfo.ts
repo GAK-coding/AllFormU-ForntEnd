@@ -12,7 +12,7 @@ export const getMakeForms = async () =>
 export const deleteFrom = async (id: number) =>
   await axios
     .delete(`/form/deleteform/1/${id}`)
-    .then((res) => alert('폼 삭제 성공!'))
+    .then((res) => true)
     .catch((err) => console.error(err));
 
 export const getFormInfo = async (userId: number, formId: number) =>
