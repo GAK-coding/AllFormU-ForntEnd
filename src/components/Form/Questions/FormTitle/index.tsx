@@ -119,6 +119,7 @@ export default function FormTitle({ isEdit, formId }: Props) {
           placeholder={'설문 제목 입력'}
           required
         />
+        {pathname.slice(1, 16) === 'mypage/editform' && info.fimage && <img src={info.fimage} alt="이미지" />}
         {pathname.slice(1, 16) === 'makeform/direct' && (
           <ImgArea>
             <ImageUploading
