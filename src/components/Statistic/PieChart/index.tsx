@@ -1,5 +1,6 @@
 import { ResponsivePie } from '@nivo/pie';
 import { ResponseData } from './ResponseData';
+import { ChartSize, NotResponsor } from '../../../pages/Statistic/styles';
 
 interface Props {
   data: object[];
@@ -130,8 +131,15 @@ export default function PieChart() {
   );
 
   return (
-    <div style={{ width: '600px', height: '400px', margin: '0 auto' }}>
-      <MyResponsivePie data={data} />
-    </div>
+    <ChartSize>
+      {data.length === 0 ? (
+        <NotResponsor>
+          <span>응답자가 존재하지 않습니다!</span>
+          <img src={'/images/noResponser.png'} alt="noResponse" />
+        </NotResponsor>
+      ) : (
+        <MyResponsivePie data={data} />
+      )}
+    </ChartSize>
   );
 }

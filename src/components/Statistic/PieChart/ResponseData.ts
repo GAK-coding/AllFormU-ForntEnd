@@ -31,6 +31,7 @@ export const ResponseData = (): Data => {
       color: colors[Math.floor(Math.random() * colors.length)],
     }));
 
+  console.log(data);
   return {
     // data: [
     //   {

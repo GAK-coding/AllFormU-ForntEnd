@@ -132,3 +132,29 @@ export const QueChart = styled.div`
   border-radius: 3rem;
   background-color: #ffffff;
 `;
+
+export const ChartSize = styled.div`
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+`;
+
+export const NotResponsor = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: 0 auto;
+
+  & > span {
+    margin: 10rem 0 5rem 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #696969;
+  }
+
+  & > img {
+    width: 100px;
+  }
+`;
