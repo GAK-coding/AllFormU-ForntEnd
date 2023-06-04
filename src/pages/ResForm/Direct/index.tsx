@@ -24,9 +24,9 @@ import SectionBox from '../../../components/Form/Questions/SectionBox';
 import FormTitle from '../../../components/Form/Questions/FormTitle';
 import { useGetSingleForm } from '../../../components/Form/hooks/useGetSingleForm';
 import { customData } from '../../../utils/customData';
-import { checkRequired, resDescriptionSets } from '../../../recoil/Resform/atom';
+import { checkRequired, checkSelection, resDescriptionSets, resSelectionSets } from '../../../recoil/Resform/atom';
 import { ResDescription, ResSelection } from '../../../typings/resForm';
-import { createDescription } from '../../../api/resFrom';
+import { createDescription, createSelection } from '../../../api/resFrom';
 import { useMutation } from 'react-query';
 
 function isDescriptionQue(que: DescriptionQue | SelectionQue | GridQue): que is DescriptionQue {
@@ -45,7 +45,9 @@ export default function DirectResForm() {
   const [data, isLoading, isFetching] = useGetSingleForm(id!);
   const [isRendering, setIsRendering] = useState(true);
   const [resDescriptionData, setResDescriptionData] = useRecoilState(resDescriptionSets);
+  const [resSelectionData, setResSelectionData] = useRecoilState(resSelectionSets);
   const [chkRequired, setChkRequired] = useRecoilState(checkRequired);
+  const [chkSelection, setChkSelection] = useRecoilState(checkSelection);
 
   const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
   const [nowIndex, setNowIndex] = useRecoilState(nowFocusIndex);
@@ -56,8 +58,7 @@ export default function DirectResForm() {
   const { blue } = useRecoilValue(color);
 
   const { mutate: resDescriptionMutate } = useMutation(createDescription);
-
-  console.log(resDescriptionData);
+  const { mutate: resSelectionMutate } = useMutation(createSelection);
 
   const onClickRes = useCallback(
     (e: React.MouseEvent<HTMLFormElement>) => {
@@ -65,6 +66,7 @@ export default function DirectResForm() {
 
       const required = JSON.parse(JSON.stringify(chkRequired));
       const descriptionData: ResDescription[] = [];
+      const selectionData: ResSelection[] = [];
 
       for (const data of resDescriptionData) {
         if (required.includes(data.question_id)) {
@@ -75,23 +77,38 @@ export default function DirectResForm() {
         if (data.content !== '') descriptionData.push(data);
       }
 
+      Object.values(resSelectionData).map((data: ResSelection | ResSelection[]) => {
+        if (Array.isArray(data)) {
+          if (required.includes(data[0].questionId)) required.splice(required.indexOf(data[0].questionId), 1);
+
+          selectionData.push(...data.flat());
+        } else {
+          if (required.includes(+Object.keys(data)[0])) required.splice(required.indexOf(+Object.keys(data)[0]), 1);
+
+          selectionData.push(...Object.values(data));
+        }
+      });
+
       if (required.length !== 0) {
         showMessage('warning', '필수 질문에 답변해주세요.');
         return;
       }
 
-      console.log(descriptionData);
-
-      if (descriptionData.length === 0) {
+      if (
+        (resDescriptionData.length !== 0 && descriptionData.length === 0) ||
+        (chkSelection.length !== 0 && selectionData.length === 0)
+      ) {
         showMessage('warning', '답변한 질문이 없습니다.');
         return;
       }
 
       //TODO: 멤버 하드코딩됨
-      resDescriptionMutate({ formId: +id!, memberId: 1, forms: descriptionData });
+      resDescriptionData.length !== 0 && resDescriptionMutate({ formId: +id!, memberId: 1, forms: descriptionData });
+      chkSelection.length !== 0 && resSelectionMutate({ formId: +id!, memberId: 1, forms: selectionData });
+
       showMessage('success', '응답 완료!');
     },
-    [resDescriptionData, chkRequired]
+    [resDescriptionData, chkRequired, resSelectionData, chkSelection]
   );
 
   const handleCancel = useCallback(() => {
@@ -130,6 +147,7 @@ export default function DirectResForm() {
       const { questions } = data;
       const resQues: ResDescription[] = [];
       const required: number[] = [];
+      const selectionChk: ResSelection[] = [];
 
       questions.map((que, idx) => {
         que.required && required.push(que.id!);
@@ -138,19 +156,17 @@ export default function DirectResForm() {
             question_id: que.id!,
             content: '',
           });
+        } else {
+          selectionChk.push({
+            questionId: que.id!,
+            num: null,
+          });
         }
-        // else {
-        //   resQues.push({
-        //     // TODO: 유저 id 부분 하드코딩됨
-        //     responsorId: 152,
-        //     questionId: que.id!,
-        //     num: null,
-        //   });
-        // }
       });
 
       setChkRequired(required);
       setResDescriptionData(resQues);
+      setChkSelection(selectionChk);
       setIsRendering(false);
     }
   }, [data, isRendering]);
