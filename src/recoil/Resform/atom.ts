@@ -8,3 +8,5 @@ export const resDescriptionSets = atom<ResDescription[]>({ key: 'resDescriptionS
 export const resSelectionSets = atom<ResSelections>({ key: 'resSelectionSets', default: {} });
 
 export const checkRequired = atom<number[]>({ key: 'checkRequired', default: [] });
+
+export const checkSelection = atom<ResSelection[]>({ key: 'checkSelection', default: [] });
