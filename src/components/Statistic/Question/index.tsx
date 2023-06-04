@@ -25,12 +25,8 @@ export default function Question({ id, index, title }: QueInfo) {
   }, []);
 
   //TODO : null인 것 count 하는 로직 추가
-  const question_id = id;
-  const { data: queResCount, isSuccess: isQueResCount } = useQuery('queResCount', () => getQueResCount(question_id!));
-
-  const { data: queStatistic, isSuccess: isQueStatistic } = useQuery('queStatistic', () =>
-    getStatisticEach(question_id!)
-  );
+  const { data: queResCount, isSuccess: isQueResCount } = useQuery('queResCount', () => getQueResCount(id!));
+  const { data: queStatistic, isSuccess: isQueStatistic } = useQuery('queStatistic', () => getStatisticEach(id!));
 
   useEffect(() => {
     if (isQueStatistic) {
@@ -79,7 +75,7 @@ export default function Question({ id, index, title }: QueInfo) {
           Bar Chart
         </Button>
       </ChartBtn>
-      <QueChart>{chartType === 'Pie Chart' ? <PieChart /> : <BarChart />}</QueChart>
+      <QueChart>{chartType === 'Pie Chart' ? <PieChart id={id} /> : <BarChart id={id} />}</QueChart>
     </QueWrapper>
   );
 }

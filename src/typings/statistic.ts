@@ -4,6 +4,10 @@ export interface QueInfo {
   title: string;
 }
 
+export interface ChartProps {
+  id: number;
+}
+
 export interface ResponseItem {
   id: number;
   responsor_id: number;
