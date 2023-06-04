@@ -76,7 +76,7 @@ const MyResponsiveBar = ({ data }: Props) => (
   />
 );
 
-export default function BarChart({ id }: ChartProps) {
+export default function BarChart() {
   const { data } = ResponseData();
 
   return (
