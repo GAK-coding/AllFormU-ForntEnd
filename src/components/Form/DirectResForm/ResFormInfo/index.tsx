@@ -11,7 +11,7 @@ export default function ResFormInfo() {
     <QueWrapper style={{ backgroundColor: '#F5F5F5' }}>
       <ResFormInfoWrapper>
         <h1>{info.title}</h1>
-        <img src={info.fimage} alt="이미지" />
+        {!!info.fimage && <img src={info.fimage} alt="이미지" />}
         <div>{info.content}</div>
       </ResFormInfoWrapper>
     </QueWrapper>
