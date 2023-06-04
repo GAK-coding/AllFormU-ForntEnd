@@ -12,7 +12,7 @@ export const getMakeForms = async () =>
 export const deleteFrom = async (id: number) =>
   await axios
     .delete(`/form/deleteform/1/${id}`)
-    .then((res) => alert('폼 삭제 성공!'))
+    .then((res) => true)
     .catch((err) => console.error(err));
 
 export const getFormInfo = async (userId: number, formId: number) =>
@@ -24,13 +24,10 @@ export const getFormInfo = async (userId: number, formId: number) =>
 export const getPagingInfo = async (data: { userId: number; pageParam: number }) => {
   try {
     const { userId, pageParam } = data;
-    console.log(userId, pageParam);
 
     const res: { data: { nextPage: boolean; pagingData: makePagingData[] } } = await axios.get(
       `/form/pages/${userId}/${pageParam}`
     );
-
-    // console.log('으악', res);
 
     return res.data;
   } catch (err) {

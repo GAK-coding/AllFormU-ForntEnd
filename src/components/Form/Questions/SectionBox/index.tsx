@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { SectionBoxWrapper } from './styles';
+import { SectionBoxWrapper, SectionTitle } from './styles';
 import { Select } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
@@ -13,6 +13,7 @@ import {
 import FormInput from '../../../ui/FormInput';
 import { DescriptionQue, GridQue, SelectionQue } from '../../../../typings/makeForm';
 import { useLocation } from 'react-router-dom';
+import ResFormInfo from '../../DirectResForm/ResFormInfo';
 
 interface Props {
   children: React.ReactNode;
@@ -93,13 +94,17 @@ export default function SectionBox({ children, index }: Props) {
   return (
     <SectionBoxWrapper>
       <div>
-        <FormInput
-          value={sectionList[index] || ''}
-          onChange={onChangeSectionName}
-          width={'50%'}
-          fontSize={1.8}
-          placeholder={'섹션 이름'}
-        />
+        {pathname.slice(1, 10) === 'directres' ? (
+          <SectionTitle>{sectionList[index] || '섹션 제목'}</SectionTitle>
+        ) : (
+          <FormInput
+            value={sectionList[index] || ''}
+            onChange={onChangeSectionName}
+            width={'50%'}
+            fontSize={1.8}
+            placeholder={'섹션 이름'}
+          />
+        )}
         {pathname.slice(1, 10) !== 'directres' && (
           <span>
             <span>섹션 순서</span>

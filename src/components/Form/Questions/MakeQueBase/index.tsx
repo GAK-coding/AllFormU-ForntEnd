@@ -54,6 +54,7 @@ import DescriptRes from '../../DirectResForm/DescriptionRes';
 import SelectionRes from '../../DirectResForm/SelectionRes';
 import { selectInfoUpdate } from '../../../../api/editForm';
 import { useMutation } from 'react-query';
+import { color } from '../../../../recoil/Color/atom';
 
 interface Props {
   data: DescriptionQue | SelectionQue | GridQue;
@@ -93,6 +94,7 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
   const { showMessage, contextHolder } = useMessage();
   const { pathname } = useLocation();
   const { id } = useParams<{ id: string }>();
+  const { lightPurple } = useRecoilValue(color);
 
   const selectOpt: SectionType[] = queSecNum.map((opt) => {
     if (+opt.value === row) {
