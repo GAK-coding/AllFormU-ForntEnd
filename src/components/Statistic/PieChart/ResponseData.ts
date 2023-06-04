@@ -22,15 +22,17 @@ export const ResponseData = (): Data => {
     'hsl(91, 70%, 50%)',
   ];
 
-  const data: DataItem[] = descriptionResultInfo.opList
-    .filter((op) => op !== null)
-    .map((op, index) => ({
-      id: op!,
-      label: op!,
-      value: descriptionResultInfo.num[index],
-      color: colors[Math.floor(Math.random() * colors.length)],
-    }));
-
+  const data: DataItem[] = [];
+  descriptionResultInfo.opList.forEach((op, index) => {
+    if (op !== null) {
+      data.push({
+        id: op!,
+        label: op!,
+        value: descriptionResultInfo.num[index],
+        color: colors[Math.floor(Math.random() * colors.length)],
+      });
+    }
+  });
   console.log(data);
   return {
     // data: [

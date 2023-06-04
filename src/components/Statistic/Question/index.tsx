@@ -37,7 +37,7 @@ export default function Question({ id, index, title }: QueInfo) {
       setQueResInfo(queStatistic!);
     }
   }, [isQueStatistic]);
-  console.log(queResInfo);
+  // console.log(queResInfo);
 
   //TODO : 나중에 null 값 처리해야함
   // useEffect(() => {
