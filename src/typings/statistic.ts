@@ -22,7 +22,7 @@ export interface DescriptionResStatistic {
 
 export interface SelectionResStatistic {
   responses: ResponseItem[];
-  num: number[];
+  nums: number[];
 }
 
 export interface QueResInfo {

@@ -37,43 +37,20 @@ export const ResponseData = ({ queInfo }: QueResInfo): Data => {
       }
     });
   } else {
-    console.log('q');
+    queInfo.nums.forEach((num, index) => {
+      if (num !== null) {
+        data.push({
+          id: num.toString(),
+          label: num.toString(),
+          value: queInfo.nums[index]!,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        });
+      }
+    });
   }
 
   console.log(data);
   return {
-    // data: [
-    //   {
-    //     id: 'elixir',
-    //     label: 'elixir',
-    //     value: 31,
-    //     color: 'hsl(200, 70%, 50%)',
-    //   },
-    //   {
-    //     id: 'haskell',
-    //     label: 'haskell',
-    //     value: 337,
-    //     color: 'hsl(237, 70%, 50%)',
-    //   },
-    //   {
-    //     id: 'javascript',
-    //     label: 'javascript',
-    //     value: 42,
-    //     color: 'hsl(334, 70%, 50%)',
-    //   },
-    //   {
-    //     id: 'lisp',
-    //     label: 'lisp',
-    //     value: 75,
-    //     color: 'hsl(44, 70%, 50%)',
-    //   },
-    //   {
-    //     id: 'sass',
-    //     label: 'sass',
-    //     value: 229,
-    //     color: 'hsl(91, 70%, 50%)',
-    //   },
-    // ],
     data,
   };
 };
