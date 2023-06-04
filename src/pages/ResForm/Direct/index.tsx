@@ -95,8 +95,8 @@ export default function DirectResForm() {
       }
 
       if (
-        (resDescriptionData.length !== 0 && descriptionData.length === 0) ||
-        (chkSelection.length !== 0 && selectionData.length === 0)
+        (chkSelection.length === 0 && resDescriptionData.length !== 0 && descriptionData.length === 0) ||
+        (resDescriptionData.length === 0 && chkSelection.length !== 0 && selectionData.length === 0)
       ) {
         showMessage('warning', '답변한 질문이 없습니다.');
         return;
