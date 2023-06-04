@@ -23,7 +23,7 @@ export default function Question({ id, index, title }: QueInfo) {
   }, []);
 
   //TODO : null인 것 count 하는 로직 추가
-  const { data: queResCount, isSuccess: isQueResCount } = useQuery('queResCount', () => getQueResCount(id!));
+  const { data: queResCount, isSuccess: isQueResCount } = useQuery(['queResCount', id], () => getQueResCount(id!));
   const { data: queStatistic, isSuccess: isQueStatistic } = useQuery(['queStatistic', id], () => getStatisticEach(id!));
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function Question({ id, index, title }: QueInfo) {
         {title}
       </QueTitle>
       <ResTitle>
-        <span>{`응답자 : ${queResCount} 명`}</span>
+        <span>{`응답수 : ${queResCount}`}</span>
       </ResTitle>
       <ChartBtn>
         <Button

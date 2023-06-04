@@ -49,7 +49,7 @@ export default function Statistic() {
             <span>{data?.timeout && formatDateTime(data.timeout[1])}</span>
           </Info>
 
-          <span>응답자</span>
+          <span>전체 응답자</span>
 
           <Info>
             <span>{`${data?.responsor_count}명`}</span>
