@@ -4,13 +4,13 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../../recoil/Color/atom';
 import Button from '../../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
-import { userInfo, userPersist } from '../../../recoil/User/atom';
+import { userInfo } from '../../../recoil/User/atom';
 
 export default function MakeForm() {
   const { lightPurple } = useRecoilValue(color);
   const navigate = useNavigate();
   // const { nickname } = useRecoilValue(userInfo);
-  const [user, setUser] = useRecoilState(userPersist);
+  const [user, setUser] = useRecoilState(userInfo);
 
   const onClickBase = useCallback(() => {
     navigate('/makeform/chatbot');

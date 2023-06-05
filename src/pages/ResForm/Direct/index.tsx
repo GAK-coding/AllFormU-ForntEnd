@@ -28,6 +28,7 @@ import { checkRequired, checkSelection, resDescriptionSets, resSelectionSets } f
 import { ResDescription, ResSelection } from '../../../typings/resForm';
 import { createDescription, createSelection } from '../../../api/resFrom';
 import { useMutation } from 'react-query';
+import { userInfo } from '../../../recoil/User/atom';
 
 function isDescriptionQue(que: DescriptionQue | SelectionQue | GridQue): que is DescriptionQue {
   return (
@@ -56,6 +57,7 @@ export default function DirectResForm() {
   const [isCreate, setIsCreate] = useState(false);
   const { showMessage, contextHolder } = useMessage();
   const { blue } = useRecoilValue(color);
+  const [user, setUser] = useRecoilState(userInfo);
 
   const { mutate: resDescriptionMutate } = useMutation(createDescription);
   const { mutate: resSelectionMutate } = useMutation(createSelection);
@@ -102,9 +104,9 @@ export default function DirectResForm() {
         return;
       }
 
-      //TODO: 멤버 하드코딩됨
-      resDescriptionData.length !== 0 && resDescriptionMutate({ formId: +id!, memberId: 1, forms: descriptionData });
-      chkSelection.length !== 0 && resSelectionMutate({ formId: +id!, memberId: 1, forms: selectionData });
+      resDescriptionData.length !== 0 &&
+        resDescriptionMutate({ formId: +id!, memberId: user.id, forms: descriptionData });
+      chkSelection.length !== 0 && resSelectionMutate({ formId: +id!, memberId: user.id, forms: selectionData });
 
       showMessage('success', '응답 완료!');
     },

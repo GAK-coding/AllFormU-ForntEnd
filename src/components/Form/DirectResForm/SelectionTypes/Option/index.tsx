@@ -29,8 +29,6 @@ export default function Option({ data, id }: Props) {
     const isRes = resDataKeys.find((key) => ref.current === +key);
 
     if (!isRes) {
-      //TODO: responsorId가 하드코딩됨
-
       temp[id] = {
         [id]: {
           questionId: id,

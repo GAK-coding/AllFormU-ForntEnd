@@ -6,7 +6,7 @@ import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { BiRightArrowAlt } from 'react-icons/bi';
-import { googleUserInfo, isLogin, userInfo, userPersist } from '../../recoil/User/atom';
+import { googleUserInfo, isLogin, userInfo } from '../../recoil/User/atom';
 
 export default function Home() {
   const { purple } = useRecoilValue(color);
@@ -14,10 +14,10 @@ export default function Home() {
   // const info = useRecoilValue(userInfo);
   // const [login, setLogin] = useRecoilState(isLogin);
   const googleInfo = useRecoilValue(googleUserInfo);
-  const [user, setUser] = useRecoilState(userPersist);
+  const [user, setUser] = useRecoilState(userInfo);
 
   const checkUser = useCallback(() => {
-    if (user.length === 0) {
+    if (user.id === -1) {
       navigate('/signin');
     } else {
       navigate('/makeform');
