@@ -16,7 +16,7 @@ import {
 
 type ResStatistic = DescriptionResStatistic | SelectionResStatistic;
 
-export default function Question({ id, index, title, type }: QueInfo) {
+export default function Question({ id, index, title, type, options }: QueInfo) {
   const { blue } = useRecoilValue(color);
   const [eachQueInfo, setEachQueInfo] = useState<ResStatistic>();
   const [chartType, setChartType] = useState<'Pie Chart' | 'Bar Chart'>('Pie Chart');

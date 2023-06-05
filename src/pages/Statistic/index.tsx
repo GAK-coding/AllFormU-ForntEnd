@@ -60,9 +60,26 @@ export default function Statistic() {
       <ChartWrapper>
         {data?.questions.map((question, index) => {
           if (question.type.includes('Description')) {
-            return <Question id={question.id!} index={index} title={question.title} type={question.type} />;
+            return (
+              <Question
+                key={question.id!}
+                id={question.id!}
+                index={index}
+                title={question.title}
+                type={question.type}
+              />
+            );
           } else {
-            return <Question id={question.id!} index={index} title={question.title} type={question.type} />;
+            return (
+              <Question
+                key={question.id!}
+                id={question.id!}
+                index={index}
+                title={question.title}
+                type={question.type}
+                // options={question.options}
+              />
+            );
           }
         })}
       </ChartWrapper>
