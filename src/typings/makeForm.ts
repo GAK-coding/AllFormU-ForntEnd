@@ -15,6 +15,7 @@ export interface createFormData extends FormInfo {
   fix: boolean;
   timeout: string[];
   fcolor: string;
+  sectionName: string[];
 }
 
 export interface FormInfo {

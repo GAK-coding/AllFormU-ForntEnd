@@ -28,6 +28,7 @@ export default function SectionBox({ children, index }: Props) {
   const [nowIndex, setNowIndex] = useRecoilState(nowFocusIndex);
   const accrueQue = useRecoilValue(sectionLens);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
+  const secNames = useRecoilValue(sectionNames);
   const { pathname } = useLocation();
 
   const onChangeSectionName = useCallback(
@@ -94,8 +95,8 @@ export default function SectionBox({ children, index }: Props) {
   return (
     <SectionBoxWrapper>
       <div>
-        {pathname.slice(1, 10) === 'directres' ? (
-          <SectionTitle>{sectionList[index] || '섹션 제목'}</SectionTitle>
+        {pathname.slice(1, 10) === 'directres' || pathname.slice(1, 7) === 'mypage' ? (
+          <SectionTitle>{secNames[index] || '섹션 제목'}</SectionTitle>
         ) : (
           <FormInput
             value={sectionList[index] || ''}
@@ -105,7 +106,7 @@ export default function SectionBox({ children, index }: Props) {
             placeholder={'섹션 이름'}
           />
         )}
-        {pathname.slice(1, 10) !== 'directres' && (
+        {pathname.slice(1, 10) !== 'directres' && pathname.slice(1, 7) !== 'mypage' && (
           <span>
             <span>섹션 순서</span>
             <Select value={`${index + 1}`} style={{ width: 100 }} onChange={onChangeSection} options={option} />
