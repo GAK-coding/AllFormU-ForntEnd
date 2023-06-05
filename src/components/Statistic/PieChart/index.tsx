@@ -129,7 +129,7 @@ export default function PieChart({ queInfo }: QueResInfo) {
       ]}
     />
   );
-  console.log(queInfo);
+  console.log(data);
   return (
     <ChartSize>
       {data.length === 0 ? (
