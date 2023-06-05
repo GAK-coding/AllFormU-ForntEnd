@@ -20,13 +20,13 @@ import { color } from '../../recoil/Color/atom';
 import { useCallback, useState } from 'react';
 import { DescriptionQue, SelectionQue } from '../../typings/makeForm';
 import { useQuery } from 'react-query';
-import { getQueResCount } from '../../api/statistic';
+import { getDescriptionResCount } from '../../api/statistic';
 import Question from '../../components/Statistic/Question';
 
 export default function Statistic() {
   const { blue } = useRecoilValue(color);
   const { id } = useParams();
-  const [data, isLoading, isFetching] = useGetSingleForm(id!);
+  const [data, isLoading, isFetching] = useGetSingleForm(id!, true);
   console.log(data);
   const formatDateTime = (dateTime: string) => {
     const [year, month, day] = dateTime.split(' ');
@@ -49,7 +49,7 @@ export default function Statistic() {
             <span>{data?.timeout && formatDateTime(data.timeout[1])}</span>
           </Info>
 
-          <span>응답자</span>
+          <span>전체 응답자</span>
 
           <Info>
             <span>{`${data?.responsor_count}명`}</span>
@@ -59,7 +59,11 @@ export default function Statistic() {
 
       <ChartWrapper>
         {data?.questions.map((question, index) => {
-          return <Question id={question.id!} index={index} title={question.title} />;
+          if (question.type.includes('Description')) {
+            return <Question id={question.id!} index={index} title={question.title} type={question.type} />;
+          } else {
+            return <Question id={question.id!} index={index} title={question.title} type={question.type} />;
+          }
         })}
       </ChartWrapper>
     </PageWrapper>
