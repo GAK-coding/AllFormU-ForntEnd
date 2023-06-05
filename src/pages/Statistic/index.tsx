@@ -59,7 +59,11 @@ export default function Statistic() {
 
       <ChartWrapper>
         {data?.questions.map((question, index) => {
-          return <Question id={question.id!} index={index} title={question.title} type={question.type} />;
+          if (question.type.includes('Description')) {
+            return <Question id={question.id!} index={index} title={question.title} type={question.type} />;
+          } else {
+            return <Question id={question.id!} index={index} title={question.title} type={question.type} />;
+          }
         })}
       </ChartWrapper>
     </PageWrapper>
