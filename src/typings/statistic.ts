@@ -22,8 +22,8 @@ export interface DescriptionResStatistic {
 }
 
 export interface SelectionResStatistic {
-  responses: ResponseItem[];
-  nums: number[];
+  response: ResponseItem[];
+  num: number[];
 }
 
 export interface QueResInfo {

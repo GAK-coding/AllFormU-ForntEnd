@@ -41,10 +41,10 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
   // }, [isQueResCount, isQueStatistic]);
 
   if (type.includes('Description')) {
-    const { data: queResCount, isSuccess: isQueResCount } = useQuery(['queResCount', id], () =>
+    const { data: queResCount, isSuccess: isQueResCount } = useQuery(['queDesResCount', id], () =>
       getDescriptionResCount(id!)
     );
-    const { data: queStatistic, isSuccess: isQueStatistic } = useQuery(['queStatistic', id], () =>
+    const { data: queStatistic, isSuccess: isQueStatistic } = useQuery(['queDesStatistic', id], () =>
       getDescriptionStatisticEach(id!)
     );
 
@@ -89,10 +89,10 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
       </QueWrapper>
     );
   } else {
-    const { data: queResCount, isSuccess: isQueResCount } = useQuery(['queResCount', id], () =>
+    const { data: queResCount, isSuccess: isQueResCount } = useQuery(['queSelectResCount', id], () =>
       getSelectionResCount(id!)
     );
-    const { data: queStatistic, isSuccess: isQueStatistic } = useQuery(['queStatistic', id], () =>
+    const { data: queStatistic, isSuccess: isQueStatistic } = useQuery(['queSelectStatistic', id], () =>
       getSelectionStatisticEach(id!)
     );
 

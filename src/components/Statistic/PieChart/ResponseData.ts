@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { descriptionResInfo } from '../../../recoil/Statistic/atom';
-import { QueResInfo } from '../../../typings/statistic';
+import { DescriptionResStatistic, QueResInfo } from '../../../typings/statistic';
 
 export interface DataItem {
   id: string;
@@ -25,8 +25,9 @@ export const ResponseData = ({ queInfo }: QueResInfo): Data => {
   console.log(queInfo);
   const data: DataItem[] = [];
 
-  if ('response' in queInfo) {
-    queInfo.opList.forEach((op, idx) => {
+  //TODO : 상위 5개만 보여주기 (주관식은 마지막은 기타로 통일해야함)
+  if ('opList' in queInfo) {
+    queInfo.opList.map((op, idx) => {
       if (op !== null) {
         data.push({
           id: op!,
@@ -37,19 +38,14 @@ export const ResponseData = ({ queInfo }: QueResInfo): Data => {
       }
     });
   } else {
-    queInfo.nums.forEach((num, idx) => {
+    queInfo.num.map((num, key) => {
       if (num !== 0) {
         data.push({
           id: num.toString(),
           label: num.toString(),
-          value: queInfo.nums[idx]!,
+          value: queInfo.num[key]!,
           color: colors[Math.floor(Math.random() * colors.length)],
         });
-      }
-
-      console.log();
-      if (data.length === 0) {
-        return null; // 빈 배열인 경우 null을 반환
       }
     });
   }
