@@ -26,7 +26,7 @@ import Question from '../../components/Statistic/Question';
 export default function Statistic() {
   const { blue } = useRecoilValue(color);
   const { id } = useParams();
-  const [data, isLoading, isFetching] = useGetSingleForm(id!);
+  const [data, isLoading, isFetching] = useGetSingleForm(id!, true);
   console.log(data);
   const formatDateTime = (dateTime: string) => {
     const [year, month, day] = dateTime.split(' ');
