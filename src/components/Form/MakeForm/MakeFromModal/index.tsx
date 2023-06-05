@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import Button from '../../../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../../../recoil/Color/atom';
-import { FormBgColor, formFix, formInfo, period, questions } from '../../../../recoil/MakeForm/atom';
+import { FormBgColor, formFix, formInfo, period, questions, sectionNames } from '../../../../recoil/MakeForm/atom';
 import UrlModal from '../UrlModal';
 import { useMutation } from 'react-query';
 import { createForm } from '../../../../api/makeform';
@@ -32,6 +32,9 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
   const [formId, setFormId] = useState(-1);
   const { showMessage, contextHolder } = useMessage();
   const fcolor = useRecoilValue(FormBgColor);
+  const [sectionName, setSectionName] = useRecoilState(sectionNames);
+
+  console.log(sectionName);
 
   const { mutate, data, isLoading, isError, error, isSuccess } = useMutation(createForm, {
     onSuccess: (data) => {
@@ -48,11 +51,11 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
         return rest;
       });
 
-      mutate({ title, fix, timeout: time, content, questions, fimage, fcolor });
+      mutate({ title, fix, timeout: time, content, questions, fimage, fcolor, sectionName });
       setIsCreate(true);
       setTime([]);
     }
-  }, [title, content, fimage, questionList, isCreate, fix, time]);
+  }, [title, content, fimage, questionList, isCreate, fix, time, sectionName]);
 
   const showModal = useCallback(() => {
     if (time.length === 0) {

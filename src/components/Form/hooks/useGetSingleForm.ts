@@ -1,14 +1,15 @@
 import { useQuery } from 'react-query';
 import { GetFormInfo } from '../../../typings/getForm';
 import { getFormInfo } from '../../../api/getFormInfo';
-import { useRecoilState } from 'recoil';
-import { formInfo } from '../../../recoil/MakeForm/atom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { formInfo, sectionNames } from '../../../recoil/MakeForm/atom';
 
 export function useGetSingleForm(
   id: string,
   statistic?: boolean
 ): [data: GetFormInfo, isLoading: boolean, isFetching: boolean] {
   const [info, setInfo] = useRecoilState(formInfo);
+  const setNames = useSetRecoilState(sectionNames);
 
   const { data, isLoading, error, isError, isFetching } = useQuery<GetFormInfo>(
     ['getFormInfo', id],
@@ -16,6 +17,7 @@ export function useGetSingleForm(
     {
       onSuccess: (data) => {
         setInfo(data);
+        setNames(data.sectionName);
       },
       staleTime: statistic ? 0 : 60000, // 10분
       cacheTime: statistic ? 0 : 90000, // 15분
