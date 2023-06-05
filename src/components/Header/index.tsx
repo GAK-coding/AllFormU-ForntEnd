@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { googleUserInfo, isLogin, userInfo } from '../../recoil/User/atom';
+import { googleUserInfo, isLogin, userInfo, userPersist } from '../../recoil/User/atom';
 import { useMessage } from '../../hooks/useMessage';
 
 export default function Header() {
@@ -13,13 +13,14 @@ export default function Header() {
   const [login, setLogin] = useRecoilState(isLogin);
 
   const { pathname } = useLocation();
-  const [info, setInfo] = useRecoilState(userInfo);
+  // const [info, setInfo] = useRecoilState(userInfo);
   const [googleInfo, setGoogleInfo] = useRecoilState(googleUserInfo);
+  const [user, setUser] = useRecoilState(userPersist);
   const { showMessage, contextHolder } = useMessage();
 
   const checkLogout = useCallback(() => {
-    if (login) {
-      setInfo({ id: -1, nickname: '', email: '', password: '', image: '/images/userProfile.png' });
+    if (user.length !== 0) {
+      setUser([]);
       setLogin(false);
       localStorage.removeItem('accessToken');
       navigate('/');
@@ -27,10 +28,7 @@ export default function Header() {
     } else {
       navigate('/signin');
     }
-  }, [info.id, login]);
-
-  console.log('헤더', login, localStorage.getItem('accessToken'));
-  console.log(info);
+  }, [user, login]);
 
   return (
     <HeaderWrapper>
@@ -59,7 +57,7 @@ export default function Header() {
         )}
 
         <Button onClick={checkLogout} fontSize={1.4} bgColor={purple} width={11} height={4} color={'white'}>
-          {!login ? 'Login' : 'Logout'}
+          {user.length === 0 ? 'Login' : 'Logout'}
         </Button>
       </BtnBox>
     </HeaderWrapper>

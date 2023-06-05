@@ -2,27 +2,29 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import BaseBgBox from '../../components/ui/BaseBgBox';
 import { Form, LoginBtn, LoginLine, LoginWrapper, PageInfo, Wrapper } from '../SignUp/styles';
 import Input from '../../components/ui/Input';
-import { signInInfo } from '../../typings/user';
+import { signInInfo, user } from '../../typings/user';
 import Button from '../../components/ui/Button';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { color } from '../../recoil/Color/atom';
 import { useNavigate } from 'react-router-dom';
-import { userInfo, signInUserInfo, isLogin } from '../../recoil/User/atom';
+import { userInfo, signInUserInfo, isLogin, userPersist } from '../../recoil/User/atom';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signIn } from '../../api/user';
 import IdMordal from '../../components/CheckModal/IdModal';
 import { useMessage } from '../../hooks/useMessage';
+import { recoilPersist } from 'recoil-persist';
 
 export default function SignIn() {
   const { showMessage, contextHolder } = useMessage();
   const { blue } = useRecoilValue(color);
   const [userInput, setUserInput] = useRecoilState(signInUserInfo);
   const { email, password } = useRecoilValue(signInUserInfo);
-  const setUserInfo = useSetRecoilState(userInfo);
+  const [info, setUserInfo] = useRecoilState(userInfo);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [login, setLogin] = useRecoilState(isLogin);
+  const setLogin = useSetRecoilState(isLogin);
+  const [user, setUser] = useRecoilState(userPersist);
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
@@ -75,6 +77,7 @@ export default function SignIn() {
           image: data.image,
         };
         setUserInfo(infoList);
+        setUser(infoList);
         //TODO: 나중에 jwt 넣으면 될듯
         localStorage.setItem('accessToken', 'true');
         setLogin(true);
