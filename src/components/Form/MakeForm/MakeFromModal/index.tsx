@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { ResModalTitle } from '../../../GPT/GPTModal/styles';
 import { CreateForm, FormInfo, FormInfoWrapper, MakeFormModalWrapper } from './styles';
-import { DatePicker } from 'antd';
+import { ConfigProvider, DatePicker } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
 import Button from '../../../ui/Button';
@@ -12,6 +12,7 @@ import UrlModal from '../UrlModal';
 import { useMutation } from 'react-query';
 import { createForm } from '../../../../api/makeform';
 import { useMessage } from '../../../../hooks/useMessage';
+import locale from 'antd/lib/locale/ko_KR';
 
 const { RangePicker } = DatePicker;
 
@@ -103,15 +104,17 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
         <FormInfo>
           <span>설문 기간</span>
           <span>
-            <RangePicker
-              onChange={(value) => {
-                value?.[0] &&
-                  value?.[1] &&
-                  setTime([value[0]?.format('YYYY MM DD HH mm ss'), value[1]?.format('YYYY MM DD HH mm ss')]);
-              }}
-              showTime
-              disabledDate={disabledDate}
-            />
+            <ConfigProvider locale={locale}>
+              <RangePicker
+                onChange={(value) => {
+                  value?.[0] &&
+                    value?.[1] &&
+                    setTime([value[0]?.format('YYYY MM DD HH mm ss'), value[1]?.format('YYYY MM DD HH mm ss')]);
+                }}
+                showTime
+                disabledDate={disabledDate}
+              />
+            </ConfigProvider>
           </span>
         </FormInfo>
         <FormInfo>

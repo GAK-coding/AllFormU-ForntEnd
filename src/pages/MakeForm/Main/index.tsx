@@ -9,7 +9,8 @@ import { userInfo } from '../../../recoil/User/atom';
 export default function MakeForm() {
   const { lightPurple } = useRecoilValue(color);
   const navigate = useNavigate();
-  const { nickname } = useRecoilValue(userInfo);
+  // const { nickname } = useRecoilValue(userInfo);
+  const [user, setUser] = useRecoilState(userInfo);
 
   const onClickBase = useCallback(() => {
     navigate('/makeform/chatbot');
@@ -19,7 +20,7 @@ export default function MakeForm() {
     <MakeFormWrapper>
       <MakeFormTop>
         <div>
-          <span>{nickname}&nbsp;</span>님 안녕하세요 😊
+          <span>{user.nickname}&nbsp;</span>님 안녕하세요 😊
         </div>
         <div>설문생성 형식을 선택해 주세요.</div>
       </MakeFormTop>

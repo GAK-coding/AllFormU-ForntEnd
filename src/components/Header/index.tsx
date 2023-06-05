@@ -13,13 +13,14 @@ export default function Header() {
   const [login, setLogin] = useRecoilState(isLogin);
 
   const { pathname } = useLocation();
-  const [info, setInfo] = useRecoilState(userInfo);
+  // const [info, setInfo] = useRecoilState(userInfo);
   const [googleInfo, setGoogleInfo] = useRecoilState(googleUserInfo);
+  const [user, setUser] = useRecoilState(userInfo);
   const { showMessage, contextHolder } = useMessage();
 
   const checkLogout = useCallback(() => {
-    if (login) {
-      setInfo({ id: -1, nickname: '', email: '', password: '', image: '/images/userProfile.png' });
+    if (user.id !== -1) {
+      setUser({ id: -1, nickname: '', email: '', password: '', image: '/images/userProfile.png' });
       setLogin(false);
       localStorage.removeItem('accessToken');
       navigate('/');
@@ -27,7 +28,7 @@ export default function Header() {
     } else {
       navigate('/signin');
     }
-  }, [info.id, login]);
+  }, [user, login]);
 
   return (
     <HeaderWrapper>
@@ -42,7 +43,7 @@ export default function Header() {
         )}
       </Title>
       <BtnBox>
-        {login && (
+        {user.id !== -1 && (
           <Button
             onClick={() => navigate('/mypage')}
             fontSize={1.4}
@@ -56,7 +57,7 @@ export default function Header() {
         )}
 
         <Button onClick={checkLogout} fontSize={1.4} bgColor={purple} width={11} height={4} color={'white'}>
-          {!login ? 'Login' : 'Logout'}
+          {user.id === -1 ? 'Login' : 'Logout'}
         </Button>
       </BtnBox>
     </HeaderWrapper>

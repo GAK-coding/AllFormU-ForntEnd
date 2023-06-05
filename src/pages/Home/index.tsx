@@ -11,17 +11,18 @@ import { googleUserInfo, isLogin, userInfo } from '../../recoil/User/atom';
 export default function Home() {
   const { purple } = useRecoilValue(color);
   const navigate = useNavigate();
-  const info = useRecoilValue(userInfo);
-  const [login, setLogin] = useRecoilState(isLogin);
+  // const info = useRecoilValue(userInfo);
+  // const [login, setLogin] = useRecoilState(isLogin);
   const googleInfo = useRecoilValue(googleUserInfo);
+  const [user, setUser] = useRecoilState(userInfo);
 
   const checkUser = useCallback(() => {
-    if (!login) {
+    if (user.id === -1) {
       navigate('/signin');
     } else {
       navigate('/makeform');
     }
-  }, [info.id]);
+  }, []);
 
   return (
     <HomeWrapper>
