@@ -64,4 +64,5 @@ export interface makePagingData {
   title: string;
   timeout: string[];
   responsor: number;
+  fimage: string;
 }
