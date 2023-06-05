@@ -3,7 +3,7 @@ export interface QueInfo {
   index: number;
   title: string;
   type: string;
-  option_list?: string[];
+  options?: string[];
 }
 
 export interface ChartProps {
