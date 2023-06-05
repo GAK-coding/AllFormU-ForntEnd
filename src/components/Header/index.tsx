@@ -29,6 +29,9 @@ export default function Header() {
     }
   }, [info.id, login]);
 
+  console.log('헤더', login, localStorage.getItem('accessToken'));
+  console.log(info);
+
   return (
     <HeaderWrapper>
       {contextHolder}

@@ -44,6 +44,15 @@ export default function SignIn() {
 
   const { mutate, data, isSuccess } = useMutation(signIn);
 
+  const onClick = useCallback(
+    (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      mutate({ email, password });
+    },
+    [email, password]
+  );
+
   useEffect(() => {
     if (isSuccess) {
       if (data.httpStatus === 'CONFLICT') {
@@ -72,7 +81,6 @@ export default function SignIn() {
         navigate('/');
 
         // 이걸 어쩌지
-        // showMessage('success', '로그인 되었습니다.');
 
         // setTimeout(() => {
         //   navigate('/');
@@ -81,15 +89,6 @@ export default function SignIn() {
       }
     }
   }, [data, isSuccess]);
-
-  const onClick = useCallback(
-    (e: ChangeEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
-      mutate({ email, password });
-    },
-    [email, password]
-  );
 
   return (
     <Wrapper>

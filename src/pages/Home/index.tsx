@@ -12,16 +12,16 @@ export default function Home() {
   const { purple } = useRecoilValue(color);
   const navigate = useNavigate();
   const info = useRecoilValue(userInfo);
-  const [login, setLogin] = useRecoilState(isLogin);
+  // const [login, setLogin] = useRecoilState(isLogin);
   const googleInfo = useRecoilValue(googleUserInfo);
 
   const checkUser = useCallback(() => {
-    if (!login) {
+    if (!localStorage.getItem('accessToken')) {
       navigate('/signin');
     } else {
       navigate('/makeform');
     }
-  }, [info.id]);
+  }, []);
 
   return (
     <HomeWrapper>
