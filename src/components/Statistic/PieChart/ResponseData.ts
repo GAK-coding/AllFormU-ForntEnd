@@ -26,6 +26,9 @@ export const ResponseData = ({ queInfo }: QueResInfo): Data => {
   const data: DataItem[] = [];
 
   //TODO : 상위 5개만 보여주기 (주관식은 마지막은 기타로 통일해야함)
+
+  // if (queInfo.num.length >= 5) {
+  // }
   if ('opList' in queInfo) {
     queInfo.opList.map((op, idx) => {
       if (op !== null) {
