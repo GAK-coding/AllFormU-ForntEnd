@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import { user } from '../../typings/user';
+import { recoilPersist } from 'recoil-persist';
 
 export const userInfo = atom<user>({
   key: 'userInfo',
@@ -19,6 +20,14 @@ export const signUpUserInfo = atom({
 export const signInUserInfo = atom({
   key: 'signInUserInfo',
   default: { email: '', password: '' },
+});
+
+const { persistAtom } = recoilPersist();
+
+export const userPersist = atom({
+  key: 'userPersist',
+  default: [],
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const isLogin = atom({ key: 'isLogin', default: !!localStorage.getItem('accessToken') });
