@@ -59,11 +59,12 @@ export default function Info() {
   const resFormInfo = useRecoilValue(resFormInfoList);
 
   const { data: makeFormInfo, isLoading, error, isError } = useQuery<GetForm[]>('myMakeForm', getMakeForms);
+  const [user, setUser] = useRecoilState(userInfo);
 
   // console.log('이거', makeFormInfo);
 
   // redirect
-  if (!login) {
+  if (user.id === -1) {
     return (
       <Routes>
         <Route path="/" element={<Navigate replace to="/signin" />} />;
