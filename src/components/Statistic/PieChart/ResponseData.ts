@@ -24,50 +24,38 @@ export const ResponseData = ({ queInfo }: QueResInfo): Data => {
 
   console.log(queInfo);
   const data: DataItem[] = [];
-  queInfo.opList.forEach((op, index) => {
-    if (op !== null) {
-      data.push({
-        id: op!,
-        label: op!,
-        value: queInfo.num[index]!,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-    }
-  });
+
+  if ('response' in queInfo) {
+    queInfo.opList.forEach((op, idx) => {
+      if (op !== null) {
+        data.push({
+          id: op!,
+          label: op!,
+          value: queInfo.num[idx]!,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        });
+      }
+    });
+  } else {
+    queInfo.nums.forEach((num, idx) => {
+      if (num !== 0) {
+        data.push({
+          id: num.toString(),
+          label: num.toString(),
+          value: queInfo.nums[idx]!,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        });
+      }
+
+      console.log();
+      if (data.length === 0) {
+        return null; // 빈 배열인 경우 null을 반환
+      }
+    });
+  }
+
   console.log(data);
   return {
-    // data: [
-    //   {
-    //     id: 'elixir',
-    //     label: 'elixir',
-    //     value: 31,
-    //     color: 'hsl(200, 70%, 50%)',
-    //   },
-    //   {
-    //     id: 'haskell',
-    //     label: 'haskell',
-    //     value: 337,
-    //     color: 'hsl(237, 70%, 50%)',
-    //   },
-    //   {
-    //     id: 'javascript',
-    //     label: 'javascript',
-    //     value: 42,
-    //     color: 'hsl(334, 70%, 50%)',
-    //   },
-    //   {
-    //     id: 'lisp',
-    //     label: 'lisp',
-    //     value: 75,
-    //     color: 'hsl(44, 70%, 50%)',
-    //   },
-    //   {
-    //     id: 'sass',
-    //     label: 'sass',
-    //     value: 229,
-    //     color: 'hsl(91, 70%, 50%)',
-    //   },
-    // ],
     data,
   };
 };

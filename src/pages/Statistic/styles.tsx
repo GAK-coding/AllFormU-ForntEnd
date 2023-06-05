@@ -134,7 +134,7 @@ export const QueChart = styled.div`
 `;
 
 export const ChartSize = styled.div`
-  width: 400px;
+  width: 600px;
   height: 400px;
   margin: 0 auto;
 `;
