@@ -224,14 +224,7 @@ export default function EditForm() {
           ))}
         </DirectForm>
       </Col>
-      <Col span={4}>
-        <AddQuestion onClick={addQuestion}>
-          <span>질문 추가</span>
-        </AddQuestion>
-        <AddSection onClick={addSection}>
-          <span>섹션 추가</span>
-        </AddSection>
-      </Col>
+      <Col span={4} />
     </Row>
   );
 }
