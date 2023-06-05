@@ -18,14 +18,16 @@ export const HeaderWrapper = styled.div`
 export const FormListWrapper = styled.div`
   & > div {
     background-color: var(--color-light-purple-30);
-    width: 90%;
-    height: 14rem;
+    width: 80%;
+    height: 16rem;
 
     margin: 0 auto;
     border-radius: 3rem;
     margin-bottom: 2rem;
 
     display: flex;
+
+    padding: 2rem;
 
     & > div {
       width: 50%;
@@ -40,20 +42,30 @@ export const BottomBox = styled.div`
 export const Title = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+
   padding: 2rem;
   padding-left: 4rem;
   box-sizing: border-box;
 
+  & > span {
+    margin-left: 2rem;
+  }
+
   & > span:first-of-type {
     font-weight: 700;
     font-size: 2.5rem;
+    margin-left: 0;
+  }
+
+  & > span:nth-child(2) {
+    font-size: 1.8rem;
+    color: #696969;
   }
 
   & > span:last-of-type {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: #696969;
-    margin-top: 1.8rem;
-    margin-left: 2rem;
   }
 `;
 
@@ -64,20 +76,51 @@ export const ButtonWrapper = styled.div`
   margin: auto;
   padding-right: 2rem;
 
+  //border: 1px solid;
+  height: 50%;
+  position: relative;
+
   & > div:first-of-type {
     height: 100%;
+    //border: 1px solid;
 
     display: flex;
+    align-items: center;
     flex-direction: row;
     & > button {
-      margin-right: 1rem;
+      margin-right: 2rem;
     }
   }
 
   & > div:last-of-type {
+    height: 100%;
+    //border: 1px solid;
+
     display: flex;
-    & > button {
-      margin-left: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+
+    margin-left: 1rem;
+
+    & > span {
+      color: #696969;
+      font-weight: 600;
+    }
+  }
+
+  & > span {
+    position: absolute;
+    bottom: -4rem;
+    right: 4rem;
+
+    color: #696969;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      color: #2196f3;
     }
   }
 `;

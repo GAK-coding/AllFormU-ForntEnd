@@ -9,12 +9,19 @@ import { Col, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useMessage } from '../../../../hooks/useMessage';
+import { formatDateTime } from '../../../../utils/formatDateTime';
+import { useCopyClipBoard } from '../../../../components/Form/hooks/useCopyClipBoard';
+import { checkTimeRange } from '../../../../utils/checkTimeRange';
 
 export default function MakeFormList() {
   const { blue, lightPurple } = useRecoilValue(color);
   const navigate = useNavigate();
   const { showMessage, contextHolder } = useMessage();
   const ref = useRef<number | null>(null);
+  const [isCopy, onCopy] = useCopyClipBoard();
+
+  // const baseUrl = process.env.REACT_BASE_URL;
+  const baseUrl = 'http://localhost:3000/directres/';
 
   const {
     data,
@@ -78,6 +85,11 @@ export default function MakeFormList() {
     }
   }, []);
 
+  const onCopyUrl = useCallback((url: string) => {
+    onCopy(url);
+    showMessage('success', '링크가 복사되었습니다.');
+  }, []);
+
   if (infiniteIsLoading) return <div>loading...</div>;
   if (infiniteIsError) return <div>error...</div>;
 
@@ -98,20 +110,29 @@ export default function MakeFormList() {
                 <div key={formInfo.id}>
                   <Title>
                     <span>{formInfo.title}</span>
-                    <span>{formInfo.content}</span>
+                    {/* <span>{checkTimeRange(formInfo.timeout) ? '만료안됨' : '만료됨'}</span> */}
+                    <span>
+                      {formInfo.content.slice(0, 17)}
+                      {formInfo.content.length > 17 && '...'}
+                    </span>
+                    <span>
+                      {formatDateTime(formInfo.timeout[0])} ~ {formatDateTime(formInfo.timeout[1])}
+                    </span>
                   </Title>
                   <ButtonWrapper>
                     <div>
-                      <Button
-                        onClick={() => navigate(`/mypage/editform/${formInfo.id}`)}
-                        color={'black'}
-                        bgColor={lightPurple}
-                        fontSize={1.3}
-                        width={4}
-                        height={8}
-                      >
-                        수정
-                      </Button>
+                      {checkTimeRange(formInfo.timeout) && (
+                        <Button
+                          onClick={() => navigate(`/mypage/editform/${formInfo.id}`)}
+                          color={'black'}
+                          bgColor={lightPurple}
+                          fontSize={1.3}
+                          width={4}
+                          height={9}
+                        >
+                          수정
+                        </Button>
+                      )}
                       <Button
                         onClick={() => {
                           deleteForm(formInfo.id);
@@ -121,7 +142,7 @@ export default function MakeFormList() {
                         bgColor={lightPurple}
                         fontSize={1.3}
                         width={4}
-                        height={8}
+                        height={9}
                       >
                         삭제
                       </Button>
@@ -137,7 +158,11 @@ export default function MakeFormList() {
                       >
                         응답보기
                       </Button>
+                      <span>응답자 {formInfo.responsor}명</span>
                     </div>
+                    {checkTimeRange(formInfo.timeout) && (
+                      <span onClick={() => onCopyUrl(`${baseUrl}${formInfo.id}`)}>링크 복사</span>
+                    )}
                   </ButtonWrapper>
                 </div>
               ))
