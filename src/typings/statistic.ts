@@ -1,9 +1,11 @@
+import { Option } from './makeForm';
+
 export interface QueInfo {
   id: number;
   index: number;
   title: string;
   type: string;
-  options?: string[];
+  options?: Option[];
 }
 
 export interface ChartProps {
