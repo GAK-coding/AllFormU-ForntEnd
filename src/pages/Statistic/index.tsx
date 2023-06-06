@@ -59,7 +59,7 @@ export default function Statistic() {
 
       <ChartWrapper>
         {data?.questions.map((question, index) => {
-          if (question.type.includes('Description')) {
+          if ('options' in question) {
             return (
               <Question
                 key={question.id!}
@@ -67,6 +67,7 @@ export default function Statistic() {
                 index={index}
                 title={question.title}
                 type={question.type}
+                options={question.options}
               />
             );
           } else {
@@ -77,7 +78,6 @@ export default function Statistic() {
                 index={index}
                 title={question.title}
                 type={question.type}
-                // options={question.options}
               />
             );
           }
