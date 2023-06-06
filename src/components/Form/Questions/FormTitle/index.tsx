@@ -6,7 +6,7 @@ import TextArea from 'antd/es/input/TextArea';
 import { QueWrapper } from '../MakeQueBase/styles';
 import { useMutation, useQuery } from 'react-query';
 import { editFormInfo } from '../../../../api/editForm';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { useMessage } from '../../../../hooks/useMessage';
 import { useLocation } from 'react-router-dom';
 import { initialChat } from '../../../../recoil/Chatbot/atom';
@@ -53,7 +53,7 @@ export default function FormTitle({ isEdit, formId }: Props) {
 
   const onChangeContent = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setInfo({ ...info, content: e.target.value });
+      if (e.target.value.length <= 300) setInfo({ ...info, content: e.target.value });
     },
     [info]
   );
