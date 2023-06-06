@@ -21,7 +21,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import { addContent, deleteContent, updateContent, updateLinear } from '../../../../../api/editForm';
 import { useMessage } from '../../../../../hooks/useMessage';
 import { linearList } from '../../../../../utils/linearList';
-import { getContentByValue } from '../../../../../utils/getContentByValue';
 
 interface Props {
   data: SelectionQue;
