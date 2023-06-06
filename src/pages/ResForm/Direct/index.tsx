@@ -1,5 +1,5 @@
 import React, { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { formInfo, nowFocusIndex, nowQuestion, questions, sectionLens } from '../../../recoil/MakeForm/atom';
 import {
@@ -58,9 +58,22 @@ export default function DirectResForm() {
   const { showMessage, contextHolder } = useMessage();
   const { blue } = useRecoilValue(color);
   const [user, setUser] = useRecoilState(userInfo);
+  const navigate = useNavigate();
 
-  const { mutate: resDescriptionMutate } = useMutation(createDescription);
-  const { mutate: resSelectionMutate } = useMutation(createSelection);
+  const { mutate: resDescriptionMutate, data: resDescData, isSuccess: isDescription } = useMutation(createDescription);
+  const { mutate: resSelectionMutate, data: resSelectData, isSuccess: isSelect } = useMutation(createSelection);
+
+  useEffect(() => {
+    if (resDescData?.httpStatus === 'CONFLICT' || resSelectData?.httpStatuss === 'FORBINDDEN') {
+      showMessage('error', '이미 응답한 설문입니다.');
+      return;
+    } else {
+      showMessage('success', '응답 완료!');
+      // navigate('/mypage');
+      return;
+    }
+    // showMessage('success', '응답 완료!');
+  }, [isDescription, isSelect]);
 
   const onClickRes = useCallback(
     (e: React.MouseEvent<HTMLFormElement>) => {
@@ -108,7 +121,7 @@ export default function DirectResForm() {
         resDescriptionMutate({ formId: +id!, memberId: user.id, forms: descriptionData });
       chkSelection.length !== 0 && resSelectionMutate({ formId: +id!, memberId: user.id, forms: selectionData });
 
-      showMessage('success', '응답 완료!');
+      // showMessage('success', '응답 완료!');
     },
     [resDescriptionData, chkRequired, resSelectionData, chkSelection]
   );
