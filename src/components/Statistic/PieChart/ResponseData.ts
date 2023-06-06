@@ -1,6 +1,4 @@
-import { useRecoilValue } from 'recoil';
-import { descriptionResInfo } from '../../../recoil/Statistic/atom';
-import { DescriptionResStatistic, QueResInfo } from '../../../typings/statistic';
+import { QueResInfo } from '../../../typings/statistic';
 
 interface DataItem {
   id: string;

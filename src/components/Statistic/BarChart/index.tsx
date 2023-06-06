@@ -1,19 +1,20 @@
 import { BarDatum, ResponsiveBar } from '@nivo/bar';
 import { ResponseData } from './ResponseData';
-import { ChartProps, QueResInfo } from '../../../typings/statistic';
+import { QueResInfo } from '../../../typings/statistic';
 import { ChartSize, NotResponsor } from '../../../pages/Statistic/styles';
 
 interface Props {
   data: BarDatum[];
+  keys: string[];
 }
 
 export default function BarChart({ queInfo, options }: QueResInfo) {
-  const { data } = ResponseData({ queInfo, options });
+  const { data, keys } = ResponseData({ queInfo, options });
 
-  const MyResponsiveBar = ({ data }: Props) => (
+  const MyResponsiveBar = ({ data, keys }: Props) => (
     <ResponsiveBar
       data={data}
-      keys={['hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut']}
+      keys={keys}
       indexBy="country"
       margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
       padding={0.25}
@@ -88,7 +89,7 @@ export default function BarChart({ queInfo, options }: QueResInfo) {
           <img src={'/images/noResponser.png'} alt="noResponse" />
         </NotResponsor>
       ) : (
-        <MyResponsiveBar data={data} />
+        <MyResponsiveBar data={data} keys={keys} />
       )}
     </ChartSize>
   );
