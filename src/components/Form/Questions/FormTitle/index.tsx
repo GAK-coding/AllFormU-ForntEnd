@@ -53,7 +53,7 @@ export default function FormTitle({ isEdit, formId }: Props) {
 
   const onChangeContent = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setInfo({ ...info, content: e.target.value });
+      if (e.target.value.length <= 300) setInfo({ ...info, content: e.target.value });
     },
     [info]
   );
