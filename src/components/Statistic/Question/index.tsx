@@ -84,7 +84,9 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
           </Button>
         </ChartBtn>
         <QueChart>
-          {chartType === 'Pie Chart' && eachQueInfo ? <PieChart queInfo={eachQueInfo} /> : <BarChart />}
+          {eachQueInfo &&
+            ((chartType === 'Pie Chart' && <PieChart queInfo={eachQueInfo} />) ||
+              (chartType === 'Bar Chart' && <BarChart queInfo={eachQueInfo} />))}
         </QueChart>
       </QueWrapper>
     );
@@ -132,11 +134,9 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
           </Button>
         </ChartBtn>
         <QueChart>
-          {chartType === 'Pie Chart' && eachQueInfo ? (
-            <PieChart queInfo={eachQueInfo} options={options} />
-          ) : (
-            <BarChart />
-          )}
+          {eachQueInfo &&
+            ((chartType === 'Pie Chart' && <PieChart queInfo={eachQueInfo} options={options} />) ||
+              (chartType === 'Bar Chart' && <BarChart queInfo={eachQueInfo} options={options} />))}
         </QueChart>
       </QueWrapper>
     );

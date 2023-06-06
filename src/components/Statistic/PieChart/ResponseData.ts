@@ -2,14 +2,14 @@ import { useRecoilValue } from 'recoil';
 import { descriptionResInfo } from '../../../recoil/Statistic/atom';
 import { DescriptionResStatistic, QueResInfo } from '../../../typings/statistic';
 
-export interface DataItem {
+interface DataItem {
   id: string;
   label: string;
   value: number;
   color: string;
 }
 
-export interface Data {
+interface Data {
   data: DataItem[];
 }
 
