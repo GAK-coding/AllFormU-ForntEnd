@@ -79,13 +79,7 @@ export const ResponseData = ({ queInfo: queInfo, options: options }: QueResInfo)
   //     'hot dogColor': 'hsl(198, 70%, 50%)',
   //     burger: 184,
   //     burgerColor: 'hsl(115, 70%, 50%)',
-  //     // sandwich: 41,
-  //     // sandwichColor: 'hsl(247, 70%, 50%)',
-  //     // kebab: 181,
-  //     // kebabColor: 'hsl(109, 70%, 50%)',
-  //     // fries: 84,
-  //     // friesColor: 'hsl(118, 70%, 50%)',
-  //     // donut: 17,
+  //
   //     // donutColor: 'hsl(272, 70%, 50%)',
   //   },
   //   {
