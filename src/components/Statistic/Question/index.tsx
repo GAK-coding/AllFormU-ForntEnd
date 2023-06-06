@@ -132,7 +132,11 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
           </Button>
         </ChartBtn>
         <QueChart>
-          {chartType === 'Pie Chart' && eachQueInfo ? <PieChart queInfo={eachQueInfo} /> : <BarChart />}
+          {chartType === 'Pie Chart' && eachQueInfo ? (
+            <PieChart queInfo={eachQueInfo} options={options} />
+          ) : (
+            <BarChart />
+          )}
         </QueChart>
       </QueWrapper>
     );
