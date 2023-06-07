@@ -53,6 +53,12 @@ export const InputInfo = styled.div`
   display: flex;
   width: 70%;
 `;
+
+export const UrlInfo = styled.div`
+  display: flex;
+  width: 90%;
+`;
+
 export const ResultWrapper = styled.div`
   display: flex;
   flex-direction: column;
