@@ -145,13 +145,13 @@ export default function Edit() {
 
   const { mutate: dormantUser } = useMutation(setDormant, {
     onSuccess: () => {
-      navigate('/');
+      navigate('/signin');
     },
   });
 
   const { mutate: withDrawalUser } = useMutation(setWithdrawal, {
     onSuccess: () => {
-      navigate('/');
+      navigate('/signup');
     },
   });
 
