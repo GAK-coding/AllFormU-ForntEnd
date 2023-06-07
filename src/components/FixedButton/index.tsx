@@ -38,7 +38,7 @@ export default function FixedButton() {
   const location = useLocation();
   const [render, setRender] = useState(false);
 
-  const excludedPaths = ['makeform', 'resform', 'signin', 'signup', 'directres'];
+  const excludedPaths = ['makeform', 'resform', 'signin', 'signup', 'directres', 'editform'];
 
   useEffect(() => {
     const isExcludedPath = excludedPaths.some((path) => location.pathname.includes(path));
