@@ -62,7 +62,7 @@ export default function PasswordMordal({ open, onCancel }: Props) {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
+      // console.log(data);
       if (data.httpStatus === 'CONFLICT') {
         showMessage('error', '비밀번호가 일치하지 않습니다.');
         return;

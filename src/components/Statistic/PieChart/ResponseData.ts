@@ -20,7 +20,7 @@ export const ResponseData = ({ queInfo: queInfo, options: options }: QueResInfo)
     'hsl(91, 70%, 50%)',
   ];
 
-  console.log(queInfo);
+  // console.log(queInfo);
   const data: DataItem[] = [];
 
   //TODO : 상위 5개만 보여주기 (주관식은 마지막은 기타로 통일해야함)
@@ -54,7 +54,7 @@ export const ResponseData = ({ queInfo: queInfo, options: options }: QueResInfo)
     });
   }
 
-  console.log(data);
+  // console.log(data);
   return {
     data,
   };

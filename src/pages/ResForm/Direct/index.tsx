@@ -72,8 +72,8 @@ export default function DirectResForm() {
     isSuccess: isSuccessSelcetion,
   } = useMutation(createSelection);
 
-  console.log('으악', resSelectData?.httpStatus);
-  console.log('tpff', resDescData?.httpStatus);
+  // console.log('으악', resSelectData?.httpStatus);
+  // console.log('tpff', resDescData?.httpStatus);
 
   // console.log(resDescriptionData, Object.values(chkSelection).flat());
 

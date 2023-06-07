@@ -14,8 +14,8 @@ export const editFormInfo = async (userId: number, formId: number, title: string
         headers: { Authorization: `Bearer ${token}` },
       }
     )
-    .then((res) => res.data)
-    .catch((err) => console.error(err));
+    .then((res) => res.data);
+// .catch((err) => console.error(err));
 
 export const deleteQue = async (formId: number, queId: number) => {
   try {
@@ -23,7 +23,7 @@ export const deleteQue = async (formId: number, queId: number) => {
       headers: { Authorization: `Bearer ${token}` },
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 };
 
@@ -46,7 +46,7 @@ export const selectInfoUpdate = async (
       }
     );
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 };
 
@@ -62,7 +62,7 @@ export const updateContent = async (formId: number, queId: number, content: stri
       }
     );
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 };
 
@@ -72,7 +72,7 @@ export const deleteContent = async (optId: number) => {
       headers: { Authorization: `Bearer ${token}` },
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 };
 
@@ -89,7 +89,7 @@ export const addContent = async (data: { queId: number; content: string; linear?
 
     return id[id.length - 1];
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 };
 
@@ -108,6 +108,6 @@ export const updateLinear = async (data: { content: string[]; queId: number }) =
 
     return res.data;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };

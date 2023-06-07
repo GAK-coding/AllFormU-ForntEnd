@@ -10,24 +10,24 @@ export const getMakeForms = async (userId: number) =>
     })
     .then((res) => {
       return res.data;
-    })
-    .catch((err) => console.error(err));
+    });
+// .catch((err) => console.error(err));
 
 export const deleteFrom = async (data: { userId: number; formId: number }) =>
   await axios
     .delete(`/form/deleteform/${data.userId}/${data.formId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    .then((res) => true)
-    .catch((err) => console.error(err));
+    .then((res) => true);
+// .catch((err) => console.error(err));
 
 export const getFormInfo = async (userId: number, formId: number) =>
   await axios
     .get(`/form/findform/${userId}/${formId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    .then((res) => res.data)
-    .catch((err) => console.error(err));
+    .then((res) => res.data);
+// .catch((err) => console.error(err));
 
 export const getPagingInfo = async (data: { userId: number; pageParam: number }) => {
   try {
@@ -42,6 +42,6 @@ export const getPagingInfo = async (data: { userId: number; pageParam: number })
 
     return res.data;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };

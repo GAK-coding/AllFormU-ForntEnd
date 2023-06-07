@@ -8,5 +8,5 @@ export const createForm = async (data: createFormData) =>
     .post('/form/createform/1', data, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    .then((res) => res.data)
-    .catch((err) => console.error(err));
+    .then((res) => res.data);
+// .catch((err) => console.error(err));
