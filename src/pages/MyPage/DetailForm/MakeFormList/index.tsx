@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Button from '../../../../components/ui/Button';
 import { BottomBox, ButtonWrapper, FormListWrapper, HeaderWrapper, Title } from '../styles';
 import { color } from '../../../../recoil/Color/atom';
@@ -12,6 +12,7 @@ import { useMessage } from '../../../../hooks/useMessage';
 import { formatDateTime } from '../../../../utils/formatDateTime';
 import { useCopyClipBoard } from '../../../../components/Form/hooks/useCopyClipBoard';
 import { checkTimeRange } from '../../../../utils/checkTimeRange';
+import { userInfo } from '../../../../recoil/User/atom';
 
 export default function MakeFormList() {
   const { blue, lightPurple } = useRecoilValue(color);
@@ -19,6 +20,7 @@ export default function MakeFormList() {
   const { showMessage, contextHolder } = useMessage();
   const ref = useRef<number | null>(null);
   const [isCopy, onCopy] = useCopyClipBoard();
+  const [user, setUser] = useRecoilState(userInfo);
 
   // const baseUrl = process.env.REACT_BASE_URL;
   const baseUrl = 'http://localhost:3000/directres/';
@@ -54,7 +56,7 @@ export default function MakeFormList() {
     isError: deleteIsError,
     error: deleteError,
     isSuccess: deleteIsSuccess,
-  } = useMutation(deleteFrom, {
+  } = useMutation((formId) => deleteFrom({ userId: user.id, formId }), {
     onMutate: async (id: number) => {
       const snapshot = queryClient.getQueryData('makeForms');
 

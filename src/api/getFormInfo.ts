@@ -13,9 +13,9 @@ export const getMakeForms = async (userId: number) =>
     })
     .catch((err) => console.error(err));
 
-export const deleteFrom = async (id: number) =>
+export const deleteFrom = async (data: { userId: number; formId: number }) =>
   await axios
-    .delete(`/form/deleteform/1/${id}`, {
+    .delete(`/form/deleteform/${data.userId}/${data.formId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((res) => true)
