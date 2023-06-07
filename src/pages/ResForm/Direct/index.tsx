@@ -25,7 +25,7 @@ import FormTitle from '../../../components/Form/Questions/FormTitle';
 import { useGetSingleForm } from '../../../components/Form/hooks/useGetSingleForm';
 import { customData } from '../../../utils/customData';
 import { checkRequired, checkSelection, resDescriptionSets, resSelectionSets } from '../../../recoil/Resform/atom';
-import { ResDescription, ResSelection } from '../../../typings/resForm';
+import { ResDescription, ResSelection, ResSelections } from '../../../typings/resForm';
 import { createDescription, createSelection } from '../../../api/resFrom';
 import { useMutation } from 'react-query';
 import { userInfo } from '../../../recoil/User/atom';
@@ -46,7 +46,7 @@ export default function DirectResForm() {
   const [data, isLoading, isFetching] = useGetSingleForm(id!);
   const [isRendering, setIsRendering] = useState(true);
   const [resDescriptionData, setResDescriptionData] = useRecoilState(resDescriptionSets);
-  const [resSelectionData, setResSelectionData] = useRecoilState(resSelectionSets);
+  // const [resSelectionData, setResSelectionData] = useRecoilState(resSelectionSets);
   const [chkRequired, setChkRequired] = useRecoilState(checkRequired);
   const [chkSelection, setChkSelection] = useRecoilState(checkSelection);
 
@@ -60,70 +60,98 @@ export default function DirectResForm() {
   const [user, setUser] = useRecoilState(userInfo);
   const navigate = useNavigate();
 
-  const { mutate: resDescriptionMutate, data: resDescData, isSuccess: isDescription } = useMutation(createDescription);
-  const { mutate: resSelectionMutate, data: resSelectData, isSuccess: isSelect } = useMutation(createSelection);
+  const [run, setRun] = useState(false);
+  const {
+    mutate: resDescriptionMutate,
+    data: resDescData,
+    isSuccess: isSuccessDescription,
+  } = useMutation(createDescription);
+  const {
+    mutate: resSelectionMutate,
+    data: resSelectData,
+    isSuccess: isSuccessSelcetion,
+  } = useMutation(createSelection);
 
-  useEffect(() => {
-    if (resDescData?.httpStatus === 'CONFLICT' || resSelectData?.httpStatuss === 'FORBINDDEN') {
-      showMessage('error', '이미 응답한 설문입니다.');
-      return;
-    } else {
-      showMessage('success', '응답 완료!');
-      // navigate('/mypage');
-      return;
-    }
-    // showMessage('success', '응답 완료!');
-  }, [isDescription, isSelect]);
+  console.log('으악', resSelectData?.httpStatus);
+  console.log('tpff', resDescData?.httpStatus);
+
+  // console.log(resDescriptionData, Object.values(chkSelection).flat());
 
   const onClickRes = useCallback(
     (e: React.MouseEvent<HTMLFormElement>) => {
       e.preventDefault();
 
+      const description = JSON.parse(JSON.stringify(resDescriptionData));
+      const selection = JSON.parse(JSON.stringify(Object.values(chkSelection).flat()));
       const required = JSON.parse(JSON.stringify(chkRequired));
-      const descriptionData: ResDescription[] = [];
-      const selectionData: ResSelection[] = [];
 
-      for (const data of resDescriptionData) {
-        if (required.includes(data.question_id)) {
-          if (data.content === '') break;
+      // console.log(description, selection);
 
-          required.splice(required.indexOf(data.question_id), 1);
-        }
-        if (data.content !== '') descriptionData.push(data);
-      }
+      description.map((desc: ResDescription) => {
+        if (required.includes(desc.question_id)) required.splice(required.indexOf(desc.question_id), 1);
+      });
 
-      Object.values(resSelectionData).map((data: ResSelection | ResSelection[]) => {
-        if (Array.isArray(data)) {
-          if (required.includes(data[0].questionId)) required.splice(required.indexOf(data[0].questionId), 1);
-
-          selectionData.push(...data.flat());
-        } else {
-          if (required.includes(+Object.keys(data)[0])) required.splice(required.indexOf(+Object.keys(data)[0]), 1);
-
-          selectionData.push(...Object.values(data));
-        }
+      selection.map((select: ResSelection) => {
+        if (required.includes(select.questionId)) required.splice(required.indexOf(select.questionId), 1);
       });
 
       if (required.length !== 0) {
-        showMessage('warning', '필수 질문에 답변해주세요.');
+        showMessage('error', '필수 응답을 완료해주세요!');
         return;
       }
 
-      if (
-        (chkSelection.length === 0 && resDescriptionData.length !== 0 && descriptionData.length === 0) ||
-        (resDescriptionData.length === 0 && chkSelection.length !== 0 && selectionData.length === 0)
-      ) {
-        showMessage('warning', '답변한 질문이 없습니다.');
-        return;
+      if (selection.length === 0 && description.length !== 0) {
+        let flag = false;
+
+        description.map((select: ResDescription) => {
+          if (select.content !== null) flag = true;
+        });
+
+        if (!flag) {
+          showMessage('warning', '응답한 문항이 없습니다!');
+          return;
+        }
       }
 
-      resDescriptionData.length !== 0 &&
-        resDescriptionMutate({ formId: +id!, memberId: user.id, forms: descriptionData });
-      chkSelection.length !== 0 && resSelectionMutate({ formId: +id!, memberId: user.id, forms: selectionData });
+      if (description.length === 0 && selection.length !== 0) {
+        let flag = false;
 
-      // showMessage('success', '응답 완료!');
+        selection.map((select: ResSelection) => {
+          if (select.num !== -1) flag = true;
+        });
+
+        if (!flag) {
+          showMessage('warning', '응답한 문항이 없습니다!');
+          return;
+        }
+      }
+
+      if (description.length !== 0 && selection.length !== 0) {
+        let flag = false;
+
+        description.map((select: ResDescription) => {
+          if (select.content !== null) flag = true;
+        });
+
+        selection.map((select: ResSelection) => {
+          if (select.num !== -1) flag = true;
+        });
+
+        if (!flag) {
+          showMessage('warning', '응답한 문항이 없습니다!');
+          return;
+        }
+      }
+
+      description.length > 0 && resDescriptionMutate({ formId: +id!, memberId: user.id, forms: description });
+      // if (resDescData?.httpStatus === 'CONFLICT') return;
+
+      selection.length > 0 && resSelectionMutate({ formId: +id!, memberId: user.id, forms: selection });
+      // if (resSelectData?.httpStatus === 'NOT_ACCEPTABLE') return;
+
+      setRun(true);
     },
-    [resDescriptionData, chkRequired, resSelectionData, chkSelection]
+    [resDescriptionData, chkRequired, chkSelection, resDescData, resSelectData, user, run]
   );
 
   const handleCancel = useCallback(() => {
@@ -158,24 +186,34 @@ export default function DirectResForm() {
   );
 
   useEffect(() => {
+    if (run && (isSuccessDescription || isSuccessSelcetion)) {
+      if (resDescData?.httpStatus === 'CONFLICT' || resSelectData?.httpStatus === 'NOT_ACCEPTABLE') {
+        showMessage('error', '이미 응답한 설문입니다!');
+      } else showMessage('success', '응답 완료!');
+
+      setRun(false);
+    }
+  }, [resDescData, resSelectData, run, isSuccessDescription, isSuccessSelcetion]);
+
+  useEffect(() => {
     if (!!data && isRendering) {
       const { questions } = data;
       const resQues: ResDescription[] = [];
       const required: number[] = [];
-      const selectionChk: ResSelection[] = [];
+      const selectionChk: ResSelections = {};
 
       questions.map((que, idx) => {
         que.required && required.push(que.id!);
         if (isDescriptionQue(que)) {
           resQues.push({
             question_id: que.id!,
-            content: '',
+            content: null,
           });
         } else {
-          selectionChk.push({
-            questionId: que.id!,
-            num: null,
-          });
+          selectionChk[+que.id!] = {
+            questionId: +que.id!,
+            num: -1,
+          };
         }
       });
 
