@@ -38,19 +38,19 @@ export default function Info() {
     const dummyData: resInfoList[] = [
       {
         id: 1,
-        title: 'Res form Title 1',
+        title: '1. 2023 체육대회 수요조사',
       },
       {
         id: 2,
-        title: 'Res form Title 2',
+        title: '2. 6/3일 약속시간 정하기',
       },
       {
         id: 3,
-        title: 'Res form Title 3',
+        title: '3. 만족도 조사',
       },
       {
         id: 4,
-        title: 'Res form Title 4',
+        title: '4. 간식행사 수요조사',
       },
     ];
     setResFormInfoList(dummyData);

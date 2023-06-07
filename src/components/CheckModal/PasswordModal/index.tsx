@@ -7,6 +7,8 @@ import { color } from '../../../recoil/Color/atom';
 import { userInfo } from '../../../recoil/User/atom';
 import { useNavigate } from 'react-router-dom';
 import { useMessage } from '../../../hooks/useMessage';
+import { useMutation } from 'react-query';
+import { signIn } from '../../../api/user';
 
 interface Props {
   open: boolean;
@@ -28,6 +30,7 @@ export default function PasswordMordal({ open, onCancel }: Props) {
   });
 
   const info = useRecoilValue(userInfo);
+  const { mutate, data, isSuccess } = useMutation(signIn);
 
   const { password } = input;
   const [check, setCheck] = useState(false);
@@ -41,17 +44,39 @@ export default function PasswordMordal({ open, onCancel }: Props) {
     [input]
   );
 
-  const onCheckPassword = useCallback(() => {
-    if (info.password === password) {
-      setCheck(true);
-    } else {
-      showMessage('error', '비밀번호가 일치하지 않습니다.');
+  const onCheckPassword = useCallback(
+    (e: React.MouseEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      // if (info.password === password) {
+      //   setCheck(true);
+      // } else {
+      //   showMessage('error', '비밀번호가 일치하지 않습니다.');
+      // }
+
+      const email = info.email;
+      mutate({ email, password });
+    },
+    [input]
+  );
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data);
+      if (data.httpStatus === 'CONFLICT') {
+        showMessage('error', '비밀번호가 일치하지 않습니다.');
+        return;
+      } else {
+        setCheck(true);
+      }
     }
-  }, [password]);
+  }, [isSuccess]);
 
   useEffect(() => {
     if (check) {
       navigate('/mypage/edit');
+    } else {
+      showMessage('error', '비밀번호가 일치하지 않습니다.');
     }
   }, [check]);
 
