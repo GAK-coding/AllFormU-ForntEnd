@@ -44,15 +44,21 @@ export default function PasswordMordal({ open, onCancel }: Props) {
     [input]
   );
 
-  const onCheckPassword = useCallback(() => {
-    // if (info.password === password) {
-    //   setCheck(true);
-    // } else {
-    //   showMessage('error', '비밀번호가 일치하지 않습니다.');
-    // }
-    const email = info.email;
-    mutate({ email, password });
-  }, [input]);
+  const onCheckPassword = useCallback(
+    (e: React.MouseEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      // if (info.password === password) {
+      //   setCheck(true);
+      // } else {
+      //   showMessage('error', '비밀번호가 일치하지 않습니다.');
+      // }
+
+      const email = info.email;
+      mutate({ email, password });
+    },
+    [input]
+  );
 
   useEffect(() => {
     if (isSuccess) {
@@ -64,7 +70,7 @@ export default function PasswordMordal({ open, onCancel }: Props) {
         setCheck(true);
       }
     }
-  }, [isSuccess]);
+  }, [data, isSuccess]);
 
   useEffect(() => {
     if (check) {

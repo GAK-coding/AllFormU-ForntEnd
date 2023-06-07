@@ -43,7 +43,6 @@ export const signUp = async (data: signUpInfo) => {
 export const signIn = async (data: signInInfo) => {
   try {
     const response = await axios.post('/member/login', data);
-    console.log(response.data.tokenDTO.accessToken);
     return response.data;
   } catch (error) {
     console.error(error);
