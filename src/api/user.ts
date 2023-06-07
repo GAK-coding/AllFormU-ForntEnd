@@ -10,7 +10,8 @@ export const checkEmail = async (data: sendEmail) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    true;
     throw error;
   }
 };
@@ -19,10 +20,11 @@ export const checkEmail = async (data: sendEmail) => {
 export const emailCheckNum = async (data: sendEmail) => {
   try {
     const response = await axios.post('/member/register/confirm', data);
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    true;
     throw error;
   }
 };
@@ -31,10 +33,11 @@ export const emailCheckNum = async (data: sendEmail) => {
 export const signUp = async (data: signUpInfo) => {
   try {
     const response = await axios.post('/member/register', data);
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    true;
     throw error;
   }
 };
@@ -45,7 +48,8 @@ export const signIn = async (data: signInInfo) => {
     const response = await axios.post('/member/login', data);
     return response.data;
   } catch (error) {
-    console.error(error);
+    true;
+    // console.error(error);
     throw error;
   }
 };
@@ -56,10 +60,11 @@ export const changeNickname = async (data: newInfo) => {
     const response = await axios.patch('/member/update/nickname', data, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    true;
     throw error;
   }
 };
@@ -70,10 +75,11 @@ export const changePwd = async (data: newInfo) => {
     const response = await axios.patch('/member/update/password', data, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    true;
     throw error;
   }
 };
@@ -91,6 +97,7 @@ export const changeUrl = async (data: { image: File }) => {
     return url.data;
   } catch (error) {
     // console.error(error);
+    true;
     throw error;
   }
 };
@@ -109,6 +116,7 @@ export const changeImg = async (data: { id: number; newImage: string }) => {
     return response.data;
   } catch (error) {
     // console.error(error);
+    true;
     throw error;
   }
 };
@@ -123,6 +131,7 @@ export const setDormant = async (id: number) => {
     return response.data;
   } catch (error) {
     // console.error(error);
+    true;
     throw error;
   }
 };
@@ -137,6 +146,7 @@ export const setWithdrawal = async (id: number) => {
     return response.data;
   } catch (error) {
     // console.error(error);
+    true;
     throw error;
   }
 };
