@@ -72,16 +72,16 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
           >
             Pie Chart
           </Button>
-          <Button
-            onClick={() => onChangeStatus('Bar Chart')}
-            color={'#696969'}
-            bgColor={blue}
-            fontSize={1.2}
-            width={10}
-            height={4}
-          >
-            Bar Chart
-          </Button>
+          {/* <Button */}
+          {/*   onClick={() => onChangeStatus('Bar Chart')} */}
+          {/*   color={'#696969'} */}
+          {/*   bgColor={blue} */}
+          {/*   fontSize={1.2} */}
+          {/*   width={10} */}
+          {/*   height={4} */}
+          {/* > */}
+          {/*   Bar Chart */}
+          {/* </Button> */}
         </ChartBtn>
         <QueChart>
           {eachQueInfo &&
@@ -122,16 +122,16 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
           >
             Pie Chart
           </Button>
-          <Button
-            onClick={() => onChangeStatus('Bar Chart')}
-            color={'#696969'}
-            bgColor={blue}
-            fontSize={1.2}
-            width={10}
-            height={4}
-          >
-            Bar Chart
-          </Button>
+          {/* <Button */}
+          {/*   onClick={() => onChangeStatus('Bar Chart')} */}
+          {/*   color={'#696969'} */}
+          {/*   bgColor={blue} */}
+          {/*   fontSize={1.2} */}
+          {/*   width={10} */}
+          {/*   height={4} */}
+          {/* > */}
+          {/*   Bar Chart */}
+          {/* </Button> */}
         </ChartBtn>
         <QueChart>
           {eachQueInfo &&
