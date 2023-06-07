@@ -34,7 +34,7 @@ export default function MakeForm() {
           height={15}
           radius={2}
         >
-          <img src="/images/Gak.png" alt={'Gak'} />
+          <img src="/images/gak.png" alt={'Gak'} />
           <span>챗봇</span>
         </Button>
         <Button
