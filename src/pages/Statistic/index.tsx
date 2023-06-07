@@ -27,7 +27,7 @@ export default function Statistic() {
   const { blue } = useRecoilValue(color);
   const { id } = useParams();
   const [data, isLoading, isFetching] = useGetSingleForm(id!, true);
-  console.log(data);
+  // console.log(data);
   const formatDateTime = (dateTime: string) => {
     const [year, month, day] = dateTime.split(' ');
     return `${year}.${month}.${day}`;

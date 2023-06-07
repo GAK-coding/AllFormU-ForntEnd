@@ -29,7 +29,7 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
     }
   }, []);
 
-  console.log(eachQueInfo);
+  // console.log(eachQueInfo);
 
   //TODO : 나중에 null 값 처리해야함
   // useEffect(() => {

@@ -13,7 +13,7 @@ const GoogleButton = () => {
 
   const loginSuccess = (res: any) => {
     const { access_token } = res;
-    console.log(res);
+    // console.log(res);
     navigate('/');
 
     fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
@@ -24,14 +24,14 @@ const GoogleButton = () => {
       .then((response) => response.json())
       .then((data) => {
         const { email, name } = data;
-        console.log('User Email:', email);
-        console.log('User Name:', name);
+        // console.log('User Email:', email);
+        // console.log('User Name:', name);
 
         setInfo({ nickname: name, email: email });
 
         // info를 api요청으로 보내기
-      })
-      .catch((error) => console.log(error));
+      });
+    // .catch((error) => console.log(error));
   };
 
   const loginButtonOnclick = useGoogleLogin({
@@ -39,7 +39,7 @@ const GoogleButton = () => {
     onSuccess: (res) => {
       loginSuccess(res);
     },
-    onError: (error) => console.log(error),
+    // onError: (error) => console.log(error),
     // flow: 'auth-code',
   });
   return (

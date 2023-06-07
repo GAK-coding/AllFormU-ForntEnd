@@ -119,7 +119,7 @@ export default function Edit() {
   }, [isChangeImageSuccess]);
 
   const sendInfo = useCallback(() => {
-    console.log('유저 id' + info.id);
+    // console.log('유저 id' + info.id);
 
     if (images.length !== 0) {
       changeImgMutate({ image: images[0].file as File });
