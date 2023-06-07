@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { newInfo, sendEmail, signInInfo, signUpInfo } from '../typings/user';
 
+const token = localStorage.getItem('accessToken');
+
 // 이메일 중복 확인
 export const checkEmail = async (data: sendEmail) => {
   try {
@@ -40,8 +42,8 @@ export const signUp = async (data: signUpInfo) => {
 // 로그인
 export const signIn = async (data: signInInfo) => {
   try {
-    const response = await axios.post('/member', data);
-    console.log(response.data);
+    const response = await axios.post('/member/login', data);
+    console.log(response.data.tokenDTO.accessToken);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -52,7 +54,9 @@ export const signIn = async (data: signInInfo) => {
 // nickname 변경
 export const changeNickname = async (data: newInfo) => {
   try {
-    const response = await axios.patch('/member/update/nickname', data);
+    const response = await axios.patch('/member/update/nickname', data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -64,7 +68,9 @@ export const changeNickname = async (data: newInfo) => {
 // 비밀번호 변경
 export const changePwd = async (data: newInfo) => {
   try {
-    const response = await axios.patch('/member/update/password', data);
+    const response = await axios.patch('/member/update/password', data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -80,7 +86,7 @@ export const changeUrl = async (data: { image: File }) => {
     formData.append('file', data.image);
 
     const url = await axios.post('/files/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
     });
 
     return url.data;
@@ -93,7 +99,13 @@ export const changeUrl = async (data: { image: File }) => {
 // 사진 변경
 export const changeImg = async (data: { id: number; newImage: string }) => {
   try {
-    const response = await axios.patch('/member/update/image', { id: data.id, newImage: data.newImage });
+    const response = await axios.patch(
+      '/member/update/image',
+      { id: data.id, newImage: data.newImage },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -105,7 +117,9 @@ export const changeImg = async (data: { id: number; newImage: string }) => {
 // 휴면계정 변환
 export const setDormant = async (id: number) => {
   try {
-    const response = await axios.patch(`/member/dormant/${id}`);
+    const response = await axios.patch(`/member/dormant/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     // console.log(response.data);
     return response.data;
   } catch (error) {
@@ -117,7 +131,9 @@ export const setDormant = async (id: number) => {
 // 계정탈퇴
 export const setWithdrawal = async (id: number) => {
   try {
-    const response = await axios.patch(`/member/withdrawal/${id}`);
+    const response = await axios.patch(`/member/withdrawal/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {

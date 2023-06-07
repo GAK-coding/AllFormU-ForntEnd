@@ -76,8 +76,8 @@ const Types: QueType[] = [
   { value: SELECTION_CHECKBOX, label: '체크 박스' },
   { value: SELECTION_DROPDOWN, label: '드롭 다운' },
   { value: SELECTION_LINEAR, label: '선형 배율' },
-  { value: GRID_RADIO, label: '객관식 그리드' },
-  { value: GRID_CHECKBOX, label: '체크박스 그리드' },
+  // { value: GRID_RADIO, label: '객관식 그리드' },
+  // { value: GRID_CHECKBOX, label: '체크박스 그리드' },
 ];
 
 export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDelete }: Props) {
