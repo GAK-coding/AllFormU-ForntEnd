@@ -52,7 +52,7 @@ export default function PasswordMordal({ open, onCancel }: Props) {
     // }
     const email = info.email;
     mutate({ email, password });
-  }, [input]);
+  }, [input, password]);
 
   useEffect(() => {
     if (isSuccess) {
