@@ -22,8 +22,7 @@ export default function MakeFormList() {
   const [isCopy, onCopy] = useCopyClipBoard();
   const [user, setUser] = useRecoilState(userInfo);
 
-  // const baseUrl = process.env.REACT_BASE_URL;
-  const baseUrl = 'http://localhost:3000/directres/';
+  const baseUrl = 'http;//172.16.213.116:3030/';
 
   const {
     data,
@@ -35,16 +34,16 @@ export default function MakeFormList() {
     error,
   } = useInfiniteQuery(
     'makeForms',
-    ({ pageParam = 0 }) => getPagingInfo({ userId: 1, pageParam }), // pageParam의 초기값을 0으로 설정
+    ({ pageParam = 0 }) => getPagingInfo({ userId: user.id, pageParam }), // pageParam의 초기값을 0으로 설정
     {
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage?.nextPage) {
           return allPages.length + 1;
         }
       },
-      refetchOnMount: false, // 마운트(리렌더링)될 때 데이터를 다시 가져오지 않음
-      refetchOnWindowFocus: false, // 브라우저를 포커싱했을때 데이터를 가져오지 않음
-      refetchOnReconnect: false, // 네트워크가 다시 연결되었을때 다시 가져오지 않음
+      // refetchOnMount: false, // 마운트(리렌더링)될 때 데이터를 다시 가져오지 않음
+      // refetchOnWindowFocus: false, // 브라우저를 포커싱했을때 데이터를 가져오지 않음
+      // refetchOnReconnect: false, // 네트워크가 다시 연결되었을때 다시 가져오지 않음
     }
   );
 
@@ -56,27 +55,27 @@ export default function MakeFormList() {
     isError: deleteIsError,
     error: deleteError,
     isSuccess: deleteIsSuccess,
-  } = useMutation((formId) => deleteFrom({ userId: user.id, formId }), {
-    onMutate: async (id: number) => {
-      const snapshot = queryClient.getQueryData('makeForms');
-
-      queryClient.setQueryData('makeForms', (old: any) =>
-        old.pages[ref.current!].pagingData.filter((item: any) => {
-          return item.id !== id;
-        })
-      );
-
-      return { snapshot };
-    },
-    onError: (error, newData, context) => {
-      if (context?.snapshot) {
-        queryClient.setQueryData('makeForms', context.snapshot);
-        showMessage('error', '삭제에 실패했습니다.');
-      }
-    },
-    onSettled() {
-      queryClient.invalidateQueries('makeForms');
-    },
+  } = useMutation((formId: number) => deleteFrom({ userId: user.id, formId }), {
+    // onMutate: async (id: number) => {
+    //   const snapshot = queryClient.getQueryData('makeForms');
+    //
+    //   queryClient.setQueryData('makeForms', (old: any) =>
+    //     old.pages[ref.current!].pagingData.filter((item: any) => {
+    //       return item.id !== id;
+    //     })
+    //   );
+    //
+    //   return { snapshot };
+    // },
+    // onError: (error, newData, context) => {
+    //   if (context?.snapshot) {
+    //     queryClient.setQueryData('makeForms', context.snapshot);
+    //     showMessage('error', '삭제에 실패했습니다.');
+    //   }
+    // },
+    // onSettled() {
+    //   queryClient.invalidateQueries('makeForms');
+    // },
   });
 
   const deleteForm = useCallback((id: number) => {

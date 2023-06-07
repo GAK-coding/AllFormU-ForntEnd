@@ -15,6 +15,13 @@ export default function Short({ id }: Props) {
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const temp = JSON.parse(JSON.stringify(resData));
+
+      if (e.target.value === '') {
+        (temp[idx] as ResDescription).content = null;
+        setResData(temp);
+        return;
+      }
+
       (temp[idx] as ResDescription).content = e.target.value;
       setResData(temp);
     },

@@ -13,7 +13,11 @@ export function checkTimeRange(period: string[]): boolean {
   const startTime = new Date(temp[0]);
   const endTime = new Date(temp[1]);
 
-  return currentTime >= startTime && currentTime <= endTime;
+  if (startTime > currentTime) {
+    return true;
+  }
+
+  return currentTime <= endTime;
 
   // 시간 범위에 포함되어 있지 않음 또는 기간이 만료됨
 }

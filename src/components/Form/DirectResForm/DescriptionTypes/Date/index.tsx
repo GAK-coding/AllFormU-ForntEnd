@@ -21,7 +21,7 @@ export default function Date({ id }: Props) {
       setResData(temp);
     } else {
       const temp = JSON.parse(JSON.stringify(resData));
-      (temp[idx] as ResDescription).content = '';
+      (temp[idx] as ResDescription).content = null;
       setResData(temp);
     }
   };

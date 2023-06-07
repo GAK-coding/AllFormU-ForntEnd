@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const token = localStorage.getItem('accessToken');
 
+// const URL = process.env.NODE_ENV === "production" ? process.env.REACT_APP_API : process.env.REACT_APP_API_LOCAL;
+
 export const editFormInfo = async (userId: number, formId: number, title: string, content: string) =>
   await axios
     .put(
