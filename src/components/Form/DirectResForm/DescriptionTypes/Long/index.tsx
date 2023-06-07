@@ -34,7 +34,7 @@ export default function Long({ id }: Props) {
         showCount
         maxLength={100}
         style={{ height: 80, resize: 'none' }}
-        value={idx !== -1 ? (resData[idx] as ResDescription)['content'] : ''}
+        value={idx !== -1 ? (resData[idx] as ResDescription)['content'] || '' : ''}
         onChange={onChange}
         placeholder="내 답변"
         // required

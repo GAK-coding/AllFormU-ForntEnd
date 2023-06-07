@@ -29,7 +29,7 @@ export default function Short({ id }: Props) {
 
   return (
     <FormInput
-      value={idx !== -1 ? (resData[idx] as ResDescription)['content'] : ''}
+      value={idx !== -1 ? (resData[idx] as ResDescription)['content'] || '' : ''}
       onChange={onChange}
       width={'50%'}
       fontSize={1.6}
