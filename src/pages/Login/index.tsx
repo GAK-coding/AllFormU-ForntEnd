@@ -13,7 +13,6 @@ import { useMutation } from 'react-query';
 import { signIn } from '../../api/user';
 import IdMordal from '../../components/CheckModal/IdModal';
 import { useMessage } from '../../hooks/useMessage';
-import { recoilPersist } from 'recoil-persist';
 
 export default function SignIn() {
   const { showMessage, contextHolder } = useMessage();
@@ -78,8 +77,7 @@ export default function SignIn() {
         };
         setUserInfo(infoList);
         setUser(infoList);
-        //TODO: 나중에 jwt 넣으면 될듯
-        // localStorage.setItem('accessToken', 'true');
+        localStorage.setItem('accessToken', data.tokenDTO.accessToken);
         setLogin(true);
         navigate('/');
 
