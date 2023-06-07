@@ -21,7 +21,7 @@ export const getDescriptionStatisticEach = async (question_id: number) => {
     });
     return res.data;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -32,7 +32,7 @@ export const getSelectionResCount = async (question_id: number) => {
     });
     return res.data;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -43,6 +43,6 @@ export const getSelectionStatisticEach = async (question_id: number) => {
     });
     return res.data;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };

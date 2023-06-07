@@ -90,7 +90,7 @@ export const changeUrl = async (data: { image: File }) => {
 
     return url.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     throw error;
   }
 };
@@ -105,10 +105,10 @@ export const changeImg = async (data: { id: number; newImage: string }) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     throw error;
   }
 };
@@ -122,7 +122,7 @@ export const setDormant = async (id: number) => {
     // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     throw error;
   }
 };
@@ -133,10 +133,10 @@ export const setWithdrawal = async (id: number) => {
     const response = await axios.patch(`/member/withdrawal/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     throw error;
   }
 };

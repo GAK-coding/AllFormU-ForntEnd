@@ -105,20 +105,12 @@ export default function SignUp() {
   );
 
   // 이메일 중복체크
-  const {
-    mutate: sendEmail,
-    data: emailStatus,
-    isSuccess: emailSuccess,
-  } = useMutation(checkEmail, {
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
+  const { mutate: sendEmail, data: emailStatus, isSuccess: emailSuccess } = useMutation(checkEmail, {});
 
   const onCheckEmail = useCallback(() => {
     if (isValidEmail) {
       sendEmail({ email });
-      console.log(emailStatus);
+      // console.log(emailStatus);
     } else {
       showMessage('warning', '이메일 형식이 올바르지 않습니다.');
     }
@@ -127,11 +119,11 @@ export default function SignUp() {
   useEffect(() => {
     if (emailSuccess) {
       if (emailStatus.httpStatus === 'OK' || emailStatus.httpStatus === 'BAD_REQUEST') {
-        console.log('성공' + emailStatus.httpStatus);
+        // console.log('성공' + emailStatus.httpStatus);
         // 인증번호 요청보냄
         onSendEmail();
       } else {
-        console.log('실패' + emailStatus.httpStatus);
+        // console.log('실패' + emailStatus.httpStatus);
       }
     }
   }, [emailSuccess]);
@@ -149,7 +141,7 @@ export default function SignUp() {
     if (checkNumSucsess) {
       if (checkNum.httpStatus === 'OK') {
         setEmailNum(checkNum.message);
-        console.log('이메일 인증번호 번호 ' + emailNum);
+        // console.log('이메일 인증번호 번호 ' + emailNum);
         showMessage('success', '인증번호가 전송 되었습니다.');
       }
     }
