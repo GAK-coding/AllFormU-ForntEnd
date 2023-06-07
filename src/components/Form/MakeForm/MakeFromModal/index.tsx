@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { ResModalTitle } from '../../../GPT/GPTModal/styles';
 import { CreateForm, FormInfo, FormInfoWrapper, MakeFormModalWrapper } from './styles';
 import { ConfigProvider, DatePicker } from 'antd';
-import type { RangePickerProps } from 'antd/es/date-picker';
 import dayjs from 'dayjs';
 import Button from '../../../ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -13,6 +12,7 @@ import { useMutation } from 'react-query';
 import { createForm } from '../../../../api/makeform';
 import { useMessage } from '../../../../hooks/useMessage';
 import locale from 'antd/lib/locale/ko_KR';
+import { userInfo } from '../../../../recoil/User/atom';
 
 const { RangePicker } = DatePicker;
 
@@ -34,6 +34,7 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
   const { showMessage, contextHolder } = useMessage();
   const fcolor = useRecoilValue(FormBgColor);
   const [sectionName, setSectionName] = useRecoilState(sectionNames);
+  const [user, setUser] = useRecoilState(userInfo);
 
   const { mutate, data, isLoading, isError, error, isSuccess } = useMutation(createForm, {
     onSuccess: (data) => {
@@ -50,7 +51,7 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
         return rest;
       });
 
-      mutate({ title, fix, timeout: time, content, questions, fimage, fcolor, sectionName });
+      mutate({ userId: user.id, form: { title, fix, timeout: time, content, questions, fimage, fcolor, sectionName } });
       setIsCreate(true);
       setTime([]);
     }
