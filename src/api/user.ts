@@ -12,6 +12,7 @@ export const checkEmail = async (data: sendEmail) => {
   } catch (error) {
     // console.error(error);
     true;
+
     throw error;
   }
 };
