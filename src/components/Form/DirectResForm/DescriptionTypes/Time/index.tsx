@@ -16,6 +16,13 @@ export default function Time({ id }: Props) {
 
   const onChange = (time: Dayjs | null, timeString: string) => {
     const temp = JSON.parse(JSON.stringify(resData));
+
+    if (!time) {
+      (temp[idx] as ResDescription).content = null;
+      setResData(temp);
+      return;
+    }
+
     (temp[idx] as ResDescription).content = timeString;
     setResData(temp);
   };

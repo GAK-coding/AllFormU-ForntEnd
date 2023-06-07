@@ -10,8 +10,8 @@ import { resFormInfoList } from '../../../recoil/FormList/atom';
 import { resInfoList } from '../../../typings/resForm';
 import { FiPlus } from 'react-icons/fi';
 import { useQuery } from 'react-query';
-import { getMakeForms } from '../../../api/getFormInfo';
-import { GetForm } from '../../../typings/getForm';
+import { getMakeForms, getPagingInfo } from '../../../api/getFormInfo';
+import { GetForm, makePagingData } from '../../../typings/getForm';
 import PasswordMordal from '../../../components/Modal/PasswordModal';
 import { useMessage } from '../../../hooks/useMessage';
 
@@ -57,14 +57,14 @@ export default function Info() {
   }, []);
 
   const resFormInfo = useRecoilValue(resFormInfoList);
-
   const [user, setUser] = useRecoilState(userInfo);
+
   const {
     data: makeFormInfo,
     isLoading,
     error,
     isError,
-  } = useQuery<GetForm[]>('myMakeForm', () => getMakeForms(user.id));
+  } = useQuery('myforms', () => getPagingInfo({ userId: user.id, pageParam: 0 }));
 
   // console.log('이거', makeFormInfo);
 
@@ -104,14 +104,13 @@ export default function Info() {
               <span>내 생성폼</span>
             </Line>
             <AlignBox>
-              {/* TODO : 4개만 보여주기 */}
-              {makeFormInfo?.map((formInfo: GetForm, idx: number) => {
+              {makeFormInfo?.pagingData?.map((formInfo, idx) => {
                 if (idx > 1) return;
                 return <FormBox key={formInfo.id}>{`${idx + 1}. ${formInfo.title}`}</FormBox>;
               })}
             </AlignBox>
             <AlignBox>
-              {makeFormInfo?.map((formInfo: GetForm, idx: number) => {
+              {makeFormInfo?.pagingData?.map((formInfo, idx) => {
                 if (idx > 3) return;
 
                 if (idx > 1) return <FormBox key={formInfo.id}>{`${idx + 1}. ${formInfo.title}`}</FormBox>;

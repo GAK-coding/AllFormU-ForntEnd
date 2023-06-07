@@ -85,14 +85,14 @@ export default function DirectResForm() {
       const selection = JSON.parse(JSON.stringify(Object.values(chkSelection).flat()));
       const required = JSON.parse(JSON.stringify(chkRequired));
 
-      // console.log(description, selection);
-
       description.map((desc: ResDescription) => {
-        if (required.includes(desc.question_id)) required.splice(required.indexOf(desc.question_id), 1);
+        if (required.includes(desc.question_id))
+          desc.content !== null && required.splice(required.indexOf(desc.question_id), 1);
       });
 
       selection.map((select: ResSelection) => {
-        if (required.includes(select.questionId)) required.splice(required.indexOf(select.questionId), 1);
+        if (required.includes(select.questionId))
+          select.num !== -1 && required.splice(required.indexOf(select.questionId), 1);
       });
 
       if (required.length !== 0) {
@@ -189,7 +189,9 @@ export default function DirectResForm() {
     if (run && (isSuccessDescription || isSuccessSelcetion)) {
       if (resDescData?.httpStatus === 'CONFLICT' || resSelectData?.httpStatus === 'NOT_ACCEPTABLE') {
         showMessage('error', '이미 응답한 설문입니다!');
-      } else showMessage('success', '응답 완료!');
+      } else {
+        navigate('/', { state: { isSuccess: true } });
+      }
 
       setRun(false);
     }

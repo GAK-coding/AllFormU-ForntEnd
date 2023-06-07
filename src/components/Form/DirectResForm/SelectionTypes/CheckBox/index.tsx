@@ -15,7 +15,6 @@ export default function CheckBox({ data, id }: Props) {
   const plainOptions = data.options.map((option) => option.content);
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
   const [checkNum, setCheckNum] = useState<number[]>([]);
-  const [resData, setResData] = useRecoilState(resSelectionSets);
   const [chkSelection, setChkSelection] = useRecoilState(checkSelection);
 
   const onChange = useCallback((list: CheckboxValueType[]) => {
@@ -30,8 +29,6 @@ export default function CheckBox({ data, id }: Props) {
   }, [checkedList]);
 
   useEffect(() => {
-    const temp = JSON.parse(JSON.stringify(resData));
-    const resDataKeys = Object.keys(resData);
     const data: ResSelection[] = [];
     const tempSelection: ResSelections = JSON.parse(JSON.stringify(chkSelection));
 
@@ -46,16 +43,6 @@ export default function CheckBox({ data, id }: Props) {
 
     tempSelection[id] = data;
     setChkSelection(tempSelection);
-
-    // if (!resDataKeys.includes(id.toString())) {
-    //   temp[id] = data;
-    //   setResData(temp);
-    // } else {
-    //   setResData({
-    //     ...temp,
-    //     [id]: data,
-    //   });
-    // }
   }, [checkNum]);
 
   return (

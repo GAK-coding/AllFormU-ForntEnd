@@ -13,7 +13,6 @@ interface Props {
 }
 
 export default function Option({ data, id }: Props) {
-  // const [resData, setResData] = useRecoilState(resSelectionSets);
   const [selectedOption, setSelectedOption] = useState<number | null>(null); // 선택된 라디오 버튼의 인덱스를 추적하는 상태
   const ref = useRef<number | null>(null);
   const [chkSelection, setChkSelection] = useRecoilState(checkSelection);
@@ -27,37 +26,8 @@ export default function Option({ data, id }: Props) {
     if (selectedOption === null) return;
 
     const temp: ResSelections = JSON.parse(JSON.stringify(chkSelection));
-    // const resDataKeys = Object.values(temp);
-
-    // console.log('변경된 값', temp[id]);
-    // console.log('변경된 값', (temp[id] as ResSelection)['num']);
-    // console.log('변경된 값', ref.current);
     (temp[id] as ResSelection)['num'] = ref.current!;
     setChkSelection(temp);
-
-    // const temp = JSON.parse(JSON.stringify(resData));
-    // const resDataKeys = Object.keys(resData);
-    // const isRes = resDataKeys.find((key) => ref.current === +key);
-    //
-    // if (!isRes) {
-    //   temp[id] = {
-    //     [id]: {
-    //       questionId: id,
-    //       num: ref.current,
-    //     },
-    //   };
-    //
-    //   setResData(temp);
-    // } else {
-    //   setResData({
-    //     ...temp,
-    //
-    //     [id]: {
-    //       questionId: id,
-    //       num: ref.current,
-    //     },
-    //   });
-    // }
   }, [selectedOption, ref]);
 
   return (
