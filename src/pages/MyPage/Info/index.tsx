@@ -59,7 +59,12 @@ export default function Info() {
   const resFormInfo = useRecoilValue(resFormInfoList);
 
   const [user, setUser] = useRecoilState(userInfo);
-  const { data: makeFormInfo, isLoading, error, isError } = useQuery<GetForm[]>('myMakeForm', getMakeForms());
+  const {
+    data: makeFormInfo,
+    isLoading,
+    error,
+    isError,
+  } = useQuery<GetForm[]>('myMakeForm', () => getMakeForms(user.id));
 
   // console.log('이거', makeFormInfo);
 
