@@ -1,19 +1,17 @@
-import { useRecoilValue } from 'recoil';
-import { descriptionResInfo } from '../../../recoil/Statistic/atom';
-import { DescriptionResStatistic, QueResInfo } from '../../../typings/statistic';
+import { QueResInfo } from '../../../typings/statistic';
 
-export interface DataItem {
+interface DataItem {
   id: string;
   label: string;
   value: number;
   color: string;
 }
 
-export interface Data {
+interface Data {
   data: DataItem[];
 }
 
-export const ResponseData = ({ queInfo }: QueResInfo): Data => {
+export const ResponseData = ({ queInfo: queInfo, options: options }: QueResInfo): Data => {
   const colors = [
     'hsl(200, 70%, 50%)',
     'hsl(237, 70%, 50%)',
@@ -26,9 +24,10 @@ export const ResponseData = ({ queInfo }: QueResInfo): Data => {
   const data: DataItem[] = [];
 
   //TODO : 상위 5개만 보여주기 (주관식은 마지막은 기타로 통일해야함)
-
   // if (queInfo.num.length >= 5) {
   // }
+
+  // description 응답 정보
   if ('opList' in queInfo) {
     queInfo.opList.map((op, idx) => {
       if (op !== null) {
@@ -40,12 +39,14 @@ export const ResponseData = ({ queInfo }: QueResInfo): Data => {
         });
       }
     });
-  } else {
+  }
+  // selection 응답 정보
+  else {
     queInfo.num.map((num, key) => {
       if (num !== 0) {
         data.push({
-          id: num.toString(),
-          label: num.toString(),
+          id: options?.[key].content || '',
+          label: options?.[key].content || '',
           value: queInfo.num[key]!,
           color: colors[Math.floor(Math.random() * colors.length)],
         });
