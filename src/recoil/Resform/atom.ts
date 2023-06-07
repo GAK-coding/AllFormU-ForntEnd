@@ -10,3 +10,5 @@ export const resSelectionSets = atom<ResSelections>({ key: 'resSelectionSets', d
 export const checkRequired = atom<number[]>({ key: 'checkRequired', default: [] });
 
 export const checkSelection = atom<ResSelections>({ key: 'checkSelection', default: {} });
+
+export const resUrlOpen = atom({ key: 'resUrlOpen', default: false });
