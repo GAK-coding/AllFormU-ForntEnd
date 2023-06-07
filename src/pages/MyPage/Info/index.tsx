@@ -12,7 +12,7 @@ import { FiPlus } from 'react-icons/fi';
 import { useQuery } from 'react-query';
 import { getMakeForms } from '../../../api/getFormInfo';
 import { GetForm } from '../../../typings/getForm';
-import PasswordMordal from '../../../components/CheckModal/PasswordModal';
+import PasswordMordal from '../../../components/Modal/PasswordModal';
 import { useMessage } from '../../../hooks/useMessage';
 
 export default function Info() {

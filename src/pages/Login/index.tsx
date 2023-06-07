@@ -11,7 +11,7 @@ import { userInfo, signInUserInfo, isLogin } from '../../recoil/User/atom';
 import GoogleAuth from '../../components/GoogleLogin/GoogleAuth';
 import { useMutation } from 'react-query';
 import { signIn } from '../../api/user';
-import IdMordal from '../../components/CheckModal/IdModal';
+import IdMordal from '../../components/Modal/IdModal';
 import { useMessage } from '../../hooks/useMessage';
 
 export default function SignIn() {
