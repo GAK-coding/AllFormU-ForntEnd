@@ -35,8 +35,6 @@ export default function MakeFromModal({ open, onCancel, isCreate, setIsCreate }:
   const fcolor = useRecoilValue(FormBgColor);
   const [sectionName, setSectionName] = useRecoilState(sectionNames);
 
-  console.log(sectionName);
-
   const { mutate, data, isLoading, isError, error, isSuccess } = useMutation(createForm, {
     onSuccess: (data) => {
       setFormId(data);

@@ -5,7 +5,8 @@ export const createDescription = async (data: { formId: number; memberId: number
   try {
     const { formId, memberId, forms } = data;
 
-    await axios.post(`/description/createDescription/${formId}/${memberId}`, forms);
+    const response = await axios.post(`/description/createDescription/${formId}/${memberId}`, forms);
+    return response.data;
   } catch (err) {
     console.log(err);
   }
@@ -15,7 +16,8 @@ export const createSelection = async (data: { formId: number; memberId: number; 
   try {
     const { formId, memberId, forms } = data;
 
-    await axios.post(`/response/${formId}/${memberId}`, forms);
+    const response = await axios.post(`/response/${formId}/${memberId}`, forms);
+    return response.data;
   } catch (err) {
     console.log(err);
   }
