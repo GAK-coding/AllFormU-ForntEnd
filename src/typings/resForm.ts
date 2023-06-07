@@ -16,14 +16,15 @@ export interface Chatbot {
 
 export interface ResDescription {
   question_id: number;
-  content: string;
+  content: string | null;
 }
 
 export interface ResSelection {
   questionId: number;
-  num: number | null;
+  num: number;
 }
 
 export interface ResSelections {
+  // [key: number]: ResSelection;
   [key: number]: ResSelection | ResSelection[];
 }

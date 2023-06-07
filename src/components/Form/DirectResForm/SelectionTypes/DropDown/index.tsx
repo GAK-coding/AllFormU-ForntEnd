@@ -4,7 +4,8 @@ import { DropDownWrapper } from './styles';
 import { Select } from 'antd';
 import { TbTriangleInverted } from 'react-icons/tb';
 import { useRecoilState } from 'recoil';
-import { resSelectionSets } from '../../../../../recoil/Resform/atom';
+import { checkSelection, resSelectionSets } from '../../../../../recoil/Resform/atom';
+import { ResSelection, ResSelections } from '../../../../../typings/resForm';
 
 interface Props {
   data: SelectionQue;
@@ -21,6 +22,7 @@ export default function DropDown({ data, id }: Props) {
   const [value, setValue] = useState(plainOptions[0].value);
   const [resData, setResData] = useRecoilState(resSelectionSets);
   const ref = useRef<number | null>(null);
+  const [chkSelection, setChkSelection] = useRecoilState(checkSelection);
 
   const handleChange = useCallback((value: string) => {
     setValue(value);
@@ -28,35 +30,42 @@ export default function DropDown({ data, id }: Props) {
   }, []);
 
   useEffect(() => {
-    const temp = JSON.parse(JSON.stringify(resData));
-    const resDataKeys = Object.keys(resData);
-    const isRes = resDataKeys.find((key) => ref.current === +key);
+    if (ref.current === null) return;
 
-    if (value === '') {
-      delete temp[id];
-      setResData(temp);
-      return;
-    }
+    const temp: ResSelections = JSON.parse(JSON.stringify(chkSelection));
 
-    if (!isRes) {
-      temp[id] = {
-        [id]: {
-          questionId: id,
-          num: ref.current,
-        },
-      };
+    (temp[id] as ResSelection)['num'] = ref.current!;
+    setChkSelection(temp);
 
-      setResData(temp);
-    } else {
-      setResData({
-        ...temp,
+    // const temp = JSON.parse(JSON.stringify(resData));
+    // const resDataKeys = Object.keys(resData);
+    // const isRes = resDataKeys.find((key) => ref.current === +key);
+    //
+    // if (value === '') {
+    //   delete temp[id];
+    //   setResData(temp);
+    //   return;
+    // }
 
-        [id]: {
-          questionId: id,
-          num: ref.current,
-        },
-      });
-    }
+    // if (!isRes) {
+    //   temp[id] = {
+    //     [id]: {
+    //       questionId: id,
+    //       num: ref.current,
+    //     },
+    //   };
+    //
+    //   setResData(temp);
+    // } else {
+    //   setResData({
+    //     ...temp,
+    //
+    //     [id]: {
+    //       questionId: id,
+    //       num: ref.current,
+    //     },
+    //   });
+    // }
   }, [value, ref]);
 
   return (
