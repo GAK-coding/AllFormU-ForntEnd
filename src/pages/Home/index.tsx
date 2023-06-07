@@ -1,20 +1,23 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Arrow, Explanation, ExplanationAbove, ExplanationBelow, ExplanationMiddle, HomeWrapper, Img } from './styles';
 import Button from '../../components/ui/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { color } from '../../recoil/Color/atom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import { googleUserInfo, isLogin, userInfo } from '../../recoil/User/atom';
+import { useMessage } from '../../hooks/useMessage';
 
 export default function Home() {
   const { purple } = useRecoilValue(color);
   const navigate = useNavigate();
+  const { state } = useLocation();
   // const info = useRecoilValue(userInfo);
   // const [login, setLogin] = useRecoilState(isLogin);
   const googleInfo = useRecoilValue(googleUserInfo);
   const [user, setUser] = useRecoilState(userInfo);
+  const { showMessage, contextHolder } = useMessage();
 
   const checkUser = useCallback(() => {
     if (user.id === -1) {
@@ -24,8 +27,15 @@ export default function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    if (state) {
+      showMessage('success', '응답에 성공했습니다!');
+    }
+  }, [state]);
+
   return (
     <HomeWrapper>
+      {contextHolder}
       <Explanation>
         <div>
           <ExplanationAbove>

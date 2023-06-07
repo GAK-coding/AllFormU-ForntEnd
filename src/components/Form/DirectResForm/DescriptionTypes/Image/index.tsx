@@ -23,7 +23,7 @@ export default function Image({ id }: Props) {
   const { mutate } = useMutation(changeUrl, {
     onSuccess: (data) => {
       const temp = JSON.parse(JSON.stringify(resData));
-      (temp[idx] as ResDescription).content = data;
+      (temp[idx] as ResDescription).content = data.url;
       setResData(temp);
     },
   });
@@ -38,7 +38,7 @@ export default function Image({ id }: Props) {
 
   const deleteImg = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(resData));
-    (temp[idx] as ResDescription).content = '';
+    (temp[idx] as ResDescription).content = null;
     setResData(temp);
   }, [resData]);
 

@@ -29,7 +29,7 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
     }
   }, []);
 
-  console.log(eachQueInfo);
+  // console.log(eachQueInfo);
 
   //TODO : 나중에 null 값 처리해야함
   // useEffect(() => {
@@ -72,19 +72,21 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
           >
             Pie Chart
           </Button>
-          <Button
-            onClick={() => onChangeStatus('Bar Chart')}
-            color={'#696969'}
-            bgColor={blue}
-            fontSize={1.2}
-            width={10}
-            height={4}
-          >
-            Bar Chart
-          </Button>
+          {/* <Button */}
+          {/*   onClick={() => onChangeStatus('Bar Chart')} */}
+          {/*   color={'#696969'} */}
+          {/*   bgColor={blue} */}
+          {/*   fontSize={1.2} */}
+          {/*   width={10} */}
+          {/*   height={4} */}
+          {/* > */}
+          {/*   Bar Chart */}
+          {/* </Button> */}
         </ChartBtn>
         <QueChart>
-          {chartType === 'Pie Chart' && eachQueInfo ? <PieChart queInfo={eachQueInfo} /> : <BarChart />}
+          {eachQueInfo &&
+            ((chartType === 'Pie Chart' && <PieChart queInfo={eachQueInfo} />) ||
+              (chartType === 'Bar Chart' && <BarChart queInfo={eachQueInfo} />))}
         </QueChart>
       </QueWrapper>
     );
@@ -120,19 +122,21 @@ export default function Question({ id, index, title, type, options }: QueInfo) {
           >
             Pie Chart
           </Button>
-          <Button
-            onClick={() => onChangeStatus('Bar Chart')}
-            color={'#696969'}
-            bgColor={blue}
-            fontSize={1.2}
-            width={10}
-            height={4}
-          >
-            Bar Chart
-          </Button>
+          {/* <Button */}
+          {/*   onClick={() => onChangeStatus('Bar Chart')} */}
+          {/*   color={'#696969'} */}
+          {/*   bgColor={blue} */}
+          {/*   fontSize={1.2} */}
+          {/*   width={10} */}
+          {/*   height={4} */}
+          {/* > */}
+          {/*   Bar Chart */}
+          {/* </Button> */}
         </ChartBtn>
         <QueChart>
-          {chartType === 'Pie Chart' && eachQueInfo ? <PieChart queInfo={eachQueInfo} /> : <BarChart />}
+          {eachQueInfo &&
+            ((chartType === 'Pie Chart' && <PieChart queInfo={eachQueInfo} options={options} />) ||
+              (chartType === 'Bar Chart' && <BarChart queInfo={eachQueInfo} options={options} />))}
         </QueChart>
       </QueWrapper>
     );

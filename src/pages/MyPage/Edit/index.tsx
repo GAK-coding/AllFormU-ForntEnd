@@ -11,6 +11,7 @@ import { useMutation } from 'react-query';
 import { Match, MisMatch } from '../../SignUp/styles';
 import { useMessage } from '../../../hooks/useMessage';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
+import { useNavigate } from 'react-router-dom';
 
 interface ChangeInfo {
   newNickname: string;
@@ -30,13 +31,13 @@ export default function Edit() {
 
   const [images, setImages] = useState<{ dataURL: string; file: File }[]>([]);
   const maxNumber = 1;
-  const [check, setCheck] = useState(true);
   const [changeInfo, setChangeInfo] = useState<ChangeInfo>({
     newNickname: '',
     newPassword: '',
     checkPassword: '',
   });
 
+  const navigate = useNavigate();
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, value: keyof ChangeInfo) => {
       const temp = { ...changeInfo };
@@ -118,7 +119,7 @@ export default function Edit() {
   }, [isChangeImageSuccess]);
 
   const sendInfo = useCallback(() => {
-    console.log('유저 id' + info.id);
+    // console.log('유저 id' + info.id);
 
     if (images.length !== 0) {
       changeImgMutate({ image: images[0].file as File });
@@ -144,23 +145,38 @@ export default function Edit() {
 
   const { mutate: dormantUser } = useMutation(setDormant, {
     onSuccess: () => {
-      showMessage('success', '휴면계정 전환 완료');
+      navigate('/signin');
     },
   });
 
   const { mutate: withDrawalUser } = useMutation(setWithdrawal, {
     onSuccess: () => {
-      showMessage('success', '회원탈퇴 완료');
+      navigate('/signup');
     },
   });
 
   const onChangeStatus = useCallback((action: '휴면계정' | '회원탈퇴') => {
     if (action === '휴면계정') {
+      const result = window.confirm('휴면계정으로 전환하시겠습니까?');
+
+      if (result) {
+        showMessage('success', '휴면계정 전환 완료');
+        dormantUser(info.id);
+        setNewInfo({ id: -1, nickname: '', email: '', password: '', image: '/images/userProfile.png' });
+        localStorage.removeItem('accessToken');
+      }
+
       // 휴면계정 전환 상태 처리
-      dormantUser(info.id);
     } else if (action === '회원탈퇴') {
+      const result = window.confirm('회원탈퇴 하시겠습니까?');
+
+      if (result) {
+        showMessage('success', '회원탈퇴 완료');
+        withDrawalUser(info.id);
+        setNewInfo({ id: -1, nickname: '', email: '', password: '', image: '/images/userProfile.png' });
+        localStorage.removeItem('accessToken');
+      }
       // 회원탈퇴 상태 처리
-      withDrawalUser(info.id);
     }
   }, []);
 

@@ -1,8 +1,12 @@
 import axios from 'axios';
 import { createFormData } from '../typings/makeForm';
 
-export const createForm = async (data: createFormData) =>
+const token = localStorage.getItem('accessToken');
+
+export const createForm = async (data: { userId: number; form: createFormData }) =>
   await axios
-    .post('/form/createform/1', data)
-    .then((res) => res.data)
-    .catch((err) => console.error(err));
+    .post(`/form/createform/${data.userId}`, data.form, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => res.data);
+// .catch((err) => console.error(err));

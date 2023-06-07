@@ -4,10 +4,22 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { gptOpen } from '../../recoil/Gpt/atom';
 import GPTSocket from '../GPT/GPTSocket';
+import { resUrlOpen } from '../../recoil/Resform/atom';
+import UrlModal from '../Modal/UrlModal';
 
 export default function FixedButton() {
   const [buttonOpen, setButtonOpen] = useState(false);
   const [isOpen, setIsOpen] = useRecoilState(gptOpen);
+  const [enterUrl, setEnterUrl] = useRecoilState(resUrlOpen);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCancel = useCallback(() => {
+    setEnterUrl(false);
+  }, []);
+
+  const enterUrlModal = useCallback(() => {
+    setEnterUrl(true);
+  }, []);
 
   const showModal = useCallback(() => {
     setIsOpen(true);
@@ -26,7 +38,7 @@ export default function FixedButton() {
   const location = useLocation();
   const [render, setRender] = useState(false);
 
-  const excludedPaths = ['makeform', 'resform', 'signin', 'signup'];
+  const excludedPaths = ['makeform', 'resform', 'signin', 'signup', 'directres', 'editform'];
 
   useEffect(() => {
     const isExcludedPath = excludedPaths.some((path) => location.pathname.includes(path));
@@ -67,7 +79,7 @@ export default function FixedButton() {
               </FunctionBtn>
               <FunctionBtn
                 onClick={() => {
-                  navigate('/resform');
+                  enterUrlModal();
                   closeFloat();
                 }}
               >
@@ -87,6 +99,7 @@ export default function FixedButton() {
             </ButtonOpen>
           )}
           {isOpen && <GPTSocket />}
+          {enterUrl && <UrlModal open={enterUrl} onCancel={handleCancel} />}
         </>
       )}
     </>

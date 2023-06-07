@@ -26,8 +26,10 @@ export interface DescriptionResStatistic {
 export interface SelectionResStatistic {
   response: ResponseItem[];
   num: number[];
+  options: Option[];
 }
 
 export interface QueResInfo {
   queInfo: DescriptionResStatistic | SelectionResStatistic;
+  options?: Option[];
 }

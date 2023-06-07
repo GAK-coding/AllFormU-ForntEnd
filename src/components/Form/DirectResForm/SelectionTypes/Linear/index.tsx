@@ -28,28 +28,6 @@ export default function Linear({ data, id }: Props) {
     const temp: ResSelections = JSON.parse(JSON.stringify(chkSelection));
     (temp[id] as ResSelection)['num'] = ref.current!;
     setChkSelection(temp);
-    // const temp = JSON.parse(JSON.stringify(resData));
-    // const resDataKeys = Object.keys(resData);
-    // const isRes = resDataKeys.find((key) => ref.current === +key);
-    //
-    // if (!isRes) {
-    //   temp[id] = {
-    //     [id]: {
-    //       questionId: id,
-    //       num: ref.current,
-    //     },
-    //   };
-    //
-    //   setResData(temp);
-    // } else {
-    //   setResData({
-    //     ...temp,
-    //     [id]: {
-    //       questionId: id,
-    //       num: ref.current,
-    //     },
-    //   });
-    // }
   }, [selectedOption, ref]);
 
   return (

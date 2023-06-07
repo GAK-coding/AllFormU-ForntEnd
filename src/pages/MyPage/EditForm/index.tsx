@@ -29,6 +29,7 @@ export default function EditForm() {
   const { id } = useParams();
   const [questionList, setQuestionList] = useRecoilState(questions);
   const queryClient = useQueryClient();
+  const { showMessage, contextHolder } = useMessage();
 
   const [data, isLoading, isFetching] = useGetSingleForm(id!);
 
@@ -66,76 +67,24 @@ export default function EditForm() {
     }
   );
 
-  const deleteQuestion = useCallback((id: number) => {
-    deleteQueMutate(id);
-  }, []);
+  const deleteQuestion = useCallback(
+    (id: number) => {
+      if (data?.questions?.length === 1) {
+        showMessage('warning', '설문지에 질문이 하나 이상 있어야 합니다.');
+        return;
+      }
+
+      const confirm = window.confirm('정말 삭제하시겠습니까?');
+      confirm && deleteQueMutate(id);
+      showMessage('success', '삭제되었습니다.');
+    },
+    [data]
+  );
 
   // 각 섹션이 몇 번 인덱스까지 사용하는지
   const [accrueQue, setAccrueQue] = useRecoilState(sectionLens);
   const [nowIndex, setNowIndex] = useRecoilState(nowFocusIndex);
   const [nowQueInfo, setNowQueInfo] = useRecoilState(nowQuestion);
-  const [sectionList, setSectionList] = useRecoilState(sectionNames);
-  const [queSecNum, setQueSecNum] = useRecoilState(queSectionNum);
-  const ref = useRef<HTMLDivElement>(null);
-  const { showMessage, contextHolder } = useMessage();
-
-  const addQuestion = useCallback(() => {
-    const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
-    const { row, col } = nowQueInfo;
-
-    let queSum = 0;
-    questionList.map((que) => (queSum += que.length));
-    if (queSum >= 100) {
-      showMessage('warning', '질문은 100개까지만 등록 가능합니다.');
-      return;
-    }
-
-    temp[row].splice(col + 1, 0, {
-      type: DESCRIPTION_SHORT,
-      tempId: uuid(),
-      required: false,
-      title: '',
-      sectionNum: row,
-      descriptions: [{ content: '' }],
-    });
-
-    setQuestionList(temp);
-    setNowIndex((prev) => prev + 1);
-  }, [questionList, nowQueInfo, nowIndex]);
-
-  const addSection = useCallback(() => {
-    const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
-    const tempSectionList: string[] = JSON.parse(JSON.stringify(sectionList));
-
-    let queSum = 0;
-    questionList.map((que) => (queSum += que.length));
-    if (queSum >= 100) {
-      showMessage('warning', '질문은 100개까지만 등록 가능합니다.');
-      return;
-    }
-
-    if (questionList.length >= 5) {
-      showMessage('warning', '섹션은 5개까지만 등록 가능합니다.');
-      return;
-    }
-
-    temp.push([
-      {
-        type: DESCRIPTION_SHORT,
-        tempId: uuid(),
-        required: true,
-        title: '',
-        sectionNum: temp.length,
-        descriptions: [{ content: '' }],
-      },
-    ]);
-
-    setQuestionList(temp);
-    setQueSecNum((prev) => [...prev, { value: queSecNum.length.toString(), label: (queSecNum.length + 1).toString() }]);
-    setSectionList([...tempSectionList, '']);
-    setNowQueInfo({ row: temp.length - 1, col: 0 });
-    setNowIndex(accrueQue[accrueQue.length - 1] + 1);
-  }, [questionList, nowIndex, accrueQue, nowQueInfo, sectionList, queSecNum]);
 
   const onClickQue = useCallback(
     (row: number, col: number) => {
@@ -172,29 +121,6 @@ export default function EditForm() {
                     <div>
                       <div {...provided.droppableProps} ref={provided.innerRef}>
                         {section?.map((que, col) => {
-                          const focus = row === 0 ? col === nowIndex : accrueQue[row - 1] + col + 1 === nowIndex;
-
-                          if (focus) {
-                            return (
-                              <div ref={ref} key={que.tempId}>
-                                <QueDraggable
-                                  draggableId={que.tempId}
-                                  data={que}
-                                  row={row}
-                                  col={col}
-                                  isClick={focus}
-                                  // onChangeTitle={() => {
-                                  //   true;
-                                  // }}
-                                  onClickQue={onClickQue}
-                                  onDelete={() => {
-                                    deleteQuestion(que.id!);
-                                  }}
-                                />
-                              </div>
-                            );
-                          }
-
                           return (
                             <div key={que.tempId}>
                               <QueDraggable
@@ -202,7 +128,7 @@ export default function EditForm() {
                                 data={que}
                                 row={row}
                                 col={col}
-                                isClick={focus}
+                                isClick={false}
                                 onChangeTitle={() => {
                                   true;
                                 }}

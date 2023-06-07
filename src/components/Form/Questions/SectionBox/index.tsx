@@ -96,7 +96,7 @@ export default function SectionBox({ children, index }: Props) {
     <SectionBoxWrapper>
       <div>
         {pathname.slice(1, 10) === 'directres' || pathname.slice(1, 7) === 'mypage' ? (
-          <SectionTitle>{secNames[index] || '섹션 제목'}</SectionTitle>
+          <SectionTitle>{secNames?.[index] || '섹션 제목'}</SectionTitle>
         ) : (
           <FormInput
             value={sectionList[index] || ''}

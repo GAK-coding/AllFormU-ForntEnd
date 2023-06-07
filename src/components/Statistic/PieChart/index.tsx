@@ -7,8 +7,8 @@ interface Props {
   data: object[];
 }
 
-export default function PieChart({ queInfo }: QueResInfo) {
-  const { data } = ResponseData({ queInfo });
+export default function PieChart({ queInfo, options }: QueResInfo) {
+  const { data } = ResponseData({ queInfo, options });
   const MyResponsivePie = ({ data }: Props) => (
     <ResponsivePie
       data={data}
@@ -32,76 +32,8 @@ export default function PieChart({ queInfo }: QueResInfo) {
         from: 'color',
         modifiers: [['darker', 3]],
       }}
-      defs={[
-        {
-          id: 'dots',
-          type: 'patternDots',
-          background: 'inherit',
-          color: 'rgba(255, 255, 255, 0.3)',
-          size: 4,
-          padding: 1,
-          stagger: true,
-        },
-        {
-          id: 'lines',
-          type: 'patternLines',
-          background: 'inherit',
-          color: 'rgba(255, 255, 255, 0.3)',
-          rotation: -45,
-          lineWidth: 6,
-          spacing: 10,
-        },
-      ]}
-      fill={[
-        {
-          match: {
-            id: 'ruby',
-          },
-          id: 'dots',
-        },
-        {
-          match: {
-            id: 'c',
-          },
-          id: 'dots',
-        },
-        {
-          match: {
-            id: 'go',
-          },
-          id: 'dots',
-        },
-        {
-          match: {
-            id: 'python',
-          },
-          id: 'dots',
-        },
-        {
-          match: {
-            id: 'scala',
-          },
-          id: 'lines',
-        },
-        {
-          match: {
-            id: 'lisp',
-          },
-          id: 'lines',
-        },
-        {
-          match: {
-            id: 'elixir',
-          },
-          id: 'lines',
-        },
-        {
-          match: {
-            id: 'javascript',
-          },
-          id: 'lines',
-        },
-      ]}
+      defs={[]}
+      fill={[]}
       legends={[
         {
           anchor: 'bottom',
@@ -129,7 +61,7 @@ export default function PieChart({ queInfo }: QueResInfo) {
       ]}
     />
   );
-  console.log(data);
+  // console.log(data);
   return (
     <ChartSize>
       {data.length === 0 ? (

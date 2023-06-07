@@ -36,36 +36,6 @@ export default function DropDown({ data, id }: Props) {
 
     (temp[id] as ResSelection)['num'] = ref.current!;
     setChkSelection(temp);
-
-    // const temp = JSON.parse(JSON.stringify(resData));
-    // const resDataKeys = Object.keys(resData);
-    // const isRes = resDataKeys.find((key) => ref.current === +key);
-    //
-    // if (value === '') {
-    //   delete temp[id];
-    //   setResData(temp);
-    //   return;
-    // }
-
-    // if (!isRes) {
-    //   temp[id] = {
-    //     [id]: {
-    //       questionId: id,
-    //       num: ref.current,
-    //     },
-    //   };
-    //
-    //   setResData(temp);
-    // } else {
-    //   setResData({
-    //     ...temp,
-    //
-    //     [id]: {
-    //       questionId: id,
-    //       num: ref.current,
-    //     },
-    //   });
-    // }
   }, [value, ref]);
 
   return (
