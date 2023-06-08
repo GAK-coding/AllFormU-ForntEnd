@@ -35,6 +35,7 @@ export default function GPTSocket() {
   const onMessageReceived = useCallback(
     (payload: Stomp.Message) => {
       const { content } = JSON.parse(payload.body);
+      console.log(content);
       setRes(content);
       setLoading(false);
     },
@@ -49,11 +50,11 @@ export default function GPTSocket() {
       {},
       () => {
         setConnected(true);
-        // console.log('연결 성공');
+        console.log('연결 성공');
         stompClient.current?.send('/app/chat.addUser', {}, JSON.stringify({ sender: 'username', type: 'JOIN' }));
       },
       () => {
-        // console.error('연결 실패');
+        console.error('연결 실패');
       }
     );
   };
