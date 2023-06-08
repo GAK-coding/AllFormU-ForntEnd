@@ -21,7 +21,7 @@ export const checkEmail = async (data: sendEmail) => {
 export const emailCheckNum = async (data: sendEmail) => {
   try {
     const response = await axios.post('/member/register/confirm', data);
-    // console.log(response.data);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     // console.error(error);
