@@ -20,7 +20,7 @@ export default function UrlModal({ open, formId }: Props) {
   const { purple, blue } = useRecoilValue(color);
   const navigate = useNavigate();
   const { showMessage, contextHolder } = useMessage();
-  const url = `http://localhost:3000/resform/direct/${formId}`;
+  const url = `http://172.16.213.116:3000/directres/${formId}`;
 
   const handleCopyClipBoard = (text: string) => {
     onCopy(text);
@@ -44,7 +44,7 @@ export default function UrlModal({ open, formId }: Props) {
         <QRCode errorLevel="H" value={url} icon="/images/logo.png" />
         <div>
           {contextHolder}
-          <span>http://localhost:3000/resform/direct/{formId}</span>
+          <span>{url}</span>
           <Button
             onClick={() => handleCopyClipBoard(url)}
             color={'white'}
