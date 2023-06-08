@@ -38,19 +38,19 @@ export default function Info() {
     const dummyData: resInfoList[] = [
       {
         id: 1,
-        title: '1. 2023 체육대회 수요조사',
+        title: '2023 체육대회 수요조사',
       },
       {
         id: 2,
-        title: '2. 6/3일 약속시간 정하기',
+        title: '6/3일 약속시간 정하기',
       },
       {
         id: 3,
-        title: '3. 만족도 조사',
+        title: '만족도 조사',
       },
       {
         id: 4,
-        title: '4. 간식행사 수요조사',
+        title: '간식행사 수요조사',
       },
     ];
     setResFormInfoList(dummyData);
@@ -106,14 +106,14 @@ export default function Info() {
             <AlignBox>
               {makeFormInfo?.pagingData?.map((formInfo, idx) => {
                 if (idx > 1) return;
-                return <FormBox key={formInfo.id}>{`${idx + 1}. ${formInfo.title}`}</FormBox>;
+                return <FormBox key={formInfo.id}>{formInfo.title}</FormBox>;
               })}
             </AlignBox>
             <AlignBox>
               {makeFormInfo?.pagingData?.map((formInfo, idx) => {
                 if (idx > 3) return;
 
-                if (idx > 1) return <FormBox key={formInfo.id}>{`${idx + 1}. ${formInfo.title}`}</FormBox>;
+                if (idx > 1) return <FormBox key={formInfo.id}>{formInfo.title}</FormBox>;
               })}
             </AlignBox>
           </Form>
