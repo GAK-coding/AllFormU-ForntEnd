@@ -22,7 +22,7 @@ export default function MakeFormList() {
   const [isCopy, onCopy] = useCopyClipBoard();
   const [user, setUser] = useRecoilState(userInfo);
 
-  const baseUrl = 'http;//172.16.213.116:3030/';
+  const baseUrl = 'http://172.16.213.116:3000/directres/';
 
   const {
     data,
@@ -124,7 +124,7 @@ export default function MakeFormList() {
                     <div>
                       {checkTimeRange(formInfo.timeout) && (
                         <Button
-                          onClick={() => navigate(`/mypage/editform/${formInfo.id}`)}
+                          onClick={() => navigate(`${baseUrl}${formInfo.id}`)}
                           color={'black'}
                           bgColor={lightPurple}
                           fontSize={1.3}
