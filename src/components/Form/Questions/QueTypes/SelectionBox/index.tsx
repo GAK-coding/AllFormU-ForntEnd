@@ -51,6 +51,11 @@ export default function SelectionBox({ data, row, col }: Props) {
 
   const addOption = useCallback(() => {
     const temp = JSON.parse(JSON.stringify(questionList));
+    if ((temp[row][col] as SelectionQue).options.length >= 10) {
+      showMessage('warning', '옵션은 최대 10개까지만 추가할 수 있습니다.');
+      return;
+    }
+
     const isEtc = options[options.length - 1].content === '기타';
     isEtc && (temp[row][col] as SelectionQue).options.pop();
 

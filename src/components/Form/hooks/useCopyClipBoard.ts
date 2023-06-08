@@ -7,7 +7,16 @@ export function useCopyClipBoard(): [boolean, onCopyFn] {
 
   const onCopy: onCopyFn = async (text: string) => {
     try {
-      await navigator.clipboard.writeText(text);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
       setIsCopy(true);
 
       return true;

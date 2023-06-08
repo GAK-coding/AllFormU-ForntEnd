@@ -49,32 +49,31 @@ export default function MakeFormSelect() {
   const setQueSecNum = useSetRecoilState(queSectionNum);
 
   const onClick = useCallback((type: string) => {
+    setInfo({ title: '', content: '', fimage: '' });
+    setQuestionList([
+      [
+        {
+          type: DESCRIPTION_SHORT,
+          tempId: uuid(),
+          required: false,
+          title: '',
+          sectionNum: 0,
+          descriptions: [{ content: '' }],
+        },
+      ],
+    ]);
+    setSecNames(['']);
+    setLens([]);
+    setFix(false);
+    setNowQueInfo({ row: 0, col: 0 });
+    setNotIndex(0);
+    setQueSecNum([{ value: '0', label: '1' }]);
+
     if (type === 'promise') setQuestionList(promise);
     else if (type === 'attendance') setQuestionList(attendance);
     else if (type === 'resume') setQuestionList(resume);
     else if (type === 'evaluation') setQuestionList(evaluation);
     else if (type === 'demand') setQuestionList(demand);
-    else {
-      setQuestionList([
-        [
-          {
-            type: DESCRIPTION_SHORT,
-            tempId: uuid(),
-            required: false,
-            title: '',
-            sectionNum: 0,
-            descriptions: [{ content: '' }],
-          },
-        ],
-      ]);
-      setInfo({ title: '', content: '' });
-      setSecNames(['']);
-      setLens([]);
-      setFix(false);
-      setNowQueInfo({ row: 0, col: 0 });
-      setNotIndex(0);
-      setQueSecNum([{ value: '0', label: '1' }]);
-    }
 
     navigate('/makeform/direct');
   }, []);
