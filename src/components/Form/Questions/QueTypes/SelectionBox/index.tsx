@@ -70,7 +70,10 @@ export default function SelectionBox({ data, row, col }: Props) {
 
   const onDelete = useCallback(
     (num: number, optId?: number, linear?: boolean) => {
-      if (options.length === 1) return;
+      if (options.length === 1) {
+        showMessage('error', '옵션은 최소 1개 이상이어야 합니다.');
+        return;
+      }
 
       if (pathname.slice(1, 16) !== 'mypage/editform') {
         const temp = JSON.parse(JSON.stringify(questionList));

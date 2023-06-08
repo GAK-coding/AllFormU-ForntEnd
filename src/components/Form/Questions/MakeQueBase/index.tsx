@@ -168,6 +168,11 @@ export default function MakeQueBase({ onClickQue, data, row, col, isClick, onDel
 
   const onEditTitle = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.length > 500) {
+        showMessage('warning', '글자 수가 너무 많아요');
+        return;
+      }
+
       const temp = JSON.parse(JSON.stringify(questionList));
       temp[row][col]['title'] = e.target.value;
       setQuestionList(temp);

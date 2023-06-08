@@ -1,11 +1,11 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import Header from './components/Header';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import loadable from '@loadable/component';
-
+0;
+const Header = loadable(() => import('./components/Header'));
 const Home = loadable(() => import('./pages/Home'));
 const SignUp = loadable(() => import('./pages/SignUp'));
 const SignIn = loadable(() => import('./pages/Login'));
@@ -22,6 +22,7 @@ const MakeFormList = loadable(() => import('./pages/MyPage/DetailForm/MakeFormLi
 const ResFormList = loadable(() => import('./pages/MyPage/DetailForm/ResFomList'));
 const EditForm = loadable(() => import('./pages/MyPage/EditForm'));
 const Statistic = loadable(() => import('./pages/Statistic'));
+const Error = loadable(() => import('./pages/Error')); // Add the Error component
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ function App() {
             <Route path={'/makeform/select'} element={<MakeFormSelect />} />
             <Route path={'/makeform/direct'} element={<MakeFormDirect />} />
             <Route path={'/makeform/chatbot'} element={<MakeFormChatbot />} />
+            <Route path={'*'} element={<Error />} /> {/* Handle all other URLs */}
           </Routes>
         </BrowserRouter>
       </RecoilRoot>

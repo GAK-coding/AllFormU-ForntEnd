@@ -34,7 +34,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production react-scripts start -p 80",
     "build": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
