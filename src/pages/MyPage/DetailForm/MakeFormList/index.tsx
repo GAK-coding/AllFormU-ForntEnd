@@ -124,7 +124,7 @@ export default function MakeFormList() {
                     <div>
                       {checkTimeRange(formInfo.timeout) && (
                         <Button
-                          onClick={() => navigate(`${baseUrl}${formInfo.id}`)}
+                          onClick={() => navigate(`/mypage/editform/${formInfo.id}`)}
                           color={'black'}
                           bgColor={lightPurple}
                           fontSize={1.3}

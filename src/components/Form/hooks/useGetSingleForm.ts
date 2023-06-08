@@ -3,6 +3,7 @@ import { GetFormInfo } from '../../../typings/getForm';
 import { getFormInfo } from '../../../api/getFormInfo';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { formInfo, sectionNames } from '../../../recoil/MakeForm/atom';
+import { userInfo } from '../../../recoil/User/atom';
 
 export function useGetSingleForm(
   id: string,
@@ -10,10 +11,11 @@ export function useGetSingleForm(
 ): [data: GetFormInfo, isLoading: boolean, isFetching: boolean] {
   const [info, setInfo] = useRecoilState(formInfo);
   const setNames = useSetRecoilState(sectionNames);
+  const [user, setUser] = useRecoilState(userInfo);
 
   const { data, isLoading, error, isError, isFetching } = useQuery<GetFormInfo>(
     ['getFormInfo', id],
-    () => getFormInfo(1, +id!),
+    () => getFormInfo(user.id, +id!),
     {
       onSuccess: (data) => {
         setInfo(data);
