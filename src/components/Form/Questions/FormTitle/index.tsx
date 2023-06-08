@@ -18,6 +18,7 @@ import { color } from '../../../../recoil/Color/atom';
 import { ImgArea } from '../../../../pages/MakeForm/Direct/styles';
 import { changeUrl } from '../../../../api/user';
 import ResFormInfo from '../../DirectResForm/ResFormInfo';
+import { userInfo } from '../../../../recoil/User/atom';
 
 interface Props {
   isEdit?: boolean;
@@ -26,7 +27,11 @@ interface Props {
 
 export default function FormTitle({ isEdit, formId }: Props) {
   const [info, setInfo] = useRecoilState(formInfo);
-  const { mutate, isLoading, error, isError } = useMutation(() => editFormInfo(1, +formId!, info.title, info.content));
+  const [user, setUser] = useRecoilState(userInfo);
+
+  const { mutate, isLoading, error, isError } = useMutation(() =>
+    editFormInfo(user.id, +formId!, info.title, info.content)
+  );
   const { showMessage, contextHolder } = useMessage();
   const { pathname, state } = useLocation();
 
