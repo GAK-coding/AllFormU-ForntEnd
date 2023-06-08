@@ -46,6 +46,10 @@ export default function FormTitle({ isEdit, formId }: Props) {
 
   const onChangeTitle = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.length > 500) {
+        showMessage('warning', '글자 수가 너무 많아요');
+        return;
+      }
       setInfo({ ...info, title: e.target.value });
     },
     [info]

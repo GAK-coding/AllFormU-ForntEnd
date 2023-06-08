@@ -4,6 +4,7 @@ import { LongWrapper } from './styles';
 import { useRecoilState } from 'recoil';
 import { resDescriptionSets } from '../../../../../recoil/Resform/atom';
 import { ResDescription } from '../../../../../typings/resForm';
+import { useMessage } from '../../../../../hooks/useMessage';
 
 interface Props {
   id: number;
@@ -12,9 +13,15 @@ interface Props {
 export default function Long({ id }: Props) {
   const [resData, setResData] = useRecoilState(resDescriptionSets);
   const [idx, setIdx] = useState<number>(-1);
+  const { showMessage, contextHolder } = useMessage();
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
+      if (e.target.value.length > 500) {
+        showMessage('warning', '글자 수가 너무 많아요');
+        return;
+      }
+
       const temp = JSON.parse(JSON.stringify(resData));
 
       if (e.target.value === '') {
@@ -37,15 +44,18 @@ export default function Long({ id }: Props) {
 
   return (
     <LongWrapper>
-      <TextArea
-        showCount
-        maxLength={100}
-        style={{ height: 80, resize: 'none' }}
-        value={idx !== -1 ? (resData[idx] as ResDescription)['content'] || '' : ''}
-        onChange={onChange}
-        placeholder="내 답변"
-        // required
-      />
+      <>
+        {showMessage}
+        <TextArea
+          showCount
+          maxLength={100}
+          style={{ height: 80, resize: 'none' }}
+          value={idx !== -1 ? (resData[idx] as ResDescription)['content'] || '' : ''}
+          onChange={onChange}
+          placeholder="내 답변"
+          // required
+        />
+      </>
     </LongWrapper>
   );
 }

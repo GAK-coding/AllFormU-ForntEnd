@@ -3,6 +3,7 @@ import FormInput from '../../../../ui/FormInput';
 import { useRecoilState } from 'recoil';
 import { resDescriptionSets } from '../../../../../recoil/Resform/atom';
 import { ResDescription } from '../../../../../typings/resForm';
+import { useMessage } from '../../../../../hooks/useMessage';
 
 interface Props {
   id: number;
@@ -11,9 +12,15 @@ interface Props {
 export default function Short({ id }: Props) {
   const [resData, setResData] = useRecoilState(resDescriptionSets);
   const [idx, setIdx] = useState(-1);
+  const { showMessage, contextHolder } = useMessage();
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.length > 500) {
+        showMessage('warning', '글자 수가 너무 많아요');
+        return;
+      }
+
       const temp = JSON.parse(JSON.stringify(resData));
 
       if (e.target.value === '') {
@@ -35,13 +42,16 @@ export default function Short({ id }: Props) {
   }, [resData, idx]);
 
   return (
-    <FormInput
-      value={idx !== -1 ? (resData[idx] as ResDescription)['content'] || '' : ''}
-      onChange={onChange}
-      width={'50%'}
-      fontSize={1.6}
-      disabled={false}
-      placeholder={'내 답변'}
-    />
+    <>
+      {contextHolder}
+      <FormInput
+        value={idx !== -1 ? (resData[idx] as ResDescription)['content'] || '' : ''}
+        onChange={onChange}
+        width={'50%'}
+        fontSize={1.6}
+        disabled={false}
+        placeholder={'내 답변'}
+      />
+    </>
   );
 }
