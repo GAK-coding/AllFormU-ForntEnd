@@ -16,22 +16,22 @@ export default function ResFormList() {
     const dummyData: resInfoList[] = [
       {
         id: 1,
-        title: 'Title 1',
+        title: '2023 체육대회 수요조사',
         description: 'Description 1',
       },
       {
         id: 2,
-        title: 'Title 2',
+        title: '6/3 약속시간 정하기',
         description: 'Description 2',
       },
       {
         id: 3,
-        title: 'Title 3',
+        title: '만족도 조사',
         description: 'Description 3',
       },
       {
         id: 4,
-        title: 'Title 4',
+        title: '간식행사 수요조사',
         description: 'Description 4',
       },
     ];
@@ -55,7 +55,7 @@ export default function ResFormList() {
                 <Title>
                   <span>{formInfo.title}</span>
                   {/* TODO: 주석 풀어야함 (데이터 받아오고 나서_ */}
-                  {/* <span>{formInfo.content}</span> */}
+                  <span>{formInfo.description}</span>
                 </Title>
 
                 <ButtonWrapper>
