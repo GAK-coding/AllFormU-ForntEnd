@@ -50,6 +50,7 @@ export const Title = styled.div`
 
   & > span {
     margin-left: 2rem;
+    fonr-size: 2rem;
   }
 
   & > span:first-of-type {
