@@ -151,7 +151,7 @@ export default function Edit() {
 
   const { mutate: withDrawalUser } = useMutation(setWithdrawal, {
     onSuccess: () => {
-      navigate('/signup');
+      navigate('/signin');
     },
   });
 
