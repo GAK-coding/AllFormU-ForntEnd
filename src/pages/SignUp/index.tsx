@@ -141,7 +141,7 @@ export default function SignUp() {
     if (checkNumSucsess) {
       if (checkNum.httpStatus === 'OK') {
         setEmailNum(checkNum.message);
-        console.log('이메일 인증번호 번호 ' + emailNum);
+        // console.log(`이메일 인증번호 번호  ${emailNum}`);
         showMessage('success', '인증번호가 전송 되었습니다.');
       }
     }

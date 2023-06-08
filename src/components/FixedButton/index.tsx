@@ -70,7 +70,7 @@ export default function FixedButton() {
               </CloseBtn>
               <FunctionBtn
                 onClick={() => {
-                  navigate('/makeform');
+                  navigate('/makeform/chatbot');
                   closeFloat();
                 }}
               >
