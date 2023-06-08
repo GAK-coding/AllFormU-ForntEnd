@@ -129,9 +129,7 @@ export default function SignIn() {
             />
           </LoginLine>
 
-          <LoginLine>
-            <div onClick={showModal}>비밀번호 찾기</div>
-          </LoginLine>
+          <LoginLine>{/* <div onClick={showModal}>비밀번호 찾기</div> */}</LoginLine>
           <IdMordal open={isModalOpen} onCancel={handleCancel} />
 
           <LoginWrapper>
