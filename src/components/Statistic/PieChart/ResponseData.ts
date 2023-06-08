@@ -42,7 +42,7 @@ export const ResponseData = ({ queInfo: queInfo, options: options }: QueResInfo)
   }
   // selection 응답 정보
   else {
-    queInfo.num.map((num, key) => {
+    queInfo?.num?.map((num, key) => {
       if (num !== 0) {
         data.push({
           id: options?.[key].content || '',
