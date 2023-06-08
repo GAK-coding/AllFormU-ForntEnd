@@ -53,7 +53,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </RecoilRoot>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   );
 }
