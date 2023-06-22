@@ -1,20 +1,23 @@
-# 🎀 AllFormU - Frontend 🎀
+# <img src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/96913056/381be6e7-059c-4675-9b9d-961daf78d289" width="200" height="53"/>
 누구나 다양한 목적으로 설문을 제작, 응답할 수 있는 대화형 챗봇 기반 설문조사 플랫폼
 <br/>챗봇을 활용한 설문 생성 & Chat GPT 사용
 
->### 👥  참여인원
+<br/>
+
+### 👥  참여인원
 - 가천대학교 컴퓨터공학과 권오현 [Gitgub](https://github.com/5hyun) | qhslsl@gmail.com
         
 - 가천대학교 소프트웨어학과 오채영 [Gitgub](https://github.com/CHCHAENG) | oco6029@naver.com
 
+<br/>
 
-## 🔨 개발환경
-- React + TypeScript
-- Recoil
-- React Query
-- Axios
-- Styled-Component
 
+## 🎯 기술 스택
+<img src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/96913056/ba7b7f7c-fd13-424d-8037-0d48da104470" width="600" height="143"/>
+
+
+<br/>
+<br/>
 
 ## 💻 프로젝트 실행 방법
 
@@ -25,6 +28,8 @@ cd AllFormU-frontEnd
 npm install
 npm start
 ```
+
+<br/>
 
 ## ❓ AllFormU 프로젝트 소개
 1. [메인페이지](#메인페이지)   
