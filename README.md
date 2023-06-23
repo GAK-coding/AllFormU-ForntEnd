@@ -1,4 +1,4 @@
-# <img src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/96913056/381be6e7-059c-4675-9b9d-961daf78d289" width="200" height="53"/>
+# <img src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/96913056/381be6e7-059c-4675-9b9d-961daf78d289" width="200"/>
 누구나 다양한 목적으로 설문을 제작, 응답할 수 있는 대화형 챗봇 기반 설문조사 플랫폼
 <br/>챗봇을 활용한 설문 생성 & Chat GPT 사용
 
@@ -13,11 +13,14 @@
 
 
 ## 🎯 기술 스택
-<img src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/96913056/ba7b7f7c-fd13-424d-8037-0d48da104470" width="600" height="143"/>
+<img src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/96913056/ba7b7f7c-fd13-424d-8037-0d48da104470" width="100%"/>
 
 
 <br/>
 <br/>
+
+## 📝 Architecture 설계도
+<img src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/96913056/3b0d07e1-c1b9-4288-9fec-0a529799ec03" width="100%"/>
 
 ## 💻 프로젝트 실행 방법
 
@@ -34,6 +37,8 @@ npm start
 ## Demo 영상
 [➡️ Demo 영상 보러가기](https://youtu.be/IxmdW8imXDw)   
 
+<br/>
+<br/>
 
 ## ❓ AllFormU 프로젝트 소개
 1. [메인페이지](#메인페이지)   
@@ -53,6 +58,8 @@ npm start
 6. [응답 분석](#응답-분석)
 7. [Float Button](#Float-Button)
 
+<br/>
+<br/>
 
 ## 메인페이지
 
