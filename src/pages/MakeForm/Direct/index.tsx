@@ -177,6 +177,8 @@ export default function MakeFormDirect() {
     (result: DropResult, row: number) => {
       const temp: (DescriptionQue | SelectionQue | GridQue)[][] = JSON.parse(JSON.stringify(questionList));
 
+      console.log(result);
+
       const start = result.source.index;
       const end = result?.destination?.index;
 

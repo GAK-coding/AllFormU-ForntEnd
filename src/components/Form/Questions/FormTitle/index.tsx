@@ -75,7 +75,7 @@ export default function FormTitle({ isEdit, formId }: Props) {
         mutate();
       }
       showMessage('success', '업데이트 완료!');
-    }, 1000),
+    }, 200),
     [isEdit, info]
   );
 

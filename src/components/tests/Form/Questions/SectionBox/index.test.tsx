@@ -73,4 +73,13 @@ describe('MakeQueBase', () => {
   it('renders MakeQueBase without errors', () => {
     // Test code
   });
+  it('renders MakeQueBase without errors', () => {
+    // Test code
+  });
+  it('renders MakeQueBase without errors', () => {
+    // Test code
+  });
+  it('renders MakeQueBase without errors', () => {
+    // Test code
+  });
 });
