@@ -130,7 +130,8 @@ npm start
 - 챗봇 생성과 직접 생성이 있습니다.
 
 ### 챗봇 생성
-<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/468a86dc-7c70-4f10-8a76-df441022d811"/>
+
+[//]: # (<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/468a86dc-7c70-4f10-8a76-df441022d811"/>)
 
 - 챗봇 생성을 누르면 챗봇과 대화하면서 설문의 기본 틀을 작성할 수 있습니다.
 - 부가 기능으로 GPT 이용하기 버튼이 있습니다.
