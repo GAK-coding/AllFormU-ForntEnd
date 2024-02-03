@@ -130,7 +130,7 @@ npm start
 - 챗봇 생성과 직접 생성이 있습니다.
 
 ### 챗봇 생성
-<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/468a86dc-7c70-4f10-8a76-df441022d811"/>
+<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/468a86dc-7c70-4f10-8a76-df441022d811"></video>
 
 - 챗봇 생성을 누르면 챗봇과 대화하면서 설문의 기본 틀을 작성할 수 있습니다.
 - 부가 기능으로 GPT 이용하기 버튼이 있습니다.
@@ -152,7 +152,7 @@ npm start
 - "이력서" 템플릿을 누르면 사진과 같이 기본적인 질문들이 같이 세팅되어서 설문 만들기 화면으로 넘어갑니다.
 
 ### 설문 만들기
-<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/ee6b4b92-083b-4dbc-8bde-b1d609ab52cb"/>
+<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/ee6b4b92-083b-4dbc-8bde-b1d609ab52cb"></video>
 
 - 설문의 제목, 설명, 이미지를 추가할 수 있습니다.
 - 왼쪽 파란 선이 현재 선택된 질문입니다.
@@ -165,7 +165,7 @@ npm start
 - 각 섹션의 오른쪽 상단 "섹션 순서"에서 섹션 순서 변경이 가능합니다.
 - 질문을 다른 섹션으로 옮기려면 질문의 오른쪽 하단의 "섹션"을 이용하여 변경 가능합니다.
 
-<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/eed8d32b-2184-4c08-8c0b-61fd63b0e1d8"/>
+<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/eed8d32b-2184-4c08-8c0b-61fd63b0e1d8"></video>
 
 - 설문의 배경 색을 바꿀 수 있습니다.
 - 설문의 기한 설정이 가능하고 응답 수정 여부를 결정할 수 있습니다.
@@ -175,7 +175,7 @@ npm start
 
 ## 설문 응답
 
-<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/9b6f0da4-c34e-4989-bbf9-2b4cb4a7137d"/>
+<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/9b6f0da4-c34e-4989-bbf9-2b4cb4a7137d"></video>
 
 - 설문 응답을 하는 시연 영상입니다.
 
