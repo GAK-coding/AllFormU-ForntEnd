@@ -130,19 +130,54 @@ npm start
 - 챗봇 생성과 직접 생성이 있습니다.
 
 ### 챗봇 생성
-<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/468a86dc-7c70-4f10-8a76-df441022d811">
+<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/468a86dc-7c70-4f10-8a76-df441022d811"/>
 
 - 챗봇 생성을 누르면 챗봇과 대화하면서 설문의 기본 틀을 작성할 수 있습니다.
 - 부가 기능으로 GPT 이용하기 버튼이 있습니다.
 - 기본 틀 작성을 마치고 "폼 미리보기"를 누르면 설문의 질문을 작성할 수 있습니다.
 
 ### 직접 생성
+<img width="1440" alt="스크린샷 2024-02-03 오후 10 07 53" src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/9b11e02f-7e4d-4239-bb3f-c091a9d3d6ec">
+
+- 직접 생성을 누르면 설문의 기본 템플릿을 선택 할 수 있습니다.
+
+-"생성"을 눌렀을 때
+<img width="1439" alt="스크린샷 2024-02-03 오후 10 08 04" src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/8f16666d-4dd4-4ba7-b128-99bf413106e1">
+
+- "생성"을 누르면 기본 템플릿이 없이 설문 만들기 화면으로 넘어갑니다.
+
+- 템플릿 "이력서"를 눌렀을 때
+<img width="1440" alt="스크린샷 2024-02-03 오후 10 08 24" src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/15c12034-8413-4786-b94f-beb787f539f3">
+
+- "이력서" 템플릿을 누르면 사진과 같이 기본적인 질문들이 같이 세팅되어서 설문 만들기 화면으로 넘어갑니다.
 
 ### 설문 만들기
+<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/ee6b4b92-083b-4dbc-8bde-b1d609ab52cb"/>
+
+- 설문의 제목, 설명, 이미지를 추가할 수 있습니다.
+- 왼쪽 파란 선이 현재 선택된 질문입니다.
+- 질문, 섹션을 추가할 때는 현재 선택된 질문의 아래에 추가됩니다.
+- 섹션은 5개, 질문은 100개까지 생성 가능합니다.
+- 질문은 단답형, 장문형, 날찌, 시간, 이미지, 객관식, 체크 박스, 드롭 다운, 선형 배율로 타입을 설정할 수 있습니다.
+- 질문의 필수 응답 여부를 선택 할 수 있습니다.
+- 질문 삭제가 가능합니다.
+- Drag&Drop으로 질문 순서의 변경이 가능합니다.
+- 각 섹션의 오른쪽 상단 "섹션 순서"에서 섹션 순서 변경이 가능합니다.
+- 질문을 다른 섹션으로 옮기려면 질문의 오른쪽 하단의 "섹션"을 이용하여 변경 가능합니다.
+
+<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/eed8d32b-2184-4c08-8c0b-61fd63b0e1d8"/>
+
+- 설문의 배경 색을 바꿀 수 있습니다.
+- 설문의 기한 설정이 가능하고 응답 수정 여부를 결정할 수 있습니다.
+- QR코드를 통해 설문을 공유할 수 있습니다.
 
 ---
 
 ## 설문 응답
+
+<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/9b6f0da4-c34e-4989-bbf9-2b4cb4a7137d"/>
+
+- 설문 응답을 하는 시연 영상입니다.
 
 ---
 
