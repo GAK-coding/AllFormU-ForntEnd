@@ -53,7 +53,7 @@ npm start
     - [설문 만들기](#설문-만들기)
 5. [설문 응답](#설문-응답) 
 6. [설문 관리](#설문-관리)
-   - [설문 수정 및 삭제](#설문-수정-및-삭제)
+   - [설문 삭제](#설문-삭제)
    - [설문 응답 조회](#설문-응답-조회)
 <br/>
 <br/>
@@ -193,6 +193,12 @@ npm start
 
 ## 설문 관리
 
-### 설문 수정 및 삭제
-
 ### 설문 응답 조회
+<img width="1440" alt="image" src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/3a9b8a54-fa4f-4199-899f-7cdd01bbe05b">
+
+- 응답한 사람들의 응답 비율을 시각화하여 볼 수 있습니다.
+
+### 설문 삭제
+<video src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/1091bf1c-5ada-483e-bf42-3d086db5a4dc"></video>
+
+- 설문 삭제도 가능합니다.
