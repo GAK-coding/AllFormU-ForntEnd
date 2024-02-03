@@ -67,15 +67,19 @@ npm start
 - 오른쪽 하단에 있는 "GAK씨" 버튼을 클릭하면 빠른 메뉴가 나옵니다.
 - 빠른 메뉴에는 생성하기, 응답하기, GPT가 있습니다.
 
--생성하기
+-생성하기<br>
 <img width="1437" alt="스크린샷 2024-02-03 오후 8 28 18" src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/6120e5f0-efdd-4fe4-9028-22ca238acf94"/>
 
 - "생성하기"를 누르면 챗봇 생성 페이지로 이동하게 됩니다.
 
--응답하기
+<br>
+
+-응답하기<br>
 <img width="1440" alt="스크린샷 2024-02-03 오후 8 28 26" src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/c9e874e0-f740-460d-b24e-34427e8435be"/>
 
 - "응답하기"를 누르면 설문 응답 URL을 입력하는 모달이 뜨고, URL을 입력하면 해당 설문에 응답할 수 있습니다.
+
+<br>
 
 -GPT
 <img width="1440" alt="스크린샷 2024-02-03 오후 8 28 41" src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/e6ed2adb-77e3-4509-b120-61542fa49de0"/>
@@ -102,10 +106,12 @@ npm start
 ---
 
 ## 마이페이지
--초기 마이페이지 화면
+-초기 마이페이지 화면<br>
 <img width="1440" alt="스크린샷 2024-02-03 오후 9 46 49" src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/81972c14-baaa-4066-8f82-42dacced55d7"/>
 
--생성 폼과 응답 폼이 있을 때 화면
+<br>
+
+-생성 폼과 응답 폼이 있을 때 화면<br>
 ![스크린샷 2024-02-03 오후 9 50 04](https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/171a1227-27c4-411f-93d0-6d811babf987)
 
 - 이 화면의 상세한 설명은 아래 설문 관리에 있습니다.
@@ -141,12 +147,16 @@ npm start
 
 - 직접 생성을 누르면 설문의 기본 템플릿을 선택 할 수 있습니다.
 
--"생성"을 눌렀을 때
+<br>
+
+-"생성"을 눌렀을 때<br>
 <img width="1439" alt="스크린샷 2024-02-03 오후 10 08 04" src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/8f16666d-4dd4-4ba7-b128-99bf413106e1">
 
 - "생성"을 누르면 기본 템플릿이 없이 설문 만들기 화면으로 넘어갑니다.
 
--템플릿 "이력서"를 눌렀을 때
+<br>
+
+-템플릿 "이력서"를 눌렀을 때<br>
 <img width="1440" alt="스크린샷 2024-02-03 오후 10 08 24" src="https://github.com/GAK-coding/AllFormU-frontEnd/assets/86971770/15c12034-8413-4786-b94f-beb787f539f3">
 
 - "이력서" 템플릿을 누르면 사진과 같이 기본적인 질문들이 같이 세팅되어서 설문 만들기 화면으로 넘어갑니다.
